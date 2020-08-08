@@ -46,8 +46,8 @@ android {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    implementation("androidx.core:core-ktx:1.3.0")
-    implementation("androidx.appcompat:appcompat:1.1.0")
+    implementation("androidx.core:core-ktx:1.3.1")
+    implementation("androidx.appcompat:appcompat:1.2.0")
 
     implementation(compose("runtime"))
     implementation(composeUI("core"))
