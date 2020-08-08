@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-android-extensions")
+    kotlin("plugin.serialization")
 }
 
 android {
@@ -28,11 +29,12 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
-        freeCompilerArgs = listOf("-Xallow-result-return-type", "-XXLanguage:+NonParenthesizedAnnotationsOnFunctionalTypes")
+        freeCompilerArgs = listOf("-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check", "-Xinline-classes", "-Xopt-in=kotlin.RequiresOptIn")
     }
 
     composeOptions {
-        kotlinCompilerVersion = "1.3.70-dev-withExperimentalGoogleExtensions-20200424"
+        val kotlinVersion: String by project
+        kotlinCompilerVersion = kotlinVersion
         val composeVersion: String by project
         kotlinCompilerExtensionVersion = composeVersion
     }
@@ -45,36 +47,28 @@ android {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
-    implementation("androidx.core:core-ktx:1.3.1")
-    implementation("androidx.appcompat:appcompat:1.2.0")
+    implementation("androidx.core","core-ktx", "1.3.1")
+    implementation("androidx.appcompat", "appcompat", "1.2.0")
 
-    implementation(compose("runtime"))
-    implementation(composeUI("core"))
-    implementation(composeUI("layout"))
-    implementation(composeUI("material"))
-    implementation(composeUI("material-icons-extended"))
-    implementation(composeUI("foundation"))
-    implementation(composeUI("animation"))
-    implementation(composeUI("tooling"))
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.8")
-    implementation("androidx.activity:activity-ktx:1.1.0")
+    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-runtime", "1.0-M1-1.4.0-rc")
+
+    val composeVersion: String by project
+    implementation("androidx.compose.runtime", "runtime", composeVersion)
+    implementation("androidx.compose.ui", "ui", composeVersion)
+    implementation("androidx.compose.foundation", "foundation-layout", composeVersion)
+    implementation("androidx.compose.material", "material", composeVersion)
+    implementation("androidx.compose.material", "material-icons-extended", composeVersion)
+    implementation("androidx.compose.foundation", "foundation", composeVersion)
+    implementation("androidx.compose.animation", "animation", composeVersion)
+    implementation("androidx.ui", "ui-tooling", composeVersion)
+    implementation("org.jetbrains.kotlinx","kotlinx-coroutines-android", "1.3.8-1.4.0-rc")
+    implementation("androidx.activity", "activity-ktx", "1.1.0")
 
     testImplementation(kotlin("test-junit"))
-    androidTestImplementation("androidx.test:rules:1.2.0")
-    androidTestImplementation("androidx.test:runner:1.2.0")
-    androidTestImplementation(composeUI("test"))
+    androidTestImplementation("androidx.test", "rules", "1.2.0")
+    androidTestImplementation("androidx.test", "runner","1.2.0")
+    androidTestImplementation("androidx.ui", "ui-test", composeVersion)
 }
 
 fun <T> NamedDomainObjectContainer<T>.release(action: T.() -> Unit): T =
     getByName("release", action)
-
-fun compose(module: String): String {
-    val composeVersion: String by project
-    return "androidx.compose:compose-$module:$composeVersion"
-}
-
-fun composeUI(module: String): String {
-    val composeVersion: String by project
-    return "androidx.ui:ui-$module:$composeVersion"
-}
