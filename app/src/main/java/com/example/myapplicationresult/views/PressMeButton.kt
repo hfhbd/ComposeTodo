@@ -6,8 +6,7 @@ import androidx.compose.runtime.Composable
 import com.example.myapplicationresult.viewmodels.PressMeViewModel
 
 @Composable
-fun PressMeButton() {
-    val viewModel = PressMeViewModel()
+fun PressMeButton(viewModel: PressMeViewModel = PressMeViewModel()) {
     Button(viewModel::loadNew) {
         Text(viewModel.text)
     }

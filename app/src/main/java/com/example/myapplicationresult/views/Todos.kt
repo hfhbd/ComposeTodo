@@ -7,8 +7,7 @@ import androidx.compose.runtime.Composable
 import com.example.myapplicationresult.viewmodels.TodoViewModel
 
 @Composable
-fun Todos() {
-    val viewModel = TodoViewModel()
+fun Todos(viewModel: TodoViewModel = TodoViewModel()) {
     Column {
         Button(viewModel::loadNew) { Text("Refresh") }
         viewModel.todos.forEach { 
