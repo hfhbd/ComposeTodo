@@ -8,9 +8,7 @@ import com.example.myapplicationresult.viewmodels.PressMeViewModel
 @Composable
 fun PressMeButton() {
     val viewModel = PressMeViewModel()
-    Button(onClick = {
-        viewModel.loadNew()
-    }) {
+    Button(viewModel::loadNew) {
         Text(viewModel.text)
     }
 }

@@ -10,7 +10,7 @@ import com.example.myapplicationresult.viewmodels.TodoViewModel
 fun Todos() {
     val viewModel = TodoViewModel()
     Column {
-        Button({viewModel.loadNew()}) { Text("Refresh") }
+        Button(viewModel::loadNew) { Text("Refresh") }
         viewModel.todos.forEach { 
             Text(it.title)
         }
