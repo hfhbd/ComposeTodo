@@ -1,2 +1,2 @@
 include(":app")
-rootProject.name = "My ApplicationResult"
+rootProject.name = "ComposeTodo"
