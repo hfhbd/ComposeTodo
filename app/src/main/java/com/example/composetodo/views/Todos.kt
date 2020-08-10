@@ -9,7 +9,7 @@ import com.example.composetodo.viewmodels.TodoViewModel
 @Composable
 fun Todos(viewModel: TodoViewModel = TodoViewModel()) {
     Column {
-        Button(viewModel::refresh) { Text("Refresh") }
+        Button(viewModel::loadNew) { Text("Refresh") }
         viewModel.todos.forEach { todo ->
             Text(todo.title)
         }
