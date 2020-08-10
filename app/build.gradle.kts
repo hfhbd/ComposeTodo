@@ -29,7 +29,7 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
-        freeCompilerArgs = listOf("-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check", "-Xinline-classes", "-Xopt-in=kotlin.RequiresOptIn")
+        freeCompilerArgs = freeCompilerArgs + listOf("-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check", "-Xinline-classes", "-Xopt-in=kotlin.RequiresOptIn")
     }
 
     composeOptions {
@@ -72,3 +72,10 @@ dependencies {
 
 fun <T> NamedDomainObjectContainer<T>.release(action: T.() -> Unit): T =
     getByName("release", action)
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        freeCompilerArgs = freeCompilerArgs + listOf("-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check")
+    }
+}
