@@ -13,7 +13,7 @@ data class HttpClient(val baseURL: String = "", val json: Json = Json) {
         json.decodeFromString(serializer, it)
     }
 
-    suspend fun delete(url: String = "/") = request(url, HTTPMethod.DELETE).mapCatching { Unit }
+    suspend fun delete(url: String = "/") = request(url, HTTPMethod.DELETE).map { Unit }
 
     private suspend fun request(url: String, method: HTTPMethod): Result<String> = withContext(Dispatchers.IO) {
         val connection = URL(baseURL + url).openConnection() as HttpsURLConnection
