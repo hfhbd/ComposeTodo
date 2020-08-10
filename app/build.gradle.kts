@@ -49,7 +49,9 @@ android {
 dependencies {
     implementation("androidx.core","core-ktx", "1.3.1")
     implementation("androidx.appcompat", "appcompat", "1.2.0")
+    implementation("androidx.activity", "activity-ktx", "1.1.0")
 
+    implementation("org.jetbrains.kotlinx","kotlinx-coroutines-android", "1.3.8-1.4.0-rc")
     implementation("org.jetbrains.kotlinx", "kotlinx-serialization-runtime", "1.0-M1-1.4.0-rc")
 
     val composeVersion: String by project
@@ -61,8 +63,6 @@ dependencies {
     implementation("androidx.compose.foundation", "foundation", composeVersion)
     implementation("androidx.compose.animation", "animation", composeVersion)
     implementation("androidx.ui", "ui-tooling", composeVersion)
-    implementation("org.jetbrains.kotlinx","kotlinx-coroutines-android", "1.3.8-1.4.0-rc")
-    implementation("androidx.activity", "activity-ktx", "1.1.0")
 
     testImplementation(kotlin("test-junit"))
     androidTestImplementation("androidx.test", "rules", "1.2.0")
