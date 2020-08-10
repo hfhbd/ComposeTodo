@@ -1,4 +1,4 @@
-package com.example.myapplicationresult
+package com.example.composetodo
 
 import kotlin.test.Test
 import kotlin.test.assertEquals

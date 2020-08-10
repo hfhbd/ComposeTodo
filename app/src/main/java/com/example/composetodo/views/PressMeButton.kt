@@ -1,9 +1,9 @@
-package com.example.myapplicationresult.views
+package com.example.composetodo.views
 
 import androidx.compose.foundation.Text
 import androidx.compose.material.Button
 import androidx.compose.runtime.Composable
-import com.example.myapplicationresult.viewmodels.PressMeViewModel
+import com.example.composetodo.viewmodels.PressMeViewModel
 
 @Composable
 fun PressMeButton(viewModel: PressMeViewModel = PressMeViewModel()) {

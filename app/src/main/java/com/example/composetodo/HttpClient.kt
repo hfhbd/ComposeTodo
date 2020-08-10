@@ -1,4 +1,4 @@
-package com.example.myapplicationresult
+package com.example.composetodo
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -9,11 +9,11 @@ import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
 data class HttpClient(val baseURL: String = "", val json: Json = Json) {
-    suspend fun <T : Any> get(url: String, serializer: KSerializer<T>) = request(url, HTTPMethod.GET).mapCatching {
+    suspend fun <T : Any> get(url: String = "/", serializer: KSerializer<T>) = request(url, HTTPMethod.GET).mapCatching {
         json.decodeFromString(serializer, it)
     }
 
-    suspend fun delete(url: String) = request(url, HTTPMethod.DELETE).mapCatching { Unit }
+    suspend fun delete(url: String = "/") = request(url, HTTPMethod.DELETE).mapCatching { Unit }
 
     private suspend fun request(url: String, method: HTTPMethod): Result<String> = withContext(Dispatchers.IO) {
         val connection = URL(baseURL + url).openConnection() as HttpsURLConnection

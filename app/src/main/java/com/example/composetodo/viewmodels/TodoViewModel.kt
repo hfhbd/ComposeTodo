@@ -1,10 +1,10 @@
-package com.example.myapplicationresult.viewmodels
+package com.example.composetodo.viewmodels
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.example.myapplicationresult.HttpClient
-import com.example.myapplicationresult.models.Todo
+import com.example.composetodo.HttpClient
+import com.example.composetodo.models.Todo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -25,5 +25,5 @@ class TodoViewModel {
     private suspend fun deleteTodo(id: Int) = client.delete("/$id").getOrDefault(Unit)
 
     private suspend fun getNewTodos() =
-        client.get("/", ListSerializer(Todo.serializer())).getOrDefault(emptyList())
+        client.get(serializer = ListSerializer(Todo.serializer())).getOrDefault(emptyList())
 }

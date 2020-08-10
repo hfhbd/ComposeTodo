@@ -1,4 +1,4 @@
-package com.example.myapplicationresult.models
+package com.example.composetodo.models
 
 import kotlinx.serialization.Serializable
 

@@ -9,7 +9,7 @@ android {
     compileSdkVersion(29)
 
     defaultConfig {
-        applicationId = "com.example.jetpacknews"
+        applicationId = "com.example.composetodo"
         minSdkVersion(21)
         targetSdkVersion(29)
         versionCode = 1
