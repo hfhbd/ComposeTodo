@@ -2,7 +2,7 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-android-extensions")
-    kotlin("plugin.serialization") version "1.4.0-rc"
+    //kotlin("plugin.serialization") version "1.4.0-rc"
 }
 
 android {
