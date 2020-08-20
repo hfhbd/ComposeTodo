@@ -1,8 +1,8 @@
 plugins {
     id("com.android.application")
-    id("kotlin-android")
+    kotlin("android")
     id("kotlin-android-extensions")
-    //kotlin("plugin.serialization") version "1.4.0-rc"
+    //kotlin("plugin.serialization") version "1.4.0"
 }
 
 android {
@@ -22,14 +22,9 @@ android {
         compose = true
     }
 
-    compileOptions {
-        targetCompatibility = JavaVersion.VERSION_1_8
-        sourceCompatibility = JavaVersion.VERSION_1_8
-    }
-
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
-        freeCompilerArgs = listOf("-Xinline-classes", "-Xopt-in=kotlin.RequiresOptIn")
+        freeCompilerArgs = listOf("-Xopt-in=kotlin.time.ExperimentalTime")
     }
 
     composeOptions {
@@ -46,13 +41,19 @@ android {
     }
 }
 
+repositories {
+    google()
+    jcenter()
+    maven("https://kotlin.bintray.com/kotlinx")
+}
+
 dependencies {
     implementation("androidx.core","core-ktx", "1.3.1")
     implementation("androidx.appcompat", "appcompat", "1.2.0")
     implementation("androidx.activity", "activity-ktx", "1.1.0")
 
-    implementation("org.jetbrains.kotlinx","kotlinx-coroutines-android", "1.3.8-1.4.0-rc")
-    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-runtime", "1.0-M1-1.4.0-rc")
+    implementation("org.jetbrains.kotlinx","kotlinx-coroutines-android", "1.3.9")
+    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-core", "1.0.0-RC")
 
     val composeVersion: String by project
     implementation("androidx.compose.runtime", "runtime", composeVersion)
@@ -64,7 +65,8 @@ dependencies {
     implementation("androidx.compose.animation", "animation", composeVersion)
     implementation("androidx.ui", "ui-tooling", composeVersion)
 
-    testImplementation(kotlin("test-junit"))
+    testImplementation(kotlin("test-junit5"))
+    androidTestImplementation(kotlin("test-junit"))
     androidTestImplementation("androidx.test", "rules", "1.2.0")
     androidTestImplementation("androidx.test", "runner","1.2.0")
     androidTestImplementation("androidx.ui", "ui-test", composeVersion)

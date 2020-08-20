@@ -9,11 +9,3 @@ buildscript {
         classpath(kotlin("gradle-plugin:$kotlinVersion"))
     }
 }
-
-allprojects {
-    repositories {
-        google()
-        jcenter()
-        maven("https://kotlin.bintray.com/kotlinx")
-    }
-}
