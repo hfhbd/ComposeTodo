@@ -2,7 +2,6 @@ package com.example.composetodo.utils
 
 import android.Manifest
 import androidx.annotation.RequiresPermission
-import androidx.annotation.WorkerThread
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.KSerializer
@@ -11,73 +10,70 @@ import java.io.IOException
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
-@WorkerThread
-data class HttpClient(val baseURL: String = "", val json: Json = Json) {
+data class HttpClient(val baseURL: String, val json: Json = Json) {
 
     @RequiresPermission(Manifest.permission.INTERNET)
-    suspend fun <T : Any> get(url: String = "/", serializer: KSerializer<T>) =
-        request(url, HTTPMethod.GET)?.let {
-            json.decodeFromString(serializer, it)
+    suspend fun <T> get(url: String = "/", serializer: KSerializer<T>) =
+        request(url, {
+            requestMethod = "GET"
+            doInput = true
+            doOutput = false
+        }) {
+            json.decodeFromString(serializer, inputStream.reader().readText())
         }
 
     @RequiresPermission(Manifest.permission.INTERNET)
-    suspend fun delete(url: String = "/") = request(url, HTTPMethod.DELETE).let { Unit }
+    suspend fun<T, R> post(url: String = "/", body: T, bodySerializer: KSerializer<T>, serializer: KSerializer<R>) = request(url, {
+        requestMethod = "POST"
+        doInput = true
+        doOutput = true
+        outputStream.writer().write(json.encodeToString(bodySerializer, body))
+    }) { json.decodeFromString(serializer, inputStream.reader().readText()) }
 
-    private suspend fun request(url: String, method: HTTPMethod) = withContext(Dispatchers.IO) {
+    @RequiresPermission(Manifest.permission.INTERNET)
+    suspend fun<T, R> patch(url: String = "/", body: T, bodySerializer: KSerializer<T>, serializer: KSerializer<R>) = request(url, {
+        requestMethod = "PATCH"
+        doInput = true
+        doOutput = true
+        outputStream.writer().write(json.encodeToString(bodySerializer, body))
+    }) { json.decodeFromString(serializer, inputStream.reader().readText()) }
+
+    @RequiresPermission(Manifest.permission.INTERNET)
+    suspend fun<T, R> put(url: String = "/", body: T, bodySerializer: KSerializer<T>, serializer: KSerializer<R>) = request(url, {
+        requestMethod = "PUT"
+        doInput = true
+        doOutput = true
+        outputStream.writer().write(json.encodeToString(bodySerializer, body))
+    }) { json.decodeFromString(serializer, inputStream.reader().readText()) }
+
+    @RequiresPermission(Manifest.permission.INTERNET)
+    suspend fun delete(url: String = "/") = request(url, {
+        requestMethod = "DELETE"
+        doInput = false
+        doOutput = false
+    }) { Unit }
+
+    private suspend fun <T> request(
+        url: String,
+        beforeConnection: HttpsURLConnection.() -> Unit,
+        afterConnection: HttpsURLConnection.() -> T
+    ) = withContext(Dispatchers.IO) {
         val connection = URL(baseURL + url).openConnection() as HttpsURLConnection
         try {
             connection.run {
-                method.beforeConnection(this)
+                beforeConnection()
                 connect()
-                if (status !in HttpStatus.validStatus) {
-                    throw IOException("Not valid status: $status")
+                if (status in HttpStatus.validStatus) {
+                    afterConnection()
                 } else {
-                    return@withContext inputStream.reader().readText()
+                    null
                 }
             }
         } catch (e: IOException) {
-            return@withContext null
+            null
         } finally {
             connection.disconnect()
         }
-    }
-
-    private sealed class HTTPMethod(
-        val beforeConnection: (HttpsURLConnection) -> Unit
-    ) {
-
-        object GET : HTTPMethod({
-            it.requestMethod = "GET"
-            it.doInput = true
-            it.doOutput = false
-        })
-
-        data class POST(val body: String) : HTTPMethod({
-            it.requestMethod = "POST"
-            it.doInput = true
-            it.doOutput = true
-            it.outputStream.writer().write(body)
-        })
-
-        data class PUT(val body: String) : HTTPMethod({
-            it.requestMethod = "PUT"
-            it.doInput = true
-            it.doOutput = true
-            it.outputStream.writer().write(body)
-        })
-
-        data class PATCH(val body: String) : HTTPMethod({
-            it.requestMethod = "PATCH"
-            it.doInput = true
-            it.doOutput = true
-            it.outputStream.writer().write(body)
-        })
-
-        object DELETE : HTTPMethod({
-            it.requestMethod = "DELETE"
-            it.doInput = false
-            it.doOutput = false
-        })
     }
 
     enum class HttpStatus(val code: Int) {
