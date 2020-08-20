@@ -1,28 +1,75 @@
 package com.example.composetodo.models
 
 import kotlinx.serialization.KSerializer
-import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.SerializationException
+import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.descriptors.ClassSerialDescriptorBuilder
+import kotlinx.serialization.descriptors.buildClassSerialDescriptor
+import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.reflect.KProperty1
 
 data class Todo(
-    val userId: Int,
     val id: Int,
+    val userId: Int,
     val title: String,
     val completed: Boolean
 ) {
     companion object {
         fun serializer() = object : KSerializer<Todo> {
-            override val descriptor: SerialDescriptor
-                get() = TODO("Not yet implemented")
+            override val descriptor = buildClassSerialDescriptor("TodoSerializer") {
+                element(Todo::id)
+                element(Todo::userId)
+                element(Todo::title)
+                element(Todo::completed)
+            }
 
             override fun deserialize(decoder: Decoder): Todo {
-                TODO("Not yet implemented")
+                val dec = decoder.beginStructure(descriptor)
+                var id: Int? = null
+                var userId: Int? = null
+                var title: String? = null
+                var completed: Boolean? = null
+                loop@ while (true) {
+                    when (val i = dec.decodeElementIndex(descriptor)) {
+                        CompositeDecoder.DECODE_DONE -> break@loop
+                        0 -> id = dec.decodeIntElement(descriptor, i)
+                        1 -> userId = dec.decodeIntElement(descriptor, i)
+                        2 -> title = dec.decodeStringElement(descriptor, i)
+                        3 -> completed = dec.decodeBooleanElement(descriptor, i)
+                        else -> throw SerializationException("Unknown index $i")
+                    }
+                }
+                dec.endStructure(descriptor)
+                return Todo(
+                    id = id ?: throw SerializationException("missing id"),
+                    userId = userId ?: throw SerializationException("missing userId"),
+                    title = title ?: throw SerializationException("missing title"),
+                    completed = completed ?: throw SerializationException("missing completed")
+                )
             }
 
             override fun serialize(encoder: Encoder, value: Todo) {
-                TODO("Not yet implemented")
+                val compositeOutput = encoder.beginStructure(descriptor)
+                compositeOutput.encodeIntElement(descriptor, 0, value.id)
+                compositeOutput.encodeIntElement(descriptor, 1, value.userId)
+                compositeOutput.encodeStringElement(descriptor, 2, value.title)
+                compositeOutput.encodeBooleanElement(descriptor, 3, value.completed)
+                compositeOutput.endStructure(descriptor)
             }
         }
     }
 }
+
+@JvmName("elementInt")
+internal fun <T> ClassSerialDescriptorBuilder.element(elementName: KProperty1<T, Int>) =
+    element(elementName.name, Int.serializer().descriptor)
+
+@JvmName("elementBoolean")
+internal fun <T> ClassSerialDescriptorBuilder.element(elementName: KProperty1<T, Boolean>) =
+    element(elementName.name, Boolean.serializer().descriptor)
+
+@JvmName("elementString")
+internal fun <T> ClassSerialDescriptorBuilder.element(elementName: KProperty1<T, String>) =
+    element(elementName.name, String.serializer().descriptor)
