@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import kotlinx.coroutines.*
 import kotlin.random.Random
-import kotlin.time.ExperimentalTime
 import kotlin.time.seconds
 
 class PressMeViewModel {
@@ -21,19 +20,14 @@ class PressMeViewModel {
         }
     }
 
-    private suspend fun testing() = newInt().fold({
-        it.toString()
-    }) {
-        "Error: ${it.message!!}"
-    }
+    private suspend fun testing() = newInt()?.toString() ?: "Error"
 
-    @OptIn(ExperimentalTime::class)
-    private suspend fun newInt(): Result<Int> {
+    private suspend fun newInt(): Int? {
         delay(5.seconds)
         return if (Random.nextBoolean()) {
-            Result.success(42)
+            42
         } else {
-            Result.failure(IllegalStateException("Blubb"))
+            null
         }
     }
 }

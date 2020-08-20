@@ -3,7 +3,7 @@ package com.example.composetodo.viewmodels
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.example.composetodo.HttpClient
+import com.example.composetodo.utils.HttpClient
 import com.example.composetodo.models.Todo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -14,6 +14,7 @@ import kotlinx.serialization.builtins.ListSerializer
 class TodoViewModel {
     private val client = HttpClient("https://jsonplaceholder.typicode.com/todos")
     var todos by mutableStateOf(emptyList<Todo>())
+
     fun loadNew() {
         GlobalScope.launch(Dispatchers.IO) {
             val newTodos = getNewTodos()
@@ -22,8 +23,9 @@ class TodoViewModel {
             }
         }
     }
-    private suspend fun deleteTodo(id: Int) = client.delete("/$id").getOrDefault(Unit)
+
+    private suspend fun deleteTodo(id: Int) = client.delete("/$id")
 
     private suspend fun getNewTodos() =
-        client.get(serializer = ListSerializer(Todo.serializer())).getOrDefault(emptyList())
+        client.get(serializer = ListSerializer(Todo.serializer())) ?: emptyList()
 }
