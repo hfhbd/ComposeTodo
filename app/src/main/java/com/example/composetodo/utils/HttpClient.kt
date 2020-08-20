@@ -1,5 +1,8 @@
-package com.example.composetodo
+package com.example.composetodo.utils
 
+import android.Manifest
+import androidx.annotation.RequiresPermission
+import androidx.annotation.WorkerThread
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.KSerializer
@@ -8,14 +11,19 @@ import java.io.IOException
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
+@WorkerThread
 data class HttpClient(val baseURL: String = "", val json: Json = Json) {
-    suspend fun <T : Any> get(url: String = "/", serializer: KSerializer<T>) = request(url, HTTPMethod.GET).mapCatching {
-        json.decodeFromString(serializer, it)
-    }
 
-    suspend fun delete(url: String = "/") = request(url, HTTPMethod.DELETE).map { Unit }
+    @RequiresPermission(Manifest.permission.INTERNET)
+    suspend fun <T : Any> get(url: String = "/", serializer: KSerializer<T>) =
+        request(url, HTTPMethod.GET)?.let {
+            json.decodeFromString(serializer, it)
+        }
 
-    private suspend fun request(url: String, method: HTTPMethod): Result<String> = withContext(Dispatchers.IO) {
+    @RequiresPermission(Manifest.permission.INTERNET)
+    suspend fun delete(url: String = "/") = request(url, HTTPMethod.DELETE).let { Unit }
+
+    private suspend fun request(url: String, method: HTTPMethod) = withContext(Dispatchers.IO) {
         val connection = URL(baseURL + url).openConnection() as HttpsURLConnection
         try {
             connection.run {
@@ -24,11 +32,11 @@ data class HttpClient(val baseURL: String = "", val json: Json = Json) {
                 if (status !in HttpStatus.validStatus) {
                     throw IOException("Not valid status: $status")
                 } else {
-                    return@withContext Result.success(inputStream.reader().readText())
+                    return@withContext inputStream.reader().readText()
                 }
             }
         } catch (e: IOException) {
-            return@withContext Result.failure(e)
+            return@withContext null
         } finally {
             connection.disconnect()
         }
@@ -74,7 +82,10 @@ data class HttpClient(val baseURL: String = "", val json: Json = Json) {
 
     enum class HttpStatus(val code: Int) {
         OK(200);
-        companion object { val validStatus = listOf(OK) }
+
+        companion object {
+            val validStatus = listOf(OK)
+        }
     }
 
     private val HttpsURLConnection.status: HttpStatus
