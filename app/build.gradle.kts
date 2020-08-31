@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     id("kotlin-android-extensions")
+    kotlin("kapt")
     //kotlin("plugin.serialization") version "1.4.0"
 }
 
@@ -20,6 +21,13 @@ android {
 
     buildFeatures {
         compose = true
+    }
+
+    compileOptions {
+        coreLibraryDesugaringEnabled = true
+        // Sets Java compatibility to Java 8
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
@@ -48,11 +56,12 @@ repositories {
 }
 
 dependencies {
-    implementation("androidx.core","core-ktx", "1.3.1")
+    coreLibraryDesugaring("com.android.tools", "desugar_jdk_libs", "1.0.9")
+    implementation("androidx.core", "core-ktx", "1.3.1")
     implementation("androidx.appcompat", "appcompat", "1.2.0")
     implementation("androidx.activity", "activity-ktx", "1.1.0")
 
-    implementation("org.jetbrains.kotlinx","kotlinx-coroutines-android", "1.3.9")
+    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-android", "1.3.9")
     implementation("org.jetbrains.kotlinx", "kotlinx-serialization-core", "1.0.0-RC")
 
     val composeVersion: String by project
@@ -65,10 +74,18 @@ dependencies {
     implementation("androidx.compose.animation", "animation", composeVersion)
     implementation("androidx.ui", "ui-tooling", composeVersion)
 
-    testImplementation(kotlin("test-junit5"))
+    val roomVersion = "2.2.5"
+
+    implementation("androidx.room", "room-runtime", roomVersion)
+    kapt("androidx.room", "room-compiler", roomVersion)
+    implementation("androidx.room", "room-ktx", roomVersion)
+    implementation("androidx.lifecycle", "lifecycle-livedata-ktx", "2.2.0")
+    testImplementation("androidx.room", "room-testing", roomVersion)
+
+    testImplementation(kotlin("test-junit"))
     androidTestImplementation(kotlin("test-junit"))
     androidTestImplementation("androidx.test", "rules", "1.2.0")
-    androidTestImplementation("androidx.test", "runner","1.2.0")
+    androidTestImplementation("androidx.test", "runner", "1.2.0")
     androidTestImplementation("androidx.ui", "ui-test", composeVersion)
 }
 

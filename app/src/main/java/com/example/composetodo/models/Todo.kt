@@ -1,5 +1,7 @@
 package com.example.composetodo.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.builtins.serializer
@@ -10,9 +12,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlin.reflect.KProperty1
 
+@Entity
 data class Todo(
-    val id: Int,
-    val userId: Int,
+    @PrimaryKey val id: Int,
     val title: String,
     val completed: Boolean
 ) {
@@ -20,7 +22,7 @@ data class Todo(
         fun serializer() = object : KSerializer<Todo> {
             override val descriptor = buildClassSerialDescriptor("TodoSerializer") {
                 element(Todo::id)
-                element(Todo::userId)
+                element("userId", Int.serializer().descriptor) // not used
                 element(Todo::title)
                 element(Todo::completed)
             }
@@ -28,14 +30,13 @@ data class Todo(
             override fun deserialize(decoder: Decoder): Todo {
                 val dec = decoder.beginStructure(descriptor)
                 var id: Int? = null
-                var userId: Int? = null
                 var title: String? = null
                 var completed: Boolean? = null
                 loop@ while (true) {
                     when (val i = dec.decodeElementIndex(descriptor)) {
                         CompositeDecoder.DECODE_DONE -> break@loop
                         0 -> id = dec.decodeIntElement(descriptor, i)
-                        1 -> userId = dec.decodeIntElement(descriptor, i)
+                        1 -> { dec.decodeIntElement(descriptor, i) }
                         2 -> title = dec.decodeStringElement(descriptor, i)
                         3 -> completed = dec.decodeBooleanElement(descriptor, i)
                         else -> throw SerializationException("Unknown index $i")
@@ -44,7 +45,6 @@ data class Todo(
                 dec.endStructure(descriptor)
                 return Todo(
                     id = id ?: throw SerializationException("missing id"),
-                    userId = userId ?: throw SerializationException("missing userId"),
                     title = title ?: throw SerializationException("missing title"),
                     completed = completed ?: throw SerializationException("missing completed")
                 )
@@ -53,7 +53,6 @@ data class Todo(
             override fun serialize(encoder: Encoder, value: Todo) {
                 val compositeOutput = encoder.beginStructure(descriptor)
                 compositeOutput.encodeIntElement(descriptor, 0, value.id)
-                compositeOutput.encodeIntElement(descriptor, 1, value.userId)
                 compositeOutput.encodeStringElement(descriptor, 2, value.title)
                 compositeOutput.encodeBooleanElement(descriptor, 3, value.completed)
                 compositeOutput.endStructure(descriptor)

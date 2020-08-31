@@ -3,29 +3,39 @@ package com.example.composetodo.viewmodels
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.example.composetodo.utils.HttpClient
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.composetodo.models.Todo
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import kotlinx.serialization.builtins.ListSerializer
+import com.example.composetodo.repository.TodoRepository
+import kotlinx.coroutines.*
 
-class TodoViewModel {
-    private val client = HttpClient("https://jsonplaceholder.typicode.com/todos")
+class TodoViewModel(private val scope: CoroutineScope, private val repo: TodoRepository) {
     var todos by mutableStateOf(emptyList<Todo>())
 
-    fun loadNew() {
-        GlobalScope.launch(Dispatchers.IO) {
-            val newTodos = getNewTodos()
-            withContext(Dispatchers.Main) {
-                todos = newTodos
+    init {
+        println("called init")
+        scope.launch(Dispatchers.Main) {
+            println("start init")
+            todos = withContext(Dispatchers.IO) {
+                println("execute init")
+                repo.get().also {
+                    println("end init with $it")
+                }
             }
+            println("init todos = $todos")
         }
     }
 
-    private suspend fun deleteTodo(id: Int) = client.delete("/$id")
+    fun loadNew() {
+        scope.launch(Dispatchers.Main) {
+            todos = withContext(Dispatchers.IO) { repo.getRemote() }
+            println("loadNew $todos")
+        }
+    }
 
-    private suspend fun getNewTodos() =
-        client.get(serializer = ListSerializer(Todo.serializer())) ?: emptyList()
+    fun clear() {
+        scope.launch(Dispatchers.IO) {
+            repo.deleteAll()
+        }
+    }
 }

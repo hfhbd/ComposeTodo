@@ -7,9 +7,10 @@ import androidx.compose.runtime.Composable
 import com.example.composetodo.viewmodels.TodoViewModel
 
 @Composable
-fun Todos(viewModel: TodoViewModel = TodoViewModel()) {
+fun Todos(viewModel: TodoViewModel) {
+    Button(viewModel::clear) { Text("Clear")}
+    Button(viewModel::loadNew) { Text("Remote") }
     Column {
-        Button(viewModel::loadNew) { Text("Refresh") }
         viewModel.todos.forEach { todo ->
             Text(todo.title)
         }
