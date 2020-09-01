@@ -22,3 +22,9 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 }
+
+tasks {
+    test {
+        useJUnitPlatform()
+    }
+}
