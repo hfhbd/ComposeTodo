@@ -1,8 +1,7 @@
-package com.example.composetodo.repository
+package com.example.composetodo.todo
 
-import com.example.composetodo.models.Todo
-import com.example.composetodo.utils.HttpClient
-import com.example.composetodo.utils.HttpClient.Companion.httpClient
+import com.example.composetodo.HttpClient
+import com.example.composetodo.HttpClient.Companion.httpClient
 import kotlinx.serialization.builtins.ListSerializer
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter

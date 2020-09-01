@@ -3,13 +3,14 @@ package com.example.composetodo.viewmodels
 import com.example.composetodo.models.Todo
 import com.example.composetodo.repository.TodoDao
 import com.example.composetodo.repository.TodoRepository
-import com.example.composetodo.repository.TodoRest
+import com.example.composetodo.todo.TodoRest
 import kotlinx.coroutines.runBlocking
 import java.time.OffsetDateTime
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 import kotlin.test.assertTrue
+import com.example.composetodo.todo.Todo as RestTodo
 
 internal class TodoViewModelTest {
     @Test
@@ -65,19 +66,19 @@ internal class TodoViewModelTest {
     }
 
     private val fakeTodoRest = object : TodoRest {
-        override suspend fun getAll(): List<Todo>? {
+        override suspend fun getAll(): List<RestTodo>? {
             TODO("Not yet implemented")
         }
 
-        override suspend fun getModified(after: OffsetDateTime): List<Todo>? {
+        override suspend fun getModified(after: OffsetDateTime): List<RestTodo>? {
             TODO("Not yet implemented")
         }
 
-        override suspend fun update(todo: Todo): Todo? {
+        override suspend fun update(todo: RestTodo): RestTodo? {
             TODO("Not yet implemented")
         }
 
-        override suspend fun delete(todo: Todo): Unit? {
+        override suspend fun delete(todo: RestTodo): Unit? {
             TODO("Not yet implemented")
         }
     }

@@ -28,7 +28,7 @@ class TodoViewModel(private val scope: CoroutineScope, private val repo: TodoRep
 
     fun loadNew() {
         scope.launch(Dispatchers.Main) {
-            todos = withContext(Dispatchers.IO) { repo.getRemote() }
+            todos = withContext(Dispatchers.IO) { repo.sync() }
             println("loadNew $todos")
         }
     }

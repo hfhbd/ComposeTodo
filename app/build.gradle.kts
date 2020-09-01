@@ -3,7 +3,6 @@ plugins {
     kotlin("android")
     id("kotlin-android-extensions")
     kotlin("kapt")
-    //kotlin("plugin.serialization") version "1.4.0"
 }
 
 android {
@@ -56,6 +55,7 @@ repositories {
 }
 
 dependencies {
+    implementation(project(":networking"))
     coreLibraryDesugaring("com.android.tools", "desugar_jdk_libs", "1.0.9")
     implementation("androidx.core", "core-ktx", "1.3.1")
     implementation("androidx.appcompat", "appcompat", "1.2.0")
