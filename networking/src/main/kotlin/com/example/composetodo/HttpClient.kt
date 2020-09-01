@@ -81,7 +81,7 @@ interface HttpClient {
                 requestMethod = "DELETE"
                 doInput = false
                 doOutput = false
-            }) { kotlin.Unit }
+            }) { Unit }
 
             private suspend fun <T> request(
                 url: String,
