@@ -88,8 +88,45 @@ class MergeTest {
         }
     }
 
-    private operator fun OffsetDateTime.minus(duration: Duration): OffsetDateTime =
-        this.minusNanos(duration.toLongNanoseconds())
+    class IDSet<ID : Comparable<ID>, E : Identifiable<ID>> : Set<E> {
+        private val map: Map<ID, E> = mapOf()
+
+        override fun contains(element: E) = map.containsKey(element.id)
+        override fun containsAll(elements: Collection<E>) = map.keys.containsAll(elements.map { it.id })
+        override fun isEmpty() = size == 0
+        override fun iterator() = map.values.iterator()
+        override val size get() = map.size
+    }
+
+    class MutableIDSet<ID : Comparable<ID>, E : Identifiable<ID>> : MutableSet<E> {
+        private val map: MutableMap<ID, E> = mutableMapOf()
+
+        override fun contains(element: E) = map.containsKey(element.id)
+        override fun containsAll(elements: Collection<E>) = map.keys.containsAll(elements.map { it.id })
+        override fun isEmpty() = size == 0
+        override fun iterator() = map.values.iterator()
+        override val size get() = map.size
+        override fun add(element: E) = map[element.id]?.let { false } ?: run {
+            map[element.id] = element
+            true
+        }
+
+        override fun addAll(elements: Collection<E>) = false !in elements.map {
+            add(it)
+        }
+
+        override fun clear() = map.clear()
+
+        override fun remove(element: E) = map.remove(element.id)?.let { true } ?: false
+
+        override fun removeAll(elements: Collection<E>) = false !in elements.map {
+            remove(it)
+        }
+
+        override fun retainAll(elements: Collection<E>) = map.clear().let {
+            addAll(elements)
+        }
+    }
 }
 
 
