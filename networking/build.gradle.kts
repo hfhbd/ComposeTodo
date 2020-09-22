@@ -10,7 +10,9 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-android", "1.3.9")
+    val coroutinesVersion = "1.3.9"
+    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-android", coroutinesVersion)
+    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-reactive", coroutinesVersion)
     implementation("org.jetbrains.kotlinx", "kotlinx-serialization-core", "1.0.0-RC")
 
     testImplementation(kotlin("test-junit5"))
