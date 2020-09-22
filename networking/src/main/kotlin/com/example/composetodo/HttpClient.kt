@@ -30,7 +30,6 @@ interface HttpClient {
     companion object {
         fun httpClient(baseURL: String, json: Json = Json) = object : HttpClient {
 
-
             override suspend fun <T> get(url: String, serializer: KSerializer<T>) =
                 request(url, {
                     requestMethod = "GET"
