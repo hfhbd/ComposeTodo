@@ -1,7 +1,6 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    kotlin("android.extensions")
     kotlin("kapt")
 }
 
@@ -23,7 +22,7 @@ android {
     }
 
     compileOptions {
-        coreLibraryDesugaringEnabled = true
+        isCoreLibraryDesugaringEnabled = true
         // Sets Java compatibility to Java 8
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -58,12 +57,13 @@ repositories {
 dependencies {
     implementation(project(":networking"))
     coreLibraryDesugaring("com.android.tools", "desugar_jdk_libs", "1.0.9")
+
     implementation("androidx.core", "core-ktx", "1.3.1")
     implementation("androidx.appcompat", "appcompat", "1.2.0")
     implementation("androidx.activity", "activity-ktx", "1.1.0")
 
-    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-android", "1.3.9")
-    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-core", "1.0.0-RC")
+    val coroutinesVersion: String by project
+    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-android", coroutinesVersion)
 
     val composeVersion: String by project
     implementation("androidx.compose.runtime", "runtime", composeVersion)

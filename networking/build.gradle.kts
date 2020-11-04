@@ -1,19 +1,20 @@
 plugins {
-    `java-library`
     kotlin("jvm")
-    kotlin("plugin.serialization") version "1.4.0"
+    kotlin("plugin.serialization") version "1.4.10"
+    `java-library`
 }
 
 repositories {
     jcenter()
-    maven("https://kotlin.bintray.com/kotlinx")
 }
 
 dependencies {
-    val coroutinesVersion = "1.3.9"
+    val coroutinesVersion: String by project
+    val serializationVersion: String by project
+
     implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-android", coroutinesVersion)
     implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-reactive", coroutinesVersion)
-    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-core", "1.0.0-RC")
+    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", serializationVersion)
 
     testImplementation(kotlin("test-junit5"))
 }
