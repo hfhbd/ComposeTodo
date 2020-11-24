@@ -8,7 +8,6 @@ kotlin {
         compilations.all {
             kotlinOptions {
                 jvmTarget = "1.8"
-                useIR = true
             }
         }
         withJava()
@@ -28,9 +27,10 @@ kotlin {
                 implementation(exposed("core"))
                 implementation(exposed("dao"))
                 implementation(exposed("jdbc"))
-                implementation(exposed("java-time"))
+                implementation(exposed("java-time")) // todo: kotlin-time
 
-                implementation("org.jetbrains.kotlinx.experimental:ktor-server-uuid:0.0.1-SNAPSHOT")
+                implementation("org.jetbrains.kotlinx.experimental:ktor-server-uuid:0.0.1")
+                implementation("org.jetbrains.kotlinx.experimental:exposed-uuid-jvm:0.0.1")
 
                 runtimeOnly(logging())
                 runtimeOnly(h2())

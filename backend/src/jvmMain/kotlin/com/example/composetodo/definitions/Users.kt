@@ -1,8 +1,8 @@
 package com.example.composetodo.definitions
 
-import org.jetbrains.exposed.dao.id.UUIDTable
+import kotlinx.uuid.exposed.KotlinxUUIDTable
 
-object Users: UUIDTable() {
+object Users: KotlinxUUIDTable() {
     val firstName = varchar("firstName", 128)
     val lastName = varchar("lastName", 128)
 }

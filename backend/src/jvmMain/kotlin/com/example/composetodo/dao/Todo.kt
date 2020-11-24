@@ -1,13 +1,14 @@
 package com.example.composetodo.dao
 
+import com.example.composetodo.KotlinxUUIDEntity
+import com.example.composetodo.KotlinxUUIDEntityClass
 import com.example.composetodo.definitions.Todos
-import org.jetbrains.exposed.dao.UUIDEntity
-import org.jetbrains.exposed.dao.UUIDEntityClass
+import kotlinx.uuid.UUID
 import org.jetbrains.exposed.dao.id.EntityID
 
 // TODO wait for Exposed DTO support
-class Todo(id: EntityID<java.util.UUID>): UUIDEntity(id) {
-    companion object: UUIDEntityClass<Todo>(Todos)
+class Todo(id: EntityID<UUID>): KotlinxUUIDEntity(id) {
+    companion object: KotlinxUUIDEntityClass<Todo>(Todos)
 
     var user by User referencedOn Todos.user
     var title by Todos.title

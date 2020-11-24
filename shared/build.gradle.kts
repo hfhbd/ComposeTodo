@@ -4,7 +4,7 @@ plugins {
 }
 
 kotlin {
-    js(IR) {
+    js {
         browser()
     }
     ios()
@@ -12,7 +12,6 @@ kotlin {
         compilations.all {
             kotlinOptions {
                 jvmTarget = "1.8"
-                useIR = true
             }
         }
         withJava()
@@ -23,7 +22,7 @@ kotlin {
             dependencies {
                 implementation(json())
                 implementation(dateTime())
-                implementation("org.jetbrains.kotlinx.experimental:kotlinx-uuid-core:0.0.1-SNAPSHOT")
+                implementation("org.jetbrains.kotlinx.experimental:kotlinx-uuid-core:0.0.1")
             }
         }
         commonTest {

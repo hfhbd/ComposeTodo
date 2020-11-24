@@ -3,18 +3,17 @@ package com.example.composetodo.controller
 import com.example.composetodo.dao.User
 import com.example.composetodo.toDTO
 import kotlinx.uuid.UUID
-import kotlinx.uuid.toJavaUUID
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 
 class UserController(userID: UUID) {
-    private val user = suspend { User[userID.toJavaUUID()] }
+    private val user = suspend { User[userID] }
 
     companion object {
         suspend fun allUsers() = newSuspendedTransaction {
             User.all().map { it.toDTO() }
         }
         suspend fun createUser(newUser: com.example.composetodo.dto.User) = newSuspendedTransaction {
-            User.new(newUser.id.toJavaUUID()) {
+            User.new(newUser.id) {
                 firstName = newUser.firstName
                 lastName = newUser.lastName
             }.toDTO()
