@@ -5,15 +5,13 @@ import com.example.composetodo.dao.User
 import com.example.composetodo.toDTO
 import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.uuid.UUID
-import kotlinx.uuid.toJavaUUID
-import kotlinx.uuid.toKotlinUUID
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 
 class TodoController(userID: UUID) {
-    private val user = suspend { User[userID.toJavaUUID()] }
+    private val user = suspend { User[userID] }
     private val todo: suspend (UUID) -> Todo = { id ->
         user().todos.first {todo ->
-            todo.id.value.toKotlinUUID() == id
+            todo.id.value == id
         }
     }
 
@@ -23,7 +21,7 @@ class TodoController(userID: UUID) {
 
     suspend fun create(newTodo: com.example.composetodo.dto.Todo) = newSuspendedTransaction {
         val user = user()
-        Todo.new(newTodo.id.toJavaUUID()) {
+        Todo.new(newTodo.id) {
             this.user = user
             title = newTodo.title
             until = newTodo.until.toJavaLocalDateTime()

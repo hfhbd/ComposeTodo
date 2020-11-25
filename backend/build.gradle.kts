@@ -29,7 +29,7 @@ kotlin {
                 implementation(exposed("jdbc"))
                 implementation(exposed("java-time")) // todo: kotlin-time
 
-                implementation("org.jetbrains.kotlinx.experimental:ktor-server-uuid:0.0.1")
+                implementation("org.jetbrains.kotlinx.experimental:ktor-server-uuid-jvm:0.0.1")
                 implementation("org.jetbrains.kotlinx.experimental:exposed-uuid-jvm:0.0.1")
 
                 runtimeOnly(logging())
