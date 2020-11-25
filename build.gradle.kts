@@ -55,7 +55,7 @@ kotlin {
         }
         val jsMain by getting {
             dependencies {
-
+                implementation("org.jetbrains.kotlinx.experimental:kotlinx-uuid-core-js:0.0.1")
             }
         }
         val jsTest by getting {
@@ -73,6 +73,16 @@ kotlin {
 
             }
         }
+        val iosArm64Main by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlinx.experimental:kotlinx-uuid-core-iosarm64:0.0.1")
+            }
+        }
+        val iosX64Main by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlinx.experimental:kotlinx-uuid-core-iosx64:0.0.1")
+            }
+        }
         val jvmMain by getting {
             dependencies {
                 implementation(ktor("server-cio"))
@@ -83,6 +93,7 @@ kotlin {
                 implementation(exposed("jdbc"))
                 implementation(exposed("java-time")) // todo: kotlin-time
 
+                implementation("org.jetbrains.kotlinx.experimental:kotlinx-uuid-core-jvm:0.0.1")
                 implementation("org.jetbrains.kotlinx.experimental:ktor-server-uuid-jvm:0.0.1")
                 implementation("org.jetbrains.kotlinx.experimental:exposed-uuid-jvm:0.0.1")
 
