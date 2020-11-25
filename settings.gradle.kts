@@ -4,7 +4,12 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-rootProject.name = "ComposeTodo"
 
-include(":app")
-include(":networking")
+rootProject.name = "ComposeTodo"
+include(":shared")
+
+include(":backend")
+
+include(":client-core")
+//include(":androidApp")
+include(":webApp")
