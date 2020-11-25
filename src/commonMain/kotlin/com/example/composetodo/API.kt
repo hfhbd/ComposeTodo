@@ -1,5 +1,9 @@
 package com.example.composetodo
 
+import com.example.composetodo.dto.Todo
+import com.example.composetodo.dto.User
+import kotlinx.uuid.UUID
+
 interface API {
     suspend fun getUsers(): List<User>
     suspend fun getUser(userID: UUID): User
