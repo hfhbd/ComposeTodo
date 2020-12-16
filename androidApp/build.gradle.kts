@@ -1,5 +1,5 @@
 plugins {
-    id("com.android.application")
+    id("com.android.application") version "7.0.0-alpha03"
     kotlin("android")
     kotlin("kapt")
 }

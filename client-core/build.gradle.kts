@@ -2,12 +2,13 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
     kotlin("multiplatform")
-    //id("com.android.library")
     kotlin("plugin.serialization")
 }
 
 kotlin {
-    //android()
+    jvm {
+        withJava()
+    }
     ios {
         binaries {
             framework {
@@ -36,14 +37,14 @@ kotlin {
         }
         commonTest
 
-        /*val androidMain by getting {
+        val jvmMain by getting {
             dependencies {
                 api(ktor("client-android"))
                 api(coroutines("android"))
             }
         }
-        val androidTest by getting
-        */
+        val jvmTest by getting
+
         val iosMain by getting {
             dependencies {
                 api(ktor("client-ios"))
@@ -68,23 +69,7 @@ tasks {
     }
     build { dependsOn(packForXcode) }
 }
-/*
-android {
-    compileSdkVersion(30)
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    defaultConfig {
-        minSdkVersion(21)
-        targetSdkVersion(30)
-        versionCode = 1
-        versionName = "1.0"
-    }
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-        }
-    }
-}
-*/
+
 /**
  * [Coroutines](https://github.com/Kotlin/kotlinx.coroutines/releases/latest)
  */

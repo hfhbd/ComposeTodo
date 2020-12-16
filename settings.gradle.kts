@@ -11,5 +11,5 @@ include(":shared")
 include(":backend")
 
 include(":client-core")
-//include(":androidApp")
+include(":androidApp")
 include(":webApp")
