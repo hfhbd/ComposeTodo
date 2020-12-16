@@ -12,4 +12,3 @@ include(":backend")
 
 include(":client-core")
 include(":androidApp")
-include(":webApp")
