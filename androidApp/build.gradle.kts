@@ -71,7 +71,7 @@ dependencies {
     implementation("androidx.compose.animation:animation:$composeVersion")
     implementation("androidx.compose.ui:ui-tooling:$composeVersion")
 
-    val roomVersion = "2.2.5"
+    val roomVersion = "2.2.6"
 
     implementation("androidx.room:room-runtime:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
