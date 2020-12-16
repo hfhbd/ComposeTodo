@@ -1,9 +1,9 @@
 package com.example.composetodo.repository
 
+import com.example.composetodo.TodoRest
+import com.example.composetodo.TodoRest.Companion.todoRest
 import com.example.composetodo.models.Todo
-import com.example.composetodo.todo.TodoRest
-import com.example.composetodo.todo.TodoRest.Companion.todoRest
-import java.time.OffsetDateTime
+import kotlinx.datetime.Clock
 
 class TodoRepository(
     private val dao: TodoDao,
@@ -11,13 +11,13 @@ class TodoRepository(
 ) {
     suspend fun delete(todo: Todo) {
         dao.delete(todo)
-        rest.delete(todo.dto)
+        rest.delete(todo.toDTO())
     }
 
     suspend fun get(): List<Todo> = dao.getAll()
 
     suspend fun sync(): List<Todo> {
-        val remoteRest = rest.getModified(OffsetDateTime.now()) ?: emptyList()
+        val remoteRest = rest.getModified(Clock.System.now()) ?: emptyList()
         val remote = remoteRest.map { Todo(it) }
         val local = dao.getAll()
         val new = local - remote

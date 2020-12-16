@@ -2,14 +2,23 @@ package com.example.composetodo.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.composetodo.todo.Todo as RestTodo
+import kotlinx.datetime.LocalDateTime
+import kotlinx.uuid.UUID
+import com.example.composetodo.dto.Todo as RestTodo
 
 @Entity
 data class Todo(
-    @PrimaryKey val id: Int,
+    @PrimaryKey val id: UUID,
     val title: String,
-    val completed: Boolean
+    val until: LocalDateTime,
+    val finished: Boolean
 ) {
-    constructor(todo: RestTodo): this(todo.id, todo.title, todo.completed)
-    val dto get() = RestTodo(id, -1, title, completed)
+    constructor(todo: RestTodo) : this(
+        todo.id,
+        todo.title,
+        todo.until,
+        todo.finished
+    )
+
+    fun toDTO() = RestTodo(id, title, until, finished)
 }

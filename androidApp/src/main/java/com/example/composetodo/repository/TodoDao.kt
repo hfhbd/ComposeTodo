@@ -8,8 +8,8 @@ interface TodoDao {
     @Query("SELECT * FROM todo")
     suspend fun getAll(): List<Todo>
 
-    @Query("SELECT * FROM todo WHERE completed = :isCompleted")
-    suspend fun getAll(isCompleted: Boolean): List<Todo>
+    @Query("SELECT * FROM todo WHERE finished = :isFinished")
+    suspend fun getAll(isFinished: Boolean): List<Todo>
 
     @Update
     suspend fun update(todo: Todo)
