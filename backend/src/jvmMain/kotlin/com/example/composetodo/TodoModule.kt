@@ -2,6 +2,7 @@ package com.example.composetodo
 
 import com.example.composetodo.controller.TodoController
 import com.example.composetodo.controller.UserController
+import com.example.composetodo.definitions.Todos
 import com.example.composetodo.definitions.Users
 import com.example.composetodo.dto.Todo
 import com.example.composetodo.dto.User
@@ -21,7 +22,7 @@ fun Application.TodoModule() {
     }
 
     transaction {
-        SchemaUtils.create(Users, com.example.composetodo.definitions.Todos)
+        SchemaUtils.create(Users, Todos)
     }
 
     routing {

@@ -1,9 +1,9 @@
 package com.example.composetodo.dao
 
-import com.example.composetodo.KotlinxUUIDEntity
-import com.example.composetodo.KotlinxUUIDEntityClass
 import com.example.composetodo.definitions.Todos
 import kotlinx.uuid.UUID
+import kotlinx.uuid.exposed.KotlinxUUIDEntity
+import kotlinx.uuid.exposed.KotlinxUUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 
 // TODO wait for Exposed DTO support
