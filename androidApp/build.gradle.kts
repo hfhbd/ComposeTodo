@@ -4,7 +4,7 @@ plugins {
     kotlin("kapt")
 }
 
-val composeVersion: String = "1.0.0-alpha06"
+val composeVersion: String = "1.0.0-alpha09"
 
 android {
     compileSdkVersion(30)
@@ -24,7 +24,7 @@ android {
     }
 
     compileOptions {
-        isCoreLibraryDesugaringEnabled = true
+        isCoreLibraryDesugaringEnabled = true // java.time needs minSDK 26
         // Sets Java compatibility to Java 8
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -37,7 +37,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerVersion = "1.4.20-RC"
+        kotlinCompilerVersion = "1.4.21"
         kotlinCompilerExtensionVersion = composeVersion
     }
 
@@ -56,34 +56,35 @@ repositories {
 
 dependencies {
     implementation(project(":client-core"))
-    coreLibraryDesugaring("com.android.tools", "desugar_jdk_libs", "1.0.9")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.1")
 
-    implementation("androidx.core", "core-ktx", "1.3.1")
-    implementation("androidx.appcompat", "appcompat", "1.2.0")
-    implementation("androidx.activity", "activity-ktx", "1.1.0")
+    implementation("androidx.core:core-ktx:1.3.2")
+    implementation("androidx.appcompat:appcompat:1.2.0")
+    implementation("androidx.activity:activity-ktx:1.1.0")
 
-    implementation("androidx.compose.runtime", "runtime", composeVersion)
-    implementation("androidx.compose.ui", "ui", composeVersion)
-    implementation("androidx.compose.foundation", "foundation-layout", composeVersion)
-    implementation("androidx.compose.material", "material", composeVersion)
-    implementation("androidx.compose.material", "material-icons-extended", composeVersion)
-    implementation("androidx.compose.foundation", "foundation", composeVersion)
-    implementation("androidx.compose.animation", "animation", composeVersion)
-    implementation("androidx.ui", "ui-tooling", composeVersion)
+    implementation("androidx.compose.runtime:runtime:$composeVersion")
+    implementation("androidx.compose.ui:ui:$composeVersion")
+    implementation("androidx.compose.foundation:foundation-layout:$composeVersion")
+    implementation("androidx.compose.material:material:$composeVersion")
+    implementation("androidx.compose.material:material-icons-extended:$composeVersion")
+    implementation("androidx.compose.foundation:foundation:$composeVersion")
+    implementation("androidx.compose.animation:animation:$composeVersion")
+    implementation("androidx.compose.ui:ui-tooling:$composeVersion")
 
     val roomVersion = "2.2.5"
 
-    implementation("androidx.room", "room-runtime", roomVersion)
-    kapt("androidx.room", "room-compiler", roomVersion)
-    implementation("androidx.room", "room-ktx", roomVersion)
-    implementation("androidx.lifecycle", "lifecycle-livedata-ktx", "2.2.0")
-    testImplementation("androidx.room", "room-testing", roomVersion)
+    implementation("androidx.room:room-runtime:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.2.0")
+    testImplementation("androidx.room:room-testing:$roomVersion")
 
     testImplementation(kotlin("test-junit"))
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2")
     androidTestImplementation(kotlin("test-junit"))
-    androidTestImplementation("androidx.test", "rules", "1.2.0")
-    androidTestImplementation("androidx.test", "runner", "1.2.0")
-    androidTestImplementation("androidx.ui", "ui-test", composeVersion)
+    androidTestImplementation("androidx.test:rules:1.3.0")
+    androidTestImplementation("androidx.test:runner:1.3.0")
+    androidTestImplementation("androidx.compose.ui:ui-test:$composeVersion")
 }
 
 fun <T> NamedDomainObjectContainer<T>.release(action: T.() -> Unit): T =
