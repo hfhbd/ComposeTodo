@@ -48,7 +48,7 @@ kotlin {
 /**
  * [Ktor](https://github.com/ktorio/ktor/releases/latest)
  */
-fun ktor(module: String) = "io.ktor:ktor-$module:1.4.2"
+fun ktor(module: String) = "io.ktor:ktor-$module:1.4.3"
 
 /**
  * [Exposed](https://github.com/JetBrains/Exposed/releases/latest)

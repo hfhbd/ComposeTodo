@@ -83,11 +83,6 @@ fun dateTime() = "org.jetbrains.kotlinx:kotlinx-datetime:0.1.0"
 /**
  * [Ktor](https://github.com/ktorio/ktor/releases/latest)
  */
-fun ktor(module: String) = "io.ktor:ktor-$module:1.4.2"
-
-/**
- * [Serialization](https://github.com/Kotlin/kotlinx.serialization/releases/latest)
- */
-fun json() = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
+fun ktor(module: String) = "io.ktor:ktor-$module:1.4.3"
 
 fun <T> NamedDomainObjectContainer<T>.release(action: T.() -> Unit) = getByName("release", action)
