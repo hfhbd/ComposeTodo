@@ -1,37 +1,70 @@
 package com.example.composetodo.viewmodels
 
+import com.example.composetodo.TodoRest
 import com.example.composetodo.models.Todo
 import com.example.composetodo.repository.TodoDao
 import com.example.composetodo.repository.TodoRepository
-import com.example.composetodo.todo.TodoRest
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
-import java.time.OffsetDateTime
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNotEquals
-import kotlin.test.assertTrue
-import com.example.composetodo.todo.Todo as RestTodo
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+import kotlinx.uuid.UUID
+import kotlinx.uuid.generateUUID
+import kotlin.test.*
+import com.example.composetodo.dto.Todo as RestTodo
 
 internal class TodoViewModelTest {
+    private val mainThreadTest = newSingleThreadContext("UI thread")
+
+    @ExperimentalCoroutinesApi
+    @BeforeTest
+    fun setUp() {
+        Dispatchers.setMain(mainThreadTest)
+    }
+
+    @ExperimentalCoroutinesApi
+    @AfterTest
+    fun tearDown() {
+        Dispatchers.resetMain()
+        mainThreadTest.close()
+    }
     @Test
     fun loadNew() = runBlocking {
         val repo = TodoRepository(fakeDao, fakeTodoRest)
         val viewModel = TodoViewModel(this, repo)
         val before = viewModel.todos
         assertEquals(before, emptyList())
-        viewModel.loadNew()
+        repo.sync()
         val after = viewModel.todos
         assertNotEquals(before, after)
         assertTrue(after.size == 1)
-        assertEquals(after, listOf(Todo(42, "Test", false)))
+        assertEquals(
+            after, listOf(
+                Todo(
+                    id = UUID.generateUUID(),
+                    title = "Test",
+                    until = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
+                    finished = false
+                )
+            )
+        )
     }
 
     private val fakeDao = object : TodoDao {
-        override suspend fun getAll(): List<Todo> {
-            TODO("Not yet implemented")
-        }
+        override suspend fun getAll() = listOf(Todo(
+            id = UUID.generateUUID(),
+            title = "Test",
+            until = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()),
+            finished = false
+        ))
 
-        override suspend fun getAll(isCompleted: Boolean): List<Todo> {
+        override suspend fun getAll(isFinished: Boolean): List<Todo> {
             TODO("Not yet implemented")
         }
 
@@ -62,7 +95,6 @@ internal class TodoViewModelTest {
         override suspend fun deleteAll() {
             TODO("Not yet implemented")
         }
-
     }
 
     private val fakeTodoRest = object : TodoRest {
@@ -70,7 +102,7 @@ internal class TodoViewModelTest {
             TODO("Not yet implemented")
         }
 
-        override suspend fun getModified(after: OffsetDateTime): List<RestTodo>? {
+        override suspend fun getModified(after: Instant): List<RestTodo>? {
             TODO("Not yet implemented")
         }
 
