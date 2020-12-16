@@ -30,9 +30,9 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                api(project(":shared"))
-                api(ktor("client-core"))
-                api(coroutines("core"))
+                implementation(project(":shared"))
+                implementation(ktor("client-core"))
+                implementation(coroutines("core"))
             }
         }
         commonTest
@@ -47,7 +47,7 @@ kotlin {
 
         val iosMain by getting {
             dependencies {
-                api(ktor("client-ios"))
+                implementation(ktor("client-ios"))
             }
         }
         val iosTest by getting
@@ -73,12 +73,7 @@ tasks {
 /**
  * [Coroutines](https://github.com/Kotlin/kotlinx.coroutines/releases/latest)
  */
-fun coroutines(module: String) = "org.jetbrains.kotlinx:kotlinx-coroutines-$module:1.4.1"
-
-/**
- * [DateTime](https://github.com/Kotlin/kotlinx-datetime/releases)
- */
-fun dateTime() = "org.jetbrains.kotlinx:kotlinx-datetime:0.1.0"
+fun coroutines(module: String) = "org.jetbrains.kotlinx:kotlinx-coroutines-$module:1.4.2-native-mt"
 
 /**
  * [Ktor](https://github.com/ktorio/ktor/releases/latest)
