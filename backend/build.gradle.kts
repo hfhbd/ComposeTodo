@@ -1,6 +1,11 @@
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization")
+    application
+}
+
+application {
+    mainClass.set("com.example.composetodo.MainKt")
 }
 
 kotlin {
@@ -41,6 +46,18 @@ kotlin {
             dependencies {
                 implementation(kotlin("test-junit"))
                 implementation(ktor("server-test-host"))
+            }
+        }
+    }
+}
+
+// only necessary until https://youtrack.jetbrains.com/issue/KT-37964 is resolved
+distributions {
+    main {
+        contents {
+            from("$buildDir/libs") {
+                rename("${rootProject.name}-jvm", rootProject.name)
+                into("lib")
             }
         }
     }

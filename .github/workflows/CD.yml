@@ -1,0 +1,106 @@
+name: CD
+
+on:
+  push:
+    tags:
+      - v* # Push events to matching v*, i.e. v1.0, v20.15.10
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set environment for version
+        run: long="${{ github.ref }}"; version=${long#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV
+      - name: Login to Docker
+        run: echo "${{ github.token }}" | docker login https://docker.pkg.github.com -u ${GITHUB_ACTOR} --password-stdin
+
+      - uses: actions/checkout@v2
+      - uses: gradle/wrapper-validation-action@v1
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Prepare files
+        run: cp build/distributions/backend.zip Docker
+        working-directory: backend
+      - name: Unzip Docker
+        run: unzip backend.zip && rm backend.zip
+        working-directory: backend/Docker
+      - name: Create Docker Image
+        run: docker build -t docker.pkg.github.com/hfhbd/composetodo/composetodo:$version .
+        working-directory: backend/Docker
+      - name: Push Docker Image
+        run: docker push docker.pkg.github.com/hfhbd/composetodo/composetodo:$version
+        working-directory: backend/Docker
+      - uses: actions/delete-package-versions@v1
+        with:
+          package-name: 'backend'
+      - name: Upload WebApp Artifact
+          uses: actions/upload-artifact@v2
+          with:
+            path: client-core/build/distributions
+
+  webApp:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set environment for version
+        run: long="${{ github.ref }}"; version=${long#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV
+      - name: Switch to GitHub Pages
+        uses: actions/checkout@v2
+        with:
+          ref: webpage
+      - uses: actions/download-artifact@v2
+      - name: Copy files to /
+        run: cp artifact/* .
+      - name: Config git
+        run: git config user.email "cd-bot@softwork.app" && git config user.name "CD Bot"
+      - name: Add changes
+        run: git add .
+      - name: Try to commit changes
+        run: git commit -m "Publish $version"
+        continue-on-error: true
+      - name: Publish changes
+        run: git push
+        if: ${{ success() }}
+
+  googleRun:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      project_id: ${{ secrets.PROJECT_ID }}
+      service_name: todo
+
+    steps:
+      - name: Set environment for version
+        run: long="${{ github.ref }}"; version=${long#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV
+      - name: Login to Docker
+        run: echo "${{ github.token }}" | docker login https://docker.pkg.github.com -u ${GITHUB_ACTOR} --password-stdin
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ secrets.RUN_SA_KEY }}
+          project_id: ${{ secrets.PROJECT_ID }}
+      - name: Login to Google Docker
+        run: gcloud auth configure-docker "eu.gcr.io" --quiet
+
+      - name: Pull Docker Image from GitHub
+        run: docker pull docker.pkg.github.com/hfhbd/composetodo/composetodo:$version
+
+      - name: Create Docker Image for Google Container Registry
+        run: docker tag "docker.pkg.github.com/hfhbd/composetodo/composetodo:$version" "eu.gcr.io/$project_id/$service_name:$version"
+      - name: Push Docker Image to Google Container Registry
+        run: docker push eu.gcr.io/$project_id/$service_name:$version
+      - name: Deploy using Google Run
+        run: |-
+          gcloud run deploy "$service_name" \
+          --quiet \
+          --region "europe-west4" \
+          --image "eu.gcr.io/$project_id/$service_name:$version" \
+          --platform "managed" \
+          --allow-unauthenticated \
+          --port 80
