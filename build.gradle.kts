@@ -1,5 +1,5 @@
 plugins {
-    val kotlinVersion = "1.4.21"
+    val kotlinVersion = "1.4.21" // Apache 2, https://github.com/JetBrains/kotlin/releases/latest
     kotlin("multiplatform") version kotlinVersion apply false
     kotlin("plugin.serialization") version kotlinVersion apply false
     id("com.android.library") version "7.0.0-alpha03" apply false

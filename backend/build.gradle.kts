@@ -25,27 +25,35 @@ kotlin {
                 implementation(project(":shared"))
             }
         }
+        // Apache 2, https://github.com/ktorio/ktor/releases/latest
+        val ktorVersion = "1.5.0"
+
         val jvmMain by getting {
             dependencies {
-                implementation(ktor("server-cio"))
-                implementation(ktor("auth"))
+                implementation("io.ktor:ktor-server-cio:$ktorVersion")
+                implementation("io.ktor:ktor-auth:$ktorVersion")
 
-                implementation(exposed("core"))
-                implementation(exposed("dao"))
-                implementation(exposed("jdbc"))
-                implementation(exposed("java-time")) // todo: kotlin-time
+                // Apache 2, https://github.com/JetBrains/Exposed/releases/latest
+                val exposedVersion = "0.28.1"
+                implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
+                implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
+                implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
+                implementation("org.jetbrains.exposed:exposed-java-time:$exposedVersion") // todo: kotlin-time
 
+                // Apache 2, https://github.com/cy6erGn0m/kotlinx-uuid/releases
                 implementation("org.jetbrains.kotlinx.experimental:ktor-server-uuid-jvm:0.0.2")
                 implementation("org.jetbrains.kotlinx.experimental:exposed-uuid-jvm:0.0.2")
 
-                runtimeOnly(logging())
-                runtimeOnly(h2())
+                // EPL 1.0, https://github.com/qos-ch/logback/releases
+                runtimeOnly("ch.qos.logback:logback-classic:1.2.3")
+                // MPL 2.0 or EPL 1.0, https://github.com/h2database/h2database/releases/latest
+                runtimeOnly("com.h2database:h2:1.4.200")
             }
         }
         val jvmTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
-                implementation(ktor("server-test-host"))
+                implementation("io.ktor:ktor-server-test-host:$ktorVersion")
             }
         }
     }
@@ -62,23 +70,3 @@ distributions {
         }
     }
 }
-
-/**
- * [Ktor](https://github.com/ktorio/ktor/releases/latest)
- */
-fun ktor(module: String) = "io.ktor:ktor-$module:1.4.3"
-
-/**
- * [Exposed](https://github.com/JetBrains/Exposed/releases/latest)
- */
-fun exposed(module: String) = "org.jetbrains.exposed:exposed-$module:0.28.1"
-
-/**
- * [Logback](https://github.com/qos-ch/logback/releases)
- */
-fun logging() = "ch.qos.logback:logback-classic:1.2.3"
-
-/**
- * [H2](https://github.com/h2database/h2database/releases/latest)
- */
-fun h2() = "com.h2database:h2:1.4.200"

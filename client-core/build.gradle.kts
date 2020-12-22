@@ -34,26 +34,55 @@ kotlin {
     }
 
     sourceSets {
+        // Apache 2, https://github.com/ktorio/ktor/releases/latest
+        val ktorVersion = "1.5.0"
+
         commonMain {
             dependencies {
                 api(project(":shared"))
-                implementation(ktor("client-core"))
-                implementation(coroutines("core"))
+
+                // Apache 2, https://github.com/ktorio/ktor/releases/latest
+                implementation("io.ktor:ktor-client-core:$ktorVersion")
+                // Apache 2, https://github.com/Kotlin/kotlinx.coroutines/releases/latest
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2-native-mt")
             }
         }
-        commonTest
+        commonTest {
+            dependencies {
+                api(project(":shared"))
+            }
+        }
+
+        val jsMain by getting {
+            dependencies {
+                // Apache 2, https://bintray.com/kotlin/kotlin-js-wrappers/kotlin-react
+                implementation("org.jetbrains:kotlin-react-router-dom:5.2.0-pre.133-kotlin-1.4.21")
+                implementation("org.jetbrains:kotlin-react:17.0.0-pre.133-kotlin-1.4.21")
+                implementation("org.jetbrains:kotlin-react-dom:17.0.0-pre.133-kotlin-1.4.21")
+            }
+        }
+
+        val jsTest by getting {
+            dependencies {
+                implementation(kotlin("test-js"))
+            }
+        }
 
         val jvmMain by getting {
             dependencies {
-                api(ktor("client-android"))
-                api(coroutines("android"))
+                api("io.ktor:ktor-client-android:$ktorVersion")
+                api("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2")
             }
         }
-        val jvmTest by getting
+        val jvmTest by getting {
+            dependencies {
+                implementation(kotlin("test-junit"))
+            }
+        }
 
         val iosMain by getting {
             dependencies {
-                implementation(ktor("client-ios"))
+                implementation("io.ktor:ktor-client-ios:$ktorVersion")
             }
         }
         val iosTest by getting
@@ -75,15 +104,3 @@ tasks {
     }
     build { dependsOn(packForXcode) }
 }
-
-/**
- * [Coroutines](https://github.com/Kotlin/kotlinx.coroutines/releases/latest)
- */
-fun coroutines(module: String) = "org.jetbrains.kotlinx:kotlinx-coroutines-$module:1.4.2-native-mt"
-
-/**
- * [Ktor](https://github.com/ktorio/ktor/releases/latest)
- */
-fun ktor(module: String) = "io.ktor:ktor-$module:1.4.3"
-
-fun <T> NamedDomainObjectContainer<T>.release(action: T.() -> Unit) = getByName("release", action)
