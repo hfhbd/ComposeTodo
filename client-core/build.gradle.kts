@@ -71,7 +71,7 @@ kotlin {
         val jvmMain by getting {
             dependencies {
                 api("io.ktor:ktor-client-android:$ktorVersion")
-                api("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2")
+                api("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2-native-mt")
             }
         }
         val jvmTest by getting {
