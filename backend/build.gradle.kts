@@ -42,7 +42,7 @@ kotlin {
 
                 // Apache 2, https://github.com/cy6erGn0m/kotlinx-uuid/releases
                 implementation("org.jetbrains.kotlinx.experimental:ktor-server-uuid-jvm:0.0.3")
-                implementation("org.jetbrains.kotlinx.experimental:exposed-uuid-jvm:0.0.2")
+                implementation("org.jetbrains.kotlinx.experimental:exposed-uuid-jvm:0.0.3")
 
                 // EPL 1.0, https://github.com/qos-ch/logback/releases
                 runtimeOnly("ch.qos.logback:logback-classic:1.2.3")
