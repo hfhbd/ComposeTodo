@@ -34,7 +34,7 @@ kotlin {
                 api("org.jetbrains.kotlinx:kotlinx-datetime:0.1.0")
 
                 // Apache 2, https://github.com/cy6erGn0m/kotlinx-uuid/releases
-                api("org.jetbrains.kotlinx.experimental:kotlinx-uuid-core:0.0.2")
+                api("org.jetbrains.kotlinx.experimental:kotlinx-uuid-core:0.0.3")
             }
         }
         commonTest {
