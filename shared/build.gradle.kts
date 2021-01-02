@@ -4,7 +4,7 @@ plugins {
 }
 
 kotlin {
-    js {
+    js(IR) {
         browser()
     }
     ios {
@@ -38,8 +38,8 @@ kotlin {
         }
         commonTest {
             dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
+                api(kotlin("test-common"))
+                api(kotlin("test-annotations-common"))
             }
         }
     }

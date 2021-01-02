@@ -13,7 +13,6 @@ kotlin {
                 useIR = true
             }
         }
-        withJava()
     }
     ios {
         binaries {
@@ -22,7 +21,7 @@ kotlin {
             }
         }
     }
-    js {
+    js(IR) {
         browser {
             binaries.executable()
             testTask {
