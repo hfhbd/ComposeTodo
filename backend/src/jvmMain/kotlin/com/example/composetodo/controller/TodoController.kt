@@ -10,7 +10,7 @@ import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransacti
 class TodoController(userID: UUID) {
     private val user = suspend { User[userID] }
     private val todo: suspend (UUID) -> Todo = { id ->
-        user().todos.first {todo ->
+        user().todos.first { todo ->
             todo.id.value == id
         }
     }

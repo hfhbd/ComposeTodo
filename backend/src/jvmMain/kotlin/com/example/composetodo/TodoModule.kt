@@ -74,7 +74,7 @@ fun Application.TodoModule() {
                     }
 
                     route("/todoID") {
-                        get("/todoID") {
+                        get("/{todoID}") {
                             val userID: UUID by call.parameters
                             val todoID: UUID by call.parameters
                             val todo = TodoController(userID).getTodo(todoID)
