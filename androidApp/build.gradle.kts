@@ -86,6 +86,3 @@ dependencies {
     androidTestImplementation("androidx.test:runner:1.3.0")
     androidTestImplementation("androidx.compose.ui:ui-test:$composeVersion")
 }
-
-fun <T> NamedDomainObjectContainer<T>.release(action: T.() -> Unit): T =
-    getByName("release", action)
