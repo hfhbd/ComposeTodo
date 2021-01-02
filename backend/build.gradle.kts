@@ -16,7 +16,6 @@ kotlin {
                 useIR = true
             }
         }
-        withJava()
     }
 
     sourceSets {
