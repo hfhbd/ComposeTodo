@@ -55,7 +55,7 @@ kotlin {
         val jsMain by getting {
             dependencies {
                 // Apache 2, https://bintray.com/kotlin/kotlin-js-wrappers/kotlin-react
-                implementation("org.jetbrains:kotlin-react-router-dom:5.2.0-pre.136-kotlin-1.4.21")
+                implementation("org.jetbrains:kotlin-react-router-dom:5.2.0-pre.137-kotlin-1.4.21")
                 implementation("org.jetbrains:kotlin-react:17.0.1-pre.137-kotlin-1.4.21")
                 implementation("org.jetbrains:kotlin-react-dom:17.0.1-pre.136-kotlin-1.4.21")
             }
