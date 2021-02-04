@@ -37,7 +37,8 @@ kotlin {
                 implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
                 implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
                 implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
-                implementation("org.jetbrains.exposed:exposed-java-time:$exposedVersion") // todo: kotlin-time
+                // todo: kotlin-time
+                implementation("org.jetbrains.exposed:exposed-java-time:$exposedVersion")
 
                 // Apache 2, https://github.com/cy6erGn0m/kotlinx-uuid/releases
                 implementation("org.jetbrains.kotlinx.experimental:ktor-server-uuid-jvm:0.0.3")
