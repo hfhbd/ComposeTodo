@@ -33,7 +33,7 @@ kotlin {
                 implementation("io.ktor:ktor-auth:$ktorVersion")
 
                 // Apache 2, https://github.com/JetBrains/Exposed/releases/latest
-                val exposedVersion = "0.28.1"
+                val exposedVersion = "0.29.1"
                 implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
                 implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
                 implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
