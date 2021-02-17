@@ -7,13 +7,7 @@ kotlin {
     js(IR) {
         browser()
     }
-    ios {
-        binaries {
-            framework {
-                baseName = "shared"
-            }
-        }
-    }
+    ios()
     jvm {
         compilations.all {
             kotlinOptions {

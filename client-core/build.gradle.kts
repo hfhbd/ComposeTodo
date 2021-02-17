@@ -17,7 +17,7 @@ kotlin {
     ios {
         binaries {
             framework {
-                baseName = "clientcore"
+                baseName = "composetodo"
             }
         }
     }
