@@ -56,7 +56,7 @@ kotlin {
             dependencies {
                 // Apache 2, https://bintray.com/kotlin/kotlin-js-wrappers/kotlin-react
                 implementation("org.jetbrains:kotlin-react-router-dom:5.2.0-pre.145-kotlin-1.4.30")
-                val reactVersion = "17.0.1-pre.145-kotlin-1.4.30"
+                val reactVersion = "17.0.1-pre.146-kotlin-1.4.30"
                 implementation("org.jetbrains:kotlin-react:$reactVersion")
                 implementation("org.jetbrains:kotlin-react-dom:$reactVersion")
             }
