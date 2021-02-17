@@ -2,6 +2,7 @@ pluginManagement {
     repositories {
         google()
         gradlePluginPortal()
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }
 
@@ -12,3 +13,4 @@ include(":backend")
 
 include(":client-core")
 include(":androidApp")
+include(":desktop")

@@ -3,11 +3,13 @@ plugins {
     kotlin("multiplatform") version "1.4.30" apply false
     kotlin("plugin.serialization") version "1.4.30" apply false
     id("com.android.application") version "7.0.0-alpha06" apply false
+    id("org.jetbrains.compose") version "0.3.0-build154" apply false
 }
 
 repositories {
     jcenter()
     google()
+    maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
 }
 
 allprojects {
@@ -15,6 +17,7 @@ allprojects {
         mavenCentral()
         google()
         maven("https://dl.bintray.com/cy6ergn0m/uuid")
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
         maven(url = "https://kotlin.bintray.com/kotlinx/")
         jcenter()
     }

@@ -41,14 +41,14 @@ kotlin {
                 api(project(":shared"))
 
                 // Apache 2, https://github.com/ktorio/ktor/releases/latest
-                implementation("io.ktor:ktor-client-core:$ktorVersion")
+                api("io.ktor:ktor-client-core:$ktorVersion")
                 // Apache 2, https://github.com/Kotlin/kotlinx.coroutines/releases/latest
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2-native-mt")
+                api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2-native-mt")
             }
         }
         commonTest {
             dependencies {
-                api(project(":shared"))
+
             }
         }
 
@@ -70,13 +70,11 @@ kotlin {
 
         val jvmMain by getting {
             dependencies {
-                api("io.ktor:ktor-client-android:$ktorVersion")
-                api("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2")
             }
         }
         val jvmTest by getting {
             dependencies {
-                implementation(kotlin("test-junit"))
+                api(kotlin("test-junit"))
             }
         }
 
@@ -88,6 +86,7 @@ kotlin {
         val iosTest by getting
     }
 }
+
 tasks {
     val packForXcode by creating(Sync::class) {
         group = "build"
