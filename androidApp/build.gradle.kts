@@ -10,7 +10,7 @@ android {
     compileSdkVersion(30)
 
     defaultConfig {
-        applicationId = "com.example.composetodo"
+        applicationId = "app.softwork.composetodo"
         minSdkVersion(21)
         targetSdkVersion(30)
         versionCode = 1
@@ -64,6 +64,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.2.0")
     implementation("androidx.activity:activity-ktx:1.2.0")
 
+    implementation("androidx.activity:activity-compose:1.3.0-alpha02")
     implementation("androidx.compose.runtime:runtime:$composeVersion")
     implementation("androidx.compose.ui:ui:$composeVersion")
     implementation("androidx.compose.foundation:foundation-layout:$composeVersion")

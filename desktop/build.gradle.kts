@@ -40,6 +40,6 @@ kotlin {
 
 compose.desktop {
     application {
-        mainClass = "MainKt"
+        mainClass = "app.softwork.composetodo.MainKt"
     }
 }

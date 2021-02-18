@@ -5,7 +5,7 @@ plugins {
 }
 
 application {
-    mainClass.set("com.example.composetodo.MainKt")
+    mainClass.set("app.softwork.composetodo.MainKt")
 }
 
 kotlin {
