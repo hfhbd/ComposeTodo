@@ -1,11 +1,11 @@
 package app.softwork.composetodo
 
-import app.softwork.composetodo.dto.Todo
-import app.softwork.composetodo.dto.User
 import app.softwork.composetodo.controller.TodoController
 import app.softwork.composetodo.controller.UserController
 import app.softwork.composetodo.definitions.Todos
 import app.softwork.composetodo.definitions.Users
+import app.softwork.composetodo.dto.Todo
+import app.softwork.composetodo.dto.User
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.http.*
@@ -30,68 +30,75 @@ fun Application.TodoModule() {
             call.respondText { "API is online" }
         }
         route("/users") {
-            get {
-                val users = UserController.allUsers()
-                call.respondJson(User.serializer(), users)
-            }
             post {
-                val newUser = call.body(User.serializer())
-                val newUserCreated = UserController.createUser(newUser)
-                call.respondJson(User.serializer(), newUserCreated)
+                call.respondJson(User.serializer()) {
+                    val newUser = body(User.serializer())
+                    UserController.createUser(newUser)
+                }
             }
 
             route("/{userID}") {
                 get {
-                    val userID: UUID by call.parameters
-                    val user = UserController(userID).getUser()
-                    call.respondJson(User.serializer(), user)
+                    call.respondJson(User.serializer()) {
+                        val userID: UUID by parameters
+                        UserController(userID).getUser()
+                    }
                 }
                 put {
-                    val userID: UUID by call.parameters
-                    val toUpdate = call.body(User.serializer())
-                    val updated = UserController(userID).update(toUpdate)
-                    call.respondJson(User.serializer(), updated)
+                    call.respondJson(User.serializer()) {
+                        val userID: UUID by parameters
+                        val toUpdate = body(User.serializer())
+                        UserController(userID).update(toUpdate)
+                    }
                 }
                 delete {
-                    val userID: UUID by call.parameters
-                    UserController(userID).delete()
-                    call.response.status(HttpStatusCode.OK)
+                    with(call) {
+                        val userID: UUID by parameters
+                        UserController(userID).delete()
+                        response.status(HttpStatusCode.OK)
+                    }
                 }
 
 
 
                 route("/todos") {
                     get {
-                        val userID: UUID by call.parameters
-                        val todos = TodoController(userID).todos()
-                        call.respondJson(Todo.serializer(), todos)
+                        call.respondJsonList(Todo.serializer()) {
+                            val userID: UUID by parameters
+                            TodoController(userID).todos()
+                        }
                     }
                     post {
-                        val userID: UUID by call.parameters
-                        val newTodo = call.body(Todo.serializer())
-                        val created = TodoController(userID).create(newTodo)
-                        call.respondJson(Todo.serializer(), created)
+                        call.respondJson(Todo.serializer()) {
+                            val userID: UUID by parameters
+                            val newTodo = body(Todo.serializer())
+                            TodoController(userID).create(newTodo)
+                        }
                     }
 
                     route("/todoID") {
                         get("/{todoID}") {
-                            val userID: UUID by call.parameters
-                            val todoID: UUID by call.parameters
-                            val todo = TodoController(userID).getTodo(todoID)
-                            call.respondJson(Todo.serializer(), todo)
+                            call.respondJson(Todo.serializer()) {
+                                val userID: UUID by parameters
+                                val todoID: UUID by parameters
+                                TodoController(userID).getTodo(todoID)
+                            }
                         }
                         put {
-                            val userID: UUID by call.parameters
-                            val todoID: UUID by call.parameters
-                            val toUpdate = call.body(Todo.serializer())
-                            val created = TodoController(userID).update(todoID, toUpdate)
-                            call.respondJson(Todo.serializer(), created)
+                            call.respondJson(Todo.serializer()) {
+                                val userID: UUID by parameters
+                                val todoID: UUID by parameters
+                                val toUpdate = body(Todo.serializer())
+                                TodoController(userID).update(todoID, toUpdate)
+                            }
                         }
                         delete {
-                            val userID: UUID by call.parameters
-                            val todoID: UUID by call.parameters
-                            TodoController(userID).delete(todoID)
-                            call.response.status(HttpStatusCode.OK)
+                            with(call) {
+                                val userID: UUID by parameters
+                                val todoID: UUID by parameters
+                                TodoController(userID).delete(todoID)
+                                response.status(HttpStatusCode.OK)
+                            }
                         }
                     }
                 }

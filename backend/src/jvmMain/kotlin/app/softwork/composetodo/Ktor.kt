@@ -11,14 +11,14 @@ import kotlinx.serialization.json.Json
 import kotlinx.uuid.UUID
 import kotlin.reflect.KProperty
 
-suspend fun <T> ApplicationCall.respondJson(serializer: KSerializer<T>, data: T, json: Json = Json) =
+suspend fun <T> ApplicationCall.respondJson(serializer: KSerializer<T>, json: Json = Json, data: suspend ApplicationCall.() -> T) =
     respondText(contentType = ContentType.Application.Json) {
-        json.encodeToString(serializer, data)
+        json.encodeToString(serializer, data())
     }
 
-suspend fun <T> ApplicationCall.respondJson(serializer: KSerializer<T>, data: List<T>, json: Json = Json) =
+suspend fun <T> ApplicationCall.respondJsonList(serializer: KSerializer<T>, json: Json = Json, data: suspend ApplicationCall.() -> List<T>) =
     respondText(contentType = ContentType.Application.Json) {
-        json.encodeToString(ListSerializer(serializer), data)
+        json.encodeToString(ListSerializer(serializer), data())
     }
 
 suspend fun <T> ApplicationCall.body(serializer: KSerializer<T>, json: Json = Json) =

@@ -1,8 +1,10 @@
 package app.softwork.composetodo
 
+import app.softwork.composetodo.controller.AdminController
 import app.softwork.composetodo.dto.User
 import io.ktor.http.*
 import io.ktor.server.testing.*
+import kotlinx.coroutines.runBlocking
 import kotlinx.uuid.UUID
 import kotlinx.uuid.generateUUID
 import org.jetbrains.exposed.sql.Database
@@ -10,6 +12,7 @@ import kotlin.random.Random
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 
 internal class TodoModuleKtTest {
@@ -24,9 +27,8 @@ internal class TodoModuleKtTest {
     }) {
 
 
-        with(handleRequest(HttpMethod.Get, "/users").response) {
-            assertEquals(HttpStatusCode.OK, status()!!)
-            assertEqualsJsonBody(emptyList(), User.serializer())
+        runBlocking {
+            assertTrue(AdminController.allUsers().isEmpty())
         }
 
         val newUser =
@@ -39,9 +41,8 @@ internal class TodoModuleKtTest {
             assertEqualsJsonBody(newUser, User.serializer())
         }
 
-        with(handleRequest(HttpMethod.Get, "/users").response) {
-            assertEquals(HttpStatusCode.OK, status()!!)
-            assertEqualsJsonBody(listOf(newUser), User.serializer())
+        runBlocking {
+            assertEquals(listOf(newUser), AdminController.allUsers())
         }
     }
 
