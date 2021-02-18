@@ -26,10 +26,10 @@ jobs:
         run: ./gradlew build
 
       - name: Prepare files
-        run: cp build/distributions/backend.zip Docker
+        run: cp build/distributions/backend.tar Docker
         working-directory: backend
       - name: Unzip Docker
-        run: unzip backend.zip && rm backend.zip
+        run: tar -xvf backend.tar && rm backend.tar
         working-directory: backend/Docker
       - name: Create Docker Image
         run: docker build -t docker.pkg.github.com/hfhbd/composetodo/composetodo:$version .
