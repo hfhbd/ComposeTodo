@@ -47,12 +47,6 @@ android {
     }
 }
 
-repositories {
-    google()
-    jcenter()
-    maven("https://kotlin.bintray.com/kotlinx")
-}
-
 dependencies {
     implementation(project(":client-core"))
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
