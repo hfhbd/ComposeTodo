@@ -4,7 +4,7 @@ plugins {
     kotlin("kapt")
 }
 
-val composeVersion: String = "1.0.0-alpha12"
+val composeVersion: String = "1.0.0-beta01"
 
 android {
     compileSdkVersion(30)
