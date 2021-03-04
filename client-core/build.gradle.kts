@@ -43,7 +43,7 @@ kotlin {
                 // Apache 2, https://github.com/ktorio/ktor/releases/latest
                 api("io.ktor:ktor-client-core:$ktorVersion")
                 // Apache 2, https://github.com/Kotlin/kotlinx.coroutines/releases/latest
-                api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2-native-mt")
+                api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3-native-mt")
             }
         }
         commonTest {
