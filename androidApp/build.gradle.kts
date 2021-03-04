@@ -77,7 +77,7 @@ dependencies {
     testImplementation("androidx.room:room-testing:$roomVersion")
 
     testImplementation(kotlin("test-junit"))
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.3-native-mt")
     androidTestImplementation(kotlin("test-junit"))
     androidTestImplementation("androidx.test:rules:1.3.0")
     androidTestImplementation("androidx.test:runner:1.3.0")
