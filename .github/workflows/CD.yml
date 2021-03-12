@@ -57,7 +57,7 @@ jobs:
           ref: webpage
       - uses: actions/download-artifact@v2
       - name: Copy files to /
-        run: cp artifact/* .
+        run: cp artifact/* . && rm -fdr artifact
       - name: Config git
         run: git config user.email "cd-bot@softwork.app" && git config user.name "CD Bot"
       - name: Add changes
