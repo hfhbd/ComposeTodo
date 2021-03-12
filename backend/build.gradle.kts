@@ -65,7 +65,8 @@ distributions {
     main {
         contents {
             from("$buildDir/libs") {
-                rename("${rootProject.name}-jvm", rootProject.name)
+                exclude(project.name)
+                rename("${project.name}-jvm", project.name)
                 into("lib")
             }
         }
