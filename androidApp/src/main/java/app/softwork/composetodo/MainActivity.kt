@@ -21,12 +21,7 @@ class MainActivity : AppCompatActivity() {
         appContainer = Container()
 
         setContent {
-            Row {
-                PressMeButton(appContainer.pressMeViewModel)
-                Login(appContainer.loginViewModel) {
-                    Todos(appContainer.todoViewModel(api = it))
-                }
-            }
+            MainView(appContainer)
         }
     }
 
@@ -39,12 +34,10 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
-
         private val db = AppDatabase.getInstance(applicationContext)
         override val loginViewModel = LoginViewModel(lifecycleScope, api = api)
         override fun todoViewModel(api: API.LoggedIn) =
-            TodoViewModel(lifecycleScope, TodoRepository(db.todoDao, api = api))
-
+            TodoViewModel(lifecycleScope, TodoRepo(db.todoDao, api = api))
         override val pressMeViewModel = PressMeViewModel(lifecycleScope)
     }
 }

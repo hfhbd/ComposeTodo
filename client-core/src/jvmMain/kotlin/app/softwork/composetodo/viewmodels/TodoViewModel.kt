@@ -16,7 +16,7 @@ class TodoViewModel(private val scope: CoroutineScope, private val repo: TodoRep
     init {
         scope.launch(Dispatchers.Main) {
             todos = withContext(Dispatchers.IO) {
-                repo.get()
+                repo.getRemote()
             }
         }
     }

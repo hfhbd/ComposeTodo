@@ -5,14 +5,14 @@ import kotlinx.datetime.*
 import kotlinx.uuid.*
 import app.softwork.composetodo.dto.Todo as RestTodo
 
-@Entity
-data class Todo(
-    @PrimaryKey val id: UUID,
-    val title: String,
-    val until: Instant?,
-    val finished: Boolean,
+@Entity(tableName = "todo")
+data class TodoEntity(
+    @PrimaryKey override val id: UUID,
+    override val title: String,
+    override val until: Instant?,
+    override val finished: Boolean,
     val recordChangeTag: String?
-) {
+): Todo {
     constructor(todo: RestTodo) : this(
         id = todo.id,
         title = todo.title,
