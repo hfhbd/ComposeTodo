@@ -1,10 +1,9 @@
 package app.softwork.composetodo.repository
 
-import app.softwork.composetodo.API
-import app.softwork.composetodo.models.Todo
-import app.softwork.composetodo.models.TodoEntity
+import app.softwork.composetodo.*
+import app.softwork.composetodo.models.*
 
-class TodoRepo(private val api: API): TodoRepository {
+class TodoRepo(private val api: API): TodoRepository<TodoEntity> {
     override suspend fun getRemote() = api.getTodos().map { TodoEntity(it) }
 
     /**
@@ -19,7 +18,7 @@ class TodoRepo(private val api: API): TodoRepository {
         }
     }
 
-    override suspend fun delete(todo: Todo) {
+    override suspend fun delete(todo: TodoEntity) {
         api.deleteTodo(todo.id)
     }
 }

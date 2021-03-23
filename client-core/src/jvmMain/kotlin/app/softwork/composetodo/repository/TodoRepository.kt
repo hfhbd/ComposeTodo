@@ -2,9 +2,9 @@ package app.softwork.composetodo.repository
 
 import app.softwork.composetodo.models.Todo
 
-interface TodoRepository {
-    suspend fun getRemote(): List<Todo>
-    suspend fun sync(): List<Todo>
+interface TodoRepository<T: Todo> {
+    suspend fun getRemote(): List<T>
+    suspend fun sync(): List<T>
     suspend fun deleteAll()
-    suspend fun delete(todo: Todo)
+    suspend fun delete(todo: T)
 }

@@ -10,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class TodoViewModel(private val scope: CoroutineScope, private val repo: TodoRepository) {
+class TodoViewModel<T: Todo>(private val scope: CoroutineScope, private val repo: TodoRepository<T>) {
     var todos by mutableStateOf(emptyList<Todo>())
 
     init {

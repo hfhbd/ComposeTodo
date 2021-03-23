@@ -5,11 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import app.softwork.composetodo.models.Todo
+import app.softwork.composetodo.models.*
 import app.softwork.composetodo.repository.converter.KotlinxUUIDConverter
 import app.softwork.composetodo.repository.converter.InstantConverter
 
-@Database(entities = [Todo::class], version = 1)
+@Database(entities = [TodoEntity::class], version = 1)
 @TypeConverters(KotlinxUUIDConverter::class, InstantConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract val todoDao: TodoDao
