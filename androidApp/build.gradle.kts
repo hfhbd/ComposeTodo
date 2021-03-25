@@ -73,7 +73,7 @@ dependencies {
     implementation("androidx.room:room-runtime:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
     testImplementation("androidx.room:room-testing:$roomVersion")
 
     testImplementation(kotlin("test-junit"))
