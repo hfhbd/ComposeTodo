@@ -35,9 +35,7 @@ operator fun API.Companion.invoke(
             json.decodeFromString(User.serializer(), it)
         }
 
-    override suspend fun deleteUser() {
-        client.delete<String>("/${user.id}")
-    }
+    override suspend fun deleteUser() = client.delete<Unit>("/${user.id}")
 
     override suspend fun getTodos() =
         client.get<String>("/users/${user.id}/todos").let {
@@ -63,7 +61,6 @@ operator fun API.Companion.invoke(
             json.decodeFromString(Todo.serializer(), it)
         }
 
-    override suspend fun deleteTodo(todoID: UUID) {
-        client.delete<String>("/users/${user.id}/todos/$todoID")
-    }
+    override suspend fun deleteTodo(todoID: UUID) =
+        client.delete<Unit>("/users/${user.id}/todos/$todoID")
 }
