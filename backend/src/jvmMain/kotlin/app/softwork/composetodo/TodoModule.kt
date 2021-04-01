@@ -55,11 +55,9 @@ fun Application.TodoModule() {
                     with(call) {
                         val userID: UUID by parameters
                         UserController(userID).delete()
-                        response.status(HttpStatusCode.OK)
+                        respond(HttpStatusCode.OK)
                     }
                 }
-
-
 
                 route("/todos") {
                     get {
@@ -97,7 +95,7 @@ fun Application.TodoModule() {
                                 val userID: UUID by parameters
                                 val todoID: UUID by parameters
                                 TodoController(userID).delete(todoID)
-                                response.status(HttpStatusCode.OK)
+                                respond(HttpStatusCode.OK)
                             }
                         }
                     }
