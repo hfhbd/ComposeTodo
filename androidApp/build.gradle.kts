@@ -2,9 +2,8 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
+    id("org.jetbrains.compose")
 }
-
-val composeVersion: String = "1.0.0-beta03"
 
 android {
     compileSdkVersion(30)
@@ -19,25 +18,11 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildFeatures {
-        compose = true
-    }
-
     compileOptions {
         isCoreLibraryDesugaringEnabled = true // java.time needs minSDK 26
         // Sets Java compatibility to Java 8
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        useIR = true
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-        freeCompilerArgs = listOf("-Xopt-in=kotlin.time.ExperimentalTime")
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = composeVersion
     }
 
     buildTypes {
@@ -59,14 +44,10 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.2.2")
 
     implementation("androidx.activity:activity-compose:1.3.0-alpha05")
-    implementation("androidx.compose.runtime:runtime:$composeVersion")
-    implementation("androidx.compose.ui:ui:$composeVersion")
-    implementation("androidx.compose.foundation:foundation-layout:$composeVersion")
-    implementation("androidx.compose.material:material:$composeVersion")
-    implementation("androidx.compose.material:material-icons-extended:$composeVersion")
-    implementation("androidx.compose.foundation:foundation:$composeVersion")
-    implementation("androidx.compose.animation:animation:$composeVersion")
-    implementation("androidx.compose.ui:ui-tooling:$composeVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.4")
+    implementation(compose.runtime)
+    implementation(compose.foundation)
+    implementation(compose.material)
 
     val roomVersion = "2.2.6"
 
@@ -81,5 +62,4 @@ dependencies {
     androidTestImplementation(kotlin("test-junit"))
     androidTestImplementation("androidx.test:rules:1.3.0")
     androidTestImplementation("androidx.test:runner:1.3.0")
-    androidTestImplementation("androidx.compose.ui:ui-test:$composeVersion")
 }
