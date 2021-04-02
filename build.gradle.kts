@@ -19,8 +19,5 @@ allprojects {
         maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
         maven(url = "https://maven.pkg.jetbrains.space/kotlin/p/kotlin/kotlin-js-wrappers")
         maven(url = "https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven")
-
-        maven(url = "https://kotlin.bintray.com/kotlinx/") // https://github.com/Kotlin/kotlinx-datetime/issues/40
-        jcenter() // https://github.com/JetBrains/Exposed/issues/1160
     }
 }
