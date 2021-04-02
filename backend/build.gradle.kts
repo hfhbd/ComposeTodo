@@ -25,7 +25,7 @@ kotlin {
             }
         }
         // Apache 2, https://github.com/ktorio/ktor/releases/latest
-        val ktorVersion = "1.5.2"
+        val ktorVersion = "1.5.3"
 
         val jvmMain by getting {
             dependencies {
