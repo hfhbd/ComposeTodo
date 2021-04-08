@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    kotlin("kapt")
+    id("com.google.devtools.ksp") version "1.4.32-1.0.0-alpha07"
     id("org.jetbrains.compose")
 }
 
@@ -49,10 +49,10 @@ dependencies {
     implementation(compose.foundation)
     implementation(compose.material)
 
-    val roomVersion = "2.2.6"
+    val roomVersion = "2.3.0-rc01"
 
     implementation("androidx.room:room-runtime:$roomVersion")
-    kapt("androidx.room:room-compiler:$roomVersion")
+    "ksp"("androidx.room:room-compiler:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
     testImplementation("androidx.room:room-testing:$roomVersion")
