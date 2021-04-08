@@ -9,12 +9,6 @@ application {
 
 kotlin {
     jvm {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-                useIR = true
-            }
-        }
         withJava()
     }
 
@@ -24,6 +18,12 @@ kotlin {
                 implementation(project(":shared"))
             }
         }
+        commonTest {
+            dependencies {
+                implementation(kotlin("test"))
+            }
+        }
+
         // Apache 2, https://github.com/ktorio/ktor/releases/latest
         val ktorVersion = "1.5.4"
 
@@ -54,7 +54,6 @@ kotlin {
         }
         val jvmTest by getting {
             dependencies {
-                implementation(kotlin("test-junit"))
                 implementation("io.ktor:ktor-server-test-host:$ktorVersion")
             }
         }

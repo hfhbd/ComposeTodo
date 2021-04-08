@@ -8,14 +8,7 @@ kotlin {
         browser()
     }
     ios()
-    jvm {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-                useIR = true
-            }
-        }
-    }
+    jvm()
 
     sourceSets {
         commonMain {
@@ -35,8 +28,7 @@ kotlin {
         }
         commonTest {
             dependencies {
-                api(kotlin("test-common"))
-                api(kotlin("test-annotations-common"))
+                implementation(kotlin("test"))
             }
         }
     }
