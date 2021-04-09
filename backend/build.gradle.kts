@@ -21,7 +21,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(project(":shared"))
+                implementation(projects.shared)
             }
         }
         // Apache 2, https://github.com/ktorio/ktor/releases/latest
