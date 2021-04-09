@@ -24,7 +24,7 @@ class TodoController(userID: UUID) {
         Todo.new(newTodo.id) {
             this.user = user
             title = newTodo.title
-            until = newTodo.until.toJavaLocalDateTime()
+            until = newTodo.until?.toJavaLocalDateTime()
             finished = newTodo.finished
         }.toDTO()
     }
@@ -41,7 +41,7 @@ class TodoController(userID: UUID) {
         newSuspendedTransaction {
             todo(todoID).apply {
                 title = update.title
-                until = update.until.toJavaLocalDateTime()
+                until = update.until?.toJavaLocalDateTime()
                 finished = update.finished
             }.toDTO()
         }
