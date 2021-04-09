@@ -9,6 +9,6 @@ import kotlinx.uuid.UUID
 data class Todo(
     val id: UUID,
     val title: String,
-    @Serializable(with = LocalDateTimeSerializer::class) val until: LocalDateTime,
+    @Serializable(with = LocalDateTimeSerializer::class) val until: LocalDateTime?,
     val finished: Boolean
 )

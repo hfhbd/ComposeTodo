@@ -7,7 +7,7 @@ import kotlinx.datetime.toKotlinLocalDateTime
 fun Todo.toDTO() = app.softwork.composetodo.dto.Todo(
     id = id.value,
     title = title,
-    until = until.toKotlinLocalDateTime(),
+    until = until?.toKotlinLocalDateTime(),
     finished = finished
 )
 
