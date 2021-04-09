@@ -10,7 +10,7 @@ import app.softwork.composetodo.dto.Todo as RestTodo
 data class Todo(
     @PrimaryKey val id: UUID,
     val title: String,
-    val until: LocalDateTime,
+    val until: LocalDateTime?,
     val finished: Boolean
 ) {
     constructor(todo: RestTodo) : this(
