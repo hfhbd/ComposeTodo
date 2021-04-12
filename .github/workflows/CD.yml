@@ -2,8 +2,7 @@ name: CD
 
 on:
   release:
-    trigger:
-      [created]
+    types: [created]
 
 jobs:
   build:
