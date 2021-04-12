@@ -19,5 +19,13 @@ allprojects {
         maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
         maven(url = "https://maven.pkg.jetbrains.space/kotlin/p/kotlin/kotlin-js-wrappers")
         maven(url = "https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven")
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/hfhbd/*")
+            credentials {
+                username = System.getProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
+                password = System.getProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
     }
 }

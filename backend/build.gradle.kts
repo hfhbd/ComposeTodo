@@ -32,6 +32,9 @@ kotlin {
                 implementation("io.ktor:ktor-server-cio:$ktorVersion")
                 implementation("io.ktor:ktor-auth:$ktorVersion")
 
+                // Apache 2, https://github.com/hfhbd/RateLimit/releases/latest
+                implementation("app.softwork:ratelimit:0.0.1")
+
                 // Apache 2, https://github.com/JetBrains/Exposed/releases/latest
                 val exposedVersion = "0.30.1"
                 implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
