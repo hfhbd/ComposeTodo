@@ -3,7 +3,7 @@ plugins {
     kotlin("multiplatform") version "1.4.32" apply false
     kotlin("plugin.serialization") version "1.4.32" apply false
     id("com.android.application") version "7.0.0-alpha13" apply false
-    id("org.jetbrains.compose") version "0.4.0-build180" apply false
+    id("org.jetbrains.compose") version "0.4.0-build182" apply false
 }
 
 repositories {
@@ -19,5 +19,13 @@ allprojects {
         maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
         maven(url = "https://maven.pkg.jetbrains.space/kotlin/p/kotlin/kotlin-js-wrappers")
         maven(url = "https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven")
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/hfhbd/*")
+            credentials {
+                username = System.getProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
+                password = System.getProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
     }
 }
