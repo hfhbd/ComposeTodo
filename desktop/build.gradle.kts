@@ -26,7 +26,6 @@ kotlin {
 
         val jvmMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.4")
                 implementation(compose.desktop.currentOs)
             }
         }
