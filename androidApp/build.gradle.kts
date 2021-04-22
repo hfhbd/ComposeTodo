@@ -48,7 +48,7 @@ dependencies {
     implementation(compose.foundation)
     implementation(compose.material)
 
-    val roomVersion = "2.3.0-rc01"
+    val roomVersion = "2.4.0-alpha01"
 
     implementation("androidx.room:room-runtime:$roomVersion")
     "ksp"("androidx.room:room-compiler:$roomVersion")
