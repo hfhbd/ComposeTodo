@@ -32,15 +32,12 @@ kotlin {
     }
 
     sourceSets {
-        // Apache 2, https://github.com/ktorio/ktor/releases/latest
-        val ktorVersion = "1.5.3"
-
         commonMain {
             dependencies {
                 api(project(":shared"))
 
                 // Apache 2, https://github.com/ktorio/ktor/releases/latest
-                api("io.ktor:ktor-client-core:$ktorVersion")
+                api("io.ktor:ktor-client-core:1.5.3")
                 // Apache 2, https://github.com/Kotlin/kotlinx.coroutines/releases/latest
                 api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3-native-mt")
             }
@@ -54,10 +51,9 @@ kotlin {
         val jsMain by getting {
             dependencies {
                 // Apache 2, https://bintray.com/kotlin/kotlin-js-wrappers/kotlin-react
+                implementation("org.jetbrains:kotlin-react:17.0.2-pre.154-kotlin-1.4.32")
+                implementation("org.jetbrains:kotlin-react-dom:17.0.2-pre.154-kotlin-1.4.32")
                 implementation("org.jetbrains:kotlin-react-router-dom:5.2.0-pre.153-kotlin-1.4.32")
-                val reactVersion = "17.0.2-pre.154-kotlin-1.4.32"
-                implementation("org.jetbrains:kotlin-react:$reactVersion")
-                implementation("org.jetbrains:kotlin-react-dom:$reactVersion")
             }
         }
 
@@ -79,7 +75,8 @@ kotlin {
 
         val iosMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-ios:$ktorVersion")
+                // Apache 2, https://github.com/ktorio/ktor/releases/latest
+                implementation("io.ktor:ktor-client-ios:1.5.3")
             }
         }
         val iosTest by getting
