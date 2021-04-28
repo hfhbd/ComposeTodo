@@ -52,7 +52,7 @@ kotlin {
             dependencies {
                 // Apache 2, https://bintray.com/kotlin/kotlin-js-wrappers/kotlin-react
                 implementation("org.jetbrains:kotlin-react:17.0.2-pre.154-kotlin-1.5.0")
-                implementation("org.jetbrains:kotlin-react-dom:17.0.2-pre.154-kotlin-1.4.32")
+                implementation("org.jetbrains:kotlin-react-dom:17.0.2-pre.154-kotlin-1.5.0")
                 implementation("org.jetbrains:kotlin-react-router-dom:5.2.0-pre.154-kotlin-1.4.32")
             }
         }
