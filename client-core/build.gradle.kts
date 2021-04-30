@@ -76,7 +76,7 @@ kotlin {
         val iosMain by getting {
             dependencies {
                 // Apache 2, https://github.com/ktorio/ktor/releases/latest
-                implementation("io.ktor:ktor-client-ios:1.5.3")
+                implementation("io.ktor:ktor-client-ios:1.5.4")
             }
         }
         val iosTest by getting
