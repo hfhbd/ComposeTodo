@@ -37,7 +37,7 @@ kotlin {
                 api(project(":shared"))
 
                 // Apache 2, https://github.com/ktorio/ktor/releases/latest
-                api("io.ktor:ktor-client-core:1.5.3")
+                api("io.ktor:ktor-client-core:1.5.4")
                 // Apache 2, https://github.com/Kotlin/kotlinx.coroutines/releases/latest
                 api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3-native-mt")
             }
