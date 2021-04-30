@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    id("com.google.devtools.ksp") version "1.4.32-1.0.0-alpha08"
+    id("com.google.devtools.ksp") version "1.5.0-1.0.0-alpha09"
     id("org.jetbrains.compose")
 }
 
