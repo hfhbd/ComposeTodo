@@ -1,31 +1,52 @@
 package app.softwork.composetodo.controller
 
+import app.softwork.composetodo.*
 import app.softwork.composetodo.dao.User
-import app.softwork.composetodo.toDTO
-import kotlinx.uuid.UUID
-import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import app.softwork.composetodo.definitions.*
+import app.softwork.composetodo.dto.*
+import kotlinx.uuid.*
+import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.transactions.experimental.*
+import kotlin.time.*
 
-class UserController(userID: UUID) {
-    private val user = suspend { User[userID] }
+class UserController(val user: User) {
 
     companion object {
-        suspend fun createUser(newUser: app.softwork.composetodo.dto.User) = newSuspendedTransaction {
-            User.new(newUser.id) {
-                firstName = newUser.firstName
-                lastName = newUser.lastName
-            }.toDTO()
+        @ExperimentalTime
+        suspend fun createUser(
+            jwtProvider: JWTProvider,
+            newUser: app.softwork.composetodo.dto.User.New
+        ): Token {
+            require(newUser.password == newUser.passwordAgain)
+            val user = newSuspendedTransaction {
+                User.new {
+                    username = newUser.username
+                    password = newUser.password
+                    firstName = newUser.firstName
+                    lastName = newUser.lastName
+                }
+            }
+            return jwtProvider.token(user)
+        }
+
+        suspend fun find(userID: UUID) = newSuspendedTransaction {
+            User.findById(userID)
+        }
+
+        suspend fun findBy(name: String, password: String) = newSuspendedTransaction {
+            User.find {
+                Users.name eq name and (Users.password eq password)
+            }.firstOrNull()
         }
     }
 
-    suspend fun getUser() = newSuspendedTransaction { user().toDTO() }
-
     suspend fun delete() = newSuspendedTransaction {
-        user().delete()
+        user.delete()
     }
 
     suspend fun update(toUpdate: app.softwork.composetodo.dto.User) =
         newSuspendedTransaction {
-            user().apply {
+            user.apply {
                 firstName = toUpdate.firstName
                 lastName = toUpdate.lastName
             }.toDTO()

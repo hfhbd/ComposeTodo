@@ -1,14 +1,13 @@
 package app.softwork.composetodo.dto
 
-import app.softwork.composetodo.dto.serializer.LocalDateTimeSerializer
-import kotlinx.datetime.LocalDateTime
-import kotlinx.serialization.Serializable
-import kotlinx.uuid.UUID
+import kotlinx.datetime.*
+import kotlinx.serialization.*
+import kotlinx.uuid.*
 
 @Serializable
 data class Todo(
     val id: UUID,
     val title: String,
-    @Serializable(with = LocalDateTimeSerializer::class) val until: LocalDateTime?,
+    val until: LocalDateTime?,
     val finished: Boolean
 )
