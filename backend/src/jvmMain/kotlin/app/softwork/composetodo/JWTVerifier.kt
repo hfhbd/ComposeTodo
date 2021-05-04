@@ -13,6 +13,7 @@ import io.ktor.auth.*
 import io.ktor.auth.jwt.*
 import kotlinx.datetime.*
 import kotlinx.datetime.Clock
+import kotlinx.uuid.*
 import kotlin.time.*
 
 @ExperimentalTime
