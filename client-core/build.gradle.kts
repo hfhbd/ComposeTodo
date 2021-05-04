@@ -1,7 +1,8 @@
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.*
 
 plugins {
     kotlin("multiplatform")
+    id("org.jetbrains.compose")
 }
 
 kotlin {
@@ -35,9 +36,6 @@ kotlin {
         commonMain {
             dependencies {
                 api(project(":shared"))
-
-                // Apache 2, https://github.com/ktorio/ktor/releases/latest
-                api("io.ktor:ktor-client-core:1.5.4")
                 // Apache 2, https://github.com/Kotlin/kotlinx.coroutines/releases/latest
                 api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3-native-mt")
             }
@@ -50,10 +48,8 @@ kotlin {
 
         val jsMain by getting {
             dependencies {
-                // Apache 2, https://bintray.com/kotlin/kotlin-js-wrappers/kotlin-react
-                implementation("org.jetbrains:kotlin-react:17.0.2-pre.154-kotlin-1.5.0")
-                implementation("org.jetbrains:kotlin-react-dom:17.0.2-pre.154-kotlin-1.5.0")
-                implementation("org.jetbrains:kotlin-react-router-dom:5.2.0-pre.154-kotlin-1.5.0")
+                implementation(compose.web.web)
+                implementation(compose.runtime)
             }
         }
 
@@ -65,6 +61,8 @@ kotlin {
 
         val jvmMain by getting {
             dependencies {
+                api(compose.runtime)
+                api(compose.desktop.currentOs)
             }
         }
         val jvmTest by getting {

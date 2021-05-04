@@ -30,7 +30,7 @@ kotlin {
         val jvmMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-server-cio:$ktorVersion")
-                implementation("io.ktor:ktor-auth:$ktorVersion")
+                implementation("io.ktor:ktor-auth-jwt:$ktorVersion")
 
                 // Apache 2, https://github.com/hfhbd/RateLimit/releases/latest
                 implementation("app.softwork:ratelimit:0.0.8")
@@ -43,9 +43,8 @@ kotlin {
                 // todo: kotlin-time
                 implementation("org.jetbrains.exposed:exposed-java-time:$exposedVersion")
 
-                // Apache 2, https://github.com/cy6erGn0m/kotlinx-uuid/releases
-                implementation("org.jetbrains.kotlinx.experimental:ktor-server-uuid-jvm:0.0.3")
-                implementation("org.jetbrains.kotlinx.experimental:exposed-uuid-jvm:0.0.3")
+                // Apache 2, https://github.com/hfhbd/kotlinx-uuid/releases
+                implementation("app.softwork:kotlinx-uuid-exposed-jvm:0.0.4")
 
                 // EPL 1.0, https://github.com/qos-ch/logback/releases
                 runtimeOnly("ch.qos.logback:logback-classic:1.2.3")

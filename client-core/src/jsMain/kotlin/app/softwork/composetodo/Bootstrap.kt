@@ -1,24 +1,23 @@
 package app.softwork.composetodo
 
-import kotlinx.html.*
+import androidx.compose.runtime.*
+import androidx.compose.web.attributes.*
+import androidx.compose.web.css.*
+import androidx.compose.web.elements.*
+import androidx.compose.web.elements.Text
 import org.w3c.dom.*
-import react.*
-import react.dom.*
-import kotlin.contracts.*
 
-@DslMarker
-annotation class BootstrapDSL
-
-@BootstrapDSL
-fun RBuilder.Toggler(target: String, controls: String) {
-    button(classes = "navbar-toggler", type = ButtonType.button) {
-        attrs["data-toggle"] = "collapse"
-        attrs["data-target"] = "#$target"
-        attrs["aria-controls"] = controls
-        attrs["aria-expanded"] = "false"
-        attrs["aria-label"] = "Toggle navigation"
-
-        span(classes = "navbar-toggler-icon") { }
+@Composable
+fun Toggler(target: String, controls: String) {
+    Button(attrs = {
+        classes("navbar-toggler")
+        attr("data-toggle", "collapse")
+        attr("data-target", "#$target")
+        attr("aria-controls", controls)
+        attr("aria-expanded", "false")
+        attr("aria-label", "Toggle navigation")
+    }) {
+        Span(attrs = { classes("navbar-toggler-icon") }) { }
     }
 }
 
@@ -59,72 +58,91 @@ enum class Color(private val value: String) {
     override fun toString() = value
 }
 
-@BootstrapDSL
-fun RBuilder.Brand(block: RDOMBuilder<DIV>.() -> Unit) = div("navbar-brand", block)
+@Composable
+fun Brand(content: @Composable () -> Unit) = Div(attrs = {
+    classes("navbar-brand")
+}) {
+    content()
+}
 
-@BootstrapDSL
-fun RBuilder.Row(block: RDOMBuilder<DIV>.() -> Unit) = div("row", block)
+@Composable
+fun Row(content: @Composable () -> Unit) = Div(attrs = { classes("row") }) { content() }
 
-@BootstrapDSL
-fun RBuilder.Column(
+@Composable
+fun Column(
     breakpoint: Breakpoint? = null,
     size: Int? = null,
-    block: RDOMBuilder<DIV>.() -> Unit
+    content: @Composable () -> Unit
 ) =
-    div("col${breakpoint?.let { "-$it" } ?: ""}${size?.let { "-$it" } ?: ""}", block)
+    Div(attrs = { classes("col${breakpoint?.let { "-$it" } ?: ""}${size?.let { "-$it" } ?: ""}") }) {
+        content()
+    }
 
-@BootstrapDSL
-fun RBuilder.Container(
+@Composable
+fun Container(
     type: Breakpoint? = null,
-    block: RDOMBuilder<DIV>.() -> Unit
-) =
-    div("container${type?.let { "-$it" } ?: ""}", block)
+    content: @Composable () -> Unit
+) = Div(attrs = {
+    classes("container${type?.let { "-$it" } ?: ""}")
+}) {
+    content()
+}
 
-@BootstrapDSL
-inline fun RBuilder.Input(
-    type: InputType? = null,
+@Composable
+inline fun input(
+    type: InputType = InputType.Text,
     label: String,
     labelClasses: String = "form-label",
     inputClasses: String = "form-control",
     placeholder: String,
     value: String,
-    crossinline block: RDOMBuilder<INPUT>.() -> Unit = { },
-    crossinline attrs: INPUT.() -> Unit = { },
+    crossinline attrs: AttrsBuilder<Tag.Input>.() -> Unit = { },
     crossinline onChange: (HTMLInputElement) -> Unit
-) = label(classes = labelClasses) {
-    +label
-    input(type = type, classes = inputClasses) {
-        attrs {
-            this.value = value
-            this.placeholder = placeholder
-            block()
-            attrs()
+) = Label(forId = "", attrs = {
+    classes(labelClasses)
+    attr("for", null)
+}) {
+    Text(label)
+    Input(type = type, attrs = {
+        attrs()
+        classes(inputClasses)
+        value(value)
+        placeholder(placeholder)
+        this.onInput {
+            val target = (it.nativeEvent.target as? HTMLInputElement) ?: return@onInput println(jsTypeOf(it.nativeEvent.target))
+            onChange(target)
         }
-        onChange(onChange)
-    }
+    })
+
+    Input(type = InputType.DateTimeLocal, attrs = {
+        onInput {
+            val event = it.nativeEvent
+        }
+    })
 }
 
 
-@BootstrapDSL
-inline fun RBuilder.Button(
+@Composable
+inline fun button(
     title: String,
     color: Color = Color.Primary,
-    customClasses: String = "",
-    type: ButtonType = ButtonType.submit,
-    crossinline block: RDOMBuilder<BUTTON>.() -> Unit = { },
-    crossinline attrs: BUTTON.() -> Unit = { },
+    vararg customClasses: String = emptyArray(),
+    type: ButtonType = ButtonType.Submit,
+    crossinline attrs: AttrsBuilder<Tag.Button>.() -> Unit = { },
     crossinline onClick: () -> Unit
-) = button(classes = "btn btn-$color $customClasses", type = type) {
-    +title
-    block()
-    attrs {
-        attrs()
+) = Button(attrs = {
+    classes("btn", "btn-$color", *customClasses)
+    attrs()
+    type(type)
+    onClick {
+        onClick()
     }
-    onClick(onClick)
+}) {
+    Text(title)
 }
 
 data class Row(val id: String, val color: Color?, val cells: List<Cell>) {
-    data class Cell(val color: Color?, val block: RDOMBuilder<TD>.() -> Unit)
+    data class Cell(val color: Color?, val content: @Composable () -> Unit)
 
     class Builder(val id: String) {
         private val values = mutableListOf<Pair<String, Cell>>()
@@ -133,40 +151,133 @@ data class Row(val id: String, val color: Color?, val cells: List<Cell>) {
 
         fun build() = values to rowColor
 
-        fun cell(title: String, color: Color? = null, block: RDOMBuilder<TD>.() -> Unit) {
-            values.add(title to Cell(color, block))
+        @Composable
+        fun cell(title: String, color: Color? = null, content: @Composable () -> Unit) {
+            values.add(title to Cell(color, content))
         }
     }
 }
 
-@BootstrapDSL
-fun <T> RBuilder.Table(
+private object Table : Tag()
+
+@Composable
+private inline fun table(
+    crossinline attrs: (AttrsBuilder<Table>.() -> Unit) = {},
+    crossinline style: (StyleBuilder.() -> Unit) = {},
+    content: @Composable ElementScope<HTMLTableElement>.() -> Unit
+) {
+    TagElement(
+        tagName = "table",
+        applyAttrs = attrs,
+        applyStyle = style,
+        content = content
+    )
+}
+
+private object TR : Tag()
+
+@Composable
+private inline fun tr(
+    crossinline attrs: (AttrsBuilder<TR>.() -> Unit) = {},
+    crossinline style: (StyleBuilder.() -> Unit) = {},
+    content: @Composable ElementScope<HTMLTableRowElement>.() -> Unit
+) {
+    TagElement(
+        tagName = "tr",
+        applyAttrs = attrs,
+        applyStyle = style,
+        content = content
+    )
+}
+
+private object THEAD : Tag()
+
+@Composable
+private inline fun thead(
+    crossinline attrs: (AttrsBuilder<THEAD>.() -> Unit) = {},
+    crossinline style: (StyleBuilder.() -> Unit) = {},
+    content: @Composable ElementScope<HTMLTableSectionElement>.() -> Unit
+) {
+    TagElement(
+        tagName = "thead",
+        applyAttrs = attrs,
+        applyStyle = style,
+        content = content
+    )
+}
+
+private object TH : Tag()
+
+@Composable
+private inline fun th(
+    crossinline attrs: (AttrsBuilder<TH>.() -> Unit) = {},
+    crossinline style: (StyleBuilder.() -> Unit) = {},
+    content: @Composable ElementScope<HTMLTableColElement>.() -> Unit
+) {
+    TagElement(
+        tagName = "th",
+        applyAttrs = attrs,
+        applyStyle = style,
+        content = content
+    )
+}
+
+private object TD : Tag()
+
+@Composable
+private inline fun td(
+    crossinline attrs: (AttrsBuilder<TD>.() -> Unit) = {},
+    crossinline style: (StyleBuilder.() -> Unit) = {},
+    content: @Composable ElementScope<HTMLTableCellElement>.() -> Unit
+) {
+    TagElement(
+        tagName = "th",
+        applyAttrs = attrs,
+        applyStyle = style,
+        content = content
+    )
+}
+
+private object TBODY : Tag()
+
+@Composable
+private inline fun tbody(
+    crossinline attrs: (AttrsBuilder<TBODY>.() -> Unit) = {},
+    crossinline style: (StyleBuilder.() -> Unit) = {},
+    content: @Composable ElementScope<HTMLTableSectionElement>.() -> Unit
+) {
+    TagElement(
+        tagName = "tbody",
+        applyAttrs = attrs,
+        applyStyle = style,
+        content = content
+    )
+}
+
+@Composable
+fun <T> Table(
     data: List<T>, id: (T) -> String,
     color: Color? = null,
     striped: Boolean = false,
     hover: Boolean = false,
-    map: Row.Builder.(T) -> Unit
-): ReactElement {
+    map: @Composable Row.Builder.(T) -> Unit
+) {
     val headers = mutableListOf<String>()
     val rows = mutableListOf<Row>()
 
-    fun add(rowBuilder: Row.Builder) {
-        val (rowValues, rowColor) = rowBuilder.build()
+    data.forEach {
+        val row = Row.Builder(id(it)).apply { map(it) }
+        val (rowValues, rowColor) = row.build()
         val cells = rowValues.map { (header, cellValue) ->
             if (header !in headers) {
                 headers.add(header)
             }
             cellValue
         }
-        val row = Row(rowBuilder.id, rowColor, cells)
-        rows.add(row)
+        val row1 = Row(row.id, rowColor, cells)
+        rows.add(row1)
     }
-
-    data.forEach {
-        val row = Row.Builder(id(it)).apply { map(it) }
-        add(row)
-    }
-    return Table(
+    Table(
         color = color,
         striped = striped,
         hover = hover,
@@ -175,35 +286,44 @@ fun <T> RBuilder.Table(
     )
 }
 
-@BootstrapDSL
-fun RBuilder.Table(
+@Composable
+fun Table(
     color: Color? = null,
     striped: Boolean = false,
     hover: Boolean = false,
     headers: List<String>,
     rows: List<Row>
-) =
-    table(classes = "table ${color?.let { "table-$it" }} ${"table-hover".takeIf { hover }} ${"table-striped".takeIf { striped }}") {
+) {
+    table(attrs = {
+        classes(
+            "table",
+            color?.let { "table-$it" } ?: "",
+            "table-hover".takeIf { hover } ?: "",
+            "table-striped".takeIf { striped } ?: "")
+    }) {
         thead {
             tr {
                 for (header in headers) {
-                    th {
-                        attrs["scope"] = "col"
-                        +header
+                    th(attrs = {
+                        attr("scope", "col")
+                    }) {
+                        Text(header)
                     }
                 }
             }
         }
         tbody {
-            rows.renderEach { row ->
-                tr(classes = "table${row.color?.let { "-$it" }}") {
-                    attrs.key = row.id
+            for (row in rows) {
+                tr(attrs = {
+                    classes("table${row.color?.let { "-$it" }}")
+                }) {
                     for (cell in row.cells) {
-                        td(classes = "table${cell.color?.let { "-$it" }}") {
-                            cell.block(this)
+                        td(attrs = { classes("table${cell.color?.let { "-$it" }}") }) {
+                            cell.content()
                         }
                     }
                 }
             }
         }
     }
+}

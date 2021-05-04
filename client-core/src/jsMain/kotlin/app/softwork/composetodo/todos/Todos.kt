@@ -1,39 +1,39 @@
 package app.softwork.composetodo.todos
 
+import androidx.compose.runtime.*
+import androidx.compose.web.elements.*
 import app.softwork.composetodo.*
 import app.softwork.composetodo.dto.*
 import kotlinx.coroutines.*
 import kotlinx.datetime.*
-import kotlinx.datetime.Clock
-import kotlinx.html.*
-import kotlinx.uuid.*
-import react.*
-import react.dom.*
-import kotlin.time.*
 
-@HtmlTagMarker
-fun RBuilder.todos() = child(Todos) { }
+class TodosViewModel(val api: API.LoggedIn) {
+    var todos by mutableStateOf(emptyList<Todo>())
 
-private val Todos = functionalComponent<RProps> {
-    var todos by useState(emptyList<Todo>())
-    useEffectWithCleanup(emptyList()) {
-        val job = scope.launch {
-            todos = api.getTodos()
-        }
-        job::cancel
-    }
-    newTodo {
+    fun refresh() {
         scope.launch {
             todos = api.getTodos()
         }
     }
-    h1 {
-        +"Todos"
+
+    fun delete(todo: Todo) {
+        scope.launch {
+            api.deleteTodo(todo.id)
+            refresh()
+        }
     }
-    if (todos.isEmpty()) {
-        +"No Todos created"
+}
+
+@Composable
+fun Todos(viewModel: TodosViewModel) {
+    NewTodo(NewTodoViewModel(viewModel.api) { viewModel.refresh() })
+    H1 {
+        Text("Todos")
+    }
+    if (viewModel.todos.isEmpty()) {
+        Text("No Todos created")
     } else {
-        Table(todos, { it.id.toString() }) { todo ->
+        Table(viewModel.todos, { it.id.toString() }) { todo ->
             rowColor = when {
                 todo.finished -> Color.Success
                 todo.until?.let {
@@ -42,13 +42,11 @@ private val Todos = functionalComponent<RProps> {
                 else -> null
             }
             cell("Title") {
-                +todo.title
+                Text(todo.title)
             }
             cell("") {
-                Button("Delete") {
-                    scope.launch {
-                        api.deleteTodo(todo.id)
-                    }
+                button("Delete") {
+                    viewModel.delete(todo)
                 }
             }
         }
