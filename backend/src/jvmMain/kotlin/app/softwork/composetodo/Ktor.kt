@@ -34,9 +34,3 @@ suspend fun <T> ApplicationCall.body(serializer: KSerializer<T>, json: Json = Js
 
 operator fun Parameters.getValue(receiver: Any?, property: KProperty<*>): UUID =
     UUID(getOrFail(property.name))
-
-fun String.toUUIDOrNull(): UUID? = try {
-    UUID(this)
-} catch (e: Exception) {
-    null
-}

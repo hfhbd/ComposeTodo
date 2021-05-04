@@ -15,10 +15,8 @@ allprojects {
     repositories {
         mavenCentral()
         google()
-        
-        maven(url = "https://dl.bintray.com/cy6ergn0m/uuid")
+
         maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
-        maven(url = "https://maven.pkg.jetbrains.space/kotlin/p/kotlin/kotlin-js-wrappers")
 
         maven {
             name = "GitHubPackages"

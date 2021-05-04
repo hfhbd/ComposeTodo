@@ -22,7 +22,7 @@ class NewTodoViewModel(val api: API.LoggedIn, val onDone: () -> Unit) {
         scope.launch {
             api.createTodo(
                 Todo(
-                    id = SecureRandom.nextUUID(),
+                    id = UUID(),
                     title = title,
                     finished = false,
                     until = LocalDateTime.parse(until)

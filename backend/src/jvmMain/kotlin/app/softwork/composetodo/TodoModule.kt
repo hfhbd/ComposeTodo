@@ -15,7 +15,6 @@ import io.ktor.routing.*
 import io.ktor.sessions.*
 import kotlinx.datetime.*
 import kotlinx.uuid.*
-import kotlinx.uuid.ktor.*
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.*
 import kotlin.time.*

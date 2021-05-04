@@ -15,9 +15,6 @@ import kotlin.contracts.*
 import kotlin.random.*
 import kotlin.test.*
 
-private val secureRandom = SecureRandom().asKotlinRandom()
-fun UUID() = UUID.generateUUID(random = secureRandom)
-
 @OptIn(ExperimentalContracts::class)
 fun dbTest(
     name: String = "test${UUID()}",
