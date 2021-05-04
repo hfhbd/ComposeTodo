@@ -1,11 +1,10 @@
 package app.softwork.composetodo.users
 
-import kotlinx.html.*
-import react.*
+import androidx.compose.runtime.*
+import androidx.compose.web.elements.*
+import app.softwork.composetodo.*
 
-@HtmlTagMarker
-fun RBuilder.users() = child(Users) { }
-
-private val Users = functionalComponent<RProps> {
-
+@Composable
+fun Users(api: API.LoggedIn) {
+    Text("User placeholder")
 }
