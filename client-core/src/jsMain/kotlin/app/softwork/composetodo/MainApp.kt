@@ -18,8 +18,8 @@ fun MainApp() {
         install(HttpCookies)
         defaultRequest {
             url {
-                protocol = URLProtocol.HTTP
-                host = "localhost"
+                protocol = URLProtocol.HTTPS
+                host = "api.todo.softwork.app"
             }
         }
     }
