@@ -1,4 +1,10 @@
 version: 2
+registries:
+  maven-github:
+    type: maven-repository
+    url: https://maven.pkg.github.com/hfhbd
+    token: ${{secrets.GITHUB_TOKEN}}
+
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -16,3 +22,5 @@ updates:
       - "hfhbd"
     assignees:
       - "hfhbd"
+    registries:
+      - maven-github
