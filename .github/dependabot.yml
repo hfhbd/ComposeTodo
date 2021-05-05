@@ -4,7 +4,7 @@ registries:
     type: maven-repository
     url: https://maven.pkg.github.com/hfhbd
     username: dependabot
-    password: ${{secrets.GITHUB_TOKEN}}
+    password: ${{secrets.GHP_TOKEN}}
 
 updates:
   - package-ecosystem: "github-actions"
