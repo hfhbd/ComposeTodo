@@ -28,6 +28,11 @@ fun Navbar(api: API, onLogout: () -> Unit) {
                             Text("Tours")
                         }
                     }
+                    Li(attrs = { classes("nav-item") }) {
+                        NavLink(attrs = { classes("nav-link") }, to = "/users") {
+                            Text("Users")
+                        }
+                    }
                 }
                 A(attrs = {
                     classes("btn", "btn-outline-${Color.Light}")
