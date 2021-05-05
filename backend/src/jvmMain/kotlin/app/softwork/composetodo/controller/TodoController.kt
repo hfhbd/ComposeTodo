@@ -15,7 +15,7 @@ class TodoController(val user: User) {
 
     suspend fun create(newTodo: app.softwork.composetodo.dto.Todo) = newSuspendedTransaction {
         Todo.new(newTodo.id) {
-            this.user = user
+            this.user = this@TodoController.user
             title = newTodo.title
             until = newTodo.until?.toJavaLocalDateTime()
             finished = newTodo.finished

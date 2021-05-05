@@ -2,6 +2,8 @@ package app.softwork.composetodo.login
 
 import androidx.compose.runtime.*
 import androidx.compose.web.attributes.*
+import androidx.compose.web.elements.*
+import androidx.compose.web.elements.Text
 import app.softwork.composetodo.*
 import kotlinx.coroutines.*
 
@@ -11,6 +13,9 @@ fun Login(api: API.LoggedOut, onLogin: (API.LoggedIn) -> Unit) {
     var password by mutableStateOf("")
     Row {
         Column {
+            H1 {
+                Text("Login")
+            }
             input(value = username, placeholder = "user.name", label = "Username") {
                 username = it.value
             }

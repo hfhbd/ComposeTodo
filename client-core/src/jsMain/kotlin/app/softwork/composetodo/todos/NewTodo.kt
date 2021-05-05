@@ -2,6 +2,7 @@ package app.softwork.composetodo.todos
 
 import androidx.compose.runtime.*
 import androidx.compose.web.attributes.*
+import androidx.compose.web.elements.*
 import app.softwork.composetodo.*
 import app.softwork.composetodo.dto.*
 import kotlinx.coroutines.*
@@ -13,10 +14,7 @@ class NewTodoViewModel(val api: API.LoggedIn, val onDone: () -> Unit) {
     var until by mutableStateOf("")
 
     val disabledButton: Boolean
-        get() {
-            println("disabledButton $title $until s")
-            return title.isEmpty() || until.isEmpty()
-        }
+        get() = title.isEmpty() || until.isEmpty()
 
     fun createTodo() {
         scope.launch {
@@ -38,8 +36,7 @@ fun NewTodo(viewModel: NewTodoViewModel) {
     input(type = InputType.Text, label = "Title", placeholder = "Hello World", value = viewModel.title) {
         viewModel.title = it.value
     }
-    input(
-        type = InputType.DateTimeLocal,
+    DateTimeInput(
         label = "Finish Date",
         placeholder = "yyyy-mm-dd",
         value = viewModel.until
@@ -47,7 +44,9 @@ fun NewTodo(viewModel: NewTodoViewModel) {
         viewModel.until = it.value
     }
     button("Create new Todo", attrs = {
-        disabled(viewModel.disabledButton)
+        if(viewModel.disabledButton) {
+            disabled(true)
+        }
     }) {
         viewModel.createTodo()
     }

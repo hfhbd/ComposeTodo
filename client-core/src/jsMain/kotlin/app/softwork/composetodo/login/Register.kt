@@ -2,6 +2,8 @@ package app.softwork.composetodo.login
 
 import androidx.compose.runtime.*
 import androidx.compose.web.attributes.*
+import androidx.compose.web.elements.*
+import androidx.compose.web.elements.Text
 import app.softwork.composetodo.*
 import app.softwork.composetodo.dto.*
 import kotlinx.coroutines.*
@@ -16,6 +18,9 @@ fun Register(api: API.LoggedOut, onLogin: (API.LoggedIn) -> Unit) {
 
     Row {
         Column {
+            H1 {
+                Text("Register")
+            }
             input(value = username, placeholder = "user.name", label = "Username") {
                 username = it.value
             }

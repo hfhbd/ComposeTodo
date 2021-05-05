@@ -71,75 +71,75 @@ fun Application.TodoModule(db: Database, jwtProvider: JWTProvider) {
                     jwtProvider.token(user)
                 }
             }
+        }
+        authenticate {
+            route("/refreshToken") {
+                delete {
+                    call.sessions.clear<RefreshToken>()
+                    call.respond(HttpStatusCode.OK)
+                }
+            }
 
-            authenticate {
-                route("/refreshToken") {
-                    delete {
-                        call.sessions.clear<RefreshToken>()
-                        call.respond(HttpStatusCode.OK)
+            route("/me") {
+                get {
+                    call.respondJson(User.serializer()) {
+                        call.principal<app.softwork.composetodo.dao.User>()!!.toDTO()
+                    }
+                }
+                put {
+                    call.respondJson(User.serializer()) {
+                        val user = call.principal<app.softwork.composetodo.dao.User>()!!
+                        val toUpdate = body(User.serializer())
+                        UserController(user).update(toUpdate)
+                    }
+                }
+                delete {
+                    with(call) {
+                        val user = call.principal<app.softwork.composetodo.dao.User>()!!
+                        TodoController(user).deleteAll()
+                        UserController(user).delete()
+                        respond(HttpStatusCode.OK)
+                    }
+                }
+            }
+
+            route("/todos") {
+                get {
+                    call.respondJsonList(Todo.serializer()) {
+                        val user = call.principal<app.softwork.composetodo.dao.User>()!!
+                        TodoController(user).todos()
+                    }
+                }
+                post {
+                    call.respondJson(Todo.serializer()) {
+                        val user = call.principal<app.softwork.composetodo.dao.User>()!!
+                        val newTodo = body(Todo.serializer())
+                        TodoController(user).create(newTodo)
                     }
                 }
 
-                route("/me") {
+                route("/{todoID}") {
                     get {
-                        call.respondJson(User.serializer()) {
-                            call.principal<app.softwork.composetodo.dao.User>()!!.toDTO()
+                        call.respondJson(Todo.serializer()) {
+                            val user = call.principal<app.softwork.composetodo.dao.User>()!!
+                            val todoID: UUID by parameters
+                            TodoController(user).getTodo(todoID)
                         }
                     }
                     put {
-                        call.respondJson(User.serializer()) {
+                        call.respondJson(Todo.serializer()) {
                             val user = call.principal<app.softwork.composetodo.dao.User>()!!
-                            val toUpdate = body(User.serializer())
-                            UserController(user).update(toUpdate)
+                            val todoID: UUID by parameters
+                            val toUpdate = body(Todo.serializer())
+                            TodoController(user).update(todoID, toUpdate)
                         }
                     }
                     delete {
                         with(call) {
                             val user = call.principal<app.softwork.composetodo.dao.User>()!!
-                            TodoController(user).deleteAll()
-                            UserController(user).delete()
+                            val todoID: UUID by parameters
+                            TodoController(user).delete(todoID)
                             respond(HttpStatusCode.OK)
-                        }
-                    }
-                }
-                route("/todos") {
-                    get {
-                        call.respondJsonList(Todo.serializer()) {
-                            val user = call.principal<app.softwork.composetodo.dao.User>()!!
-                            TodoController(user).todos()
-                        }
-                    }
-                    post {
-                        call.respondJson(Todo.serializer()) {
-                            val user = call.principal<app.softwork.composetodo.dao.User>()!!
-                            val newTodo = body(Todo.serializer())
-                            TodoController(user).create(newTodo)
-                        }
-                    }
-
-                    route("/todoID") {
-                        get("/{todoID}") {
-                            call.respondJson(Todo.serializer()) {
-                                val user = call.principal<app.softwork.composetodo.dao.User>()!!
-                                val todoID: UUID by parameters
-                                TodoController(user).getTodo(todoID)
-                            }
-                        }
-                        put {
-                            call.respondJson(Todo.serializer()) {
-                                val user = call.principal<app.softwork.composetodo.dao.User>()!!
-                                val todoID: UUID by parameters
-                                val toUpdate = body(Todo.serializer())
-                                TodoController(user).update(todoID, toUpdate)
-                            }
-                        }
-                        delete {
-                            with(call) {
-                                val user = call.principal<app.softwork.composetodo.dao.User>()!!
-                                val todoID: UUID by parameters
-                                TodoController(user).delete(todoID)
-                                respond(HttpStatusCode.OK)
-                            }
                         }
                     }
                 }
