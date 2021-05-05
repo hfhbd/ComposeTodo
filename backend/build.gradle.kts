@@ -44,7 +44,7 @@ kotlin {
                 implementation("org.jetbrains.exposed:exposed-java-time:$exposedVersion")
 
                 // Apache 2, https://github.com/hfhbd/kotlinx-uuid/releases
-                implementation("app.softwork:kotlinx-uuid-exposed-jvm:0.0.4")
+                implementation("app.softwork:kotlinx-uuid-exposed-jvm:0.0.5")
 
                 // EPL 1.0, https://github.com/qos-ch/logback/releases
                 runtimeOnly("ch.qos.logback:logback-classic:1.2.3")
