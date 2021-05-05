@@ -15,15 +15,15 @@ fun main() {
     val db = Database.connect("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;", "org.h2.Driver")
     val jwtProvider = JWTProvider(
         Algorithm.HMAC512("secret"),
-        "app.softwork.composetodo",
-        "app.softwork.composetodo",
+        "app.softwork.todo",
+        "app.softwork.todo",
         expireDuration = 10.minutes
     )
 
     embeddedServer(CIO) {
         install(RateLimit)
         install(CORS) {
-            host("composetodo.softwork.app", listOf("https"))
+            host("todo.softwork.app", listOf("https"))
             host("localhost:8080")
             allowCredentials = true
             header(HttpHeaders.Authorization)
