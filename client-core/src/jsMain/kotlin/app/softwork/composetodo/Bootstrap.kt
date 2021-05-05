@@ -89,6 +89,32 @@ fun Container(
 }
 
 @Composable
+inline fun DateTimeInput(
+    label: String,
+    labelClasses: String = "form-label",
+    inputClasses: String = "form-control",
+    placeholder: String,
+    value: String,
+    crossinline attrs: AttrsBuilder<Tag.Input>.() -> Unit = { },
+    crossinline onChange: (HTMLInputElement) -> Unit
+) = Label(forId = "", attrs = {
+    classes(labelClasses)
+    attr("for", null)
+}) {
+    Text(label)
+    Input(type = InputType.DateTimeLocal, attrs = {
+        attrs()
+        classes(inputClasses)
+        value(value)
+        placeholder(placeholder)
+        addEventListener("input") {
+            onChange(it.nativeEvent.target as HTMLInputElement)
+        }
+    })
+}
+
+
+@Composable
 inline fun input(
     type: InputType = InputType.Text,
     label: String,
@@ -102,6 +128,7 @@ inline fun input(
     classes(labelClasses)
     attr("for", null)
 }) {
+    require(type != InputType.DateTimeLocal)
     Text(label)
     Input(type = type, attrs = {
         attrs()
@@ -109,14 +136,8 @@ inline fun input(
         value(value)
         placeholder(placeholder)
         this.onInput {
-            val target = (it.nativeEvent.target as? HTMLInputElement) ?: return@onInput println(jsTypeOf(it.nativeEvent.target))
+            val target = it.nativeEvent.target as HTMLInputElement
             onChange(target)
-        }
-    })
-
-    Input(type = InputType.DateTimeLocal, attrs = {
-        onInput {
-            val event = it.nativeEvent
         }
     })
 }
@@ -141,10 +162,10 @@ inline fun button(
     Text(title)
 }
 
-data class Row(val id: String, val color: Color?, val cells: List<Cell>) {
+data class Row(val color: Color?, val cells: List<Cell>) {
     data class Cell(val color: Color?, val content: @Composable () -> Unit)
 
-    class Builder(val id: String) {
+    class Builder {
         private val values = mutableListOf<Pair<String, Cell>>()
 
         var rowColor: Color? = null
@@ -231,7 +252,7 @@ private inline fun td(
     content: @Composable ElementScope<HTMLTableCellElement>.() -> Unit
 ) {
     TagElement(
-        tagName = "th",
+        tagName = "td",
         applyAttrs = attrs,
         applyStyle = style,
         content = content
@@ -256,7 +277,7 @@ private inline fun tbody(
 
 @Composable
 fun <T> Table(
-    data: List<T>, id: (T) -> String,
+    data: List<T>,
     color: Color? = null,
     striped: Boolean = false,
     hover: Boolean = false,
@@ -266,7 +287,7 @@ fun <T> Table(
     val rows = mutableListOf<Row>()
 
     data.forEach {
-        val row = Row.Builder(id(it)).apply { map(it) }
+        val row = Row.Builder().apply { map(it) }
         val (rowValues, rowColor) = row.build()
         val cells = rowValues.map { (header, cellValue) ->
             if (header !in headers) {
@@ -274,7 +295,7 @@ fun <T> Table(
             }
             cellValue
         }
-        val row1 = Row(row.id, rowColor, cells)
+        val row1 = Row(rowColor, cells)
         rows.add(row1)
     }
     Table(
@@ -295,11 +316,16 @@ fun Table(
     rows: List<Row>
 ) {
     table(attrs = {
-        classes(
-            "table",
-            color?.let { "table-$it" } ?: "",
-            "table-hover".takeIf { hover } ?: "",
-            "table-striped".takeIf { striped } ?: "")
+        classes {
+            +"table"
+            color?.let { +"table-$it" }
+            if (hover) {
+                +"table-hover"
+            }
+            if (striped) {
+                +"table-striped"
+            }
+        }
     }) {
         thead {
             tr {
@@ -315,10 +341,16 @@ fun Table(
         tbody {
             for (row in rows) {
                 tr(attrs = {
-                    classes("table${row.color?.let { "-$it" }}")
+                    classes {
+                        row.color?.let { +"table-$it" }
+                    }
                 }) {
                     for (cell in row.cells) {
-                        td(attrs = { classes("table${cell.color?.let { "-$it" }}") }) {
+                        td(attrs = {
+                            classes {
+                                cell.color?.let { +"table-$it" }
+                            }
+                        }) {
                             cell.content()
                         }
                     }
