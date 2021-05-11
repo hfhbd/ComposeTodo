@@ -3,7 +3,6 @@ package app.softwork.composetodo.login
 import androidx.compose.runtime.*
 import androidx.compose.web.attributes.*
 import androidx.compose.web.elements.*
-import androidx.compose.web.elements.Text
 import app.softwork.composetodo.*
 import app.softwork.composetodo.dto.*
 import kotlinx.coroutines.*
@@ -36,28 +35,27 @@ fun Register(api: API.LoggedOut, onLogin: (API.LoggedIn) -> Unit) {
             input(placeholder = "Doe", label = "Last Name", value = lastName) {
                 lastName = it.value
             }
-            if (listOf(
+            button("Register", attrs = {
+                disabled(password != passwordAgain || listOf(
                     username,
                     password,
                     passwordAgain,
                     firstName,
                     lastName
-                ).all { it.isNotEmpty() } && password == passwordAgain
-            ) {
-                button("Register") {
-                    scope.launch {
-                        onLogin(
-                            api.register(
-                                User.New(
-                                    username = username,
-                                    password = password,
-                                    passwordAgain = passwordAgain,
-                                    firstName = firstName,
-                                    lastName = lastName
-                                )
+                ).any { it.isEmpty() })
+            }) {
+                scope.launch {
+                    onLogin(
+                        api.register(
+                            User.New(
+                                username = username,
+                                password = password,
+                                passwordAgain = passwordAgain,
+                                firstName = firstName,
+                                lastName = lastName
                             )
                         )
-                    }
+                    )
                 }
             }
         }
