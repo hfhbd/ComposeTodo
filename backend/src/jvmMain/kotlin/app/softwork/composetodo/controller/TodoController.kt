@@ -8,34 +8,34 @@ import kotlinx.uuid.*
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.experimental.*
 
-class TodoController(val user: User) {
-    suspend fun todos() = newSuspendedTransaction {
+class TodoController(private val db: Database) {
+    suspend fun todos(user: User) = newSuspendedTransaction(db = db) {
         user.todos.map { it.toDTO() }
     }
 
-    suspend fun create(newTodo: app.softwork.composetodo.dto.Todo) = newSuspendedTransaction {
+    suspend fun create(user: User, newTodo: app.softwork.composetodo.dto.Todo) = newSuspendedTransaction(db = db) {
         Todo.new(newTodo.id) {
-            this.user = this@TodoController.user
+            this.user = user
             title = newTodo.title
             until = newTodo.until?.toJavaLocalDateTime()
             finished = newTodo.finished
         }.toDTO()
     }
 
-    suspend fun getTodo(todoID: UUID) = newSuspendedTransaction {
+    suspend fun getTodo(user: User, todoID: UUID) = newSuspendedTransaction(db = db) {
         Todo.find {
             Todos.id eq todoID and (Todos.user eq user.id)
         }.first().toDTO()
     }
 
-    suspend fun delete(todoID: UUID) = newSuspendedTransaction {
+    suspend fun delete(user: User, todoID: UUID) = newSuspendedTransaction(db = db) {
         Todo.find {
             Todos.id eq todoID and (Todos.user eq user.id)
         }.first().delete()
     }
 
-    suspend fun update(todoID: UUID, update: app.softwork.composetodo.dto.Todo) =
-        newSuspendedTransaction {
+    suspend fun update(user: User, todoID: UUID, update: app.softwork.composetodo.dto.Todo) =
+        newSuspendedTransaction(db = db) {
             Todo.find {
                 Todos.id eq todoID and (Todos.user eq user.id)
             }.first().apply {
@@ -45,7 +45,7 @@ class TodoController(val user: User) {
             }.toDTO()
         }
 
-    suspend fun deleteAll() = newSuspendedTransaction {
+    suspend fun deleteAll(user: User) = newSuspendedTransaction(db = db) {
         user.todos.forEach {
             it.delete()
         }
