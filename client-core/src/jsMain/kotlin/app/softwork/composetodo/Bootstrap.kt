@@ -2,7 +2,6 @@ package app.softwork.composetodo
 
 import androidx.compose.runtime.*
 import androidx.compose.web.attributes.*
-import androidx.compose.web.css.*
 import androidx.compose.web.elements.*
 import androidx.compose.web.elements.Text
 import org.w3c.dom.*
@@ -179,102 +178,6 @@ data class Row(val color: Color?, val cells: List<Cell>) {
     }
 }
 
-private object Table : Tag()
-
-@Composable
-private inline fun table(
-    crossinline attrs: (AttrsBuilder<Table>.() -> Unit) = {},
-    crossinline style: (StyleBuilder.() -> Unit) = {},
-    content: @Composable ElementScope<HTMLTableElement>.() -> Unit
-) {
-    TagElement(
-        tagName = "table",
-        applyAttrs = attrs,
-        applyStyle = style,
-        content = content
-    )
-}
-
-private object TR : Tag()
-
-@Composable
-private inline fun tr(
-    crossinline attrs: (AttrsBuilder<TR>.() -> Unit) = {},
-    crossinline style: (StyleBuilder.() -> Unit) = {},
-    content: @Composable ElementScope<HTMLTableRowElement>.() -> Unit
-) {
-    TagElement(
-        tagName = "tr",
-        applyAttrs = attrs,
-        applyStyle = style,
-        content = content
-    )
-}
-
-private object THEAD : Tag()
-
-@Composable
-private inline fun thead(
-    crossinline attrs: (AttrsBuilder<THEAD>.() -> Unit) = {},
-    crossinline style: (StyleBuilder.() -> Unit) = {},
-    content: @Composable ElementScope<HTMLTableSectionElement>.() -> Unit
-) {
-    TagElement(
-        tagName = "thead",
-        applyAttrs = attrs,
-        applyStyle = style,
-        content = content
-    )
-}
-
-private object TH : Tag()
-
-@Composable
-private inline fun th(
-    crossinline attrs: (AttrsBuilder<TH>.() -> Unit) = {},
-    crossinline style: (StyleBuilder.() -> Unit) = {},
-    content: @Composable ElementScope<HTMLTableColElement>.() -> Unit
-) {
-    TagElement(
-        tagName = "th",
-        applyAttrs = attrs,
-        applyStyle = style,
-        content = content
-    )
-}
-
-private object TD : Tag()
-
-@Composable
-private inline fun td(
-    crossinline attrs: (AttrsBuilder<TD>.() -> Unit) = {},
-    crossinline style: (StyleBuilder.() -> Unit) = {},
-    content: @Composable ElementScope<HTMLTableCellElement>.() -> Unit
-) {
-    TagElement(
-        tagName = "td",
-        applyAttrs = attrs,
-        applyStyle = style,
-        content = content
-    )
-}
-
-private object TBODY : Tag()
-
-@Composable
-private inline fun tbody(
-    crossinline attrs: (AttrsBuilder<TBODY>.() -> Unit) = {},
-    crossinline style: (StyleBuilder.() -> Unit) = {},
-    content: @Composable ElementScope<HTMLTableSectionElement>.() -> Unit
-) {
-    TagElement(
-        tagName = "tbody",
-        applyAttrs = attrs,
-        applyStyle = style,
-        content = content
-    )
-}
-
 @Composable
 fun <T> Table(
     data: List<T>,
@@ -315,7 +218,7 @@ fun Table(
     headers: List<String>,
     rows: List<Row>
 ) {
-    table(attrs = {
+    Table(attrs = {
         classes {
             +"table"
             color?.let { +"table-$it" }
@@ -327,26 +230,26 @@ fun Table(
             }
         }
     }) {
-        thead {
-            tr {
+        Thead {
+            Tr {
                 for (header in headers) {
-                    th(attrs = {
-                        attr("scope", "col")
+                    Th(attrs = {
+                        scope(Scope.Col)
                     }) {
                         Text(header)
                     }
                 }
             }
         }
-        tbody {
+        Tbody {
             for (row in rows) {
-                tr(attrs = {
+                Tr(attrs = {
                     classes {
                         row.color?.let { +"table-$it" }
                     }
                 }) {
                     for (cell in row.cells) {
-                        td(attrs = {
+                        Td(attrs = {
                             classes {
                                 cell.color?.let { +"table-$it" }
                             }

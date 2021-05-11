@@ -2,7 +2,6 @@ package app.softwork.composetodo.todos
 
 import androidx.compose.runtime.*
 import androidx.compose.web.attributes.*
-import androidx.compose.web.elements.*
 import app.softwork.composetodo.*
 import app.softwork.composetodo.dto.*
 import kotlinx.coroutines.*
@@ -44,9 +43,7 @@ fun NewTodo(viewModel: NewTodoViewModel) {
         viewModel.until = it.value
     }
     button("Create new Todo", attrs = {
-        if(viewModel.disabledButton) {
-            disabled(true)
-        }
+        disabled(viewModel.disabledButton)
     }) {
         viewModel.createTodo()
     }
