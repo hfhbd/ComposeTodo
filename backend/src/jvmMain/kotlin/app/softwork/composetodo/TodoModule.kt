@@ -3,17 +3,13 @@ package app.softwork.composetodo
 import app.softwork.composetodo.controller.*
 import app.softwork.composetodo.definitions.*
 import app.softwork.composetodo.dto.*
-import com.auth0.jwt.*
-import com.auth0.jwt.algorithms.*
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.auth.jwt.*
-import io.ktor.features.*
 import io.ktor.http.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.sessions.*
-import kotlinx.datetime.*
 import kotlinx.uuid.*
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.*
@@ -21,11 +17,13 @@ import kotlin.time.*
 
 @ExperimentalTime
 fun Application.TodoModule(db: Database, jwtProvider: JWTProvider) {
+    val userController = UserController(db = db)
+    val todoController = TodoController(db = db)
 
     install(Authentication) {
         basic("login") {
             validate { (name, password) ->
-                UserController.findBy(name, password)
+                userController.findBy(name, password)
             }
         }
         jwt {
@@ -33,7 +31,9 @@ fun Application.TodoModule(db: Database, jwtProvider: JWTProvider) {
                 jwtProvider.verifier
             }
             validate { credentials ->
-                jwtProvider.validate(credentials)
+                jwtProvider.validate(credentials) { userID ->
+                    userController.find(userID)
+                }
             }
         }
     }
@@ -47,7 +47,7 @@ fun Application.TodoModule(db: Database, jwtProvider: JWTProvider) {
         }
     }
 
-    transaction {
+    transaction(db) {
         SchemaUtils.create(Users, Todos)
     }
 
@@ -59,7 +59,7 @@ fun Application.TodoModule(db: Database, jwtProvider: JWTProvider) {
         post("/users") {
             call.respondJson(Token.serializer()) {
                 val newUser = body(User.New.serializer())
-                UserController.createUser(jwtProvider, newUser)
+                userController.createUser(jwtProvider, newUser)
             }
         }
 
@@ -90,14 +90,14 @@ fun Application.TodoModule(db: Database, jwtProvider: JWTProvider) {
                     call.respondJson(User.serializer()) {
                         val user = call.principal<app.softwork.composetodo.dao.User>()!!
                         val toUpdate = body(User.serializer())
-                        UserController(user).update(toUpdate)
+                        userController.update(user, toUpdate)
                     }
                 }
                 delete {
                     with(call) {
                         val user = call.principal<app.softwork.composetodo.dao.User>()!!
-                        TodoController(user).deleteAll()
-                        UserController(user).delete()
+                        todoController.deleteAll(user)
+                        userController.delete(user)
                         respond(HttpStatusCode.OK)
                     }
                 }
@@ -107,14 +107,14 @@ fun Application.TodoModule(db: Database, jwtProvider: JWTProvider) {
                 get {
                     call.respondJsonList(Todo.serializer()) {
                         val user = call.principal<app.softwork.composetodo.dao.User>()!!
-                        TodoController(user).todos()
+                        todoController.todos(user)
                     }
                 }
                 post {
                     call.respondJson(Todo.serializer()) {
                         val user = call.principal<app.softwork.composetodo.dao.User>()!!
                         val newTodo = body(Todo.serializer())
-                        TodoController(user).create(newTodo)
+                        todoController.create(user, newTodo)
                     }
                 }
 
@@ -123,7 +123,7 @@ fun Application.TodoModule(db: Database, jwtProvider: JWTProvider) {
                         call.respondJson(Todo.serializer()) {
                             val user = call.principal<app.softwork.composetodo.dao.User>()!!
                             val todoID: UUID by parameters
-                            TodoController(user).getTodo(todoID)
+                            todoController.getTodo(user, todoID)
                         }
                     }
                     put {
@@ -131,14 +131,14 @@ fun Application.TodoModule(db: Database, jwtProvider: JWTProvider) {
                             val user = call.principal<app.softwork.composetodo.dao.User>()!!
                             val todoID: UUID by parameters
                             val toUpdate = body(Todo.serializer())
-                            TodoController(user).update(todoID, toUpdate)
+                            todoController.update(user, todoID, toUpdate)
                         }
                     }
                     delete {
                         with(call) {
                             val user = call.principal<app.softwork.composetodo.dao.User>()!!
                             val todoID: UUID by parameters
-                            TodoController(user).delete(todoID)
+                            todoController.delete(user, todoID)
                             respond(HttpStatusCode.OK)
                         }
                     }
