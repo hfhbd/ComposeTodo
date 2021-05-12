@@ -17,7 +17,7 @@ jobs:
         run: echo "${{ github.token }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - uses: actions/checkout@v2
-      - uses: gradle/wrapper-validation-action@v1
+      - uses: gradle/wrapper-validation-action@v1.0.3
       - uses: actions/setup-java@v2
         with:
           distribution: 'adopt'
