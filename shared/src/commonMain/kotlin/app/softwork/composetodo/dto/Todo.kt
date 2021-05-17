@@ -8,6 +8,7 @@ import kotlinx.uuid.*
 data class Todo(
     val id: UUID,
     val title: String,
-    val until: LocalDateTime?,
-    val finished: Boolean
+    val until: Instant?,
+    val finished: Boolean,
+    val recordChangeTag: String?
 )

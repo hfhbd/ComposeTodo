@@ -1,20 +1,37 @@
 package app.softwork.composetodo.dao
 
-import app.softwork.composetodo.definitions.*
+import app.softwork.cloudkitclient.*
+import app.softwork.cloudkitclient.values.*
 import io.ktor.auth.*
-import kotlinx.uuid.*
-import kotlinx.uuid.exposed.*
-import org.jetbrains.exposed.dao.id.*
+import kotlinx.serialization.*
 
-// TODO wait for Exposed DTO support
-class User(id: EntityID<UUID>) : KotlinxUUIDEntity(id), Principal {
-    companion object : KotlinxUUIDEntityClass<User>(Users)
+@Serializable
+data class User(
+    override val recordName: String,
+    override val fields: Fields,
 
-    var username by Users.name
-    var password by Users.password
+    override var created: TimeInformation? = null,
+    override var modified: TimeInformation? = null,
+    override var deleted: Boolean? = false,
 
-    var firstName by Users.firstName
-    var lastName by Users.lastName
+    override val pluginFields: PluginFields = PluginFields(),
+    override var recordChangeTag: String? = null,
+    override val zoneID: ZoneID = ZoneID.default
+) : Record<User.Fields>, Principal {
 
-    val todos by Todo referrersOn Todos.user
+    override val recordType: String = Companion.recordType
+
+    companion object : Record.Information<Fields, User> {
+        override val recordType: String = "User"
+
+        override fun fields() = listOf(Fields::firstName, Fields::lastName, Fields::password)
+        override fun fieldsSerializer() = Fields.serializer()
+    }
+
+    @Serializable
+    data class Fields(
+        val password: Value.String?,
+        val firstName: Value.String,
+        val lastName: Value.String
+    ) : Record.Fields
 }

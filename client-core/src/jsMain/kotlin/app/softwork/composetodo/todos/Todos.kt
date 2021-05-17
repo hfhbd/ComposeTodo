@@ -43,7 +43,7 @@ fun Todos(viewModel: TodosViewModel) {
             rowColor = when {
                 todo.finished -> Color.Success
                 todo.until?.let {
-                    it.toInstant(TimeZone.currentSystemDefault()) <= Clock.System.now()
+                    it <= Clock.System.now()
                 } ?: false -> Color.Warning
                 else -> null
             }

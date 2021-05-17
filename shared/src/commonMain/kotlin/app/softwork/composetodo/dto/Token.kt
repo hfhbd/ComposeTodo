@@ -1,14 +1,12 @@
 package app.softwork.composetodo.dto
 
 import io.ktor.util.*
-import io.ktor.util.InternalAPI
 import kotlinx.datetime.*
 import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.*
+import kotlinx.serialization.encoding.*
 import kotlinx.serialization.encoding.Encoder
-import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.json.*
-import kotlinx.uuid.*
 
 @Serializable
 data class Token(val content: String) {
@@ -23,7 +21,7 @@ data class Token(val content: String) {
     @Serializable
     data class Payload(
         @SerialName("iss") val issuer: String,
-        @SerialName("sub") val subject: UUID,
+        @SerialName("sub") val subject: String,
         @Serializable(with = InstantSerializer::class) @SerialName("exp") val expiredAt: Instant,
         @Serializable(with = InstantSerializer::class) @SerialName("nbf") val notBefore: Instant,
         @Serializable(with = InstantSerializer::class) @SerialName("iat") val issuedAt: Instant,

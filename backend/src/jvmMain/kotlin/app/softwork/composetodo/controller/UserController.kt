@@ -1,52 +1,28 @@
 package app.softwork.composetodo.controller
 
+import app.softwork.cloudkitclient.*
 import app.softwork.composetodo.*
 import app.softwork.composetodo.dao.User
-import app.softwork.composetodo.definitions.*
 import app.softwork.composetodo.dto.*
-import kotlinx.uuid.*
-import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.transactions.experimental.*
 import kotlin.time.*
 
-class UserController(private val db: Database) {
+class UserController(private val db: Client.Database) {
     @ExperimentalTime
     suspend fun createUser(
         jwtProvider: JWTProvider,
-        newUser: app.softwork.composetodo.dto.User.New
+        newUser: User
     ): Token {
-        require(newUser.password == newUser.passwordAgain)
-        val user = newSuspendedTransaction(db = db) {
-            User.new {
-                username = newUser.username
-                password = newUser.password
-                firstName = newUser.firstName
-                lastName = newUser.lastName
-            }
-        }
+        val user = db.create(newUser, User)
+
         return jwtProvider.token(user)
     }
 
-    suspend fun find(userID: UUID) = newSuspendedTransaction(db = db) {
-        User.findById(userID)
+    suspend fun find(username: String): User? = db.read(username, User)
+
+    suspend fun findBy(name: String, password: String) = db.read(name, User)?.takeIf {
+        it.fields.password?.value == password
     }
 
-    suspend fun findBy(name: String, password: String) = newSuspendedTransaction(db = db) {
-        User.find {
-            Users.name eq name and (Users.password eq password)
-        }.firstOrNull()
-    }
-
-
-    suspend fun delete(user: User) = newSuspendedTransaction(db = db) {
-        user.delete()
-    }
-
-    suspend fun update(user: User, toUpdate: app.softwork.composetodo.dto.User) =
-        newSuspendedTransaction(db = db) {
-            user.apply {
-                firstName = toUpdate.firstName
-                lastName = toUpdate.lastName
-            }.toDTO()
-        }
+    suspend fun delete(user: User) = db.delete(user, User)
+    suspend fun update(user: User) = db.update(user, User)
 }
