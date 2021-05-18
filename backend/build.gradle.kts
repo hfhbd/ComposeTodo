@@ -47,7 +47,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("test-junit"))
                 implementation("io.ktor:ktor-server-test-host:$ktorVersion")
-                implementation("app.softwork:cloudkitclient-testing:0.0.3")
+                implementation("app.softwork:cloudkitclient-testing:0.0.7")
             }
         }
     }
