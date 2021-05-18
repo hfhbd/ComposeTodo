@@ -1,5 +1,6 @@
 plugins {
     kotlin("multiplatform")
+    kotlin("plugin.serialization")
     application
 }
 
@@ -35,27 +36,18 @@ kotlin {
                 // Apache 2, https://github.com/hfhbd/RateLimit/releases/latest
                 implementation("app.softwork:ratelimit:0.0.8")
 
-                // Apache 2, https://github.com/JetBrains/Exposed/releases/latest
-                val exposedVersion = "0.31.1"
-                implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
-                implementation("org.jetbrains.exposed:exposed-dao:$exposedVersion")
-                implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
-                // todo: kotlin-time
-                implementation("org.jetbrains.exposed:exposed-java-time:$exposedVersion")
-
-                // Apache 2, https://github.com/hfhbd/kotlinx-uuid/releases
-                implementation("app.softwork:kotlinx-uuid-exposed-jvm:0.0.5")
+                // Apache 2, https://github.com/hfhbd/cloudkitclient/releases/latest
+                implementation("app.softwork:cloudkitclient-core:0.0.7")
 
                 // EPL 1.0, https://github.com/qos-ch/logback/releases
                 runtimeOnly("ch.qos.logback:logback-classic:1.2.3")
-                // MPL 2.0 or EPL 1.0, https://github.com/h2database/h2database/releases/latest
-                runtimeOnly("com.h2database:h2:1.4.200")
             }
         }
         val jvmTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
                 implementation("io.ktor:ktor-server-test-host:$ktorVersion")
+                implementation("app.softwork:cloudkitclient-testing:0.0.7")
             }
         }
     }

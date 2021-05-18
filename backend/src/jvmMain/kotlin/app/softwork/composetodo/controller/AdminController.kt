@@ -1,11 +1,9 @@
 package app.softwork.composetodo.controller
 
-import app.softwork.composetodo.dao.User
-import app.softwork.composetodo.toDTO
-import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import app.softwork.cloudkitclient.*
+import app.softwork.composetodo.*
+import app.softwork.composetodo.dao.*
 
-object AdminController {
-    suspend fun allUsers() = newSuspendedTransaction {
-        User.all().map { it.toDTO() }
-    }
+class AdminController(private val db: Client.Database) {
+    suspend fun allUsers() = db.query(User).map { it.toDTO() }
 }

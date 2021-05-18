@@ -22,7 +22,8 @@ class NewTodoViewModel(val api: API.LoggedIn, val onDone: () -> Unit) {
                     id = UUID(),
                     title = title,
                     finished = false,
-                    until = LocalDateTime.parse(until)
+                    until = LocalDateTime.parse(until).toInstant(TimeZone.currentSystemDefault()),
+                    recordChangeTag = null
                 )
             )
             onDone()
