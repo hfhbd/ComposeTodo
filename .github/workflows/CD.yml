@@ -100,4 +100,5 @@ jobs:
           --image "eu.gcr.io/$project_id/$service_name:$version" \
           --platform "managed" \
           --allow-unauthenticated \
+          --set-env-vars keyID="${{ secrets.CK_KEYID }}",privateKey=${{ secrets.CK_KEY}} \
           --port 80
