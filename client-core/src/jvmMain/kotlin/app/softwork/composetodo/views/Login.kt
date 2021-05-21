@@ -15,10 +15,16 @@ fun Login(viewModel: LoginViewModel, onSuccess: @Composable (API.LoggedIn) -> Un
     } else {
         Column {
             TextField(
+                label = {
+                    Text("Username")
+                },
                 value = viewModel.userName,
                 onValueChange = { viewModel.userName = it }
             )
             TextField(
+                label = {
+                    Text("Password")
+                },
                 value = viewModel.password,
                 onValueChange = { viewModel.password = it },
                 visualTransformation = PasswordVisualTransformation()

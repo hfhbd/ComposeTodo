@@ -1,3 +1,4 @@
+import org.jetbrains.compose.compose
 import org.jetbrains.kotlin.gradle.plugin.mpp.*
 
 plugins {
@@ -44,7 +45,8 @@ kotlin {
         val jvmMain by getting {
             dependencies {
                 api(compose.runtime)
-                api(compose.desktop.currentOs)
+                api(compose.foundation)
+                api(compose.material)
             }
         }
         val jvmTest by getting {
