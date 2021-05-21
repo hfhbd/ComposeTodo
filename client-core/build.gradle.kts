@@ -21,7 +21,7 @@ kotlin {
             }
         }
     }
-    js(IR) {
+    /*js(IR) {
         browser {
             binaries.executable()
             testTask {
@@ -30,7 +30,7 @@ kotlin {
                 }
             }
         }
-    }
+    }*/
 
     sourceSets {
         commonMain {
@@ -46,7 +46,7 @@ kotlin {
             }
         }
 
-        val jsMain by getting {
+        /*val jsMain by getting {
             dependencies {
                 implementation(compose.web.web)
                 implementation(compose.runtime)
@@ -57,7 +57,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("test-js"))
             }
-        }
+        }*/
 
         val jvmMain by getting {
             dependencies {

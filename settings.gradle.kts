@@ -1,8 +1,8 @@
 pluginManagement {
     repositories {
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
         google()
         gradlePluginPortal()
-        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }
 
@@ -12,5 +12,5 @@ include(":shared")
 include(":backend")
 
 include(":client-core")
-//include(":androidApp")
+include(":androidApp")
 include(":desktop")
