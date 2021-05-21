@@ -1,20 +1,28 @@
 package app.softwork.composetodo.models
 
-import kotlinx.datetime.LocalDateTime
-import kotlinx.uuid.UUID
+import kotlinx.datetime.*
+import kotlinx.uuid.*
 
 data class TodoEntity(
     override val id: UUID,
     override val title: String,
-    override val until: LocalDateTime,
-    override val finished: Boolean
+    override val until: Instant?,
+    override val finished: Boolean,
+    val recordChangeTag: String?
 ) : Todo {
     constructor(todo: app.softwork.composetodo.dto.Todo) : this(
-        todo.id,
-        todo.title,
-        todo.until,
-        todo.finished
+        id = todo.id,
+        title = todo.title,
+        until = todo.until,
+        finished = todo.finished,
+        recordChangeTag = todo.recordChangeTag
     )
 
-    fun toDTO() = app.softwork.composetodo.dto.Todo(id, title, until, finished)
+    fun toDTO() = app.softwork.composetodo.dto.Todo(
+        id = id,
+        title = title,
+        until = until,
+        finished = finished,
+        recordChangeTag = recordChangeTag
+    )
 }

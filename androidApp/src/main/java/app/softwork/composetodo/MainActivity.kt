@@ -1,15 +1,16 @@
 package app.softwork.composetodo
 
-import android.os.Bundle
-import androidx.activity.compose.setContent
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
-import app.softwork.composetodo.repository.AppDatabase
-import app.softwork.composetodo.repository.TodoRepo
-import app.softwork.composetodo.repository.TodoRepository
-import app.softwork.composetodo.viewmodels.LoginViewModel
-import app.softwork.composetodo.viewmodels.PressMeViewModel
-import app.softwork.composetodo.viewmodels.TodoViewModel
+import android.os.*
+import androidx.activity.compose.*
+import androidx.appcompat.app.*
+import androidx.lifecycle.*
+import app.softwork.composetodo.models.*
+import app.softwork.composetodo.repository.*
+import app.softwork.composetodo.viewmodels.*
+import io.ktor.client.*
+import io.ktor.client.engine.android.*
+import io.ktor.client.features.*
+import io.ktor.http.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var appContainer: AppContainer<TodoEntity>
@@ -36,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         override val loginViewModel = LoginViewModel(lifecycleScope, api = api)
         override fun todoViewModel(api: API.LoggedIn) =
             TodoViewModel(lifecycleScope, TodoRepo(db.todoDao, api = api))
+
         override val pressMeViewModel = PressMeViewModel(lifecycleScope)
     }
 }

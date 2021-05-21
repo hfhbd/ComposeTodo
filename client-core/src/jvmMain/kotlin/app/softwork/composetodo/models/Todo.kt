@@ -1,12 +1,12 @@
 package app.softwork.composetodo.models
 
-import kotlinx.datetime.LocalDateTime
-import kotlinx.uuid.UUID
+import kotlinx.datetime.*
+import kotlinx.uuid.*
 
 interface Todo {
     val id: UUID
     val title: String
-    val until: LocalDateTime
+    val until: Instant?
     val finished: Boolean
 
     companion object
