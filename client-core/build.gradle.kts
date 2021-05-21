@@ -11,6 +11,9 @@ kotlin {
         binaries {
             framework {
                 baseName = "composetodo"
+                export(project(":shared"))
+                // Export transitively.
+                transitiveExport = true
             }
         }
     }
@@ -65,7 +68,7 @@ tasks {
         group = "build"
         val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
         val sdkName = System.getenv("SDK_NAME") ?: "iphonesimulator"
-        val targetName = "ios" + if (sdkName.startsWith("iphoneos")) "Arm64" else "X64"
+        val targetName = "iosArm64"
         val framework =
             kotlin.targets.getByName<KotlinNativeTarget>(targetName).binaries.getFramework(mode)
         inputs.property("mode", mode)
@@ -74,5 +77,7 @@ tasks {
         from({ framework.outputDirectory })
         into(targetDir)
     }
-    build { dependsOn(packForXcode) }
+    build {
+        dependsOn(packForXcode)
+    }
 }
