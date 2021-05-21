@@ -6,14 +6,7 @@ plugins {
 }
 
 kotlin {
-    jvm {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-                useIR = true
-            }
-        }
-    }
+    jvm()
     ios {
         binaries {
             framework {
@@ -23,7 +16,6 @@ kotlin {
     }
     js(IR) {
         browser {
-            binaries.executable()
             testTask {
                 useKarma {
                     useChromeHeadless()
@@ -42,20 +34,7 @@ kotlin {
         }
         commonTest {
             dependencies {
-
-            }
-        }
-
-        val jsMain by getting {
-            dependencies {
-                implementation(compose.web.web)
-                implementation(compose.runtime)
-            }
-        }
-
-        val jsTest by getting {
-            dependencies {
-                implementation(kotlin("test-js"))
+                implementation(kotlin("test"))
             }
         }
 
@@ -67,7 +46,7 @@ kotlin {
         }
         val jvmTest by getting {
             dependencies {
-                api(kotlin("test-junit"))
+
             }
         }
 

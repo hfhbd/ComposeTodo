@@ -4,14 +4,7 @@ plugins {
 }
 
 kotlin {
-    jvm {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-                useIR = true
-            }
-        }
-    }
+    jvm()
 
     sourceSets {
         commonMain {
@@ -21,6 +14,7 @@ kotlin {
         }
         commonTest {
             dependencies {
+                implementation(kotlin("test"))
             }
         }
 
@@ -30,7 +24,6 @@ kotlin {
         }
         val jvmTest by getting {
             dependencies {
-
             }
         }
     }
