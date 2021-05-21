@@ -1,22 +1,21 @@
 package app.softwork.composetodo.repository
 
 import app.softwork.composetodo.API
-import app.softwork.composetodo.api
 import app.softwork.composetodo.models.Todo
 
 class TodoRepository(
     private val dao: TodoDao,
-    private val rest: API = api
+    private val api: API.LoggedIn
 ) {
     suspend fun delete(todo: Todo) {
         dao.delete(todo)
-        rest.deleteTodo(todo.id)
+        api.deleteTodo(todo.id)
     }
 
     suspend fun get(): List<Todo> = dao.getAll()
 
     suspend fun sync(): List<Todo> {
-        val remoteRest = rest.getTodos()
+        val remoteRest = api.getTodos()
         val remote = remoteRest.map { Todo(it) }
         val local = dao.getAll()
         val new = local - remote

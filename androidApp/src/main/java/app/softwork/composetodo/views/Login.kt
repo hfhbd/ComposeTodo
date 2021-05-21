@@ -1,17 +1,17 @@
 package app.softwork.composetodo.views
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Button
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import app.softwork.composetodo.viewmodels.LoginViewModel
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.text.input.*
+import app.softwork.composetodo.*
+import app.softwork.composetodo.viewmodels.*
 
 @Composable
-fun Login(viewModel: LoginViewModel, onSuccess: @Composable () -> Unit) {
-    if (viewModel.success) {
-        onSuccess()
+fun Login(viewModel: LoginViewModel, onSuccess: @Composable (API.LoggedIn) -> Unit) {
+    val login = viewModel.login
+    if (login != null) {
+        onSuccess(login)
     } else {
         Column {
             TextField(

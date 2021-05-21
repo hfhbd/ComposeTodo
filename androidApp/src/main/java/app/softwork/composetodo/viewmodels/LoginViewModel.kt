@@ -1,20 +1,17 @@
 package app.softwork.composetodo.viewmodels
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import app.softwork.composetodo.API
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+import androidx.compose.runtime.*
+import app.softwork.composetodo.*
+import kotlinx.coroutines.*
 
-class LoginViewModel(private val scope: CoroutineScope, private val api: API) {
+class LoginViewModel(private val scope: CoroutineScope, private val api: API.LoggedOut) {
     var userName by mutableStateOf("")
     var password by mutableStateOf("")
-    var success by mutableStateOf(false)
+    var login: API.LoggedIn? by mutableStateOf(null)
 
     fun login() {
         scope.launch {
-            success = api.login(userName = userName, password = password)
+            login = api.login(username = userName, password = password)
         }
     }
 }
