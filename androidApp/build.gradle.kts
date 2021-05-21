@@ -49,11 +49,10 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.3.0")
     implementation("androidx.activity:activity-ktx:1.2.3")
 
-    implementation("androidx.activity:activity-compose:1.3.0-alpha08")
+    implementation("androidx.activity:activity-compose:1.3.0-beta01")
     implementation(compose.runtime)
     implementation(compose.foundation)
     implementation(compose.material)
-    implementation("androidx.activity:activity-compose:1.3.0-alpha08")
 
     val roomVersion = "2.3.0"
 
