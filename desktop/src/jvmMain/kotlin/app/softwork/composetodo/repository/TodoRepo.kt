@@ -6,15 +6,14 @@ import kotlinx.datetime.*
 import kotlinx.uuid.*
 
 class TodoRepo(private val api: API.LoggedIn) : TodoRepository<TodoEntity> {
-    override suspend fun getRemote() = api.getTodos().map { TodoEntity(it) }
 
     /**
      * Always online, no local DB yet
      */
-    override suspend fun sync() = getRemote()
+    override suspend fun sync() = api.getTodos().map { TodoEntity(it) }
 
     override suspend fun deleteAll() {
-        val all = getRemote()
+        val all = sync()
         all.forEach { toDelete ->
             api.deleteTodo(toDelete.id)
         }

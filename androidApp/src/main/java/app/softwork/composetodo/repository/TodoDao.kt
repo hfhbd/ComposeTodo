@@ -21,7 +21,7 @@ interface TodoDao {
     suspend fun insert(todos: List<TodoEntity>)
 
     @Insert
-    suspend fun insert(todos: TodoEntity)
+    suspend fun insert(todo: TodoEntity)
 
     @Delete
     suspend fun delete(todo: List<TodoEntity>)
