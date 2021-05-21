@@ -1,21 +1,20 @@
 package app.softwork.composetodo
 
-import android.os.Bundle
-import androidx.activity.compose.setContent
-import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.Row
-import androidx.lifecycle.lifecycleScope
-import app.softwork.composetodo.repository.AppDatabase
-import app.softwork.composetodo.repository.TodoRepository
-import app.softwork.composetodo.viewmodels.LoginViewModel
-import app.softwork.composetodo.viewmodels.PressMeViewModel
-import app.softwork.composetodo.viewmodels.TodoViewModel
-import app.softwork.composetodo.views.Login
-import app.softwork.composetodo.views.PressMeButton
-import app.softwork.composetodo.views.Todos
+import android.os.*
+import androidx.activity.compose.*
+import androidx.appcompat.app.*
+import androidx.compose.foundation.layout.*
+import androidx.lifecycle.*
+import app.softwork.composetodo.repository.*
+import app.softwork.composetodo.viewmodels.*
+import app.softwork.composetodo.views.*
+import io.ktor.client.*
+import io.ktor.client.engine.android.*
+import io.ktor.client.features.*
+import io.ktor.http.*
 
 class MainActivity : AppCompatActivity() {
-    lateinit var appContainer: AppContainer
+    private lateinit var appContainer: AppContainer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,16 +24,27 @@ class MainActivity : AppCompatActivity() {
             Row {
                 PressMeButton(appContainer.pressMeViewModel)
                 Login(appContainer.loginViewModel) {
-                    Todos(appContainer.todoViewModel)
+                    Todos(appContainer.todoViewModel(api = it))
                 }
             }
         }
     }
 
-    inner class Container: AppContainer {
+    inner class Container : AppContainer {
+        private val api = API.LoggedOut(HttpClient(Android) {
+            defaultRequest {
+                url {
+                    protocol = URLProtocol.HTTPS
+                    host = "api.todo.softwork.app"
+                }
+            }
+        })
+
         private val db = AppDatabase.getInstance(applicationContext)
         override val loginViewModel = LoginViewModel(lifecycleScope, api = api)
-        override val todoViewModel = TodoViewModel(lifecycleScope, TodoRepository(db.todoDao))
+        override fun todoViewModel(api: API.LoggedIn) =
+            TodoViewModel(lifecycleScope, TodoRepository(db.todoDao, api = api))
+
         override val pressMeViewModel = PressMeViewModel(lifecycleScope)
     }
 }

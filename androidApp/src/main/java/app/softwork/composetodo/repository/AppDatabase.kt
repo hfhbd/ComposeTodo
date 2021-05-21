@@ -7,10 +7,10 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import app.softwork.composetodo.models.Todo
 import app.softwork.composetodo.repository.converter.KotlinxUUIDConverter
-import app.softwork.composetodo.repository.converter.LocalDateTimeConverter
+import app.softwork.composetodo.repository.converter.InstantConverter
 
 @Database(entities = [Todo::class], version = 1)
-@TypeConverters(KotlinxUUIDConverter::class, LocalDateTimeConverter::class)
+@TypeConverters(KotlinxUUIDConverter::class, InstantConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract val todoDao: TodoDao
 
