@@ -2,7 +2,7 @@ plugins {
     // Apache 2, https://github.com/JetBrains/kotlin/releases/latest
     kotlin("multiplatform") version "1.5.0" apply false
     kotlin("plugin.serialization") version "1.5.0" apply false
-    id("com.android.application") version "7.0.0-beta02" apply false
+    id("com.android.application") version "7.1.0-alpha01" apply false
     id("org.jetbrains.compose") version "0.4.0-build209" apply false
 }
 
