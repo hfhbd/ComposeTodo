@@ -32,7 +32,7 @@ data class Todo(
     data class Fields(
         val user: Value.Reference<User.Fields, User>,
         val title: Value.String,
-        val until: Value.DateTime?,
+        val until: Value.DateTime? = null,
         val finished: Value.String
     ) : Record.Fields
 }
