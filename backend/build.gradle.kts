@@ -10,7 +10,7 @@ application {
 
 kotlin {
     jvm {
-        //withJava()
+        withJava()
     }
 
     sourceSets {
