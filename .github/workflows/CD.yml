@@ -40,7 +40,7 @@ jobs:
       - name: Upload WebApp Artifact
         uses: actions/upload-artifact@v2
         with:
-          path: client-core/build/distributions
+          path: web/build/distributions
 
   webApp:
     needs: build
