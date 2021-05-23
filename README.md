@@ -11,4 +11,4 @@ Sample app to play with Jetpack Compose and Kotlin Multiplatform.
 
 ## Authentication
 
-The used authentication is for demo purpose only. Never use this implementation for a productive application.
+The used authentication is for demo purpose only. Never use this implementation in a productive application.
