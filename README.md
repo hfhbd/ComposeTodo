@@ -6,7 +6,7 @@ Sample app to play with Jetpack Compose and Kotlin Multiplatform.
 
 - Android using Jetpack Compose
 - Desktop using Jetpack Compose
-- Web using Jetpack Compose Web
+- Web using Jetpack Compose Web (see web-dev branch)
 - Backend using Ktor
 
 ## Authentication
