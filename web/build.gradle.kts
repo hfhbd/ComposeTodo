@@ -1,6 +1,6 @@
 plugins {
     kotlin("multiplatform")
-    id("org.jetbrains.compose")
+    id("org.jetbrains.compose") version "0.0.12-SNAPSHOT"
 }
 
 kotlin {
@@ -18,7 +18,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                api(project(":client-core"))
+                api(projects.shared)
             }
         }
         commonTest {
@@ -29,7 +29,7 @@ kotlin {
 
         val jsMain by getting {
             dependencies {
-                implementation(compose.web.web)
+                implementation(compose.web.core)
                 implementation(compose.runtime)
             }
         }

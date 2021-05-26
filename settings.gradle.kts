@@ -7,11 +7,15 @@ pluginManagement {
 }
 
 rootProject.name = "ComposeTodo"
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 include(":shared")
 
 include(":backend")
+include(":clients")
 
-include(":client-core")
+include(":iosClient")
 include(":androidApp")
 include(":desktop")
-//include(":web")
+include(":web")

@@ -1,6 +1,6 @@
 plugins {
     kotlin("multiplatform")
-    id("org.jetbrains.compose")
+    id("org.jetbrains.compose") version "0.4.0-build211"
 }
 
 kotlin {
@@ -9,7 +9,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(project(":client-core"))
+                implementation(projects.clients)
             }
         }
         commonTest {
