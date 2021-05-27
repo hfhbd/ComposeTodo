@@ -17,7 +17,7 @@ kotlin {
                 api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1")
 
                 // Apache 2, https://github.com/Kotlin/kotlinx-datetime/releases
-                api("org.jetbrains.kotlinx:kotlinx-datetime:0.2.0")
+                api("org.jetbrains.kotlinx:kotlinx-datetime:0.2.1")
 
                 // Apache 2, https://github.com/hfhbd/kotlinx-uuid/releases
                 api("app.softwork:kotlinx-uuid-core:0.0.5")
