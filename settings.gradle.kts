@@ -13,9 +13,11 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":shared")
 
 include(":backend")
-include(":clients")
+
 
 include(":iosClient")
+//include(":web")
+
+include(":androidAndDesktop")
 include(":androidApp")
 include(":desktop")
-include(":web")

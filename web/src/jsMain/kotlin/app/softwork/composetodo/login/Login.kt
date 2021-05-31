@@ -3,6 +3,7 @@ package app.softwork.composetodo.login
 import androidx.compose.runtime.*
 import androidx.compose.web.attributes.*
 import androidx.compose.web.elements.*
+import app.softwork.bootstrapcompose.*
 import app.softwork.composetodo.*
 import kotlinx.coroutines.*
 
@@ -15,13 +16,13 @@ fun Login(api: API.LoggedOut, onLogin: (API.LoggedIn) -> Unit) {
             H1 {
                 Text("Login")
             }
-            input(value = username, placeholder = "user.name", label = "Username") {
+            Input(value = username, placeholder = "user.name", label = "Username") {
                 username = it.value
             }
-            input(InputType.Password, placeholder = "password", label = "Passwort", value = password) {
+            Input(InputType.Password, placeholder = "password", label = "Passwort", value = password) {
                 password = it.value
             }
-            button("Login", attrs = {
+            Button("Login", attrs = {
                 disabled(username.isEmpty() || password.isEmpty())
             }) {
                 scope.launch {

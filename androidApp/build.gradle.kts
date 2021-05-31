@@ -2,7 +2,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
-    id("org.jetbrains.compose")
+    id("org.jetbrains.compose") version "0.4.0-rc2"
 }
 
 android {
@@ -39,7 +39,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":client-core"))
+    implementation(projects.androidAndDesktop)
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
 
     implementation("io.ktor:ktor-client-android:1.6.0")
@@ -50,9 +50,6 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.2.3")
 
     implementation("androidx.activity:activity-compose:1.3.0-beta01")
-    implementation(compose.runtime)
-    implementation(compose.foundation)
-    implementation(compose.material)
 
     val roomVersion = "2.3.0"
 

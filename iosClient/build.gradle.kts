@@ -1,9 +1,7 @@
-import org.jetbrains.compose.compose
 import org.jetbrains.kotlin.gradle.plugin.mpp.*
 
 plugins {
     kotlin("multiplatform")
-    id("org.jetbrains.compose")
 }
 
 kotlin {
@@ -12,7 +10,7 @@ kotlin {
         binaries {
             framework {
                 baseName = "composetodo"
-                export(project(":shared"))
+                export(projects.shared)
                 // Export transitively.
                 transitiveExport = true
             }
@@ -31,7 +29,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                api(project(":shared"))
+                api(projects.shared)
                 // Apache 2, https://github.com/Kotlin/kotlinx.coroutines/releases/latest
                 api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0-native-mt")
             }
@@ -39,19 +37,6 @@ kotlin {
         commonTest {
             dependencies {
                 implementation(kotlin("test"))
-            }
-        }
-
-        val jvmMain by getting {
-            dependencies {
-                api(compose.runtime)
-                api(compose.foundation)
-                api(compose.material)
-            }
-        }
-        val jvmTest by getting {
-            dependencies {
-
             }
         }
 
