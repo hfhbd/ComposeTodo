@@ -23,7 +23,9 @@ class NewTodoViewModel(val api: API.LoggedIn, val onDone: () -> Unit) {
                     id = UUID(),
                     title = title,
                     finished = false,
-                    until = LocalDateTime.parse(until).toInstant(TimeZone.currentSystemDefault()),
+                    until = until.takeIf { it.isNotBlank() }?.let {
+                        LocalDateTime.parse(until).toInstant(TimeZone.currentSystemDefault())
+                    },
                     recordChangeTag = null
                 )
             )
@@ -34,7 +36,12 @@ class NewTodoViewModel(val api: API.LoggedIn, val onDone: () -> Unit) {
 
 @Composable
 fun NewTodo(viewModel: NewTodoViewModel) {
-    Input(type = InputType.Text, label = "Title", placeholder = "Hello World", value = viewModel.title) {
+    Input(
+        type = InputType.Text,
+        label = "Title",
+        placeholder = "Hello World",
+        value = viewModel.title
+    ) {
         viewModel.title = it.value
     }
     DateTimeInput(
