@@ -2,6 +2,7 @@ package app.softwork.composetodo.todos
 
 import androidx.compose.runtime.*
 import androidx.compose.web.elements.*
+import app.softwork.bootstrapcompose.*
 import app.softwork.composetodo.*
 import app.softwork.composetodo.dto.*
 import kotlinx.coroutines.*
@@ -39,7 +40,7 @@ fun Todos(viewModel: TodosViewModel) {
     if (viewModel.todos.isEmpty()) {
         Text("No Todos created")
     } else {
-        Table(viewModel.todos) { todo ->
+        Table(data = viewModel.todos) { todo ->
             rowColor = when {
                 todo.finished -> Color.Success
                 todo.until?.let {
@@ -47,11 +48,11 @@ fun Todos(viewModel: TodosViewModel) {
                 } ?: false -> Color.Warning
                 else -> null
             }
-            cell("Title") {
+            column("Title") {
                 Text(todo.title)
             }
-            cell("") {
-                button("Delete") {
+            column("") {
+                Button("Delete", color = Color.Danger) {
                     viewModel.delete(todo)
                 }
             }
