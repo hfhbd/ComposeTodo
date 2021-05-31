@@ -16,7 +16,7 @@ include(":backend")
 
 
 include(":iosClient")
-//include(":web")
+include(":web")
 
 include(":androidAndDesktop")
 include(":androidApp")
