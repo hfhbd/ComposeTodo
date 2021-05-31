@@ -9,7 +9,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(projects.androidAndDesktop)
+                api(projects.shared)
             }
         }
         commonTest {
@@ -18,21 +18,17 @@ kotlin {
             }
         }
 
-        val jvmMain by getting {
+       val jvmMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-cio:1.6.0")
-                implementation(compose.desktop.currentOs)
+                api(compose.runtime)
+                api(compose.foundation)
+                api(compose.material)
             }
         }
         val jvmTest by getting {
             dependencies {
+
             }
         }
-    }
-}
-
-compose.desktop {
-    application {
-        mainClass = "app.softwork.composetodo.MainKt"
     }
 }

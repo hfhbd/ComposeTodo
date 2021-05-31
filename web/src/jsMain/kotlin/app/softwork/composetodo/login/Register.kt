@@ -3,6 +3,7 @@ package app.softwork.composetodo.login
 import androidx.compose.runtime.*
 import androidx.compose.web.attributes.*
 import androidx.compose.web.elements.*
+import app.softwork.bootstrapcompose.*
 import app.softwork.composetodo.*
 import app.softwork.composetodo.dto.*
 import kotlinx.coroutines.*
@@ -20,22 +21,22 @@ fun Register(api: API.LoggedOut, onLogin: (API.LoggedIn) -> Unit) {
             H1 {
                 Text("Register")
             }
-            input(value = username, placeholder = "user.name", label = "Username") {
+            Input(value = username, placeholder = "user.name", label = "Username") {
                 username = it.value
             }
-            input(InputType.Password, placeholder = "password", label = "Passwort", value = password) {
+            Input(InputType.Password, placeholder = "password", label = "Passwort", value = password) {
                 password = it.value
             }
-            input(InputType.Password, placeholder = "passwordAgain", label = "Passwort Again", value = passwordAgain) {
+            Input(InputType.Password, placeholder = "passwordAgain", label = "Passwort Again", value = passwordAgain) {
                 passwordAgain = it.value
             }
-            input(placeholder = "John", label = "First Name", value = firstName) {
+            Input(placeholder = "John", label = "First Name", value = firstName) {
                 firstName = it.value
             }
-            input(placeholder = "Doe", label = "Last Name", value = lastName) {
+            Input(placeholder = "Doe", label = "Last Name", value = lastName) {
                 lastName = it.value
             }
-            button("Register", attrs = {
+            Button("Register", attrs = {
                 disabled(password != passwordAgain || listOf(
                     username,
                     password,
