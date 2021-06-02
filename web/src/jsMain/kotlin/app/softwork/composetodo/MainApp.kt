@@ -32,15 +32,9 @@ fun MainApp() {
     Main {
         Container {
             when (val currentApi = api) {
-                is API.LoggedIn ->
-                    when (path()) {
-                        "/users" -> {
-                            Users(currentApi)
-                        }
-                        else -> {
-                            Todos(TodosViewModel(currentApi))
-                        }
-                    }
+                is API.LoggedIn -> {
+                    MainContent(currentApi)
+                }
                 is API.LoggedOut -> {
                     Text("This application uses a cold Google Cloud Run server, which usally takes 2 seconds to start the backend.")
                     Login(currentApi) {
@@ -51,6 +45,19 @@ fun MainApp() {
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun MainContent(api: API.LoggedIn) {
+    val path by path(42)
+    when (path) {
+        "/users" -> {
+            Users(api)
+        }
+        else -> {
+            Todos(TodosViewModel(api))
         }
     }
 }
