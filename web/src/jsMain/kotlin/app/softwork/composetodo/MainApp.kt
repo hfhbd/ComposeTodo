@@ -42,6 +42,7 @@ fun MainApp() {
                         }
                     }
                 is API.LoggedOut -> {
+                    Text("This application uses a cold Google Cloud Run server, which usally takes 2 seconds to start the backend.")
                     Login(currentApi) {
                         api = it
                     }
