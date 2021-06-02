@@ -1,10 +1,10 @@
 package app.softwork.composetodo
 
 import androidx.compose.runtime.*
-import androidx.compose.web.elements.*
 import app.softwork.bootstrapcompose.*
 import app.softwork.composetodo.routing.*
 import kotlinx.coroutines.*
+import org.jetbrains.compose.web.dom.*
 
 @Composable
 fun Navbar(api: API, onLogout: () -> Unit) {

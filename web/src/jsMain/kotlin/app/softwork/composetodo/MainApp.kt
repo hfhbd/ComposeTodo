@@ -1,7 +1,6 @@
 package app.softwork.composetodo
 
 import androidx.compose.runtime.*
-import androidx.compose.web.elements.*
 import app.softwork.bootstrapcompose.*
 import app.softwork.composetodo.login.*
 import app.softwork.composetodo.routing.*
@@ -12,6 +11,7 @@ import io.ktor.client.engine.js.*
 import io.ktor.client.features.*
 import io.ktor.client.features.cookies.*
 import io.ktor.http.*
+import org.jetbrains.compose.web.dom.*
 
 @Composable
 fun MainApp() {
