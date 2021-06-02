@@ -5,7 +5,6 @@ plugins {
 }
 
 kotlin {
-    jvm()
     ios {
         binaries {
             framework {
@@ -13,15 +12,6 @@ kotlin {
                 export(projects.shared)
                 // Export transitively.
                 transitiveExport = true
-            }
-        }
-    }
-    js(IR) {
-        browser {
-            testTask {
-                useKarma {
-                    useChromeHeadless()
-                }
             }
         }
     }
