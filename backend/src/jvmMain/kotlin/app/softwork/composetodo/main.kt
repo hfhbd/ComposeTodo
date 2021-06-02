@@ -24,7 +24,6 @@ fun main() {
     )
 
     embeddedServer(CIO) {
-        install(RateLimit)
         install(CORS) {
             host("todo.softwork.app", listOf("https"))
             host("localhost:8080")
@@ -33,6 +32,11 @@ fun main() {
             header(HttpHeaders.ContentType)
             method(HttpMethod.Delete)
             method(HttpMethod.Put)
+        }
+        install(RateLimit) {
+            skip { call ->
+                call.request.local.uri.startsWith("/login").not()
+            }
         }
         TodoModule(db = db, jwtProvider = jwtProvider)
     }.start(wait = true)

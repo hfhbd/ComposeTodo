@@ -1,6 +1,6 @@
 plugins {
     kotlin("multiplatform")
-    id("org.jetbrains.compose") version "0.0.12-SNAPSHOT"
+    id("org.jetbrains.compose") version "0.0.0-web-dev-14.1"
 }
 
 kotlin {
@@ -29,7 +29,7 @@ kotlin {
 
         val jsMain by getting {
             dependencies {
-                implementation("app.softwork:bootstrap-compose:0.0.1")
+                implementation("app.softwork:bootstrap-compose:0.0.5")
                 implementation(compose.web.core)
                 implementation(compose.runtime)
             }

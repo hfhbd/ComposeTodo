@@ -1,7 +1,7 @@
 package app.softwork.composetodo
 
-import androidx.compose.web.*
 import kotlinx.coroutines.*
+import org.jetbrains.compose.web.*
 
 val scope = MainScope()
 
