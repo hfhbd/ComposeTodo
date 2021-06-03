@@ -2,7 +2,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
-    id("org.jetbrains.compose") version "0.4.0"
+    id("org.jetbrains.compose") version "0.4.0-build212"
 }
 
 android {
