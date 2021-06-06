@@ -25,6 +25,11 @@ fun MainApp() {
         }
     }
     var api: API by remember { mutableStateOf(API.LoggedOut(client)) }
+    LaunchedEffect(Unit) {
+        (api as? API.LoggedOut)?.let {
+            it.silentLogin()?.let { api = it }
+        }
+    }
     Navbar(api) {
         api = API.LoggedOut(client)
     }
@@ -36,7 +41,7 @@ fun MainApp() {
                     MainContent(currentApi)
                 }
                 is API.LoggedOut -> {
-                    Text("This application uses a cold Google Cloud Run server, which usally takes 2 seconds to start the backend.")
+                    Text("This application uses a cold Google Cloud Run server, which usually takes 2 seconds to start.")
                     Login(currentApi) {
                         api = it
                     }

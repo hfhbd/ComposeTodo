@@ -59,23 +59,39 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
             }
         }
 
-        authenticate("login") {
-            get("/refreshToken") {
-                call.respondJson(Token.serializer()) {
-                    val user = call.principal<app.softwork.composetodo.dao.User>()!!
-                    call.sessions.set(RefreshToken(user.recordName))
-                    jwtProvider.token(user)
+        route("/refreshToken") {
+
+            authenticate("login") {
+                post {
+                    call.respondJson(Token.serializer()) {
+                        val user = call.principal<app.softwork.composetodo.dao.User>()!!
+                        val longRefreshToken = RefreshToken(user.recordName)
+                        call.sessions.set(longRefreshToken)
+                        jwtProvider.token(longRefreshToken)
+                    }
                 }
             }
-        }
-        authenticate {
-            route("/refreshToken") {
+
+            get {
+                val refreshToken: RefreshToken? = call.sessions.get<RefreshToken>()
+                if (refreshToken == null) {
+                    call.respond(UnauthorizedResponse())
+                } else {
+                    call.respondJson(Token.serializer()) {
+                        jwtProvider.token(refreshToken)
+                    }
+                }
+            }
+
+            authenticate {
                 delete {
                     call.sessions.clear<RefreshToken>()
                     call.respond(HttpStatusCode.OK)
                 }
             }
+        }
 
+        authenticate {
             route("/me") {
                 get {
                     call.respondJson(User.serializer()) {
@@ -118,7 +134,8 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
                         call.respondJson(Todo.serializer()) {
                             val user = call.principal<app.softwork.composetodo.dao.User>()!!
                             val todoID: UUID by parameters
-                            todoController.getTodo(user, todoID)?.toDTO() ?: throw NotFoundException()
+                            todoController.getTodo(user, todoID)?.toDTO()
+                                ?: throw NotFoundException()
                         }
                     }
                     put {
@@ -126,7 +143,8 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
                             val user = call.principal<app.softwork.composetodo.dao.User>()!!
                             val todoID: UUID by parameters
                             val toUpdate = body(Todo.serializer())
-                            todoController.update(user, todoID, toUpdate)?.toDTO() ?: throw NotFoundException()
+                            todoController.update(user, todoID, toUpdate)?.toDTO()
+                                ?: throw NotFoundException()
                         }
                     }
                     delete {
