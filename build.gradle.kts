@@ -2,7 +2,7 @@ plugins {
     // Apache 2, https://github.com/JetBrains/kotlin/releases/latest
     kotlin("multiplatform") version "1.5.10" apply false
     kotlin("plugin.serialization") version "1.5.10" apply false
-    id("com.android.application") version "7.0.0-beta02" apply false
+    id("com.android.application") version "7.0.0-beta03" apply false
 }
 
 repositories {
@@ -17,9 +17,7 @@ allprojects {
 
         maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
 
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/hfhbd/*")
+        maven(url = "https://maven.pkg.github.com/hfhbd/*") {
             credentials {
                 username = System.getProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
                 password = System.getProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
