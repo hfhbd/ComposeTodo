@@ -8,7 +8,7 @@ import org.jetbrains.compose.web.dom.*
 @Composable
 fun NavLink(
     to: String,
-    attrs: AttrsBuilder<Tag.A>.() -> Unit,
+    attrs: AttrsBuilder<Tag.A>.() -> Unit = {},
     content: @Composable () -> Unit
 ) = A(attrs = {
     attrs()
