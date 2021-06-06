@@ -40,7 +40,7 @@ fun Todos(viewModel: TodosViewModel) {
     if (viewModel.todos.isEmpty()) {
         Text("No Todos created")
     } else {
-        Table(data = viewModel.todos) { todo ->
+        Table(data = viewModel.todos) { _, todo ->
             rowColor = when {
                 todo.finished -> Color.Success
                 todo.until?.let {
