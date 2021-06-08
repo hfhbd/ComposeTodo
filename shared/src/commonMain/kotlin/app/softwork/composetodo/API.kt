@@ -17,9 +17,10 @@ sealed class API {
     private val json: Json = Json
 
     data class LoggedOut(val client: HttpClient) : API() {
-        suspend fun register(newUser: User.New): LoggedIn = LoggedIn(Token.serializer() by client.post("/users") {
-            body = newUser using User.New.serializer()
-        }, client)
+        suspend fun register(newUser: User.New): LoggedIn =
+            LoggedIn(Token.serializer() by client.post("/users") {
+                body = newUser using User.New.serializer()
+            }, client)
 
         @OptIn(InternalAPI::class)
         suspend fun login(
@@ -27,8 +28,11 @@ sealed class API {
             password: String
         ): LoggedIn? {
             val token = try {
-                Token.serializer() by client.get("/refreshToken") {
-                    header(HttpHeaders.Authorization, "Basic ${"$username:$password".encodeBase64()}")
+                Token.serializer() by client.post("/refreshToken") {
+                    header(
+                        HttpHeaders.Authorization,
+                        "Basic ${"$username:$password".encodeBase64()}"
+                    )
                 }
             } catch (e: ClientRequestException) {
                 if (e.response.status == HttpStatusCode.Unauthorized) {
@@ -39,6 +43,19 @@ sealed class API {
             }
 
             return LoggedIn(token, client)
+        }
+
+        suspend fun silentLogin(): LoggedIn? {
+            val token = try {
+                Token.serializer() by client.get("/refreshToken")
+            } catch (e: ClientRequestException) {
+                if (e.response.status == HttpStatusCode.Unauthorized) {
+                    null
+                } else {
+                    throw e
+                }
+            }
+            return token?.let { LoggedIn(token, client) }
         }
     }
 

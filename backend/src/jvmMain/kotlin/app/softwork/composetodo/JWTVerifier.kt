@@ -30,12 +30,12 @@ data class JWTProvider(
             }
         } else null
 
-    fun token(user: User): Token {
+    fun token(refreshToken: RefreshToken): Token {
         val now = Clock.System.now()
         return Token(
             Token.Payload(
                 issuer = issuer,
-                subject = user.recordName,
+                subject = refreshToken.value,
                 expiredAt = now + expireDuration,
                 notBefore = now,
                 issuedAt = now,
