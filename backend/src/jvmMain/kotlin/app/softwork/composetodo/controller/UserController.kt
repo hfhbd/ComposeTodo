@@ -14,7 +14,7 @@ class UserController(private val db: Client.Database) {
     ): Token {
         val user = db.create(newUser, User)
 
-        return jwtProvider.token(user)
+        return jwtProvider.token(RefreshToken(user.recordName))
     }
 
     suspend fun find(username: String): User? = db.read(username, User)

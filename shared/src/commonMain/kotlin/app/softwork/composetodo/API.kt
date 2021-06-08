@@ -28,7 +28,7 @@ sealed class API {
             password: String
         ): LoggedIn? {
             val token = try {
-                Token.serializer() by client.get("/refreshToken") {
+                Token.serializer() by client.post("/refreshToken") {
                     header(
                         HttpHeaders.Authorization,
                         "Basic ${"$username:$password".encodeBase64()}"
