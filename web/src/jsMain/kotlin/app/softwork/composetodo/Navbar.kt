@@ -2,7 +2,7 @@ package app.softwork.composetodo
 
 import androidx.compose.runtime.*
 import app.softwork.bootstrapcompose.*
-import app.softwork.composetodo.routing.*
+import app.softwork.routingcompose.*
 import kotlinx.coroutines.*
 import org.jetbrains.compose.web.dom.*
 

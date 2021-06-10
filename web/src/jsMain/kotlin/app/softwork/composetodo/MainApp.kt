@@ -3,9 +3,9 @@ package app.softwork.composetodo
 import androidx.compose.runtime.*
 import app.softwork.bootstrapcompose.*
 import app.softwork.composetodo.login.*
-import app.softwork.composetodo.routing.*
 import app.softwork.composetodo.todos.*
 import app.softwork.composetodo.users.*
+import app.softwork.routingcompose.*
 import io.ktor.client.*
 import io.ktor.client.engine.js.*
 import io.ktor.client.features.*
@@ -56,12 +56,21 @@ fun MainApp() {
 
 @Composable
 fun MainContent(api: API.LoggedIn) {
-    val path by path(42)
-    when (path) {
-        "/users" -> {
-            Users(api)
+    HashRouter("/todos") {
+        route("/users") {
+            noMatch {
+                Users(api)
+            }
         }
-        else -> {
+        route("/todos") {
+            uuid { todoID ->
+                Todo(api, todoID)
+            }
+            noMatch {
+                Todos(TodosViewModel(api))
+            }
+        }
+        noMatch {
             Todos(TodosViewModel(api))
         }
     }
