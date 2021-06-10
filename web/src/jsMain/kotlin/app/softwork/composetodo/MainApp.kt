@@ -12,7 +12,9 @@ import io.ktor.client.features.*
 import io.ktor.client.features.cookies.*
 import io.ktor.http.*
 import org.jetbrains.compose.web.dom.*
+import kotlin.time.*
 
+@ExperimentalTime
 @Composable
 fun MainApp() {
     val client = HttpClient(Js) {
@@ -54,6 +56,7 @@ fun MainApp() {
     }
 }
 
+@ExperimentalTime
 @Composable
 fun MainContent(api: API.LoggedIn) {
     HashRouter("/todos") {

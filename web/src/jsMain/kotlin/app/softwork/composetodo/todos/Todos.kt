@@ -7,12 +7,23 @@ import app.softwork.composetodo.dto.*
 import kotlinx.coroutines.*
 import kotlinx.datetime.*
 import org.jetbrains.compose.web.dom.*
+import kotlin.time.*
 
+@ExperimentalTime
 class TodosViewModel(val api: API.LoggedIn) {
     var todos by mutableStateOf(emptyList<Todo>())
+        private set
 
     init {
         scope.launch {
+            todos = api.getTodos()
+        }
+    }
+
+    fun add(todo: Todo) {
+        todos = todos + todo
+        scope.launch {
+            delay(3.seconds)
             todos = api.getTodos()
         }
     }
@@ -31,16 +42,19 @@ class TodosViewModel(val api: API.LoggedIn) {
     }
 }
 
+@ExperimentalTime
 @Composable
 fun Todos(viewModel: TodosViewModel) {
-    NewTodo(NewTodoViewModel(viewModel.api) { viewModel.refresh() })
+    NewTodo(NewTodoViewModel(viewModel.api) {
+        viewModel.add(it)
+    })
     H1 {
         Text("Todos")
     }
     if (viewModel.todos.isEmpty()) {
         Text("No Todos created")
     } else {
-        Table(data = viewModel.todos) { _, todo ->
+        Table(data = viewModel.todos, key = { it.id }) { _, todo ->
             rowColor = when {
                 todo.finished -> Color.Success
                 todo.until?.let {
