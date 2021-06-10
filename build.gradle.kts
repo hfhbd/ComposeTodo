@@ -3,6 +3,7 @@ plugins {
     kotlin("multiplatform") version "1.5.10" apply false
     kotlin("plugin.serialization") version "1.5.10" apply false
     id("com.android.application") version "7.1.0-alpha02" apply false
+    id("org.jetbrains.compose") version "0.5.0-build223" apply false
 }
 
 repositories {
