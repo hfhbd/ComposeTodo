@@ -24,10 +24,20 @@ fun Register(api: API.LoggedOut, onLogin: (API.LoggedIn) -> Unit) {
             Input(value = username, placeholder = "user.name", label = "Username") {
                 username = it.value
             }
-            Input(InputType.Password, placeholder = "password", label = "Passwort", value = password) {
+            Input(
+                type = InputType.Password,
+                placeholder = "password",
+                label = "Passwort",
+                value = password
+            ) {
                 password = it.value
             }
-            Input(InputType.Password, placeholder = "passwordAgain", label = "Passwort Again", value = passwordAgain) {
+            Input(
+                type = InputType.Password,
+                placeholder = "passwordAgain",
+                label = "Passwort Again",
+                value = passwordAgain
+            ) {
                 passwordAgain = it.value
             }
             Input(placeholder = "John", label = "First Name", value = firstName) {

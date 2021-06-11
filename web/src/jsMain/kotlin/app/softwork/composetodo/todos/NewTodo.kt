@@ -9,7 +9,7 @@ import kotlinx.datetime.*
 import kotlinx.uuid.*
 import org.jetbrains.compose.web.attributes.*
 
-class NewTodoViewModel(val api: API.LoggedIn, val onDone: () -> Unit) {
+class NewTodoViewModel(val api: API.LoggedIn, val created: (Todo) -> Unit) {
     var title by mutableStateOf("")
     var until by mutableStateOf("")
 
@@ -18,18 +18,17 @@ class NewTodoViewModel(val api: API.LoggedIn, val onDone: () -> Unit) {
 
     fun createTodo() {
         scope.launch {
-            api.createTodo(
-                Todo(
-                    id = UUID(),
-                    title = title,
-                    finished = false,
-                    until = until.takeIf { it.isNotBlank() }?.let {
-                        LocalDateTime.parse(until).toInstant(TimeZone.currentSystemDefault())
-                    },
-                    recordChangeTag = null
-                )
+            val newTodo = Todo(
+                id = UUID(),
+                title = title,
+                finished = false,
+                until = until.takeIf { it.isNotBlank() }?.let {
+                    LocalDateTime.parse(until).toInstant(TimeZone.currentSystemDefault())
+                },
+                recordChangeTag = null
             )
-            onDone()
+            api.createTodo(newTodo)
+            created(newTodo)
         }
     }
 }

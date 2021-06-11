@@ -19,7 +19,7 @@ fun Login(api: API.LoggedOut, onLogin: (API.LoggedIn) -> Unit) {
             Input(value = username, placeholder = "user.name", label = "Username") {
                 username = it.value
             }
-            Input(InputType.Password, placeholder = "password", label = "Passwort", value = password) {
+            Input(type = InputType.Password, placeholder = "password", label = "Passwort", value = password) {
                 password = it.value
             }
             Button("Login", attrs = {

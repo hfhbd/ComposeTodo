@@ -2,9 +2,11 @@ package app.softwork.composetodo
 
 import kotlinx.coroutines.*
 import org.jetbrains.compose.web.*
+import kotlin.time.*
 
 val scope = MainScope()
 
+@ExperimentalTime
 fun main() {
     // https://youtrack.jetbrains.com/issue/KTOR-539
     js(
