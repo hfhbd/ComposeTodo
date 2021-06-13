@@ -60,12 +60,12 @@ fun MainApp() {
 @Composable
 fun MainContent(api: API.LoggedIn) {
     HashRouter("/todos") {
-        route("/users") {
+        route("users") {
             noMatch {
                 Users(api)
             }
         }
-        route("/todos") {
+        route("todos") {
             uuid { todoID ->
                 Todo(api, todoID)
             }
