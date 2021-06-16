@@ -35,7 +35,11 @@ fun main() {
         }
         install(RateLimit) {
             skip { call ->
-                call.request.local.uri.startsWith("/login").not()
+                if(call.request.local.uri == "/login") {
+                    SkipResult.ExecuteRateLimit
+                } else {
+                    SkipResult.SkipRateLimit
+                }
             }
         }
         TodoModule(db = db, jwtProvider = jwtProvider)
