@@ -23,7 +23,9 @@ fun Login(api: API.LoggedOut, onLogin: (API.LoggedIn) -> Unit) {
                 password = it.value
             }
             Button("Login", attrs = {
-                disabled(username.isEmpty() || password.isEmpty())
+                if (username.isEmpty() || password.isEmpty()) {
+                    disabled()
+                }
             }) {
                 scope.launch {
                     api.login(username = username, password = password)?.let {

@@ -21,7 +21,7 @@ class TodosViewModel(val api: API.LoggedIn) {
     }
 
     fun add(todo: Todo) {
-        todos = todos + todo
+        todos += todo
         scope.launch {
             delay(3.seconds)
             todos = api.getTodos()

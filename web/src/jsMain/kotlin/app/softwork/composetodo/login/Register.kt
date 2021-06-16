@@ -47,13 +47,16 @@ fun Register(api: API.LoggedOut, onLogin: (API.LoggedIn) -> Unit) {
                 lastName = it.value
             }
             Button("Register", attrs = {
-                disabled(password != passwordAgain || listOf(
-                    username,
-                    password,
-                    passwordAgain,
-                    firstName,
-                    lastName
-                ).any { it.isEmpty() })
+                if (password != passwordAgain || listOf(
+                        username,
+                        password,
+                        passwordAgain,
+                        firstName,
+                        lastName
+                    ).any { it.isEmpty() }
+                ) {
+                    disabled()
+                }
             }) {
                 scope.launch {
                     onLogin(

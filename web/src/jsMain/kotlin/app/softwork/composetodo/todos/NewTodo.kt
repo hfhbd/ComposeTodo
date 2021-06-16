@@ -51,7 +51,9 @@ fun NewTodo(viewModel: NewTodoViewModel) {
         viewModel.until = it.value
     }
     Button("Create new Todo", attrs = {
-        disabled(viewModel.disabledButton)
+        if (viewModel.disabledButton) {
+            disabled()
+        }
     }) {
         viewModel.createTodo()
     }
