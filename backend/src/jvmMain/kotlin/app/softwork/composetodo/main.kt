@@ -2,6 +2,7 @@ package app.softwork.composetodo
 
 import app.softwork.cloudkitclient.*
 import app.softwork.ratelimit.*
+import app.softwork.ratelimit.RateLimit.SkipResult.*
 import com.auth0.jwt.algorithms.*
 import io.ktor.application.*
 import io.ktor.features.*
@@ -36,9 +37,9 @@ fun main() {
         install(RateLimit) {
             skip { call ->
                 if(call.request.local.uri == "/login") {
-                    SkipResult.ExecuteRateLimit
+                    ExecuteRateLimit
                 } else {
-                    SkipResult.SkipRateLimit
+                    SkipRateLimit
                 }
             }
         }
