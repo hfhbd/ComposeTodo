@@ -42,7 +42,7 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
             cookie.path = "/refreshToken"
             cookie.httpOnly = true
             cookie.extensions["SameSite"] = "strict"
-            cookie.maxAgeInSeconds = 1.days.inSeconds.toLong()
+            cookie.maxAgeInSeconds = 1.days.inWholeSeconds
         }
     }
 
@@ -73,13 +73,10 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
             }
 
             get {
-                val refreshToken: RefreshToken? = call.sessions.get<RefreshToken>()
-                if (refreshToken == null) {
-                    call.respond(UnauthorizedResponse())
-                } else {
-                    call.respondJson(Token.serializer()) {
-                        jwtProvider.token(refreshToken)
-                    }
+                val refreshToken: RefreshToken = call.sessions.get<RefreshToken>() ?: throw BadRequestException("Token is missing")
+
+                call.respondJson(Token.serializer()) {
+                    jwtProvider.token(refreshToken)
                 }
             }
 
