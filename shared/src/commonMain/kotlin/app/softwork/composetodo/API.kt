@@ -49,7 +49,7 @@ sealed class API {
             val token = try {
                 Token.serializer() by client.get("/refreshToken")
             } catch (e: ClientRequestException) {
-                if (e.response.status == HttpStatusCode.Unauthorized) {
+                if (e.response.status == HttpStatusCode.BadRequest) {
                     null
                 } else {
                     throw e
