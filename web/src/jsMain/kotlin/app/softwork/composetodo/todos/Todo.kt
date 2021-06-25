@@ -3,7 +3,6 @@ package app.softwork.composetodo.todos
 import androidx.compose.runtime.*
 import app.softwork.composetodo.*
 import app.softwork.composetodo.dto.*
-import kotlinx.coroutines.*
 import kotlinx.uuid.*
 import org.jetbrains.compose.web.dom.*
 
@@ -11,9 +10,7 @@ import org.jetbrains.compose.web.dom.*
 fun Todo(api: API.LoggedIn, todoID: UUID) {
     var todo: Todo? by remember { mutableStateOf(null) }
     LaunchedEffect(todoID) {
-        scope.launch {
-            todo = api.getTodo(todoID)
-        }
+        todo = api.getTodo(todoID)
     }
     todo?.let {
         Text(it.title)
