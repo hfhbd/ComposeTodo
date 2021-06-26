@@ -7,11 +7,13 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.util.*
 import io.ktor.util.InternalAPI
+import io.ktor.utils.io.errors.*
 import kotlinx.datetime.*
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.*
 import kotlinx.serialization.json.*
 import kotlinx.uuid.*
+import kotlin.coroutines.cancellation.*
 
 sealed class API {
     private val json: Json = Json
@@ -23,6 +25,7 @@ sealed class API {
             }, client)
 
         @OptIn(InternalAPI::class)
+        @Throws(IOException::class, CancellationException::class)
         suspend fun login(
             username: String,
             password: String
@@ -45,6 +48,7 @@ sealed class API {
             return LoggedIn(token, client)
         }
 
+        @Throws(IOException::class, CancellationException::class)
         suspend fun silentLogin(): LoggedIn? {
             val token = try {
                 Token.serializer() by client.get("/refreshToken")
@@ -67,45 +71,54 @@ sealed class API {
             header(HttpHeaders.Authorization, "Bearer ${token.content}")
         }
 
+        @Throws(IOException::class, CancellationException::class)
         suspend fun logout() = client.delete<Unit>("/refreshToken") {
             addToken()
         }
 
+        @Throws(IOException::class, CancellationException::class)
         suspend fun getMe(): User = User.serializer() by client.get("/me") {
             addToken()
         }
 
+        @Throws(IOException::class, CancellationException::class)
         suspend fun updateMe(user: User): User = User.serializer() by client.put("/me") {
             body = user using User.serializer()
             addToken()
         }
 
+        @Throws(IOException::class, CancellationException::class)
         suspend fun deleteMe() = client.delete<Unit>("/me") {
             addToken()
         }
 
+        @Throws(IOException::class, CancellationException::class)
         suspend fun getTodos() =
             ListSerializer(Todo.serializer()) by client.get("/todos") {
                 addToken()
             }
 
+        @Throws(IOException::class, CancellationException::class)
         suspend fun getTodo(todoID: UUID) = Todo.serializer() by
                 client.get("/todos/$todoID") {
                     addToken()
                 }
 
+        @Throws(IOException::class, CancellationException::class)
         suspend fun createTodo(todo: Todo) = Todo.serializer() by
                 client.post("/todos") {
                     body = todo using Todo.serializer()
                     addToken()
                 }
 
+        @Throws(IOException::class, CancellationException::class)
         suspend fun updateTodo(todoID: UUID, todo: Todo) = Todo.serializer() by
                 client.put("/todos/$todoID") {
                     body = todo using Todo.serializer()
                     addToken()
                 }
 
+        @Throws(IOException::class, CancellationException::class)
         suspend fun deleteTodo(todoID: UUID) =
             client.delete<Unit>("/todos/$todoID") {
                 addToken()

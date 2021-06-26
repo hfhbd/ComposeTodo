@@ -11,10 +11,13 @@ import SwiftUI
 struct ComposeTodoApp: App {
     let persistenceController = PersistenceController.shared
 
+    @StateObject private var model = ViewModel()
+
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                ContentView().environment(\.managedObjectContext, persistenceController.container.viewContext)
+                ContentView(viewModel: model)
+                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
             }
         }
     }
