@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct ComposeTodoApp: App {
-    let persistenceController = PersistenceController.shared
+    private let persistenceController = PersistenceController()
 
     @StateObject private var model = ViewModel()
 
