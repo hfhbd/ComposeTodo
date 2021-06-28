@@ -12,8 +12,8 @@ fun api(cookiesStorage: CookiesStorage) = API.LoggedOut(HttpClient(Ios) {
     }
     install(DefaultRequest) {
         url {
-            protocol = URLProtocol.HTTP
-            host = "localhost"
+            protocol = URLProtocol.HTTPS
+            host = "api.todo.softwork.app"
         }
     }
 })

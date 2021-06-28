@@ -9,7 +9,8 @@ import SwiftUI
 import CoreData
 import shared
 
-final actor RefreshTokenStorage: CookiesStorage {
+@MainActor
+final class RefreshTokenStorage: CookiesStorage {
     @AppStorage("refreshtoken") private var refreshToken: String?
 
     func addCookie(requestUrl: Url, cookie: Cookie) async throws -> KotlinUnit {
@@ -17,7 +18,7 @@ final actor RefreshTokenStorage: CookiesStorage {
         return KotlinUnit()
     }
 
-    func get(requestUrl: Url) async throws -> [Cookie] {
+    func get(requestUrl: Url) async throws -> [Cookie]? {
         guard let refreshToken = refreshToken else {
             return []
         }
@@ -26,34 +27,48 @@ final actor RefreshTokenStorage: CookiesStorage {
     }
 
 
-    nonisolated func close() {
-    }
+    func close() { }
 }
 
+enum Errors: Error {
+    case WrongPassword
+}
 
 final class ViewModel: ObservableObject {
+    
+    @Published private (set) var api: API
 
-    @Published private (set) var api: API = ClientKt.api(cookiesStorage: RefreshTokenStorage())
-
-
-    func login(username: String, password: String) async throws {
-        guard let api = api as? API.LoggedOut else { return }
-        self.api = try await api.login(username: username, password: password)
+    init(api: API) {
+        self.api = api
     }
 
+    func trySilentLogin() async throws {
+        guard let api = api as? API.LoggedOut else { return }
+        guard let successLogin = try await api.silentLogin() else { return }
+        self.api = successLogin
+    }
+    
+    func login(username: String, password: String) async throws {
+        guard let api = api as? API.LoggedOut else { return }
+        guard let successLogin = try await api.login(username: username, password: password) else {
+            throw Errors.WrongPassword
+        }
+        self.api = successLogin
+    }
+    
     func refreshTodos() async throws -> [Todo] {
         guard let api = api as? API.LoggedIn else { return [] }
-        return try await api.getTodos()
+        return (try await api.getTodos())!
     }
 }
 
 struct Login: View {
     let login: (String, String) async throws -> Void
-
+    
     @State private var username: String = ""
     @State private var password: String = ""
     @State private var error: Error? = nil
-
+    
     var body: some View {
         Form {
             TextField("Username", text: $username)
@@ -76,7 +91,7 @@ struct Login: View {
 
 struct ContentView: View {
     @ObservedObject private (set) var viewModel: ViewModel
-
+    
     var body: some View {
         NavigationView {
             if(viewModel.api is API.LoggedOut) {
@@ -96,11 +111,13 @@ struct Todos: View {
     @Environment(\.managedObjectContext) private var viewContext
 
     @ObservedObject private (set) var viewModel: ViewModel
-
+    
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \TodoItem.title, ascending: true)],
         animation: .default)
     private var items: FetchedResults<TodoItem>
+
+    @State private var createNewTodo = false
 
     var body: some View {
         List {
@@ -110,25 +127,37 @@ struct Todos: View {
             .onDelete(perform: deleteItems)
         }
         .toolbar {
-            #if os(iOS)
-            EditButton()
-            #endif
+            ToolbarItemGroup {
+                #if os(iOS)
 
-            NavigationLink(destination: NewItem { title, until in
-                    let new = newTodo()
+                    EditButton()
+
+                #endif
+
+
+                    Button(action: {
+                        self.createNewTodo = true
+                    }) {
+                        Label("Add Item", systemImage: "plus")
+                    }
+                }
+
+        }.refreshable {
+            let newTodos = (try? await viewModel.refreshTodos()) ?? []
+            saveNewTodos(items: items, newTodos: newTodos)
+        }.sheet(isPresented: self.$createNewTodo) {
+            self.createNewTodo = false
+        } content: {
+            NewItem { title, until in
+                let new = newTodo()
                 new.title = title
                 new.finished = false
                 new.until = until
                 save()
-            }) {
-                Label("Add Item", systemImage: "plus")
             }
-        }.refreshable {
-            let newTodos = (try? await viewModel.refreshTodos()) ?? []
-            saveNewTodos(items: items, newTodos: newTodos)
         }.navigationTitle("Items")
     }
-
+    
     private func save() {
         do {
             try viewContext.save()
@@ -203,9 +232,12 @@ extension String {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(viewModel: ViewModel()).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        ContentView(viewModel: ViewModel(api: TestAPI()))
+            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
+
+class TestAPI: shared.API { }
 
 struct TodoItemRow: View {
     let item: TodoItem
