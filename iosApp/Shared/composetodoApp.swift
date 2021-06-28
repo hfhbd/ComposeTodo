@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import shared
 
 @main
 struct ComposeTodoApp: App {
     private let persistenceController = PersistenceController()
 
-    @StateObject private var model = ViewModel()
-
+    @StateObject private var model = ViewModel(api: ClientKt.api(cookiesStorage: RefreshTokenStorage()))
+    
     var body: some Scene {
         WindowGroup {
             NavigationView {
