@@ -29,7 +29,7 @@ kotlin {
 
         val jsMain by getting {
             dependencies {
-                implementation("app.softwork:bootstrap-compose:0.0.22")
+                implementation("app.softwork:bootstrap-compose:0.0.23")
                 implementation("app.softwork:routing-compose:0.0.16")
                 implementation(compose.web.core)
                 implementation(compose.runtime)
