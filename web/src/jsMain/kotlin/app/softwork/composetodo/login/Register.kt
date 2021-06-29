@@ -21,30 +21,30 @@ fun Register(api: API.LoggedOut, onLogin: (API.LoggedIn) -> Unit) {
             H1 {
                 Text("Register")
             }
-            Input(value = username, placeholder = "user.name", label = "Username") {
-                username = it.value
+            Input(value = username, placeholder = "user.name", label = "Username", type = InputType.Text) { value, _ ->
+                username = value
             }
             Input(
                 type = InputType.Password,
                 placeholder = "password",
                 label = "Passwort",
                 value = password
-            ) {
-                password = it.value
+            ) { value, _ ->
+                password = value
             }
             Input(
                 type = InputType.Password,
                 placeholder = "passwordAgain",
                 label = "Passwort Again",
                 value = passwordAgain
-            ) {
-                passwordAgain = it.value
+            ) { value, _ ->
+                passwordAgain = value
             }
-            Input(placeholder = "John", label = "First Name", value = firstName) {
-                firstName = it.value
+            Input(placeholder = "John", label = "First Name", value = firstName, type = InputType.Text) { value, _ ->
+                firstName = value
             }
-            Input(placeholder = "Doe", label = "Last Name", value = lastName) {
-                lastName = it.value
+            Input(placeholder = "Doe", label = "Last Name", value = lastName, type = InputType.Text) { value, _ ->
+                lastName = value
             }
             Button("Register", attrs = {
                 if (password != passwordAgain || listOf(
