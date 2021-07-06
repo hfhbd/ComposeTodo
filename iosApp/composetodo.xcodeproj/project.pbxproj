@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0812ECAB2694B13900CEC45D /* composetodo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0812ECAA2694B13900CEC45D /* composetodo.framework */; platformFilter = ios; };
+		0812ECAC2694B13900CEC45D /* composetodo.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0812ECAA2694B13900CEC45D /* composetodo.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0823C16C265282B600AA4A20 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0823C16B265282B600AA4A20 /* Tests_iOS.swift */; };
 		0823C177265282B600AA4A20 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0823C176265282B600AA4A20 /* Tests_macOS.swift */; };
 		0823C179265282B600AA4A20 /* composetodo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0823C14D265282B400AA4A20 /* composetodo.xcdatamodeld */; };
@@ -19,8 +21,6 @@
 		0823C180265282B600AA4A20 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0823C151265282B400AA4A20 /* Persistence.swift */; };
 		0823C181265282B600AA4A20 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0823C152265282B600AA4A20 /* Assets.xcassets */; };
 		0823C182265282B600AA4A20 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0823C152265282B600AA4A20 /* Assets.xcassets */; };
-		0823C195265284EE00AA4A20 /* composetodo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0823C193265284CF00AA4A20 /* composetodo.framework */; };
-		0823C196265284EE00AA4A20 /* composetodo.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0823C193265284CF00AA4A20 /* composetodo.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0823C19A265286D400AA4A20 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0823C199265286D400AA4A20 /* CloudKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -42,13 +42,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		0823C197265284EE00AA4A20 /* Embed Frameworks */ = {
+		0812ECAD2694B13900CEC45D /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				0823C196265284EE00AA4A20 /* composetodo.framework in Embed Frameworks */,
+				0812ECAC2694B13900CEC45D /* composetodo.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -56,6 +56,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0812ECA92694724000CEC45D /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
+		0812ECAA2694B13900CEC45D /* composetodo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = composetodo.framework; path = "../iosClient/build/xcode-frameworks/composetodo.framework"; sourceTree = "<group>"; };
+		0812ECAE2694D6B000CEC45D /* ci_pre_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_pre_xcodebuild.sh; sourceTree = "<group>"; };
 		0823C14E265282B400AA4A20 /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		0823C14F265282B400AA4A20 /* composetodoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = composetodoApp.swift; sourceTree = "<group>"; };
 		0823C150265282B400AA4A20 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -82,8 +85,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0823C195265284EE00AA4A20 /* composetodo.framework in Frameworks */,
 				0823C19A265286D400AA4A20 /* CloudKit.framework in Frameworks */,
+				0812ECAB2694B13900CEC45D /* composetodo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,9 +114,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0812ECA82694721B00CEC45D /* ci_scripts */ = {
+			isa = PBXGroup;
+			children = (
+				0812ECA92694724000CEC45D /* ci_post_clone.sh */,
+				0812ECAE2694D6B000CEC45D /* ci_pre_xcodebuild.sh */,
+			);
+			path = ci_scripts;
+			sourceTree = "<group>";
+		};
 		0823C147265282B300AA4A20 = {
 			isa = PBXGroup;
 			children = (
+				0812ECA82694721B00CEC45D /* ci_scripts */,
 				0823C198265286D200AA4A20 /* composetodo.entitlements */,
 				0823C14C265282B400AA4A20 /* Shared */,
 				0823C159265282B600AA4A20 /* iOS */,
@@ -186,6 +199,7 @@
 		0823C192265284CF00AA4A20 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0812ECAA2694B13900CEC45D /* composetodo.framework */,
 				0823C199265286D400AA4A20 /* CloudKit.framework */,
 				0823C193265284CF00AA4A20 /* composetodo.framework */,
 			);
@@ -203,7 +217,7 @@
 				0823C153265282B600AA4A20 /* Sources */,
 				0823C154265282B600AA4A20 /* Frameworks */,
 				0823C155265282B600AA4A20 /* Resources */,
-				0823C197265284EE00AA4A20 /* Embed Frameworks */,
+				0812ECAD2694B13900CEC45D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -361,8 +375,8 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :client-core:packForXcode -PXCODE_CONFIGURATION=${CONFIGURATION}\n";
+			shellPath = /bin/zsh;
+			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :iOSClient:packForXcode -PXCODE_CONFIGURATION=${CONFIGURATION}\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -541,7 +555,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 468HYAQSU6;
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = "/Users/philipwedemann/GitHub/ComposeTodo/iosApp/../client-core/build/xcode-frameworks";
+				FRAMEWORK_SEARCH_PATHS = "/Users/philipwedemann/GitHub/ComposeTodo/iosApp/../iOSClient/build/xcode-frameworks";
 				INFOPLIST_FILE = iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -565,7 +579,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 468HYAQSU6;
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = "/Users/philipwedemann/GitHub/ComposeTodo/iosApp/../client-core/build/xcode-frameworks";
+				FRAMEWORK_SEARCH_PATHS = "/Users/philipwedemann/GitHub/ComposeTodo/iosApp/../iOSClient/build/xcode-frameworks";
 				INFOPLIST_FILE = iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
