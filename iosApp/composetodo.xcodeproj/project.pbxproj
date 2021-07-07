@@ -396,7 +396,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 468HYAQSU6;
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = "/Users/philipwedemann/GitHub/ComposeTodo/iosApp/../iOSClient/build/xcode-frameworks";
+				FRAMEWORK_SEARCH_PATHS = "../iOSClient/build/xcode-frameworks";
 				INFOPLIST_FILE = iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -420,7 +420,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 468HYAQSU6;
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = "/Users/philipwedemann/GitHub/ComposeTodo/iosApp/../iOSClient/build/xcode-frameworks";
+				FRAMEWORK_SEARCH_PATHS = "../iOSClient/build/xcode-frameworks";
 				INFOPLIST_FILE = iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
