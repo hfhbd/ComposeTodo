@@ -21,30 +21,38 @@ fun Register(api: API.LoggedOut, onLogin: (API.LoggedIn) -> Unit) {
             H1 {
                 Text("Register")
             }
-            Input(value = username, placeholder = "user.name", label = "Username", type = InputType.Text) { value, _ ->
-                username = value
+            Input(value = username, placeholder = "user.name", label = "Username", type = InputType.Text) {
+                username = it.value
             }
             Input(
                 type = InputType.Password,
                 placeholder = "password",
                 label = "Passwort",
+                autocomplete = AutoComplete.newPassword,
                 value = password
-            ) { value, _ ->
-                password = value
+            ) {
+                password = it.value
             }
             Input(
                 type = InputType.Password,
                 placeholder = "passwordAgain",
                 label = "Passwort Again",
+                autocomplete = AutoComplete.newPassword,
                 value = passwordAgain
-            ) { value, _ ->
-                passwordAgain = value
+            ) {
+                passwordAgain = it.value
             }
-            Input(placeholder = "John", label = "First Name", value = firstName, type = InputType.Text) { value, _ ->
-                firstName = value
+            Input(placeholder = "John", label = "First Name", value = firstName, type = InputType.Text) {
+                firstName = it.value
             }
-            Input(placeholder = "Doe", label = "Last Name", value = lastName, type = InputType.Text) { value, _ ->
-                lastName = value
+            Input(
+                placeholder = "Doe",
+                label = "Last Name",
+                value = lastName,
+                type = InputType.Text,
+                autocomplete = AutoComplete.familyName
+            ) {
+                lastName = it.value
             }
             Button("Register", attrs = {
                 if (password != passwordAgain || listOf(

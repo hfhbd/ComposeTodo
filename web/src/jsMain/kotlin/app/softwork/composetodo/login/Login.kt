@@ -4,6 +4,7 @@ import androidx.compose.runtime.*
 import app.softwork.bootstrapcompose.*
 import app.softwork.composetodo.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 import org.jetbrains.compose.web.attributes.*
 import org.jetbrains.compose.web.dom.*
 
@@ -16,16 +17,23 @@ fun Login(api: API.LoggedOut, onLogin: (API.LoggedIn) -> Unit) {
             H1 {
                 Text("Login")
             }
-            Input(value = username, placeholder = "user.name", label = "Username", type = InputType.Text) { value, _ ->
-                username = value
+            Input(
+                value = username,
+                placeholder = "user.name",
+                label = "Username",
+                autocomplete = AutoComplete.username,
+                type = InputType.Text
+            ) {
+                username = it.value
             }
             Input(
                 type = InputType.Password,
                 placeholder = "password",
                 label = "Passwort",
+                autocomplete = AutoComplete.currentPassword,
                 value = password
-            ) { value, _ ->
-                password = value
+            ) {
+                password = it.value
             }
             Button("Login", attrs = {
                 if (username.isEmpty() || password.isEmpty()) {
