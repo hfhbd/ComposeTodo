@@ -395,6 +395,7 @@
 				CODE_SIGN_ENTITLEMENTS = composetodo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 468HYAQSU6;
+				ENABLE_BITCODE = NO;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "../iOSClient/build/xcode-frameworks";
 				INFOPLIST_FILE = iOS/Info.plist;
@@ -419,6 +420,7 @@
 				CODE_SIGN_ENTITLEMENTS = composetodo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 468HYAQSU6;
+				ENABLE_BITCODE = NO;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "../iOSClient/build/xcode-frameworks";
 				INFOPLIST_FILE = iOS/Info.plist;
