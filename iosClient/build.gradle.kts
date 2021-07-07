@@ -33,7 +33,7 @@ kotlin {
         val iosArm64Main by getting {
             dependencies {
                 // Apache 2, https://github.com/ktorio/ktor/releases/latest
-                implementation("io.ktor:ktor-client-ios:1.6.0")
+                implementation("io.ktor:ktor-client-ios:1.6.1")
             }
         }
     }
