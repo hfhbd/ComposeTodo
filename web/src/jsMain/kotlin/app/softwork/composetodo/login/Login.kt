@@ -10,8 +10,8 @@ import org.jetbrains.compose.web.dom.*
 
 @Composable
 fun Login(api: API.LoggedOut, onLogin: (API.LoggedIn) -> Unit) {
-    var username by mutableStateOf("")
-    var password by mutableStateOf("")
+    var username by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
     Row {
         Column {
             H1 {

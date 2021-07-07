@@ -10,11 +10,11 @@ import org.jetbrains.compose.web.dom.*
 
 @Composable
 fun Register(api: API.LoggedOut, onLogin: (API.LoggedIn) -> Unit) {
-    var username by mutableStateOf("")
-    var password by mutableStateOf("")
-    var passwordAgain by mutableStateOf("")
-    var firstName by mutableStateOf("")
-    var lastName by mutableStateOf("")
+    var username by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var passwordAgain by remember { mutableStateOf("") }
+    var firstName by remember { mutableStateOf("") }
+    var lastName by remember { mutableStateOf("") }
 
     Row {
         Column {
