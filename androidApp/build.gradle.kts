@@ -45,7 +45,7 @@ dependencies {
     implementation("io.ktor:ktor-client-android:1.6.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0-native-mt")
 
-    implementation("androidx.core:core-ktx:1.5.0")
+    implementation("androidx.core:core-ktx:1.6.0")
     implementation("androidx.appcompat:appcompat:1.3.0")
     implementation("androidx.activity:activity-ktx:1.2.3")
 
@@ -61,6 +61,6 @@ dependencies {
 
     testImplementation(kotlin("test-junit"))
     androidTestImplementation(kotlin("test-junit"))
-    androidTestImplementation("androidx.test:rules:1.3.0")
+    androidTestImplementation("androidx.test:rules:1.4.0")
     androidTestImplementation("androidx.test:runner:1.4.0")
 }
