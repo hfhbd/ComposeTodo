@@ -158,7 +158,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0823C185265282B600AA4A20 /* Build configuration list for PBXNativeTarget "composetodo (iOS)" */;
 			buildPhases = (
-				0823C191265282FE00AA4A20 /* ShellScript */,
 				0823C153265282B600AA4A20 /* Sources */,
 				0823C154265282B600AA4A20 /* Frameworks */,
 				0823C155265282B600AA4A20 /* Resources */,
@@ -245,26 +244,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		0823C191265282FE00AA4A20 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/zsh;
-			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :iOSClient:packForXcode -PXCODE_CONFIGURATION=${CONFIGURATION}\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0823C153265282B600AA4A20 /* Sources */ = {
