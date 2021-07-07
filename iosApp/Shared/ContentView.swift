@@ -31,7 +31,7 @@ struct ContentView: View {
             Button(action: addItem) {
                 Label("Add Item", systemImage: "plus")
             }
-        }
+        }.navigationTitle("Items")
     }
 
     private func addItem() {

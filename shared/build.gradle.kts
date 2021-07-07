@@ -7,7 +7,7 @@ kotlin {
     js(IR) {
         browser()
     }
-    ios()
+    iosArm64()
     jvm()
 
     sourceSets {
