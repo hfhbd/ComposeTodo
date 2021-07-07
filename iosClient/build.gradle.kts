@@ -5,7 +5,7 @@ plugins {
 }
 
 kotlin {
-    ios {
+    iosArm64 {
         binaries {
             framework {
                 baseName = "composetodo"
@@ -30,13 +30,12 @@ kotlin {
             }
         }
 
-        val iosMain by getting {
+        val iosArm64Main by getting {
             dependencies {
                 // Apache 2, https://github.com/ktorio/ktor/releases/latest
                 implementation("io.ktor:ktor-client-ios:1.6.0")
             }
         }
-        val iosTest by getting
     }
 }
 
