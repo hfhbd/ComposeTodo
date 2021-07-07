@@ -10,17 +10,11 @@
 		0812ECAB2694B13900CEC45D /* composetodo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0812ECAA2694B13900CEC45D /* composetodo.framework */; platformFilter = ios; };
 		0812ECAC2694B13900CEC45D /* composetodo.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0812ECAA2694B13900CEC45D /* composetodo.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0823C16C265282B600AA4A20 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0823C16B265282B600AA4A20 /* Tests_iOS.swift */; };
-		0823C177265282B600AA4A20 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0823C176265282B600AA4A20 /* Tests_macOS.swift */; };
 		0823C179265282B600AA4A20 /* composetodo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0823C14D265282B400AA4A20 /* composetodo.xcdatamodeld */; };
-		0823C17A265282B600AA4A20 /* composetodo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0823C14D265282B400AA4A20 /* composetodo.xcdatamodeld */; };
 		0823C17B265282B600AA4A20 /* composetodoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0823C14F265282B400AA4A20 /* composetodoApp.swift */; };
-		0823C17C265282B600AA4A20 /* composetodoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0823C14F265282B400AA4A20 /* composetodoApp.swift */; };
 		0823C17D265282B600AA4A20 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0823C150265282B400AA4A20 /* ContentView.swift */; };
-		0823C17E265282B600AA4A20 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0823C150265282B400AA4A20 /* ContentView.swift */; };
 		0823C17F265282B600AA4A20 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0823C151265282B400AA4A20 /* Persistence.swift */; };
-		0823C180265282B600AA4A20 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0823C151265282B400AA4A20 /* Persistence.swift */; };
 		0823C181265282B600AA4A20 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0823C152265282B600AA4A20 /* Assets.xcassets */; };
-		0823C182265282B600AA4A20 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0823C152265282B600AA4A20 /* Assets.xcassets */; };
 		0823C19A265286D400AA4A20 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0823C199265286D400AA4A20 /* CloudKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -31,13 +25,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 0823C156265282B600AA4A20;
 			remoteInfo = "composetodo (iOS)";
-		};
-		0823C173265282B600AA4A20 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0823C148265282B300AA4A20 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0823C15E265282B600AA4A20;
-			remoteInfo = "composetodo (macOS)";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -66,15 +53,9 @@
 		0823C152265282B600AA4A20 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0823C157265282B600AA4A20 /* composetodo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = composetodo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0823C15A265282B600AA4A20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0823C15F265282B600AA4A20 /* composetodo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = composetodo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		0823C161265282B600AA4A20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0823C162265282B600AA4A20 /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
 		0823C167265282B600AA4A20 /* Tests iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0823C16B265282B600AA4A20 /* Tests_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_iOS.swift; sourceTree = "<group>"; };
 		0823C16D265282B600AA4A20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0823C172265282B600AA4A20 /* Tests macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		0823C176265282B600AA4A20 /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
-		0823C178265282B600AA4A20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0823C193265284CF00AA4A20 /* composetodo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = composetodo.framework; path = "../client-core/build/xcode-frameworks/composetodo.framework"; sourceTree = "<group>"; };
 		0823C198265286D200AA4A20 /* composetodo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = composetodo.entitlements; sourceTree = "<group>"; };
 		0823C199265286D400AA4A20 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.5.sdk/System/Library/Frameworks/CloudKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -90,21 +71,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0823C15C265282B600AA4A20 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		0823C164265282B600AA4A20 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0823C16F265282B600AA4A20 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -130,9 +97,7 @@
 				0823C198265286D200AA4A20 /* composetodo.entitlements */,
 				0823C14C265282B400AA4A20 /* Shared */,
 				0823C159265282B600AA4A20 /* iOS */,
-				0823C160265282B600AA4A20 /* macOS */,
 				0823C16A265282B600AA4A20 /* Tests iOS */,
-				0823C175265282B600AA4A20 /* Tests macOS */,
 				0823C158265282B600AA4A20 /* Products */,
 				0823C192265284CF00AA4A20 /* Frameworks */,
 			);
@@ -154,9 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				0823C157265282B600AA4A20 /* composetodo.app */,
-				0823C15F265282B600AA4A20 /* composetodo.app */,
 				0823C167265282B600AA4A20 /* Tests iOS.xctest */,
-				0823C172265282B600AA4A20 /* Tests macOS.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -169,15 +132,6 @@
 			path = iOS;
 			sourceTree = "<group>";
 		};
-		0823C160265282B600AA4A20 /* macOS */ = {
-			isa = PBXGroup;
-			children = (
-				0823C161265282B600AA4A20 /* Info.plist */,
-				0823C162265282B600AA4A20 /* macOS.entitlements */,
-			);
-			path = macOS;
-			sourceTree = "<group>";
-		};
 		0823C16A265282B600AA4A20 /* Tests iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -185,15 +139,6 @@
 				0823C16D265282B600AA4A20 /* Info.plist */,
 			);
 			path = "Tests iOS";
-			sourceTree = "<group>";
-		};
-		0823C175265282B600AA4A20 /* Tests macOS */ = {
-			isa = PBXGroup;
-			children = (
-				0823C176265282B600AA4A20 /* Tests_macOS.swift */,
-				0823C178265282B600AA4A20 /* Info.plist */,
-			);
-			path = "Tests macOS";
 			sourceTree = "<group>";
 		};
 		0823C192265284CF00AA4A20 /* Frameworks */ = {
@@ -228,23 +173,6 @@
 			productReference = 0823C157265282B600AA4A20 /* composetodo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		0823C15E265282B600AA4A20 /* composetodo (macOS) */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 0823C188265282B600AA4A20 /* Build configuration list for PBXNativeTarget "composetodo (macOS)" */;
-			buildPhases = (
-				0823C15B265282B600AA4A20 /* Sources */,
-				0823C15C265282B600AA4A20 /* Frameworks */,
-				0823C15D265282B600AA4A20 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "composetodo (macOS)";
-			productName = "composetodo (macOS)";
-			productReference = 0823C15F265282B600AA4A20 /* composetodo.app */;
-			productType = "com.apple.product-type.application";
-		};
 		0823C166265282B600AA4A20 /* Tests iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0823C18B265282B600AA4A20 /* Build configuration list for PBXNativeTarget "Tests iOS" */;
@@ -263,24 +191,6 @@
 			productReference = 0823C167265282B600AA4A20 /* Tests iOS.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		0823C171265282B600AA4A20 /* Tests macOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 0823C18E265282B600AA4A20 /* Build configuration list for PBXNativeTarget "Tests macOS" */;
-			buildPhases = (
-				0823C16E265282B600AA4A20 /* Sources */,
-				0823C16F265282B600AA4A20 /* Frameworks */,
-				0823C170265282B600AA4A20 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				0823C174265282B600AA4A20 /* PBXTargetDependency */,
-			);
-			name = "Tests macOS";
-			productName = "Tests macOS";
-			productReference = 0823C172265282B600AA4A20 /* Tests macOS.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -293,16 +203,9 @@
 					0823C156265282B600AA4A20 = {
 						CreatedOnToolsVersion = 12.5;
 					};
-					0823C15E265282B600AA4A20 = {
-						CreatedOnToolsVersion = 12.5;
-					};
 					0823C166265282B600AA4A20 = {
 						CreatedOnToolsVersion = 12.5;
 						TestTargetID = 0823C156265282B600AA4A20;
-					};
-					0823C171265282B600AA4A20 = {
-						CreatedOnToolsVersion = 12.5;
-						TestTargetID = 0823C15E265282B600AA4A20;
 					};
 				};
 			};
@@ -320,9 +223,7 @@
 			projectRoot = "";
 			targets = (
 				0823C156265282B600AA4A20 /* composetodo (iOS) */,
-				0823C15E265282B600AA4A20 /* composetodo (macOS) */,
 				0823C166265282B600AA4A20 /* Tests iOS */,
-				0823C171265282B600AA4A20 /* Tests macOS */,
 			);
 		};
 /* End PBXProject section */
@@ -336,22 +237,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0823C15D265282B600AA4A20 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				0823C182265282B600AA4A20 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		0823C165265282B600AA4A20 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0823C170265282B600AA4A20 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -392,30 +278,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0823C15B265282B600AA4A20 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				0823C17C265282B600AA4A20 /* composetodoApp.swift in Sources */,
-				0823C180265282B600AA4A20 /* Persistence.swift in Sources */,
-				0823C17A265282B600AA4A20 /* composetodo.xcdatamodeld in Sources */,
-				0823C17E265282B600AA4A20 /* ContentView.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		0823C163265282B600AA4A20 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				0823C16C265282B600AA4A20 /* Tests_iOS.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0823C16E265282B600AA4A20 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				0823C177265282B600AA4A20 /* Tests_macOS.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,11 +293,6 @@
 			isa = PBXTargetDependency;
 			target = 0823C156265282B600AA4A20 /* composetodo (iOS) */;
 			targetProxy = 0823C168265282B600AA4A20 /* PBXContainerItemProxy */;
-		};
-		0823C174265282B600AA4A20 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 0823C15E265282B600AA4A20 /* composetodo (macOS) */;
-			targetProxy = 0823C173265282B600AA4A20 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -595,54 +457,6 @@
 			};
 			name = Release;
 		};
-		0823C189265282B600AA4A20 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 468HYAQSU6;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = macOS/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 11.3;
-				PRODUCT_BUNDLE_IDENTIFIER = app.softwork.composetodo;
-				PRODUCT_NAME = composetodo;
-				SDKROOT = macosx;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		0823C18A265282B600AA4A20 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 468HYAQSU6;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = macOS/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 11.3;
-				PRODUCT_BUNDLE_IDENTIFIER = app.softwork.composetodo;
-				PRODUCT_NAME = composetodo;
-				SDKROOT = macosx;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
 		0823C18C265282B600AA4A20 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -688,50 +502,6 @@
 			};
 			name = Release;
 		};
-		0823C18F265282B600AA4A20 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 468HYAQSU6;
-				INFOPLIST_FILE = "Tests macOS/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 11.3;
-				PRODUCT_BUNDLE_IDENTIFIER = "app.softwork.Tests-macOS";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = "composetodo (macOS)";
-			};
-			name = Debug;
-		};
-		0823C190265282B600AA4A20 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 468HYAQSU6;
-				INFOPLIST_FILE = "Tests macOS/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 11.3;
-				PRODUCT_BUNDLE_IDENTIFIER = "app.softwork.Tests-macOS";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = "composetodo (macOS)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -753,29 +523,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0823C188265282B600AA4A20 /* Build configuration list for PBXNativeTarget "composetodo (macOS)" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				0823C189265282B600AA4A20 /* Debug */,
-				0823C18A265282B600AA4A20 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		0823C18B265282B600AA4A20 /* Build configuration list for PBXNativeTarget "Tests iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0823C18C265282B600AA4A20 /* Debug */,
 				0823C18D265282B600AA4A20 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		0823C18E265282B600AA4A20 /* Build configuration list for PBXNativeTarget "Tests macOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				0823C18F265282B600AA4A20 /* Debug */,
-				0823C190265282B600AA4A20 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
