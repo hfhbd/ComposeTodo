@@ -13,7 +13,7 @@ import shared
 final class RefreshTokenStorage: CookiesStorage {
     @AppStorage("refreshtoken") private var refreshToken: String?
 
-    func addCookie(requestUrl: Url, cookie: Cookie) async throws -> KotlinUnit {
+    func addCookie(requestUrl: Url, cookie: Cookie) async throws -> KotlinUnit? {
         refreshToken = cookie.value
         return KotlinUnit()
     }
@@ -69,20 +69,28 @@ struct Login: View {
     @State private var password: String = ""
     @State private var error: Error? = nil
     
+    private func submit() {
+        async {
+            do {
+                try await login(username, password)
+            } catch {
+                self.error = error
+            }
+        }
+    }
+    
     var body: some View {
         Form {
             TextField("Username", text: $username)
             SecureField("Password", text: $password) {
-                async {
-                    do {
-                        try await login(username, password)
-                    } catch {
-                        self.error = error
-                    }
-                }
+                submit()
             }
             if(error != nil) {
                 Text("Error \(error.debugDescription). Please try it again.")
+            }
+        }.toolbar {
+            Button("Login") {
+                submit()
             }
         }
     }
@@ -93,14 +101,18 @@ struct ContentView: View {
     @ObservedObject private (set) var viewModel: ViewModel
     
     var body: some View {
-        NavigationView {
-            if(viewModel.api is API.LoggedOut) {
-                TabView {
-                    Login(login: viewModel.login).tabItem {
-                        Label("Login", systemImage: "person")
-                    }.navigationTitle("Login")
+        if(viewModel.api is API.LoggedOut) {
+            TabView {
+                NavigationView {
+                    Login(login: viewModel.login)
+                        
+                        .navigationTitle("Login")
+                }.tabItem {
+                    Label("Login", systemImage: "person")
                 }
-            } else {
+            }
+        } else {
+            NavigationView {
                 Todos(viewModel: viewModel).navigationTitle("Todos")
             }
         }

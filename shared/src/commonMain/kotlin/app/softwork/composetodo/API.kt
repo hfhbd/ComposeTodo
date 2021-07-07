@@ -18,7 +18,7 @@ import kotlin.coroutines.cancellation.*
 sealed class API {
     private val json: Json = Json
 
-    data class LoggedOut(val client: HttpClient) : API() {
+    class LoggedOut(private val client: HttpClient) : API() {
         suspend fun register(newUser: User.New): LoggedIn =
             LoggedIn(Token.serializer() by client.post("/users") {
                 body = newUser using User.New.serializer()
@@ -63,7 +63,7 @@ sealed class API {
         }
     }
 
-    data class LoggedIn(private var token: Token, val client: HttpClient) : API() {
+    class LoggedIn(private var token: Token, private val client: HttpClient) : API() {
         private suspend fun HttpRequestBuilder.addToken() {
             if (Clock.System.now() > token.payload.expiredAt) {
                 token = Token.serializer() by client.get("/refreshToken")
