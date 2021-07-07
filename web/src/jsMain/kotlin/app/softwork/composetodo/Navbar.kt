@@ -7,7 +7,7 @@ import kotlinx.coroutines.*
 import org.jetbrains.compose.web.dom.*
 
 @Composable
-fun Navbar(api: API, onLogout: () -> Unit) {
+fun Navbar(links: List<Pair<String, String>>, api: API, onLogout: () -> Unit) {
     Nav(attrs = {
         classes(
             "navbar",
@@ -30,14 +30,11 @@ fun Navbar(api: API, onLogout: () -> Unit) {
                     id("navbarNav")
                 }) {
                     Ul(attrs = { classes("navbar-nav", "me-auto") }) {
-                        Li(attrs = { classes("nav-item") }) {
-                            NavLink(attrs = { classes("nav-link") }, to = "/") {
-                                Text("Tours")
-                            }
-                        }
-                        Li(attrs = { classes("nav-item") }) {
-                            NavLink(attrs = { classes("nav-link") }, to = "/users") {
-                                Text("Users")
+                        links.forEach { (name, link) ->
+                            Li(attrs = { classes("nav-item") }) {
+                                NavLink(attrs = { classes("nav-link") }, to = link) {
+                                    Text(name)
+                                }
                             }
                         }
                     }

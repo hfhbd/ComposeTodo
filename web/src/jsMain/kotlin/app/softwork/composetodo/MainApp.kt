@@ -32,49 +32,70 @@ fun MainApp() {
             it.silentLogin()?.let { api = it }
         }
     }
-    Navbar(api) {
-        api = API.LoggedOut(client)
-    }
 
+    when (val currentApi = api) {
+        is API.LoggedIn -> {
+            MainContent(currentApi) {
+                api = API.LoggedOut(client)
+            }
+        }
+        is API.LoggedOut -> {
+            LoginView(currentApi) {
+                api = it
+            }
+        }
+    }
+}
+
+@Composable
+private fun LoginView(api: API.LoggedOut, onLogin: (API.LoggedIn) -> Unit) {
+    Content(emptyList(), api, onLogout = {}) {
+
+        Text("This application uses a cold Google Cloud Run server, which usually takes 2 seconds to start.")
+        Login(api, onLogin)
+        Register(api, onLogin)
+    }
+}
+
+@Composable
+private fun Content(links: List<Pair<String, String>>, api: API, onLogout: () -> Unit, content: @Composable () -> Unit) {
+    Navbar(links, api, onLogout)
     Main {
         Container {
-            when (val currentApi = api) {
-                is API.LoggedIn -> {
-                    MainContent(currentApi)
-                }
-                is API.LoggedOut -> {
-                    Text("This application uses a cold Google Cloud Run server, which usually takes 2 seconds to start.")
-                    Login(currentApi) {
-                        api = it
-                    }
-                    Register(currentApi) {
-                        api = it
-                    }
-                }
-            }
+            content()
         }
     }
 }
 
 @ExperimentalTime
 @Composable
-fun MainContent(api: API.LoggedIn) {
+private fun MainContent(api: API.LoggedIn, onLogout: () -> Unit) {
+    val links = listOf("Todos" to "/todos", "Users" to "/users")
+
     HashRouter("/todos") {
         route("users") {
             noMatch {
-                Users(api)
+                Content(links, api, onLogout) {
+                    Users(api)
+                }
             }
         }
         route("todos") {
             uuid { todoID ->
-                Todo(api, todoID)
+                Content(links, api, onLogout) {
+                    Todo(api, todoID)
+                }
             }
             noMatch {
-                Todos(TodosViewModel(api))
+                Content(links, api, onLogout) {
+                    Todos(TodosViewModel(api))
+                }
             }
         }
         noMatch {
-            Todos(TodosViewModel(api))
+            Content(links, api, onLogout) {
+                Todos(TodosViewModel(api))
+            }
         }
     }
 }
