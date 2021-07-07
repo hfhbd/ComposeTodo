@@ -61,6 +61,6 @@ dependencies {
 
     testImplementation(kotlin("test-junit"))
     androidTestImplementation(kotlin("test-junit"))
-    androidTestImplementation("androidx.test:rules:1.3.0")
+    androidTestImplementation("androidx.test:rules:1.4.0")
     androidTestImplementation("androidx.test:runner:1.4.0")
 }
