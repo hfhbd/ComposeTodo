@@ -40,16 +40,16 @@ fun NewTodo(viewModel: NewTodoViewModel) {
         label = "Title",
         placeholder = "Hello World",
         value = viewModel.title
-    ) { value, _ ->
-        viewModel.title = value
+    ) {
+        viewModel.title = it.value
     }
     Input(
         type = InputType.DateTimeLocal,
         label = "Finish Date",
         placeholder = "yyyy-mm-dd",
         value = viewModel.until
-    ) { value, _ ->
-        viewModel.until = value
+    ) {
+        viewModel.until = it.value
     }
     Button("Create new Todo", attrs = {
         if (viewModel.disabledButton) {
