@@ -8,7 +8,7 @@ kotlin {
     iosArm64 {
         binaries {
             framework {
-                baseName = "composetodo"
+                baseName = "shared"
                 export(projects.shared)
                 // Export transitively.
                 transitiveExport = true
@@ -43,10 +43,8 @@ tasks {
     val packForXcode by creating(Sync::class) {
         group = "build"
         val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
-        val sdkName = System.getenv("SDK_NAME") ?: "iphonesimulator"
-        val targetName = "iosArm64"
-        val framework =
-            kotlin.targets.getByName<KotlinNativeTarget>(targetName).binaries.getFramework(mode)
+        val iosArm64: KotlinNativeTarget by kotlin.targets
+        val framework = iosArm64.binaries.getFramework(mode)
         inputs.property("mode", mode)
         dependsOn(framework.linkTask)
         val targetDir = File(buildDir, "xcode-frameworks")

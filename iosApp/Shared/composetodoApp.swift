@@ -6,16 +6,16 @@
 //
 
 import SwiftUI
+import shared
 
 @main
 struct ComposeTodoApp: App {
-    let persistenceController = PersistenceController.shared
-
+    private let persistenceController = PersistenceController()
+    
     var body: some Scene {
         WindowGroup {
-            NavigationView {
-                ContentView().environment(\.managedObjectContext, persistenceController.container.viewContext)
-            }
+            ContentView(viewModel: ViewModel(api: ClientKt.api(cookiesStorage: RefreshTokenStorage())))
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }
