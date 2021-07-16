@@ -43,13 +43,13 @@ dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
 
     implementation("io.ktor:ktor-client-android:1.6.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1-native-mt")
 
     implementation("androidx.core:core-ktx:1.6.0")
     implementation("androidx.appcompat:appcompat:1.3.0")
     implementation("androidx.activity:activity-ktx:1.2.3")
 
-    implementation("androidx.activity:activity-compose:1.3.0-rc01")
+    implementation("androidx.activity:activity-compose:1.3.0-rc02")
 
     val roomVersion = "2.3.0"
 
