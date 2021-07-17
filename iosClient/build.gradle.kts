@@ -21,7 +21,7 @@ kotlin {
             dependencies {
                 api(projects.shared)
                 // Apache 2, https://github.com/Kotlin/kotlinx.coroutines/releases/latest
-                api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0-native-mt")
+                api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1-native-mt")
             }
         }
         commonTest {
