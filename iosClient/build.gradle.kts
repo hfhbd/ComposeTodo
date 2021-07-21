@@ -20,20 +20,6 @@ kotlin {
         commonMain {
             dependencies {
                 api(projects.shared)
-                // Apache 2, https://github.com/Kotlin/kotlinx.coroutines/releases/latest
-                api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0-native-mt")
-            }
-        }
-        commonTest {
-            dependencies {
-                implementation(kotlin("test"))
-            }
-        }
-
-        val iosArm64Main by getting {
-            dependencies {
-                // Apache 2, https://github.com/ktorio/ktor/releases/latest
-                implementation("io.ktor:ktor-client-ios:1.6.1")
             }
         }
     }
