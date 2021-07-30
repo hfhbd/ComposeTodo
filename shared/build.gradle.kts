@@ -23,7 +23,7 @@ kotlin {
                 api("app.softwork:kotlinx-uuid-core:0.0.9")
 
                 // Apache 2, https://github.com/ktorio/ktor/releases/latest
-                api("io.ktor:ktor-client-core:1.6.1")
+                api("io.ktor:ktor-client-core:1.6.2")
             }
         }
         commonTest {
