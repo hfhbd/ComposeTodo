@@ -34,7 +34,7 @@ kotlin {
         val iosArm64Main by getting {
             dependencies {
                 // Apache 2, https://github.com/ktorio/ktor/releases/latest
-                api("io.ktor:ktor-client-ios:1.6.1")
+                api("io.ktor:ktor-client-ios:1.6.2")
 
                 // Apache 2, https://github.com/Kotlin/kotlinx.coroutines/releases/latest
                 api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1-native-mt")
