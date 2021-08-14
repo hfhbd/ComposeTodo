@@ -20,7 +20,7 @@ kotlin {
 
         val jvmMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-cio:1.6.1")
+                implementation("io.ktor:ktor-client-cio:1.6.2")
                 implementation(compose.desktop.currentOs)
             }
         }
