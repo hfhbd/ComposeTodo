@@ -14,7 +14,7 @@ dependencies {
 
 
     // Apache 2, https://github.com/ktorio/ktor/releases/latest
-    val ktorVersion = "1.6.2"
+    val ktorVersion = "1.6.3"
 
     implementation("io.ktor:ktor-server-cio:$ktorVersion")
     implementation("io.ktor:ktor-auth-jwt:$ktorVersion")
