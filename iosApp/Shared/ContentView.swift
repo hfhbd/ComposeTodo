@@ -1,111 +1,89 @@
-//
-//  ContentView.swift
-//  Shared
-//
-//  Created by Philip Wedemann on 17.05.21.
-//
-
 import SwiftUI
 import CoreData
 import shared
 
-@MainActor
-final class RefreshTokenStorage: CookiesStorage {
-    @AppStorage("refreshtoken") private var refreshToken: String?
-
-    func addCookie(requestUrl: Url, cookie: Cookie) async throws -> KotlinUnit? {
-        refreshToken = cookie.value
-        return KotlinUnit()
-    }
-
-    func get(requestUrl: Url) async throws -> [Cookie]? {
-        guard let refreshToken = refreshToken else {
-            return []
-        }
-
-        return [Cookie(name: "SESSION", value: refreshToken, encoding: .uriEncoding, maxAge: 0, expires: nil, domain: nil, path: nil, secure: false, httpOnly: true, extensions: [:])]
-    }
-
-
-    func close() { }
-}
-
-enum Errors: Error {
-    case WrongPassword
-}
-
-final class ViewModel: ObservableObject {
-    
-    @Published private (set) var api: API
-
-    init(api: API) {
-        self.api = api
-    }
-
-    func trySilentLogin() async throws {
-        guard let api = api as? API.LoggedOut else { return }
-        guard let successLogin = try await api.silentLogin() else { return }
-        self.api = successLogin
-    }
-    
-    func login(username: String, password: String) async throws {
-        guard let api = api as? API.LoggedOut else { return }
-        guard let successLogin = try await api.login(username: username, password: password) else {
-            throw Errors.WrongPassword
-        }
-        self.api = successLogin
-    }
-    
-    func refreshTodos() async throws -> [Todo] {
-        guard let api = api as? API.LoggedIn else { return [] }
-        return (try await api.getTodos())!
-    }
-}
-
 struct Login: View {
     let login: (String, String) async throws -> Void
+    let silentLogin: () -> Void
     
     @State private var username: String = ""
     @State private var password: String = ""
-    @State private var error: Error? = nil
-    
+    @State private var error: String? = nil
+
+    @FocusState private var focus: Fields?
+
+    private enum Fields: Hashable {
+        case username, password
+    }
+
     @MainActor
     private func submit() async {
-            do {
-                try await login(username, password)
-            } catch {
-                self.error = error
+        focus = nil
+        do {
+            try await login(username, password)
+        } catch let error as Errors {
+            switch error {
+            case .WrongPassword:
+                self.error = "Wrong password"
+                focus = .password
             }
+        } catch {
+            self.error = error.localizedDescription
+        }
     }
-    
+
     var body: some View {
         Form {
-            TextField("Username", text: $username)
+            TextField("Username", text: $username, onCommit: {
+                focus = .password
+            }).focused($focus, equals: .username)
             SecureField("Password", text: $password) {
-                async { await submit() }
-            }
-            if(error != nil) {
-                Text("Error \(error.debugDescription). Please try it again.")
+                Task {
+                    await submit()
+                }
+            }.focused($focus, equals: .password)
+
+            if let error = error {
+                Text(error)
             }
         }.toolbar {
             Button("Login") {
-                async { await submit() }
+                Task {
+                    await submit()
+                }
             }
+        }.onAppear {
+            focus = .username
+            silentLogin()
         }
     }
+}
+
+final class SwiftViewModel: ObservableObject {
+    let viewModel: ViewModel
+    init(viewModel: ViewModel) {
+        self.viewModel = viewModel
+        viewModel.loginState.key
+        viewModel.data(subscription: {
+            
+        })
+    }
+    
+    @Published private (set) var login: LoginState = LoginState.loggedout
+    @Published private (set) var data: RequestResult.KeyValueObservingPublisher
 }
 
 
 struct ContentView: View {
-    @ObservedObject private (set) var viewModel: ViewModel
     
     var body: some View {
-        if(viewModel.api is API.LoggedOut) {
+        if (viewModel.log is API.LoggedOut) {
             TabView {
                 NavigationView {
-                    Login(login: viewModel.login)
-                        
-                        .navigationTitle("Login")
+                    Login(login: viewModel.login) {
+                        Task { try? await viewModel.trySilentLogin() }
+                    }
+                            .navigationTitle("Login")
                 }.tabItem {
                     Label("Login", systemImage: "person")
                 }
@@ -122,53 +100,71 @@ struct Todos: View {
     @Environment(\.managedObjectContext) private var viewContext
 
     @ObservedObject private (set) var viewModel: ViewModel
-    
+
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \TodoItem.title, ascending: true)],
-        animation: .default)
+            sortDescriptors: [NSSortDescriptor(keyPath: \TodoItem.title, ascending: true)],
+            animation: .default)
     private var items: FetchedResults<TodoItem>
 
-    @State private var createNewTodo = false
+    @State private var selection: Set<TodoItem> = []
 
+    @State private var createNewTodo = false
+    @State var editMode: EditMode = .inactive
     var body: some View {
-        List {
+        List(selection: $selection) {
             ForEach(items) { item in
                 TodoItemRow(item: item)
             }
-            .onDelete(perform: deleteItems)
+                    .onDelete(perform: deleteItems)
         }
-        .toolbar {
-            ToolbarItemGroup {
-                #if os(iOS)
+                .toolbar {
 
-                    EditButton()
+                    #if os(iOS)
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        EditButton()
+                    }
+                    #endif
 
-                #endif
+                    ToolbarItem(placement: .navigationBarTrailing) {
 
-
-                    Button(action: {
-                        self.createNewTodo = true
-                    }) {
-                        Label("Add Item", systemImage: "plus")
+                        if editMode == .inactive {
+                            Button(action: {
+                                self.createNewTodo = true
+                            }) {
+                                Label("Add Item", systemImage: "plus")
+                            }
+                        } else {
+                            Button(action: {
+                                withAnimation {
+                                    selection.forEach(viewContext.delete)
+                                }
+                                save()
+                                selection = []
+                            }) {
+                                Label("Delete", systemImage: "trash")
+                            }
+                        }
                     }
                 }
-
-        }.refreshable {
-            let newTodos = (try? await viewModel.refreshTodos()) ?? []
-            saveNewTodos(items: items, newTodos: newTodos)
-        }.sheet(isPresented: self.$createNewTodo) {
-            self.createNewTodo = false
-        } content: {
-            NewItem { title, until in
-                let new = newTodo()
-                new.title = title
-                new.finished = false
-                new.until = until
-                save()
-            }
-        }.navigationTitle("Items")
+                .refreshable {
+                    let newTodos = (try? await viewModel.refreshTodos()) ?? []
+                    saveNewTodos(items: items, newTodos: newTodos)
+                }.sheet(isPresented: self.$createNewTodo) {
+                    self.createNewTodo = false
+                } content: {
+                    NavigationView {
+                        NewItem { title, until in
+                            let new = newTodo()
+                            new.title = title
+                            new.finished = false
+                            new.until = until
+                            save()
+                        }
+                    }
+                }.navigationTitle("Items")
+                .environment(\.editMode, $editMode)
     }
-    
+
     private func save() {
         do {
             try viewContext.save()
@@ -183,7 +179,10 @@ struct Todos: View {
     private func saveNewTodos(items: FetchedResults<TodoItem>, newTodos todos: [Todo]) {
         todos.forEach { todo in
             let found = items.first(where: { item in
-                item.id == todo.id.toNsUUID()
+                let itemID = item.id
+                let todoID = todo.id.toNsUUID()
+                print("\(itemID) \(todoID)")
+                return itemID == todoID
             }) ?? newTodo()
 
             found.title = todo.title
@@ -202,7 +201,9 @@ struct Todos: View {
 
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
+            offsets.map {
+                items[$0]
+            }.forEach(viewContext.delete)
         }
         save()
     }
@@ -212,28 +213,34 @@ struct NewItem: View {
     let save: (String, Date) -> Void
 
     @Environment(\.dismiss) var dismiss
-
+    @FocusState private var focus: Bool
 
     @State private var title: String = ""
     @State private var until: Date = Date.now
 
     var body: some View {
         Form {
-            TextField("Title", text: $title)
+            TextField("Title", text: $title).focused($focus)
             DatePicker("Until", selection: $until)
-        }.navigationTitle(self.title.ifBlank { "New Todo" })
-            .toolbar {
-                Button("Save") {
-                    save(self.title, self.until)
-                    dismiss()
+        }.onAppear {
+                    focus = true
                 }
-            }
+                .navigationTitle(self.title.ifBlank {
+                    "New Todo"
+                })
+                .toolbar {
+                    Button("Save") {
+                        save(self.title, self.until)
+                        focus = false
+                        dismiss()
+                    }
+                }
     }
 }
 
 extension String {
     func ifBlank(fallback: () -> String) -> String {
-        if(isEmpty) {
+        if (isEmpty) {
             return fallback()
         } else {
             return self
@@ -244,11 +251,12 @@ extension String {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView(viewModel: ViewModel(api: TestAPI()))
-            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+                .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }
 
-class TestAPI: shared.API { }
+class TestAPI: shared.API {
+}
 
 struct TodoItemRow: View {
     let item: TodoItem

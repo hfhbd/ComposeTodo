@@ -14,10 +14,7 @@ include(":shared")
 
 include(":backend")
 
-
-include(":iosClient")
+include(":clients")
 include(":web")
-
-include(":androidAndDesktop")
 include(":androidApp")
 include(":desktop")

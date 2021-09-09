@@ -11,7 +11,7 @@ data class TodoEntity(
     override val title: String,
     override val until: Instant?,
     override val finished: Boolean,
-    val recordChangeTag: String?
+    override val recordChangeTag: String?
 ): Todo {
     constructor(todo: RestTodo) : this(
         id = todo.id,

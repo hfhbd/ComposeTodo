@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import shared
 
 struct PersistenceController {
 
@@ -13,7 +14,7 @@ struct PersistenceController {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
         for i in 0..<10 {
-            let newItem = TodoItem(context: viewContext)
+            let newItem = SharedTodoItem()
             newItem.title = "Test \(i)"
             newItem.finished = i % 2 == 0
             newItem.until = Date()

@@ -9,7 +9,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(projects.androidAndDesktop)
+                implementation(projects.clients)
             }
         }
         commonTest {

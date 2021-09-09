@@ -8,6 +8,7 @@ interface Todo {
     val title: String
     val until: Instant?
     val finished: Boolean
+    val recordChangeTag: String?
 
     companion object
 }

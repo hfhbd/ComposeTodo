@@ -8,7 +8,7 @@ data class TodoEntity(
     override val title: String,
     override val until: Instant?,
     override val finished: Boolean,
-    val recordChangeTag: String?
+    override val recordChangeTag: String?
 ) : Todo {
     constructor(todo: app.softwork.composetodo.dto.Todo) : this(
         id = todo.id,

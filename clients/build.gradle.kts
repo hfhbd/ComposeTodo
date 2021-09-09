@@ -6,6 +6,23 @@ plugins {
 kotlin {
     jvm()
 
+    iosArm64 {
+        binaries {
+            framework {
+                baseName = "shared"
+                export(projects.shared)
+                // Export transitively.
+                transitiveExport = true
+            }
+        }
+    }
+
+    js(IR) {
+        browser {
+            binaries.library()
+        }
+    }
+
     sourceSets {
         commonMain {
             dependencies {
