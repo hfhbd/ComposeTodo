@@ -1,8 +1,8 @@
 package app.softwork.composetodo
 
 import android.os.*
+import androidx.activity.*
 import androidx.activity.compose.*
-import androidx.appcompat.app.*
 import androidx.lifecycle.*
 import app.softwork.composetodo.models.*
 import app.softwork.composetodo.repository.*
@@ -12,7 +12,7 @@ import io.ktor.client.engine.android.*
 import io.ktor.client.features.*
 import io.ktor.http.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
     private lateinit var appContainer: AppContainer<TodoEntity>
 
     override fun onCreate(savedInstanceState: Bundle?) {
