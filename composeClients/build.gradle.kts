@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.apple.*
+
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.compose")
@@ -6,10 +8,19 @@ plugins {
 kotlin {
     jvm()
 
+    /*js(IR) {
+        browser {
+            binaries.library()
+        }
+    }*/
+
     sourceSets {
         commonMain {
             dependencies {
-                implementation(projects.composeClients)
+                api(projects.clients)
+                api(compose.runtime)
+                api(compose.foundation)
+                api(compose.material)
             }
         }
         commonTest {
@@ -20,19 +31,13 @@ kotlin {
 
         val jvmMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-cio:1.6.3")
-                implementation(compose.desktop.currentOs)
+
             }
         }
         val jvmTest by getting {
             dependencies {
+
             }
         }
-    }
-}
-
-compose.desktop {
-    application {
-        mainClass = "app.softwork.composetodo.MainKt"
     }
 }

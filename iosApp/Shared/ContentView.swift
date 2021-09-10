@@ -59,20 +59,6 @@ struct Login: View {
     }
 }
 
-final class SwiftViewModel: ObservableObject {
-    let viewModel: ViewModel
-    init(viewModel: ViewModel) {
-        self.viewModel = viewModel
-        viewModel.loginState.key
-        viewModel.data(subscription: {
-            
-        })
-    }
-    
-    @Published private (set) var login: LoginState = LoginState.loggedout
-    @Published private (set) var data: RequestResult.KeyValueObservingPublisher
-}
-
 
 struct ContentView: View {
     

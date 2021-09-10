@@ -1,11 +1,13 @@
+import org.jetbrains.kotlin.gradle.plugin.mpp.apple.*
+
 plugins {
     kotlin("multiplatform")
-    id("org.jetbrains.compose")
 }
 
 kotlin {
     jvm()
 
+    val xcf = XCFramework()
     iosArm64 {
         binaries {
             framework {
@@ -13,6 +15,7 @@ kotlin {
                 export(projects.shared)
                 // Export transitively.
                 transitiveExport = true
+                xcf.add(this)
             }
         }
     }
@@ -31,21 +34,22 @@ kotlin {
         }
         commonTest {
             dependencies {
-                implementation(kotlin("test"))
+                api(kotlin("test"))
             }
         }
 
-       val jvmMain by getting {
+        val iosArm64Main by getting {
             dependencies {
-                api(compose.runtime)
-                api(compose.foundation)
-                api(compose.material)
+                // Apache 2, https://github.com/ktorio/ktor/releases/latest
+                api("io.ktor:ktor-client-ios:1.6.3")
             }
         }
-        val jvmTest by getting {
-            dependencies {
+    }
+}
 
-            }
-        }
+tasks {
+    val assembleClientsXCFramework by this
+    build {
+        dependsOn(assembleClientsXCFramework)
     }
 }
