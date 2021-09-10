@@ -4,6 +4,7 @@ import androidx.compose.runtime.*
 import app.softwork.bootstrapcompose.*
 import app.softwork.composetodo.*
 import app.softwork.composetodo.dto.*
+import app.softwork.composetodo.dto.Todo
 import kotlinx.coroutines.*
 import kotlinx.datetime.*
 import kotlinx.uuid.*

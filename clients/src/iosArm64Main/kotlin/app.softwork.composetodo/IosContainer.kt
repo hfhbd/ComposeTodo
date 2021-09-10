@@ -1,0 +1,52 @@
+package app.softwork.composetodo
+
+import app.softwork.composetodo.repository.*
+import app.softwork.composetodo.viewmodels.*
+import com.squareup.sqldelight.db.*
+import com.squareup.sqldelight.drivers.native.*
+import io.ktor.client.*
+import io.ktor.client.engine.ios.*
+import io.ktor.client.features.*
+import io.ktor.client.features.cookies.*
+import io.ktor.http.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+
+class IosContainer(
+    private val scope: CoroutineScope,
+    protocol: URLProtocol,
+    host: String
+) : AppContainer {
+    override val driver: SqlDriver = NativeSqliteDriver(ComposeTodoDB.Schema, "composetodo.db")
+
+    constructor() : this(scope = MainScope(), protocol = URLProtocol.HTTPS, host = "api.todo.softwork.app")
+
+    override val client: HttpClient = HttpClient(Ios) {
+        install(HttpCookies) {
+            storage = UserDefaultsCookieStorage()
+        }
+        install(DefaultRequest) {
+            url {
+                this.protocol = protocol
+                this.host = host
+            }
+        }
+        engine {
+            configureRequest {
+                setAllowsCellularAccess(true)
+            }
+        }
+    }
+
+    override fun loginViewModel(api: API.LoggedOut) = LoginViewModel(scope, api) {
+        isLoggedIn.value = it
+    }
+
+    override fun todoViewModel(api: API.LoggedIn) = TodoViewModel(scope = scope, repo = TodoRepository(api, driver))
+
+    override fun registerViewModel(api: API.LoggedOut) = RegisterViewModel(scope, api) {
+        isLoggedIn.value = it
+    }
+
+    override val isLoggedIn: MutableStateFlow<API> = MutableStateFlow(API.LoggedOut(client))
+}

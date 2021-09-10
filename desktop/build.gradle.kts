@@ -1,34 +1,15 @@
 plugins {
-    kotlin("multiplatform")
+    kotlin("jvm")
     id("org.jetbrains.compose")
 }
 
-kotlin {
-    jvm()
+dependencies {
+    implementation(projects.composeClients)
+    testImplementation(kotlin("test"))
 
-    sourceSets {
-        commonMain {
-            dependencies {
-                implementation(projects.composeClients)
-            }
-        }
-        commonTest {
-            dependencies {
-                implementation(kotlin("test"))
-            }
-        }
-
-        val jvmMain by getting {
-            dependencies {
-                implementation("io.ktor:ktor-client-cio:1.6.3")
-                implementation(compose.desktop.currentOs)
-            }
-        }
-        val jvmTest by getting {
-            dependencies {
-            }
-        }
-    }
+    implementation("io.ktor:ktor-client-cio:1.6.3")
+    implementation("com.squareup.sqldelight:sqlite-driver:1.5.0")
+    implementation(compose.desktop.currentOs)
 }
 
 compose.desktop {

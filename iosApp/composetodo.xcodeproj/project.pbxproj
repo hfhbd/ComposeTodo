@@ -12,6 +12,8 @@
 		0823C17D265282B600AA4A20 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0823C150265282B400AA4A20 /* ContentView.swift */; };
 		0823C181265282B600AA4A20 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0823C152265282B600AA4A20 /* Assets.xcassets */; };
 		0823C19A265286D400AA4A20 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0823C199265286D400AA4A20 /* CloudKit.framework */; };
+		08EA7CEA26F1FF2300FFA5A9 /* clients.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08EA7CE926F1FF2300FFA5A9 /* clients.xcframework */; };
+		08EA7CEB26F1FF2300FFA5A9 /* clients.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08EA7CE926F1FF2300FFA5A9 /* clients.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +33,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				08EA7CEB26F1FF2300FFA5A9 /* clients.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -50,6 +53,7 @@
 		0823C16D265282B600AA4A20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0823C198265286D200AA4A20 /* composetodo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = composetodo.entitlements; sourceTree = "<group>"; };
 		0823C199265286D400AA4A20 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.5.sdk/System/Library/Frameworks/CloudKit.framework; sourceTree = DEVELOPER_DIR; };
+		08EA7CE926F1FF2300FFA5A9 /* clients.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = clients.xcframework; path = ../clients/build/XCFrameworks/debug/clients.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08EA7CEA26F1FF2300FFA5A9 /* clients.xcframework in Frameworks */,
 				0823C19A265286D400AA4A20 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -132,6 +137,7 @@
 		0823C192265284CF00AA4A20 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				08EA7CE926F1FF2300FFA5A9 /* clients.xcframework */,
 				0823C199265286D400AA4A20 /* CloudKit.framework */,
 			);
 			name = Frameworks;

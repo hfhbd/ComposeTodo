@@ -47,9 +47,10 @@ fun main() {
     }.start(wait = true)
 }
 
-private fun client(): CKClient {
+private fun client(): Client {
     val container = "iCloud.app.softwork.composetodo"
-    val keyID by Env
+    val keyID = System.getenv("keyID") ?: return TestClient()
+
     val privateKey by Env
     val logger = LoggerFactory.getLogger(CKClient::class.java)
     return CKClient(container, keyID, Base64.getMimeDecoder().decode(privateKey), logging = {

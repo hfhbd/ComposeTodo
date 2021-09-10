@@ -1,43 +1,76 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.*
 
 plugins {
+    id("com.android.library")
     kotlin("multiplatform")
     id("org.jetbrains.compose")
 }
 
 kotlin {
-    jvm()
+    android()
+    jvm("desktop")
 
-    /*js(IR) {
+    js(IR) {
         browser {
             binaries.library()
         }
-    }*/
+    }
 
     sourceSets {
         commonMain {
             dependencies {
                 api(projects.clients)
                 api(compose.runtime)
-                api(compose.foundation)
-                api(compose.material)
             }
         }
+
         commonTest {
             dependencies {
                 implementation(kotlin("test"))
             }
         }
 
-        val jvmMain by getting {
+        val desktopMain by getting {
             dependencies {
-
+                api(compose.foundation)
+                api(compose.material)
             }
         }
-        val jvmTest by getting {
-            dependencies {
 
+        val androidMain by getting {
+            dependencies {
+                api(compose.foundation)
+                api(compose.material)
+                implementation("io.github.vanpra.compose-material-dialogs:datetime:0.6.0")
             }
+        }
+
+        val jsMain by getting {
+            dependencies {
+                api(compose.web.core)
+                api("app.softwork:bootstrap-compose:0.0.41")
+            }
+        }
+    }
+}
+
+android {
+    compileSdk = 31
+
+    defaultConfig {
+        minSdk = 26
+        targetSdk = 31
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    sourceSets {
+        named("main") {
+            manifest.srcFile("src/androidMain/AndroidManifest.xml")
+            res.srcDirs("src/androidMain/res")
         }
     }
 }

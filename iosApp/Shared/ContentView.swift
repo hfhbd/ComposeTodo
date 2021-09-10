@@ -2,254 +2,132 @@ import SwiftUI
 import CoreData
 import shared
 
-struct Login: View {
-    let login: (String, String) async throws -> Void
-    let silentLogin: () -> Void
-    
-    @State private var username: String = ""
-    @State private var password: String = ""
-    @State private var error: String? = nil
-
-    @FocusState private var focus: Fields?
-
-    private enum Fields: Hashable {
-        case username, password
-    }
-
-    @MainActor
-    private func submit() async {
-        focus = nil
-        do {
-            try await login(username, password)
-        } catch let error as Errors {
-            switch error {
-            case .WrongPassword:
-                self.error = "Wrong password"
-                focus = .password
-            }
-        } catch {
-            self.error = error.localizedDescription
-        }
-    }
-
-    var body: some View {
-        Form {
-            TextField("Username", text: $username, onCommit: {
-                focus = .password
-            }).focused($focus, equals: .username)
-            SecureField("Password", text: $password) {
-                Task {
-                    await submit()
-                }
-            }.focused($focus, equals: .password)
-
-            if let error = error {
-                Text(error)
-            }
-        }.toolbar {
-            Button("Login") {
-                Task {
-                    await submit()
-                }
-            }
-        }.onAppear {
-            focus = .username
-            silentLogin()
-        }
-    }
-}
-
-
 struct ContentView: View {
+    let container: IosContainer
+
+    init(container: IosContainer) {
+        self.container = container
+        self._isLoggedIn = .init(container.isLoggedIn)
+    }
+    
+    @Binding private var isLoggedIn: API
     
     var body: some View {
-        if (viewModel.log is API.LoggedOut) {
+        if (isLoggedIn is API.LoggedOut) {
             TabView {
                 NavigationView {
-                    Login(login: viewModel.login) {
-                        Task { try? await viewModel.trySilentLogin() }
-                    }
-                            .navigationTitle("Login")
+                    Login(viewModel: container.loginViewModel(api: isLoggedIn as! API.LoggedOut))
+                        .navigationTitle("Login")
                 }.tabItem {
                     Label("Login", systemImage: "person")
+                }
+                NavigationView {
+                    Register(viewModel: container.registerViewModel(api: isLoggedIn as! API.LoggedOut))
+                        .navigationTitle("Register")
+                }.tabItem {
+                    Label("Register", systemImage: "person.badge.plus")
                 }
             }
         } else {
             NavigationView {
-                Todos(viewModel: viewModel).navigationTitle("Todos")
+                Todos(viewModel: container.todoViewModel(api: isLoggedIn as! API.LoggedIn))
+                    .navigationTitle("Todos")
             }
         }
     }
 }
 
-struct Todos: View {
-    @Environment(\.managedObjectContext) private var viewContext
 
-    @ObservedObject private (set) var viewModel: ViewModel
-
-    @FetchRequest(
-            sortDescriptors: [NSSortDescriptor(keyPath: \TodoItem.title, ascending: true)],
-            animation: .default)
-    private var items: FetchedResults<TodoItem>
-
-    @State private var selection: Set<TodoItem> = []
-
-    @State private var createNewTodo = false
-    @State var editMode: EditMode = .inactive
-    var body: some View {
-        List(selection: $selection) {
-            ForEach(items) { item in
-                TodoItemRow(item: item)
-            }
-                    .onDelete(perform: deleteItems)
-        }
-                .toolbar {
-
-                    #if os(iOS)
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        EditButton()
-                    }
-                    #endif
-
-                    ToolbarItem(placement: .navigationBarTrailing) {
-
-                        if editMode == .inactive {
-                            Button(action: {
-                                self.createNewTodo = true
-                            }) {
-                                Label("Add Item", systemImage: "plus")
-                            }
-                        } else {
-                            Button(action: {
-                                withAnimation {
-                                    selection.forEach(viewContext.delete)
-                                }
-                                save()
-                                selection = []
-                            }) {
-                                Label("Delete", systemImage: "trash")
-                            }
-                        }
-                    }
-                }
-                .refreshable {
-                    let newTodos = (try? await viewModel.refreshTodos()) ?? []
-                    saveNewTodos(items: items, newTodos: newTodos)
-                }.sheet(isPresented: self.$createNewTodo) {
-                    self.createNewTodo = false
-                } content: {
-                    NavigationView {
-                        NewItem { title, until in
-                            let new = newTodo()
-                            new.title = title
-                            new.finished = false
-                            new.until = until
-                            save()
-                        }
-                    }
-                }.navigationTitle("Items")
-                .environment(\.editMode, $editMode)
+struct Login: View {
+    let viewModel: LoginViewModel
+    
+    init(viewModel: LoginViewModel) {
+        self.viewModel = viewModel
+        self._username = .init(viewModel.userName)
+        self._password = .init(viewModel.password)
+        self._error = .init(viewModel.error)
     }
-
-    private func save() {
-        do {
-            try viewContext.save()
-        } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
-    }
-
-    private func saveNewTodos(items: FetchedResults<TodoItem>, newTodos todos: [Todo]) {
-        todos.forEach { todo in
-            let found = items.first(where: { item in
-                let itemID = item.id
-                let todoID = todo.id.toNsUUID()
-                print("\(itemID) \(todoID)")
-                return itemID == todoID
-            }) ?? newTodo()
-
-            found.title = todo.title
-            found.finished = todo.finished
-            found.until = todo.until?.toNSDate()
-        }
-
-        save()
-    }
-
-    private func newTodo() -> TodoItem {
-        let new = TodoItem(context: viewContext)
-        new.id = UUID()
-        return new
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map {
-                items[$0]
-            }.forEach(viewContext.delete)
-        }
-        save()
-    }
-}
-
-struct NewItem: View {
-    let save: (String, Date) -> Void
-
-    @Environment(\.dismiss) var dismiss
-    @FocusState private var focus: Bool
-
-    @State private var title: String = ""
-    @State private var until: Date = Date.now
+    
+    @Binding private var username: String
+    @Binding private var password: String
+    @Binding private var error: LoginViewModel.LoginResultFailure?
 
     var body: some View {
         Form {
-            TextField("Title", text: $title).focused($focus)
-            DatePicker("Until", selection: $until)
-        }.onAppear {
-                    focus = true
-                }
-                .navigationTitle(self.title.ifBlank {
-                    "New Todo"
-                })
-                .toolbar {
-                    Button("Save") {
-                        save(self.title, self.until)
-                        focus = false
-                        dismiss()
-                    }
-                }
-    }
-}
+            TextField("Username", text: $username)
+            SecureField("Password", text: $password)
 
-extension String {
-    func ifBlank(fallback: () -> String) -> String {
-        if (isEmpty) {
-            return fallback()
-        } else {
-            return self
+            if let error = error {
+                Text(error.description)
+            }
+        }.toolbar {
+            Button("Login") {
+                viewModel.login()
+            }
         }
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView(viewModel: ViewModel(api: TestAPI()))
-                .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+struct Register: View {
+    let viewModel: RegisterViewModel
+    
+    init(viewModel: RegisterViewModel) {
+        self.viewModel = viewModel
+        self._username = .init(viewModel.username)
+        self._password = .init(viewModel.password)
+        self._passwordAgain = .init(viewModel.passwordAgain)
+        self._firstName = .init(viewModel.firstName)
+        self._lastName = .init(viewModel.lastName)
+    }
+    
+    @Binding private var username: String
+    @Binding private var password: String
+    @Binding private var passwordAgain: String
+    @Binding private var firstName: String
+    @Binding private var lastName: String
+    
+    var body: some View {
+        Form {
+            TextField("Username", text: $username)
+            SecureField("Password", text: $password)
+            SecureField("Password Again", text: $passwordAgain)
+            TextField("First Name", text: $firstName)
+            TextField("Last Name", text: $lastName)
+        }.toolbar {
+            Button("Register") {
+                viewModel.register()
+            }
+        }
     }
 }
 
-class TestAPI: shared.API {
+extension Todo: Swift.Identifiable { }
+
+struct Todos: View {
+    let viewModel: TodoViewModel
+    
+    @State private var todos = [Todo]()
+    
+    var body: some View {
+        List(todos) { todo in
+            TodoItemRow(item: todo)
+        }.refreshable {
+            viewModel.refresh()
+        }.onReceive(viewModel.todos
+                        .publisher([Todo].self)
+                        .replaceError(with: [])
+        ) { newValues in
+            self.todos = newValues
+        }
+    }
 }
 
 struct TodoItemRow: View {
-    let item: TodoItem
+    let item: Todo
 
     var body: some View {
         VStack {
-            Text(item.title!)
+            Text(item.title)
         }
     }
 }
