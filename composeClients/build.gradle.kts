@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.plugin.mpp.apple.*
-
 plugins {
     id("com.android.library")
     kotlin("multiplatform")
