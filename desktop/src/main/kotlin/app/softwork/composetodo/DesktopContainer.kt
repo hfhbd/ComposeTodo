@@ -13,7 +13,10 @@ import kotlinx.coroutines.flow.*
 
 class DesktopContainer(private val scope: CoroutineScope) : AppContainer {
     override val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:composetodo.db")
-    override fun todoViewModel(api: API.LoggedIn): TodoViewModel = TodoViewModel(scope, TodoRepository(api, driver))
+    override fun todoViewModel(api: API.LoggedIn): TodoViewModel =
+        TodoViewModel(scope, TodoRepository(api, driver) { schema ->
+            schema.create(driver)
+        })
 
     override fun loginViewModel(api: API.LoggedOut) = LoginViewModel(scope, api) {
         isLoggedIn.value = it
@@ -26,8 +29,8 @@ class DesktopContainer(private val scope: CoroutineScope) : AppContainer {
     override val client = HttpClient(CIO) {
         defaultRequest {
             url {
-                protocol = URLProtocol.HTTP
-                host = "localhost"
+                protocol = URLProtocol.HTTPS
+                host = "api.todo.softwork.app"
             }
         }
     }

@@ -8,6 +8,7 @@ import io.ktor.client.*
 import io.ktor.client.engine.ios.*
 import io.ktor.client.features.*
 import io.ktor.client.features.cookies.*
+import io.ktor.client.features.logging.*
 import io.ktor.http.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -30,6 +31,9 @@ class IosContainer(
                 this.protocol = protocol
                 this.host = host
             }
+        }
+        install(Logging) {
+            level = LogLevel.ALL
         }
         engine {
             configureRequest {

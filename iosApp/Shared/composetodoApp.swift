@@ -11,8 +11,7 @@ import Combine
 
 @main
 struct ComposeTodoApp: App {
-    
-    let container = IosContainer.init(scope: CoroutineScopeKt.MainScope(), protocol: URLProtocol.Companion().HTTP, host: "philips-macbook-air.local")
+    let container = IosContainer()
     
     var body: some Scene {
         WindowGroup {
@@ -31,38 +30,41 @@ extension Binding {
     }
 }
 
-private class Collector<T>: FlowCollector {
-    let subject: PassthroughSubject<T, Error>
-    init(subject: PassthroughSubject<T, Error>) {
-        self.subject = subject
-    }
-    
-    func emit(value: Any?) async throws -> KotlinUnit? {
-        subject.send(value as! T)
-        return KotlinUnit()
-    }
-}
 
 extension Flow {
     func publisher<T>(_ type: T.Type) -> AnyPublisher<T, Error> {
         let subject = PassthroughSubject<T, Error>()
-        let collector = Collector(subject: subject)
         
-        self.collect(collector: collector) {  _, error in
+        FlowsKt.collectOnMain(self, collector: { value in
+            subject.send(value as! T)
+        }, completionHandler: { _, error in
             if let error = error {
                 subject.send(completion: .failure(error))
             } else {
                 subject.send(completion: .finished)
             }
-        }
+        })
         return subject.eraseToAnyPublisher()
     }
 }
 
-extension Sequence where Element == AnyCancellable {
-    func cancelAll() {
-        forEach {
-            $0.cancel()
+
+extension Publisher {
+    func toFlow(_ caller: String, canceling: @escaping (AnyCancellable) -> Void) -> Flow {
+        FlowsKt.toFlow(caller: caller) { (onComplete, onReceive) in
+            canceling(self.sink { it in
+                switch it {
+                case .failure(let error):
+                    onComplete(error)
+                case .finished:
+                    onComplete(nil)
+                }
+            } receiveValue: { it in
+                onReceive.invoke(p1: it) { it, error in
+                    Swift.print("PublisherToFlowSuspendCompletionHandler with \(it) \(error)")
+                }
+            })
         }
     }
 }
+

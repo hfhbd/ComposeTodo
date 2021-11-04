@@ -10,9 +10,9 @@ class LoginViewModel(
     private val api: API.LoggedOut,
     private val onLogin: (API.LoggedIn) -> Unit
 ) {
-    var userName = MutableStateFlow("")
-    var password = MutableStateFlow("")
-    var error = MutableStateFlow<LoginResult.Failure?>(null)
+    val userName = MutableStateFlow("")
+    val password = MutableStateFlow("")
+    val error = MutableStateFlow<LoginResult.Failure?>(null)
 
     fun silentLogin() {
         scope.launch {
@@ -22,7 +22,7 @@ class LoginViewModel(
 
     fun login() {
         scope.launch {
-            val loginResult: LoginResult = try {
+            val loginResult = try {
                 val success = api.login(username = userName.value, password = password.value)
                 if (success != null) {
                     LoginResult.Success(success)
@@ -45,9 +45,15 @@ class LoginViewModel(
 
     sealed class LoginResult {
         data class Success(val login: API.LoggedIn) : LoginResult()
-        abstract class Failure: LoginResult()
+        abstract class Failure: LoginResult() {
+            abstract val reason: String
+        }
 
-        object WrongCredentials : Failure()
-        object NoNetwork : Failure()
+        object WrongCredentials : Failure() {
+            override val reason: String get() = "Wrong credentials"
+        }
+        object NoNetwork : Failure() {
+            override val reason: String get() = "Server not available"
+        }
     }
 }

@@ -6,6 +6,7 @@ pluginManagement {
         mavenCentral()
         maven("https://www.jetbrains.com/intellij-repository/releases")
         maven("https://jetbrains.bintray.com/intellij-third-party-dependencies")
+        maven(url = "https://oss.sonatype.org/content/repositories/snapshots")
     }
 }
 

@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.apple.*
 
 plugins {
     kotlin("multiplatform")
-    id("com.squareup.sqldelight") version "1.5.1"
+    id("com.squareup.sqldelight")
 }
 
 sqldelight {
@@ -19,28 +19,36 @@ kotlin {
         binaries {
             framework {
                 baseName = "shared"
-                export(projects.shared)
-                export("com.squareup.sqldelight:coroutines-extensions:1.5.1")
-                export("app.softwork:kotlinx-uuid-sqldelight:0.0.11")
-                // Export transitively.
-                transitiveExport = true
                 xcf.add(this)
+                export(projects.shared)
+                export("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt")
+                transitiveExport = true
+            }
+        }
+    }
+    iosSimulatorArm64 {
+        binaries {
+            framework {
+                baseName = "shared"
+                xcf.add(this)
+                export(projects.shared)
+                export("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt")
+                transitiveExport = true
             }
         }
     }
 
     js(IR) {
-        browser {
-            binaries.library()
-        }
+        browser()
     }
 
     sourceSets {
         commonMain {
             dependencies {
                 api(projects.shared)
-                api("com.squareup.sqldelight:coroutines-extensions:1.5.1")
-                api("app.softwork:kotlinx-uuid-sqldelight:0.0.11")
+                implementation("com.squareup.sqldelight:coroutines-extensions:1.6.0-SNAPSHOT")
+                implementation("app.softwork:kotlinx-uuid-sqldelight:0.0.12")
+                implementation("io.ktor:ktor-client-logging:1.6.5")
             }
         }
         commonTest {
@@ -52,9 +60,17 @@ kotlin {
         val iosArm64Main by getting {
             dependencies {
                 // Apache 2, https://github.com/ktorio/ktor/releases/latest
-                api("io.ktor:ktor-client-ios:1.6.4")
-                implementation("com.squareup.sqldelight:native-driver:1.5.1")
+                implementation("io.ktor:ktor-client-ios:1.6.5")
+                implementation("com.squareup.sqldelight:native-driver:1.5.2")
+                api("org.jetbrains.kotlinx:kotlinx-coroutines-core") {
+                    version {
+                        strictly("1.5.2-native-mt")
+                    }
+                }
             }
+        }
+        val iosSimulatorArm64Main by getting {
+            dependsOn(iosArm64Main)
         }
     }
 }

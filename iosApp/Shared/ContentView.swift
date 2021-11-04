@@ -37,7 +37,6 @@ struct ContentView: View {
     }
 }
 
-
 struct Login: View {
     let viewModel: LoginViewModel
     
@@ -58,12 +57,17 @@ struct Login: View {
             SecureField("Password", text: $password)
 
             if let error = error {
-                Text(error.description)
+                Text(error.reason)
             }
         }.toolbar {
             Button("Login") {
                 viewModel.login()
             }
+        }.onReceive(viewModel.error.publisher(LoginViewModel.LoginResultFailure?.self)
+                        .replaceError(with: nil)
+                        .receive(on: RunLoop.main)
+        ) {
+            self.error = $0
         }
     }
 }
@@ -102,32 +106,3 @@ struct Register: View {
 }
 
 extension Todo: Swift.Identifiable { }
-
-struct Todos: View {
-    let viewModel: TodoViewModel
-    
-    @State private var todos = [Todo]()
-    
-    var body: some View {
-        List(todos) { todo in
-            TodoItemRow(item: todo)
-        }.refreshable {
-            viewModel.refresh()
-        }.onReceive(viewModel.todos
-                        .publisher([Todo].self)
-                        .replaceError(with: [])
-        ) { newValues in
-            self.todos = newValues
-        }
-    }
-}
-
-struct TodoItemRow: View {
-    let item: Todo
-
-    var body: some View {
-        VStack {
-            Text(item.title)
-        }
-    }
-}

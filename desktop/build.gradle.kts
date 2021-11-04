@@ -7,8 +7,8 @@ dependencies {
     implementation(projects.composeClients)
     testImplementation(kotlin("test"))
 
-    implementation("io.ktor:ktor-client-cio:1.6.3")
-    implementation("com.squareup.sqldelight:sqlite-driver:1.5.0")
+    implementation("io.ktor:ktor-client-cio:1.6.5")
+    implementation("com.squareup.sqldelight:sqlite-driver:1.5.2")
     implementation(compose.desktop.currentOs)
 }
 

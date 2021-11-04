@@ -17,7 +17,7 @@ actual fun Row(content: @Composable () -> Unit) {
 
 @Composable
 actual fun Card(content: @Composable () -> Unit) {
-    app.softwork.bootstrapcompose.Card("") { content() }
+    app.softwork.bootstrapcompose.Card { content() }
 }
 
 @Composable

@@ -23,6 +23,12 @@ fun Login(viewModel: LoginViewModel) {
             isPassword = true,
             placeholder = ""
         )
-        Button("Login", enabled = true) { viewModel.login() }
+        Button("Login", enabled = userName.isNotEmpty() && password.isNotEmpty()) { viewModel.login() }
+
+        val error by viewModel.error.collectAsState()
+
+        error?.let {
+            Text("ERROR: ${it.reason}")
+        }
     }
 }

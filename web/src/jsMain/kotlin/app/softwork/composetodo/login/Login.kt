@@ -11,10 +11,11 @@ import org.jetbrains.compose.web.dom.*
 fun Login(api: API.LoggedOut, onLogin: (API.LoggedIn) -> Unit) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
     Row {
         Column {
             H1 {
-                Text("Login")
+                Text("Login $username")
             }
             Input(
                 value = username,
@@ -34,11 +35,7 @@ fun Login(api: API.LoggedOut, onLogin: (API.LoggedIn) -> Unit) {
             ) {
                 password = it.value
             }
-            Button("Login", attrs = {
-                if (username.isEmpty() || password.isEmpty()) {
-                    disabled()
-                }
-            }) {
+            Button("Login $username", disabled = username.isEmpty() || password.isEmpty()) {
                 scope.launch {
                     api.login(username = username, password = password)?.let {
                         onLogin(it)

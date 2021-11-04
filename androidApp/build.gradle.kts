@@ -24,7 +24,7 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
+        release {
             isMinifyEnabled = true
         }
     }
@@ -32,9 +32,9 @@ android {
 
 dependencies {
     implementation(projects.composeClients)
-    implementation("com.squareup.sqldelight:android-driver:1.5.1")
+    implementation("com.squareup.sqldelight:android-driver:1.5.2")
 
-    implementation("io.ktor:ktor-client-android:1.6.4")
+    implementation("io.ktor:ktor-client-android:1.6.5")
 
-    implementation("androidx.activity:activity-compose:1.3.1")
+    implementation("androidx.activity:activity-compose:1.4.0")
 }
