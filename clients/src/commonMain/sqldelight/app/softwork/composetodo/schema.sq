@@ -1,0 +1,28 @@
+import kotlinx.uuid.UUID;
+import kotlinx.datetime.Instant;
+
+CREATE TABLE todo(
+  id TEXT AS UUID NOT NULL PRIMARY KEY,
+  title TEXT NOT NULL,
+  until TEXT AS Instant,
+  finished INTEGER AS Boolean NOT NULL,
+  recordChangeTag TEXT
+);
+
+upsertTodo:
+INSERT OR REPLACE INTO todo(id, title, until, finished, recordChangeTag) VALUES (?, ?, ?, ?, ?);
+
+all:
+SELECT * FROM todo;
+
+allIDs:
+SELECT id FROM todo;
+
+get:
+SELECT * FROM todo WHERE id = ?;
+
+delete:
+DELETE FROM todo WHERE id = ?;
+
+deleteAll:
+DELETE FROM todo;

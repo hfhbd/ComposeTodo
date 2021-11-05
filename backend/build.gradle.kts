@@ -12,9 +12,8 @@ application {
 dependencies {
     implementation(projects.shared)
 
-
     // Apache 2, https://github.com/ktorio/ktor/releases/latest
-    val ktorVersion = "1.6.3"
+    val ktorVersion = "1.6.5"
 
     implementation("io.ktor:ktor-server-cio:$ktorVersion")
     implementation("io.ktor:ktor-auth-jwt:$ktorVersion")
@@ -26,10 +25,10 @@ dependencies {
     implementation("app.softwork:cloudkitclient-core:0.0.8")
 
     // EPL 1.0, https://github.com/qos-ch/logback/releases
-    runtimeOnly("ch.qos.logback:logback-classic:1.2.5")
+    runtimeOnly("ch.qos.logback:logback-classic:1.2.6")
 
 
     testImplementation(kotlin("test"))
     testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
-    testImplementation("app.softwork:cloudkitclient-testing:0.0.8")
+    implementation("app.softwork:cloudkitclient-testing:0.0.8")
 }

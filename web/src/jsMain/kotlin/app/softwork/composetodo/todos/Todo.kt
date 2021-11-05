@@ -2,7 +2,7 @@ package app.softwork.composetodo.todos
 
 import androidx.compose.runtime.*
 import app.softwork.composetodo.*
-import app.softwork.composetodo.dto.*
+import app.softwork.composetodo.dto.Todo
 import kotlinx.uuid.*
 import org.jetbrains.compose.web.dom.*
 

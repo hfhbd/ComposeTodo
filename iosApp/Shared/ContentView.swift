@@ -1,80 +1,108 @@
-//
-//  ContentView.swift
-//  Shared
-//
-//  Created by Philip Wedemann on 17.05.21.
-//
-
 import SwiftUI
 import CoreData
+import shared
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) private var viewContext
+    let container: IosContainer
 
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
+    init(container: IosContainer) {
+        self.container = container
+        self._isLoggedIn = .init(container.isLoggedIn)
+    }
+    
+    @Binding private var isLoggedIn: API
+    
+    var body: some View {
+        if (isLoggedIn is API.LoggedOut) {
+            TabView {
+                NavigationView {
+                    Login(viewModel: container.loginViewModel(api: isLoggedIn as! API.LoggedOut))
+                        .navigationTitle("Login")
+                }.tabItem {
+                    Label("Login", systemImage: "person")
+                }
+                NavigationView {
+                    Register(viewModel: container.registerViewModel(api: isLoggedIn as! API.LoggedOut))
+                        .navigationTitle("Register")
+                }.tabItem {
+                    Label("Register", systemImage: "person.badge.plus")
+                }
+            }
+        } else {
+            NavigationView {
+                Todos(viewModel: container.todoViewModel(api: isLoggedIn as! API.LoggedIn))
+                    .navigationTitle("Todos")
+            }
+        }
+    }
+}
+
+struct Login: View {
+    let viewModel: LoginViewModel
+    
+    init(viewModel: LoginViewModel) {
+        self.viewModel = viewModel
+        self._username = .init(viewModel.userName)
+        self._password = .init(viewModel.password)
+        self._error = .init(viewModel.error)
+    }
+    
+    @Binding private var username: String
+    @Binding private var password: String
+    @Binding private var error: LoginViewModel.LoginResultFailure?
 
     var body: some View {
-        List {
-            ForEach(items) { item in
-                Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-            }
-            .onDelete(perform: deleteItems)
-        }
-        .toolbar {
-            #if os(iOS)
-            EditButton()
-            #endif
+        Form {
+            TextField("Username", text: $username)
+            SecureField("Password", text: $password)
 
-            Button(action: addItem) {
-                Label("Add Item", systemImage: "plus")
+            if let error = error {
+                Text(error.reason)
             }
-        }.navigationTitle("Items")
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }.toolbar {
+            Button("Login") {
+                viewModel.login()
             }
+        }.onReceive(viewModel.error.publisher(LoginViewModel.LoginResultFailure?.self)
+                        .replaceError(with: nil)
+                        .receive(on: RunLoop.main)
+        ) {
+            self.error = $0
         }
     }
+}
 
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+struct Register: View {
+    let viewModel: RegisterViewModel
+    
+    init(viewModel: RegisterViewModel) {
+        self.viewModel = viewModel
+        self._username = .init(viewModel.username)
+        self._password = .init(viewModel.password)
+        self._passwordAgain = .init(viewModel.passwordAgain)
+        self._firstName = .init(viewModel.firstName)
+        self._lastName = .init(viewModel.lastName)
+    }
+    
+    @Binding private var username: String
+    @Binding private var password: String
+    @Binding private var passwordAgain: String
+    @Binding private var firstName: String
+    @Binding private var lastName: String
+    
+    var body: some View {
+        Form {
+            TextField("Username", text: $username)
+            SecureField("Password", text: $password)
+            SecureField("Password Again", text: $passwordAgain)
+            TextField("First Name", text: $firstName)
+            TextField("Last Name", text: $lastName)
+        }.toolbar {
+            Button("Register") {
+                viewModel.register()
             }
         }
     }
 }
 
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-    }
-}
+extension Todo: Swift.Identifiable { }

@@ -20,9 +20,8 @@ internal class TodoModuleKtTest {
     }) { db ->
         assertTrue(AdminController(db).allUsers().isEmpty())
 
-        val newUser: User
         register(User.New("user", "password", "password", "John", "Doe")) {
-            newUser = getMe()
+            val newUser = getMe()
             with(newUser) {
                 assertEquals("John", firstName)
                 assertEquals("Doe", lastName)

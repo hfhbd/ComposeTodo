@@ -3,7 +3,7 @@ package app.softwork.composetodo.todos
 import androidx.compose.runtime.*
 import app.softwork.bootstrapcompose.*
 import app.softwork.composetodo.*
-import app.softwork.composetodo.dto.*
+import app.softwork.composetodo.dto.Todo
 import kotlinx.coroutines.*
 import kotlinx.datetime.*
 import kotlinx.uuid.*
@@ -51,11 +51,7 @@ fun NewTodo(viewModel: NewTodoViewModel) {
     ) {
         viewModel.until = it.value
     }
-    Button("Create new Todo", attrs = {
-        if (viewModel.disabledButton) {
-            disabled()
-        }
-    }) {
+    Button("Create new Todo", disabled = viewModel.disabledButton) {
         viewModel.createTodo()
     }
 }

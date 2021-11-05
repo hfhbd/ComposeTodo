@@ -3,19 +3,19 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0812ECAB2694B13900CEC45D /* composetodo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0812ECAA2694B13900CEC45D /* composetodo.framework */; platformFilter = ios; };
-		0812ECAC2694B13900CEC45D /* composetodo.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0812ECAA2694B13900CEC45D /* composetodo.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0823C16C265282B600AA4A20 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0823C16B265282B600AA4A20 /* Tests_iOS.swift */; };
-		0823C179265282B600AA4A20 /* composetodo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0823C14D265282B400AA4A20 /* composetodo.xcdatamodeld */; };
 		0823C17B265282B600AA4A20 /* composetodoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0823C14F265282B400AA4A20 /* composetodoApp.swift */; };
 		0823C17D265282B600AA4A20 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0823C150265282B400AA4A20 /* ContentView.swift */; };
-		0823C17F265282B600AA4A20 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0823C151265282B400AA4A20 /* Persistence.swift */; };
 		0823C181265282B600AA4A20 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0823C152265282B600AA4A20 /* Assets.xcassets */; };
 		0823C19A265286D400AA4A20 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0823C199265286D400AA4A20 /* CloudKit.framework */; };
+		08DB9C8D27341E6300B6B383 /* TodoItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB9C8C27341E6300B6B383 /* TodoItemRow.swift */; };
+		08DB9C8F273432A200B6B383 /* Todos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB9C8E273432A200B6B383 /* Todos.swift */; };
+		08EA7CEA26F1FF2300FFA5A9 /* clients.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08EA7CE926F1FF2300FFA5A9 /* clients.xcframework */; };
+		08EA7CEB26F1FF2300FFA5A9 /* clients.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08EA7CE926F1FF2300FFA5A9 /* clients.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,13 +29,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		0812ECAD2694B13900CEC45D /* Embed Frameworks */ = {
+		083CF09E2695D6D600F4B54D /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				0812ECAC2694B13900CEC45D /* composetodo.framework in Embed Frameworks */,
+				08EA7CEB26F1FF2300FFA5A9 /* clients.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -44,21 +44,20 @@
 
 /* Begin PBXFileReference section */
 		0812ECA92694724000CEC45D /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
-		0812ECAA2694B13900CEC45D /* composetodo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = composetodo.framework; path = "../iosClient/build/xcode-frameworks/composetodo.framework"; sourceTree = "<group>"; };
 		0812ECAE2694D6B000CEC45D /* ci_pre_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_pre_xcodebuild.sh; sourceTree = "<group>"; };
-		0823C14E265282B400AA4A20 /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		0823C14F265282B400AA4A20 /* composetodoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = composetodoApp.swift; sourceTree = "<group>"; };
 		0823C150265282B400AA4A20 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		0823C151265282B400AA4A20 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		0823C152265282B600AA4A20 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0823C157265282B600AA4A20 /* composetodo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = composetodo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0823C15A265282B600AA4A20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0823C167265282B600AA4A20 /* Tests iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0823C16B265282B600AA4A20 /* Tests_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_iOS.swift; sourceTree = "<group>"; };
 		0823C16D265282B600AA4A20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0823C193265284CF00AA4A20 /* composetodo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = composetodo.framework; path = "../client-core/build/xcode-frameworks/composetodo.framework"; sourceTree = "<group>"; };
 		0823C198265286D200AA4A20 /* composetodo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = composetodo.entitlements; sourceTree = "<group>"; };
 		0823C199265286D400AA4A20 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.5.sdk/System/Library/Frameworks/CloudKit.framework; sourceTree = DEVELOPER_DIR; };
+		08DB9C8C27341E6300B6B383 /* TodoItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItemRow.swift; sourceTree = "<group>"; };
+		08DB9C8E273432A200B6B383 /* Todos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todos.swift; sourceTree = "<group>"; };
+		08EA7CE926F1FF2300FFA5A9 /* clients.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = clients.xcframework; path = ../clients/build/XCFrameworks/release/clients.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,8 +65,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08EA7CEA26F1FF2300FFA5A9 /* clients.xcframework in Frameworks */,
 				0823C19A265286D400AA4A20 /* CloudKit.framework in Frameworks */,
-				0812ECAB2694B13900CEC45D /* composetodo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,9 +107,9 @@
 			children = (
 				0823C14F265282B400AA4A20 /* composetodoApp.swift */,
 				0823C150265282B400AA4A20 /* ContentView.swift */,
-				0823C151265282B400AA4A20 /* Persistence.swift */,
 				0823C152265282B600AA4A20 /* Assets.xcassets */,
-				0823C14D265282B400AA4A20 /* composetodo.xcdatamodeld */,
+				08DB9C8C27341E6300B6B383 /* TodoItemRow.swift */,
+				08DB9C8E273432A200B6B383 /* Todos.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -144,9 +143,8 @@
 		0823C192265284CF00AA4A20 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0812ECAA2694B13900CEC45D /* composetodo.framework */,
+				08EA7CE926F1FF2300FFA5A9 /* clients.xcframework */,
 				0823C199265286D400AA4A20 /* CloudKit.framework */,
-				0823C193265284CF00AA4A20 /* composetodo.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -161,7 +159,7 @@
 				0823C153265282B600AA4A20 /* Sources */,
 				0823C154265282B600AA4A20 /* Frameworks */,
 				0823C155265282B600AA4A20 /* Resources */,
-				0812ECAD2694B13900CEC45D /* Embed Frameworks */,
+				083CF09E2695D6D600F4B54D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -209,7 +207,7 @@
 				};
 			};
 			buildConfigurationList = 0823C14B265282B300AA4A20 /* Build configuration list for PBXProject "composetodo" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -251,9 +249,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				0823C17B265282B600AA4A20 /* composetodoApp.swift in Sources */,
-				0823C17F265282B600AA4A20 /* Persistence.swift in Sources */,
-				0823C179265282B600AA4A20 /* composetodo.xcdatamodeld in Sources */,
 				0823C17D265282B600AA4A20 /* ContentView.swift in Sources */,
+				08DB9C8D27341E6300B6B383 /* TodoItemRow.swift in Sources */,
+				08DB9C8F273432A200B6B383 /* Todos.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,8 +396,12 @@
 				ENABLE_BITCODE = YES;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "../iOSClient/build/xcode-frameworks";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"_Nullable=_Nullable_result",
+					"DEBUG=1",
+				);
 				INFOPLIST_FILE = iOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -423,8 +425,9 @@
 				ENABLE_BITCODE = YES;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "../iOSClient/build/xcode-frameworks";
+				GCC_PREPROCESSOR_DEFINITIONS = "_Nullable=_Nullable_result";
 				INFOPLIST_FILE = iOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -514,19 +517,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		0823C14D265282B400AA4A20 /* composetodo.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				0823C14E265282B400AA4A20 /* Shared.xcdatamodel */,
-			);
-			currentVersion = 0823C14E265282B400AA4A20 /* Shared.xcdatamodel */;
-			path = composetodo.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 0823C148265282B300AA4A20 /* Project object */;
 }
