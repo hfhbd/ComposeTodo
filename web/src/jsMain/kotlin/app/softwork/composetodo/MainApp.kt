@@ -33,32 +33,40 @@ fun MainApp() {
         }
     }
 
-    when (val currentApi = api) {
-        is API.LoggedIn -> {
-            MainContent(currentApi) {
-                api = API.LoggedOut(client)
+    HashRouter("/todos") {
+        when (val currentApi = api) {
+            is API.LoggedIn -> {
+                MainContent(currentApi) {
+                    api = API.LoggedOut(client)
+                }
             }
-        }
-        is API.LoggedOut -> {
-            LoginView(currentApi) {
-                api = it
+            is API.LoggedOut -> {
+                LoginView(currentApi) {
+                    api = it
+                }
             }
         }
     }
 }
 
 @Composable
-private fun LoginView(api: API.LoggedOut, onLogin: (API.LoggedIn) -> Unit) {
+private fun NavBuilder.LoginView(api: API.LoggedOut, onLogin: (API.LoggedIn) -> Unit) {
     Content(emptyList(), api, onLogout = {}) {
-
-        Text("This application uses a cold Google Cloud Run server, which usually takes 2 seconds to start.")
-        Login(api, onLogin)
-        Register(api, onLogin)
+        noMatch {
+            Text("This application uses a cold Google Cloud Run server, which usually takes 2 seconds to start.")
+            Login(api, onLogin)
+            Register(api, onLogin)
+        }
     }
 }
 
 @Composable
-private fun Content(links: List<Pair<String, String>>, api: API, onLogout: () -> Unit, content: @Composable () -> Unit) {
+private fun Content(
+    links: List<Pair<String, String>>,
+    api: API,
+    onLogout: () -> Unit,
+    content: @Composable () -> Unit
+) {
     Navbar(links, api, onLogout)
     Main {
         Container {
@@ -69,33 +77,22 @@ private fun Content(links: List<Pair<String, String>>, api: API, onLogout: () ->
 
 @ExperimentalTime
 @Composable
-private fun MainContent(api: API.LoggedIn, onLogout: () -> Unit) {
+private fun NavBuilder.MainContent(api: API.LoggedIn, onLogout: () -> Unit) {
     val links = listOf("Todos" to "/todos", "Users" to "/users")
-
-    HashRouter("/todos") {
-        route("users") {
-            noMatch {
-                Content(links, api, onLogout) {
-                    Users(api)
-                }
-            }
+    Content(links, api, onLogout) {
+        constant("users") {
+            Users(api)
         }
-        route("todos") {
+        constant("todos") {
             uuid { todoID ->
-                Content(links, api, onLogout) {
-                    Todo(api, todoID)
-                }
+                Todo(api, todoID)
             }
             noMatch {
-                Content(links, api, onLogout) {
-                    Todos(TodosViewModel(api))
-                }
+                Todos(TodosViewModel(api))
             }
         }
         noMatch {
-            Content(links, api, onLogout) {
-                Todos(TodosViewModel(api))
-            }
+            Todos(TodosViewModel(api))
         }
     }
 }
