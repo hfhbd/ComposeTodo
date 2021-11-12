@@ -25,7 +25,7 @@ dependencies {
     implementation("app.softwork:cloudkitclient-core:0.0.8")
 
     // EPL 1.0, https://github.com/qos-ch/logback/releases
-    runtimeOnly("ch.qos.logback:logback-classic:1.2.6")
+    runtimeOnly("ch.qos.logback:logback-classic:1.2.7")
 
 
     testImplementation(kotlin("test"))
