@@ -32,7 +32,7 @@ android {
 
 dependencies {
     implementation(projects.composeClients)
-    implementation("com.squareup.sqldelight:android-driver:1.5.2")
+    implementation("com.squareup.sqldelight:android-driver:1.5.3")
 
     implementation("io.ktor:ktor-client-android:1.6.5")
 
