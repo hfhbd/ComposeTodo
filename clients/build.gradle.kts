@@ -61,7 +61,7 @@ kotlin {
             dependencies {
                 // Apache 2, https://github.com/ktorio/ktor/releases/latest
                 implementation("io.ktor:ktor-client-ios:1.6.5")
-                implementation("com.squareup.sqldelight:native-driver:1.5.2")
+                implementation("com.squareup.sqldelight:native-driver:1.5.3")
                 api("org.jetbrains.kotlinx:kotlinx-coroutines-core") {
                     version {
                         strictly("1.5.2-native-mt")
