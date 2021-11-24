@@ -80,10 +80,10 @@ private fun Content(
 private fun NavBuilder.MainContent(api: API.LoggedIn, onLogout: () -> Unit) {
     val links = listOf("Todos" to "/todos", "Users" to "/users")
     Content(links, api, onLogout) {
-        constant("users") {
+        route("users") {
             Users(api)
         }
-        constant("todos") {
+        route("todos") {
             uuid { todoID ->
                 Todo(api, todoID)
             }
