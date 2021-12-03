@@ -46,7 +46,7 @@ kotlin {
         commonMain {
             dependencies {
                 api(projects.shared)
-                implementation("com.squareup.sqldelight:coroutines-extensions:1.6.0-SNAPSHOT")
+                implementation("com.squareup.sqldelight:coroutines-extensions:1.5.3")
                 implementation("app.softwork:kotlinx-uuid-sqldelight:0.0.12")
                 implementation("io.ktor:ktor-client-logging:1.6.5")
             }
@@ -62,11 +62,7 @@ kotlin {
                 // Apache 2, https://github.com/ktorio/ktor/releases/latest
                 implementation("io.ktor:ktor-client-ios:1.6.5")
                 implementation("com.squareup.sqldelight:native-driver:1.5.3")
-                api("org.jetbrains.kotlinx:kotlinx-coroutines-core") {
-                    version {
-                        strictly("1.5.2-native-mt")
-                    }
-                }
+                api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt!!")
             }
         }
         val iosSimulatorArm64Main by getting {
@@ -77,7 +73,7 @@ kotlin {
 
 tasks {
     val assembleClientsXCFramework by this
-    build {
+    assemble {
         dependsOn(assembleClientsXCFramework)
     }
 }
