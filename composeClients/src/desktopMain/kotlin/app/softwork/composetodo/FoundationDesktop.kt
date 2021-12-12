@@ -65,7 +65,8 @@ actual fun Theme(content: @Composable () -> Unit) {
 
 @Composable
 actual fun DateField(value: Instant?, label: String, onValueChange: (Instant?) -> Unit) {
-    TextField(value = value?.toString() ?: "Select date", label = { Text(label) }, onValueChange = {
+    val initValue = remember { Clock.System.now() }
+    TextField(value = (value ?: initValue).toString(), label = { Text(label) }, onValueChange = {
         onValueChange(it.toInstantOrNull())
     })
 }
