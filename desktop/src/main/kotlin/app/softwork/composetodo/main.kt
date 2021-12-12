@@ -9,6 +9,7 @@ fun main() = application {
 
     Window(onCloseRequest = {
         scope.cancel()
+        exitApplication()
     }) {
         MainView(appContainer)
     }

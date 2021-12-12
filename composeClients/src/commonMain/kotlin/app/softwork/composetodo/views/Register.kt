@@ -27,7 +27,7 @@ fun Register(viewModel: RegisterViewModel) {
         val passwordAgain by viewModel.passwordAgain.collectAsState()
         TextField(
             label = "Password Again",
-            value = password,
+            value = passwordAgain,
             onValueChange = { viewModel.passwordAgain.value = it },
             isPassword = true,
             placeholder = ""
@@ -36,7 +36,7 @@ fun Register(viewModel: RegisterViewModel) {
         val firstName by viewModel.firstName.collectAsState()
         TextField(
             label = "First Name",
-            value = password,
+            value = firstName,
             onValueChange = { viewModel.firstName.value = it },
             isPassword = false,
             placeholder = ""
@@ -45,7 +45,7 @@ fun Register(viewModel: RegisterViewModel) {
         val lastName by viewModel.lastName.collectAsState()
         TextField(
             label = "Last Name",
-            value = password,
+            value = lastName,
             onValueChange = { viewModel.lastName.value = it },
             isPassword = false,
             placeholder = ""
