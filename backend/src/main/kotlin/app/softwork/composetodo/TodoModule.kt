@@ -13,6 +13,7 @@ import io.ktor.routing.*
 import io.ktor.sessions.*
 import kotlinx.uuid.*
 import kotlin.time.*
+import kotlin.time.Duration.Companion.days
 
 @ExperimentalTime
 fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {

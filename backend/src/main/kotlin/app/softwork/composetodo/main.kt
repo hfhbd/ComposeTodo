@@ -13,6 +13,7 @@ import org.slf4j.*
 import java.util.*
 import kotlin.reflect.*
 import kotlin.time.*
+import kotlin.time.Duration.Companion.minutes
 
 @ExperimentalTime
 fun main() {

@@ -19,6 +19,7 @@ fun <T> toFlow(caller: String, collector: ((NSError?) -> Unit, suspend (T) -> Un
         }
     }.flowOn(Dispatchers.Main)
 
+@OptIn(InternalCoroutinesApi::class)
 suspend fun <T> Flow<T>.collectOnMain(collector: (T) -> Unit) = withContext(Dispatchers.Main) {
     flowOn(Dispatchers.Main)
         .collect {
