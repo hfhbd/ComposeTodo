@@ -12,7 +12,7 @@ import kotlinx.serialization.json.*
 data class Token(val content: String) {
 
     val payload: Payload by lazy {
-        val (keyPart, payloadPart, signPart) = content.split(".")
+        val (_, payloadPart, _) = content.split(".")
         @OptIn(InternalAPI::class)
         val payloadJson = payloadPart.decodeBase64String()
         Json.decodeFromString(Payload.serializer(), payloadJson)

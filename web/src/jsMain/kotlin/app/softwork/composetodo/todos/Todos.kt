@@ -8,6 +8,7 @@ import kotlinx.coroutines.*
 import kotlinx.datetime.*
 import org.jetbrains.compose.web.dom.*
 import kotlin.time.*
+import kotlin.time.Duration.Companion.seconds
 
 @ExperimentalTime
 class TodosViewModel(val api: API.LoggedIn) {
