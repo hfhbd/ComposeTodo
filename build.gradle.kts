@@ -3,7 +3,7 @@ plugins {
     kotlin("multiplatform") version "1.6.10-RC" apply false
     kotlin("plugin.serialization") version "1.6.10-RC" apply false
     id("com.android.application") version "7.0.4" apply false
-    id("org.jetbrains.compose") version "0.0.0-use_kotlin_1.6.10-RC-dev521" apply false
+    id("org.jetbrains.compose") version "1.0.1-rc1" apply false
     id("com.squareup.sqldelight") version "1.5.3" apply false
 }
 
