@@ -7,13 +7,13 @@ import app.softwork.composetodo.views.*
 fun MainView(appContainer: AppContainer) {
     Theme {
         Column {
-            val _isLoggedIn by appContainer.isLoggedIn.collectAsState()
-            when (val isLoggedIn = _isLoggedIn) {
-                is API.LoggedIn -> Todos(appContainer.todoViewModel(isLoggedIn))
+            val _api by appContainer.api.collectAsState()
+            when (val api = _api) {
+                is API.LoggedIn -> Todos(appContainer.todoViewModel(api))
                 is API.LoggedOut -> {
                     Row {
-                        Login(appContainer.loginViewModel(isLoggedIn))
-                        Register(appContainer.registerViewModel(isLoggedIn))
+                        Login(appContainer.loginViewModel(api))
+                        Register(appContainer.registerViewModel(api))
                     }
                 }
             }

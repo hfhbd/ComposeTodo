@@ -12,8 +12,8 @@ import io.ktor.http.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
-class Container(applicationContext: Context, private val scope: CoroutineScope) : AppContainer {
-    override val driver: SqlDriver = AndroidSqliteDriver(ComposeTodoDB.Schema, applicationContext, "composetodo.db")
+class Container(applicationContext: Context, override val scope: CoroutineScope) : AppContainer {
+    private val driver: SqlDriver = AndroidSqliteDriver(ComposeTodoDB.Schema, applicationContext, "composetodo.db")
 
     override val client = HttpClient(Android) {
         defaultRequest {
@@ -24,14 +24,14 @@ class Container(applicationContext: Context, private val scope: CoroutineScope) 
         }
     }
 
-    override val isLoggedIn: MutableStateFlow<API> = MutableStateFlow(API.LoggedOut(client))
+    override val api: MutableStateFlow<API> = MutableStateFlow(API.LoggedOut(client))
 
     override fun loginViewModel(api: API.LoggedOut) = LoginViewModel(scope, api = api) {
-        isLoggedIn.value = it
+        this.api.value = it
     }
 
     override fun registerViewModel(api: API.LoggedOut) = RegisterViewModel(scope, api) {
-        isLoggedIn.value = it
+        this.api.value = it
     }
 
     override fun todoViewModel(api: API.LoggedIn) = TodoViewModel(scope, TodoRepository(api = api, driver = driver))

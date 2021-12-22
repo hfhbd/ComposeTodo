@@ -4,26 +4,25 @@ import androidx.compose.runtime.*
 import app.softwork.bootstrapcompose.*
 import app.softwork.composetodo.*
 import app.softwork.composetodo.dto.*
+import app.softwork.composetodo.viewmodels.*
 import kotlinx.coroutines.*
 import org.jetbrains.compose.web.attributes.*
 import org.jetbrains.compose.web.dom.*
 
 @Composable
-fun Register(api: API.LoggedOut, onLogin: (API.LoggedIn) -> Unit) {
-    var username by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var passwordAgain by remember { mutableStateOf("") }
-    var firstName by remember { mutableStateOf("") }
-    var lastName by remember { mutableStateOf("") }
-
+fun Register(viewModel: RegisterViewModel) {
     Row {
         Column {
             H1 {
                 Text("Register")
             }
+
+            val username by viewModel.username.collectAsState()
             Input(value = username, placeholder = "user.name", label = "Username", type = InputType.Text) {
-                username = it.value
+                viewModel.username.value = it.value
             }
+
+            val password by viewModel.password.collectAsState()
             Input(
                 type = InputType.Password,
                 placeholder = "password",
@@ -31,8 +30,10 @@ fun Register(api: API.LoggedOut, onLogin: (API.LoggedIn) -> Unit) {
                 autocomplete = AutoComplete.newPassword,
                 value = password
             ) {
-                password = it.value
+                viewModel.password.value = it.value
             }
+
+            val passwordAgain by viewModel.passwordAgain.collectAsState()
             Input(
                 type = InputType.Password,
                 placeholder = "passwordAgain",
@@ -40,11 +41,15 @@ fun Register(api: API.LoggedOut, onLogin: (API.LoggedIn) -> Unit) {
                 autocomplete = AutoComplete.newPassword,
                 value = passwordAgain
             ) {
-                passwordAgain = it.value
+                viewModel.passwordAgain.value = it.value
             }
+
+            val firstName by viewModel.firstName.collectAsState()
             Input(placeholder = "John", label = "First Name", value = firstName, type = InputType.Text) {
-                firstName = it.value
+                viewModel.firstName.value = it.value
             }
+
+            val lastName by viewModel.lastName.collectAsState()
             Input(
                 placeholder = "Doe",
                 label = "Last Name",
@@ -52,27 +57,22 @@ fun Register(api: API.LoggedOut, onLogin: (API.LoggedIn) -> Unit) {
                 type = InputType.Text,
                 autocomplete = AutoComplete.familyName
             ) {
-                lastName = it.value
+                viewModel.lastName.value = it.value
             }
-            Button("Register", disabled = password != passwordAgain || listOf(
-                username,
-                password,
-                passwordAgain,
-                firstName,
-                lastName
-            ).any { it.isEmpty() }) {
-                scope.launch {
-                    onLogin(
-                        api.register(
-                            User.New(
-                                username = username,
-                                password = password,
-                                passwordAgain = passwordAgain,
-                                firstName = firstName,
-                                lastName = lastName
-                            )
-                        )
-                    )
+
+            val enableRegisterButton by viewModel.enableRegisterButton.collectAsState(false)
+
+            Button("Register", disabled = !enableRegisterButton) {
+                viewModel.register()
+            }
+
+            val error by viewModel.error.collectAsState()
+            error?.let {
+                Alert(color = Color.Danger) {
+                    Text(it.reason)
+                    CloseButton {
+                        viewModel.error.value = null
+                    }
                 }
             }
         }

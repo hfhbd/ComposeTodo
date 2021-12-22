@@ -7,7 +7,7 @@ struct ContentView: View {
 
     init(container: IosContainer) {
         self.container = container
-        self._isLoggedIn = .init(container.isLoggedIn)
+        self._isLoggedIn = .init(container.api)
     }
     
     @Binding private var isLoggedIn: API
@@ -49,7 +49,7 @@ struct Login: View {
     
     @Binding private var username: String
     @Binding private var password: String
-    @Binding private var error: LoginViewModel.LoginResultFailure?
+    @Binding private var error: Failure?
 
     var body: some View {
         Form {
@@ -63,7 +63,7 @@ struct Login: View {
             Button("Login") {
                 viewModel.login()
             }
-        }.onReceive(viewModel.error.publisher(LoginViewModel.LoginResultFailure?.self)
+        }.onReceive(viewModel.error.publisher(Failure?.self)
                         .replaceError(with: nil)
                         .receive(on: RunLoop.main)
         ) {

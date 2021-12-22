@@ -2,9 +2,6 @@ package app.softwork.composetodo
 
 import kotlinx.coroutines.*
 import org.jetbrains.compose.web.*
-import kotlin.time.*
-
-val scope = MainScope()
 
 fun main() {
     // https://youtrack.jetbrains.com/issue/KTOR-539
@@ -17,6 +14,7 @@ window.fetch = function (resource, init) {
 """
     )
     renderComposable(rootElementId = "root") {
-        MainApp()
+        val appContainer = Container(MainScope())
+        MainApp(appContainer)
     }
 }

@@ -3,17 +3,16 @@ package app.softwork.composetodo.login
 import androidx.compose.runtime.*
 import app.softwork.bootstrapcompose.*
 import app.softwork.composetodo.*
+import app.softwork.composetodo.viewmodels.*
 import kotlinx.coroutines.*
 import org.jetbrains.compose.web.attributes.*
 import org.jetbrains.compose.web.dom.*
 
 @Composable
-fun Login(api: API.LoggedOut, onLogin: (API.LoggedIn) -> Unit) {
-    var username by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-
+fun Login(viewModel: LoginViewModel) {
     Row {
         Column {
+            val username by viewModel.userName.collectAsState()
             H1 {
                 Text("Login $username")
             }
@@ -24,8 +23,9 @@ fun Login(api: API.LoggedOut, onLogin: (API.LoggedIn) -> Unit) {
                 autocomplete = AutoComplete.username,
                 type = InputType.Text
             ) {
-                username = it.value
+                viewModel.userName.value = it.value
             }
+            val password by viewModel.password.collectAsState()
             Input(
                 type = InputType.Password,
                 placeholder = "password",
@@ -33,12 +33,20 @@ fun Login(api: API.LoggedOut, onLogin: (API.LoggedIn) -> Unit) {
                 autocomplete = AutoComplete.currentPassword,
                 value = password
             ) {
-                password = it.value
+                viewModel.password.value = it.value
             }
-            Button("Login $username", disabled = username.isEmpty() || password.isEmpty()) {
-                scope.launch {
-                    api.login(username = username, password = password)?.let {
-                        onLogin(it)
+            val enableLogin by viewModel.enableLogin.collectAsState(false)
+
+            Button("Login $username", disabled = !enableLogin) {
+                viewModel.login()
+            }
+
+            val error by viewModel.error.collectAsState()
+            error?.let {
+                Alert(color = Color.Danger) {
+                    Text(it.reason)
+                    CloseButton {
+                        viewModel.error.value = null
                     }
                 }
             }

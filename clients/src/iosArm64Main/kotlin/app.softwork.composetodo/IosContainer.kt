@@ -14,11 +14,11 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
 class IosContainer(
-    private val scope: CoroutineScope,
+    override val scope: CoroutineScope,
     protocol: URLProtocol,
     host: String
 ) : AppContainer {
-    override val driver: SqlDriver = NativeSqliteDriver(ComposeTodoDB.Schema, "composetodo.db")
+    private val driver: SqlDriver = NativeSqliteDriver(ComposeTodoDB.Schema, "composetodo.db")
 
     constructor() : this(scope = MainScope(), protocol = URLProtocol.HTTPS, host = "api.todo.softwork.app")
 
@@ -43,14 +43,14 @@ class IosContainer(
     }
 
     override fun loginViewModel(api: API.LoggedOut) = LoginViewModel(scope, api) {
-        isLoggedIn.value = it
+        this.api.value = it
     }
 
     override fun todoViewModel(api: API.LoggedIn) = TodoViewModel(scope = scope, repo = TodoRepository(api, driver))
 
     override fun registerViewModel(api: API.LoggedOut) = RegisterViewModel(scope, api) {
-        isLoggedIn.value = it
+        this.api.value = it
     }
 
-    override val isLoggedIn: MutableStateFlow<API> = MutableStateFlow(API.LoggedOut(client))
+    override val api: MutableStateFlow<API> = MutableStateFlow(API.LoggedOut(client))
 }
