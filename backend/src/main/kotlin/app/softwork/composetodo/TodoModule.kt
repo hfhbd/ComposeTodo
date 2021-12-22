@@ -44,6 +44,7 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
             cookie.httpOnly = true
             cookie.extensions["SameSite"] = "strict"
             cookie.maxAgeInSeconds = 1.days.inWholeSeconds
+            //cookie.secure = true
         }
     }
 
@@ -133,7 +134,7 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
                     get {
                         call.respondJson(Todo.serializer()) {
                             val user = call.principal<app.softwork.composetodo.dao.User>()!!
-                            val todoID: UUID by parameters
+                            val todoID by parameters
                             todoController.getTodo(user, todoID)?.toDTO()
                                 ?: throw NotFoundException()
                         }
@@ -141,7 +142,7 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
                     put {
                         call.respondJson(Todo.serializer()) {
                             val user = call.principal<app.softwork.composetodo.dao.User>()!!
-                            val todoID: UUID by parameters
+                            val todoID by parameters
                             val toUpdate = body(Todo.serializer())
                             todoController.update(user, todoID, toUpdate)?.toDTO()
                                 ?: throw NotFoundException()
@@ -150,7 +151,7 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
                     delete {
                         with(call) {
                             val user = call.principal<app.softwork.composetodo.dao.User>()!!
-                            val todoID: UUID by parameters
+                            val todoID by parameters
                             todoController.delete(user, todoID) ?: throw NotFoundException()
                             respond(HttpStatusCode.OK)
                         }

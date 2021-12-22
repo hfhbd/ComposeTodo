@@ -2,58 +2,23 @@ package app.softwork.composetodo.todos
 
 import androidx.compose.runtime.*
 import app.softwork.bootstrapcompose.*
-import app.softwork.composetodo.*
-import app.softwork.composetodo.dto.Todo
-import kotlinx.coroutines.*
+import app.softwork.composetodo.viewmodels.*
 import kotlinx.datetime.*
 import org.jetbrains.compose.web.dom.*
-import kotlin.time.*
-import kotlin.time.Duration.Companion.seconds
-
-class TodosViewModel(val api: API.LoggedIn) {
-    var todos by mutableStateOf(emptyList<Todo>())
-        private set
-
-    init {
-        scope.launch {
-            todos = api.getTodos()
-        }
-    }
-
-    fun add(todo: Todo) {
-        todos += todo
-        scope.launch {
-            delay(3.seconds)
-            todos = api.getTodos()
-        }
-    }
-
-    fun refresh() {
-        scope.launch {
-            todos = api.getTodos()
-        }
-    }
-
-    fun delete(todo: Todo) {
-        scope.launch {
-            api.deleteTodo(todo.id)
-            refresh()
-        }
-    }
-}
+import kotlin.js.*
 
 @Composable
-fun Todos(viewModel: TodosViewModel) {
-    NewTodo(NewTodoViewModel(viewModel.api) {
-        viewModel.add(it)
-    })
+fun Todos(viewModel: TodoViewModel) {
+    NewTodo(viewModel)
     H1 {
         Text("Todos")
     }
-    if (viewModel.todos.isEmpty()) {
+    val todos by viewModel.todos.collectAsState(emptyList())
+
+    if (todos.isEmpty()) {
         Text("No Todos created")
     } else {
-        Table(data = viewModel.todos, key = { it.id }) { _, todo ->
+        Table(data = todos, key = { it.id }) { _, todo ->
             rowColor = when {
                 todo.finished -> Color.Success
                 todo.until?.let {
@@ -64,6 +29,11 @@ fun Todos(viewModel: TodosViewModel) {
             column("Title") {
                 Text(todo.title)
             }
+            column("Until") {
+                todo.until?.let {
+                    Text(it.toDate().toLocaleString())
+                }
+            }
             column("") {
                 Button("Delete", color = Color.Danger) {
                     viewModel.delete(todo)
@@ -72,3 +42,5 @@ fun Todos(viewModel: TodosViewModel) {
         }
     }
 }
+
+private fun Instant.toDate(): Date = Date(toEpochMilliseconds())

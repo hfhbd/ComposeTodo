@@ -71,6 +71,7 @@ suspend fun <T> HttpClient.register(
     val result: T
     cookiesSession {
         val api = API.LoggedOut(this).register(user)
+        assertNotNull(api)
         result = api.block()
         api.logout()
     }

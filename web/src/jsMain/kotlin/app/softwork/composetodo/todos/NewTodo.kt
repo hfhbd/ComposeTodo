@@ -2,56 +2,34 @@ package app.softwork.composetodo.todos
 
 import androidx.compose.runtime.*
 import app.softwork.bootstrapcompose.*
-import app.softwork.composetodo.*
-import app.softwork.composetodo.dto.Todo
-import kotlinx.coroutines.*
+import app.softwork.composetodo.viewmodels.*
 import kotlinx.datetime.*
-import kotlinx.uuid.*
 import org.jetbrains.compose.web.attributes.*
 
-class NewTodoViewModel(val api: API.LoggedIn, val created: (Todo) -> Unit) {
-    var title by mutableStateOf("")
-    var until by mutableStateOf("")
-
-    val disabledButton: Boolean
-        get() = title.isEmpty() || until.isEmpty()
-
-    fun createTodo() {
-        scope.launch {
-            val newTodo = Todo(
-                id = UUID(),
-                title = title,
-                finished = false,
-                until = until.takeIf { it.isNotBlank() }?.let {
-                    LocalDateTime.parse(until).toInstant(TimeZone.currentSystemDefault())
-                },
-                recordChangeTag = null
-            )
-            api.createTodo(newTodo)
-            created(newTodo)
-        }
-    }
-}
-
 @Composable
-fun NewTodo(viewModel: NewTodoViewModel) {
+fun NewTodo(viewModel: TodoViewModel) {
+    var title by remember { mutableStateOf("") }
+    var until by remember { mutableStateOf("") }
     Input(
         type = InputType.Text,
         label = "Title",
         placeholder = "Hello World",
-        value = viewModel.title
+        value = title
     ) {
-        viewModel.title = it.value
+        title = it.value
     }
     Input(
         type = InputType.DateTimeLocal,
         label = "Finish Date",
         placeholder = "yyyy-mm-dd",
-        value = viewModel.until
+        value = until
     ) {
-        viewModel.until = it.value
+        until = it.value
     }
-    Button("Create new Todo", disabled = viewModel.disabledButton) {
-        viewModel.createTodo()
+
+    Button("Create new Todo", disabled = title.isEmpty()) {
+        viewModel.create(title, until.takeIf { it.isNotBlank() }?.let {
+            LocalDateTime.parse(until).toInstant(TimeZone.currentSystemDefault())
+        })
     }
 }

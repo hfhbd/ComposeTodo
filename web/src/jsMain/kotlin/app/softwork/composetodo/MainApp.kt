@@ -6,55 +6,39 @@ import app.softwork.composetodo.login.*
 import app.softwork.composetodo.todos.*
 import app.softwork.composetodo.users.*
 import app.softwork.routingcompose.*
-import io.ktor.client.*
-import io.ktor.client.engine.js.*
-import io.ktor.client.features.*
-import io.ktor.client.features.cookies.*
-import io.ktor.http.*
 import org.jetbrains.compose.web.dom.*
-import kotlin.time.*
 
 @Composable
-fun MainApp() {
-    val client = HttpClient(Js) {
-        install(HttpCookies)
-        defaultRequest {
-            url {
-                protocol = URLProtocol.HTTPS
-                host = "api.todo.softwork.app"
-            }
-        }
-    }
-    var api: API by remember { mutableStateOf(API.LoggedOut(client)) }
+fun MainApp(appContainer: AppContainer) {
+    val api by appContainer.api.collectAsState()
+
     LaunchedEffect(Unit) {
         (api as? API.LoggedOut)?.let {
-            it.silentLogin()?.let { api = it }
+            it.silentLogin()?.let {
+                appContainer.api.value = it
+            }
         }
     }
 
     HashRouter("/todos") {
         when (val currentApi = api) {
             is API.LoggedIn -> {
-                MainContent(currentApi) {
-                    api = API.LoggedOut(client)
-                }
+                MainContent(appContainer, currentApi)
             }
             is API.LoggedOut -> {
-                LoginView(currentApi) {
-                    api = it
-                }
+                LoginView(appContainer, currentApi)
             }
         }
     }
 }
 
 @Composable
-private fun NavBuilder.LoginView(api: API.LoggedOut, onLogin: (API.LoggedIn) -> Unit) {
-    Content(emptyList(), api, onLogout = {}) {
+private fun NavBuilder.LoginView(appContainer: AppContainer, api: API.LoggedOut) {
+    Content(emptyList(), onLogout = null) {
         noMatch {
             Text("This application uses a cold Google Cloud Run server, which usually takes 2 seconds to start.")
-            Login(api, onLogin)
-            Register(api, onLogin)
+            Login(appContainer.loginViewModel(api))
+            Register(appContainer.registerViewModel(api))
         }
     }
 }
@@ -62,11 +46,10 @@ private fun NavBuilder.LoginView(api: API.LoggedOut, onLogin: (API.LoggedIn) -> 
 @Composable
 private fun Content(
     links: List<Pair<String, String>>,
-    api: API,
-    onLogout: () -> Unit,
+    onLogout: (() -> Unit)?,
     content: @Composable () -> Unit
 ) {
-    Navbar(links, api, onLogout)
+    Navbar(links, onLogout)
     Main {
         Container {
             content()
@@ -75,9 +58,11 @@ private fun Content(
 }
 
 @Composable
-private fun NavBuilder.MainContent(api: API.LoggedIn, onLogout: () -> Unit) {
+private fun NavBuilder.MainContent(appContainer: AppContainer, api: API.LoggedIn) {
     val links = listOf("Todos" to "/todos", "Users" to "/users")
-    Content(links, api, onLogout) {
+    Content(links, {
+        appContainer.logout()
+    }) {
         route("users") {
             Users(api)
         }
@@ -86,11 +71,11 @@ private fun NavBuilder.MainContent(api: API.LoggedIn, onLogout: () -> Unit) {
                 Todo(api, todoID)
             }
             noMatch {
-                Todos(TodosViewModel(api))
+                Todos(appContainer.todoViewModel(api))
             }
         }
         noMatch {
-            Todos(TodosViewModel(api))
+            Todos(appContainer.todoViewModel(api))
         }
     }
 }

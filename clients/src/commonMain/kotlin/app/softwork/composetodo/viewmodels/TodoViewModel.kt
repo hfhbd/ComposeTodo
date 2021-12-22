@@ -1,5 +1,6 @@
 package app.softwork.composetodo.viewmodels
 
+import app.softwork.composetodo.*
 import app.softwork.composetodo.repository.*
 import kotlinx.coroutines.*
 import kotlinx.datetime.*
@@ -27,6 +28,12 @@ class TodoViewModel(private val scope: CoroutineScope, private val repo: TodoRep
         scope.launch(Dispatchers.Default) {
             repo.create(title = title, until = until)
             repo.sync()
+        }
+    }
+
+    fun delete(todo: Todo) {
+        scope.launch(Dispatchers.Default) {
+            repo.delete(todo)
         }
     }
 }

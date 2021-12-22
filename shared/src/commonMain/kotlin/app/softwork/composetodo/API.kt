@@ -19,10 +19,21 @@ sealed class API {
     private val json: Json = Json
 
     class LoggedOut(private val client: HttpClient) : API() {
-        suspend fun register(newUser: User.New): LoggedIn =
-            LoggedIn(Token.serializer() by client.post("/users") {
-                body = newUser using User.New.serializer()
-            }, client)
+        suspend fun register(newUser: User.New): LoggedIn? {
+            val token = try {
+                Token.serializer() by client.post("/users") {
+                    body = newUser using User.New.serializer()
+                }
+            } catch (e: ClientRequestException) {
+                if (e.response.status == HttpStatusCode.BadRequest) {
+                    return null
+                } else {
+                    throw e
+                }
+            }
+
+            return LoggedIn(token, client)
+        }
 
         @OptIn(InternalAPI::class)
         @Throws(IOException::class, CancellationException::class)

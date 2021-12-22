@@ -26,7 +26,7 @@ fun NewTodo(viewModel: TodoViewModel) {
                 }, label = "Until"
             )
 
-            Button(title = "Create", enabled = true) {
+            Button(title = "Create", enabled = title.isNotEmpty()) {
                 viewModel.create(title = title, until = until)
                 title = ""
                 until = null
