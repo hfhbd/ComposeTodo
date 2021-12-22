@@ -10,7 +10,6 @@ import org.jetbrains.compose.web.dom.*
 import kotlin.time.*
 import kotlin.time.Duration.Companion.seconds
 
-@ExperimentalTime
 class TodosViewModel(val api: API.LoggedIn) {
     var todos by mutableStateOf(emptyList<Todo>())
         private set
@@ -43,7 +42,6 @@ class TodosViewModel(val api: API.LoggedIn) {
     }
 }
 
-@ExperimentalTime
 @Composable
 fun Todos(viewModel: TodosViewModel) {
     NewTodo(NewTodoViewModel(viewModel.api) {

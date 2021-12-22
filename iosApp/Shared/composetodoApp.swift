@@ -36,7 +36,9 @@ extension Flow {
         let subject = PassthroughSubject<T, Error>()
         
         FlowsKt.collectOnMain(self, collector: { value in
-            subject.send(value as! T)
+            if let value = value as? T {
+                subject.send(value)
+            }
         }, completionHandler: { _, error in
             if let error = error {
                 subject.send(completion: .failure(error))
