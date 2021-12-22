@@ -21,7 +21,7 @@ kotlin {
                 baseName = "shared"
                 xcf.add(this)
                 export(projects.shared)
-                export("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
+                export("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0-native-mt")
                 transitiveExport = true
             }
         }
@@ -32,7 +32,7 @@ kotlin {
                 baseName = "shared"
                 xcf.add(this)
                 export(projects.shared)
-                export("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
+                export("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0-native-mt")
                 transitiveExport = true
             }
         }

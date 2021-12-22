@@ -55,7 +55,9 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
         post("/users") {
             call.respondJson(Token.serializer()) {
                 val newUser = body(User.New.serializer())
-                require(newUser.password == newUser.passwordAgain)
+                if(newUser.password != newUser.passwordAgain) {
+                    throw BadRequestException("password was not equal to passwordAgain")
+                }
                 userController.createUser(jwtProvider, newUser.toDAO())
             }
         }

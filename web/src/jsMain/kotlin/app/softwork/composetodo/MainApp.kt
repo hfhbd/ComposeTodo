@@ -14,7 +14,6 @@ import io.ktor.http.*
 import org.jetbrains.compose.web.dom.*
 import kotlin.time.*
 
-@ExperimentalTime
 @Composable
 fun MainApp() {
     val client = HttpClient(Js) {
@@ -75,7 +74,6 @@ private fun Content(
     }
 }
 
-@ExperimentalTime
 @Composable
 private fun NavBuilder.MainContent(api: API.LoggedIn, onLogout: () -> Unit) {
     val links = listOf("Todos" to "/todos", "Users" to "/users")
