@@ -18,7 +18,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                api(projects.clients) // try composeClients
+                api(projects.composeClients)
             }
         }
         commonTest {
@@ -29,7 +29,6 @@ kotlin {
 
         val jsMain by getting {
             dependencies {
-                implementation("app.softwork:bootstrap-compose:0.0.49")
                 implementation("app.softwork:routing-compose:0.1.5")
                 implementation(compose.web.core)
                 implementation(compose.runtime)

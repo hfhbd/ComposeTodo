@@ -27,7 +27,6 @@ class TodoViewModel(private val scope: CoroutineScope, private val repo: TodoRep
     fun create(title: String, until: Instant?) {
         scope.launch(Dispatchers.Default) {
             repo.create(title = title, until = until)
-            repo.sync()
         }
     }
 

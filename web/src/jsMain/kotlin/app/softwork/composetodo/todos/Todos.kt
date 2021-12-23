@@ -18,7 +18,7 @@ fun Todos(viewModel: TodoViewModel) {
     if (todos.isEmpty()) {
         Text("No Todos created")
     } else {
-        Table(data = todos, key = { it.id }) { _, todo ->
+        Table(data = todos.sortedBy { it.title }, key = { it.id }) { _, todo ->
             rowColor = when {
                 todo.finished -> Color.Success
                 todo.until?.let {
