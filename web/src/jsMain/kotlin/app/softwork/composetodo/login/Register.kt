@@ -3,9 +3,10 @@ package app.softwork.composetodo.login
 import androidx.compose.runtime.*
 import app.softwork.bootstrapcompose.*
 import app.softwork.composetodo.*
-import app.softwork.composetodo.dto.*
+import app.softwork.composetodo.Column
+import app.softwork.composetodo.Row
+import app.softwork.composetodo.Text
 import app.softwork.composetodo.viewmodels.*
-import kotlinx.coroutines.*
 import org.jetbrains.compose.web.attributes.*
 import org.jetbrains.compose.web.dom.*
 
@@ -62,7 +63,7 @@ fun Register(viewModel: RegisterViewModel) {
 
             val enableRegisterButton by viewModel.enableRegisterButton.collectAsState(false)
 
-            Button("Register", disabled = !enableRegisterButton) {
+            Button("Register", enabled = enableRegisterButton) {
                 viewModel.register()
             }
 
