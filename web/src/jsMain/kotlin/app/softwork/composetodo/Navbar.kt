@@ -41,7 +41,7 @@ fun Navbar(links: List<Pair<String, String>>, onLogout: (() -> Unit)?) {
                         onClick {
                             onLogout()
                         }
-                    }, href = "/#") {
+                    }, href = "/#/") {
                         Text("Logout")
                     }
                 }
