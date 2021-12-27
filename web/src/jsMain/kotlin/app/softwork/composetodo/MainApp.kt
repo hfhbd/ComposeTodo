@@ -59,7 +59,7 @@ private fun Content(
 
 @Composable
 private fun NavBuilder.MainContent(appContainer: AppContainer, api: API.LoggedIn) {
-    val links = listOf("Todos" to "/todos", "Users" to "/users")
+    val links = listOf("To-Dos" to "/todos", "Users" to "/users")
     Content(links, {
         appContainer.logout()
     }) {
