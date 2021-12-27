@@ -11,7 +11,6 @@ import io.ktor.http.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.sessions.*
-import kotlinx.uuid.*
 import kotlin.time.*
 import kotlin.time.Duration.Companion.days
 
@@ -56,7 +55,7 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
         post("/users") {
             call.respondJson(Token.serializer()) {
                 val newUser = body(User.New.serializer())
-                if(newUser.password != newUser.passwordAgain) {
+                if (newUser.password != newUser.passwordAgain) {
                     throw BadRequestException("password was not equal to passwordAgain")
                 }
                 userController.createUser(jwtProvider, newUser.toDAO())
@@ -68,7 +67,6 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
             authenticate("login") {
                 post {
                     call.respondJson(Token.serializer()) {
-                        val user = call.principal<app.softwork.composetodo.dao.User>()!!
                         val longRefreshToken = RefreshToken(user.recordName)
                         call.sessions.set(longRefreshToken)
                         jwtProvider.token(longRefreshToken)
@@ -77,7 +75,8 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
             }
 
             get {
-                val refreshToken: RefreshToken = call.sessions.get<RefreshToken>() ?: throw BadRequestException("Token is missing")
+                val refreshToken: RefreshToken =
+                    call.sessions.get<RefreshToken>() ?: throw BadRequestException("Token is missing")
 
                 call.respondJson(Token.serializer()) {
                     jwtProvider.token(refreshToken)
@@ -96,18 +95,21 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
             route("/me") {
                 get {
                     call.respondJson(User.serializer()) {
-                        call.principal<app.softwork.composetodo.dao.User>()!!.toDTO()
+                        userController.find(user.recordName)?.toDTO()
+                            ?: throw NotFoundException()
                     }
                 }
                 put {
                     call.respondJson(User.serializer()) {
-                        val toUpdate = body(User.serializer())
-                        userController.update(toUpdate.toDAO()).toDTO()
+                        val toUpdate = body(User.serializer()).toDAO()
+                        if (user.recordName != toUpdate.recordName) {
+                            throw BadRequestException("Wrong username")
+                        }
+                        userController.update(toUpdate).toDTO()
                     }
                 }
                 delete {
                     with(call) {
-                        val user = call.principal<app.softwork.composetodo.dao.User>()!!
                         todoController.deleteAll(user)
                         userController.delete(user)
                         respond(HttpStatusCode.OK)
@@ -118,13 +120,11 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
             route("/todos") {
                 get {
                     call.respondJsonList(Todo.serializer()) {
-                        val user = call.principal<app.softwork.composetodo.dao.User>()!!
                         todoController.todos(user)
                     }
                 }
                 post {
                     call.respondJson(Todo.serializer()) {
-                        val user = call.principal<app.softwork.composetodo.dao.User>()!!
                         val newTodo = body(Todo.serializer()).toDAO(user)
                         todoController.create(newTodo).toDTO()
                     }
@@ -133,7 +133,6 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
                 route("/{todoID}") {
                     get {
                         call.respondJson(Todo.serializer()) {
-                            val user = call.principal<app.softwork.composetodo.dao.User>()!!
                             val todoID by parameters
                             todoController.getTodo(user, todoID)?.toDTO()
                                 ?: throw NotFoundException()
@@ -141,7 +140,6 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
                     }
                     put {
                         call.respondJson(Todo.serializer()) {
-                            val user = call.principal<app.softwork.composetodo.dao.User>()!!
                             val todoID by parameters
                             val toUpdate = body(Todo.serializer())
                             todoController.update(user, todoID, toUpdate)?.toDTO()
@@ -150,7 +148,6 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
                     }
                     delete {
                         with(call) {
-                            val user = call.principal<app.softwork.composetodo.dao.User>()!!
                             val todoID by parameters
                             todoController.delete(user, todoID) ?: throw NotFoundException()
                             respond(HttpStatusCode.OK)

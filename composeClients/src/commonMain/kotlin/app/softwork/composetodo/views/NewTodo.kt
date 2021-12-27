@@ -16,7 +16,7 @@ fun NewTodo(viewModel: TodoViewModel) {
                 value = title, onValueChange = {
                     title = it
                 }, label = "Title",
-                placeholder = "Todo Title",
+                placeholder = "To-do Title",
                 isPassword = false
             )
 

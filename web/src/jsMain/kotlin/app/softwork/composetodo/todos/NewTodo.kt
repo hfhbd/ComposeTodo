@@ -20,14 +20,14 @@ fun NewTodo(viewModel: TodoViewModel) {
     }
     Input(
         type = InputType.DateTimeLocal,
-        label = "Finish Date",
+        label = "Until",
         placeholder = "yyyy-mm-dd",
         value = until
     ) {
         until = it.value
     }
 
-    Button("Create new Todo", disabled = title.isEmpty()) {
+    Button("Create new to-do", disabled = title.isEmpty()) {
         viewModel.create(title, until.takeIf { it.isNotBlank() }?.let {
             LocalDateTime.parse(until).toInstant(TimeZone.currentSystemDefault())
         })

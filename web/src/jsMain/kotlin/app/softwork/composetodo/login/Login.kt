@@ -31,7 +31,7 @@ fun Login(viewModel: LoginViewModel) {
             Input(
                 type = InputType.Password,
                 placeholder = "password",
-                label = "Passwort",
+                label = "Password",
                 autocomplete = AutoComplete.currentPassword,
                 value = password
             ) {

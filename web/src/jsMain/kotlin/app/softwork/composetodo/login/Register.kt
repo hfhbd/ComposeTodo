@@ -27,7 +27,7 @@ fun Register(viewModel: RegisterViewModel) {
             Input(
                 type = InputType.Password,
                 placeholder = "password",
-                label = "Passwort",
+                label = "Password",
                 autocomplete = AutoComplete.newPassword,
                 value = password
             ) {
@@ -38,7 +38,7 @@ fun Register(viewModel: RegisterViewModel) {
             Input(
                 type = InputType.Password,
                 placeholder = "passwordAgain",
-                label = "Passwort Again",
+                label = "Password Again",
                 autocomplete = AutoComplete.newPassword,
                 value = passwordAgain
             ) {

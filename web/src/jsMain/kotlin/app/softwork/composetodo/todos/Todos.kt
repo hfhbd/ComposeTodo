@@ -11,12 +11,12 @@ import kotlin.js.*
 fun Todos(viewModel: TodoViewModel) {
     NewTodo(viewModel)
     H1 {
-        Text("Todos")
+        Text("To-Dos")
     }
     val todos by viewModel.todos.collectAsState(emptyList())
 
     if (todos.isEmpty()) {
-        Text("No Todos created")
+        Text("No to-dos created")
     } else {
         Table(data = todos.sortedBy { it.title }, key = { it.id }) { _, todo ->
             rowColor = when {
