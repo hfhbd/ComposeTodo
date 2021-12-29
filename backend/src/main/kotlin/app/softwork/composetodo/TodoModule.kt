@@ -11,10 +11,8 @@ import io.ktor.http.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.sessions.*
-import kotlin.time.*
 import kotlin.time.Duration.Companion.days
 
-@ExperimentalTime
 fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
     val userController = UserController(db = db)
     val todoController = TodoController(db = db)

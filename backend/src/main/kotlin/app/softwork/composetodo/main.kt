@@ -1,8 +1,6 @@
 package app.softwork.composetodo
 
 import app.softwork.cloudkitclient.*
-import app.softwork.ratelimit.*
-import app.softwork.ratelimit.RateLimit.SkipResult.*
 import com.auth0.jwt.algorithms.*
 import io.ktor.application.*
 import io.ktor.features.*
@@ -12,10 +10,8 @@ import io.ktor.server.engine.*
 import org.slf4j.*
 import java.util.*
 import kotlin.reflect.*
-import kotlin.time.*
 import kotlin.time.Duration.Companion.minutes
 
-@ExperimentalTime
 fun main() {
     val db = client().publicDB
     val jwtProvider = JWTProvider(
@@ -34,15 +30,6 @@ fun main() {
             header(HttpHeaders.ContentType)
             method(HttpMethod.Delete)
             method(HttpMethod.Put)
-        }
-        install(RateLimit) {
-            skip { call ->
-                if(call.request.local.uri == "/login") {
-                    ExecuteRateLimit
-                } else {
-                    SkipRateLimit
-                }
-            }
         }
         TodoModule(db = db, jwtProvider = jwtProvider)
     }.start(wait = true)

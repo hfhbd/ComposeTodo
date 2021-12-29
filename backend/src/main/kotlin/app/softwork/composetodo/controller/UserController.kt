@@ -4,10 +4,8 @@ import app.softwork.cloudkitclient.*
 import app.softwork.composetodo.*
 import app.softwork.composetodo.dao.User
 import app.softwork.composetodo.dto.*
-import kotlin.time.*
 
 class UserController(private val db: Client.Database) {
-    @ExperimentalTime
     suspend fun createUser(
         jwtProvider: JWTProvider,
         newUser: User
