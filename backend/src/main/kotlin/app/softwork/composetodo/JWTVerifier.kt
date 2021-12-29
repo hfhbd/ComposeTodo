@@ -10,7 +10,6 @@ import kotlinx.datetime.*
 import kotlinx.datetime.Clock
 import kotlin.time.*
 
-@ExperimentalTime
 data class JWTProvider(
     val algorithm: Algorithm,
     val issuer: String,

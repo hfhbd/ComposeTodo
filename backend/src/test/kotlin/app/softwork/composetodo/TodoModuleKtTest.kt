@@ -8,9 +8,8 @@ import io.ktor.client.statement.*
 import io.ktor.http.*
 import kotlinx.uuid.*
 import kotlin.test.*
-import kotlin.time.*
+import kotlin.time.Duration.Companion.seconds
 
-@ExperimentalTime
 internal class TodoModuleKtTest {
     private val jwt = JWTProvider(Algorithm.HMAC256("secret"), "test.com", "test", 45.seconds)
 
