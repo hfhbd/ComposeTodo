@@ -19,7 +19,7 @@ dependencies {
     implementation("io.ktor:ktor-auth-jwt:$ktorVersion")
 
     // Apache 2, https://github.com/hfhbd/RateLimit/releases/latest
-    implementation("app.softwork:ratelimit:0.0.10")
+    implementation("app.softwork:ratelimit:0.1.0")
 
     // Apache 2, https://github.com/hfhbd/cloudkitclient/releases/latest
     implementation("app.softwork:cloudkitclient-core:0.0.8")
