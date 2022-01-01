@@ -7,7 +7,6 @@ import com.auth0.jwt.algorithms.*
 import com.auth0.jwt.impl.*
 import io.ktor.auth.jwt.*
 import kotlinx.datetime.*
-import kotlinx.datetime.Clock
 import kotlin.time.*
 
 data class JWTProvider(
@@ -42,7 +41,6 @@ data class JWTProvider(
             ).build(algorithm)
         )
     }
-
 
     private fun Token.Payload.build(algorithm: Algorithm): String = JWT.create()
         .withIssuer(issuer)

@@ -41,7 +41,7 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
             cookie.httpOnly = true
             cookie.extensions["SameSite"] = "strict"
             cookie.maxAgeInSeconds = 1.days.inWholeSeconds
-            //cookie.secure = true
+            // cookie.secure = true
         }
     }
 

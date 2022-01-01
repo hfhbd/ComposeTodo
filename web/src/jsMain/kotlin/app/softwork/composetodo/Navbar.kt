@@ -30,9 +30,7 @@ fun Navbar(links: List<Pair<String, String>>, onLogout: (() -> Unit)?) {
                     Ul(attrs = { classes("navbar-nav", "me-auto") }) {
                         links.forEach { (name, link) ->
                             Li(attrs = { classes("nav-item") }) {
-                                NavLink(attrs = { classes("nav-link") }, to = link) {
-                                    Text(name)
-                                }
+                                NavLink(attrs = { classes("nav-link") }, to = link) { Text(name) }
                             }
                         }
                     }
@@ -41,9 +39,7 @@ fun Navbar(links: List<Pair<String, String>>, onLogout: (() -> Unit)?) {
                         onClick {
                             onLogout()
                         }
-                    }, href = "/#/") {
-                        Text("Logout")
-                    }
+                    }, href = "/#/") { Text("Logout") }
                 }
             }
         }

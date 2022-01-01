@@ -83,7 +83,8 @@ suspend fun <T> HttpClient.register(
 
 @OptIn(ExperimentalContracts::class)
 suspend fun <T> HttpClient.login(
-    username: String, passwort: String,
+    username: String,
+    passwort: String,
     block: suspend API.LoggedIn.() -> T
 ): T {
     contract {

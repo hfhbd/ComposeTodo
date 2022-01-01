@@ -14,9 +14,7 @@ import kotlinx.coroutines.flow.*
 class DesktopContainer(override val scope: CoroutineScope) : AppContainer {
     private val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:composetodo.db")
     override fun todoViewModel(api: API.LoggedIn): TodoViewModel =
-        TodoViewModel(scope, TodoRepository(api, driver) { schema ->
-            schema.create(driver)
-        })
+        TodoViewModel(scope, TodoRepository(api, driver) { schema -> schema.create(driver) })
 
     override fun loginViewModel(api: API.LoggedOut) = LoginViewModel(scope, api) {
         this.api.value = it

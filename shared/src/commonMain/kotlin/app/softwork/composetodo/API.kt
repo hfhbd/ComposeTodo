@@ -104,36 +104,31 @@ sealed class API {
         }
 
         @Throws(IOException::class, CancellationException::class)
-        suspend fun getTodos() =
-            ListSerializer(Todo.serializer()) by client.get("/todos") {
-                addToken()
-            }
+        suspend fun getTodos() = ListSerializer(Todo.serializer()) by client.get("/todos") {
+            addToken()
+        }
 
         @Throws(IOException::class, CancellationException::class)
-        suspend fun getTodo(todoID: UUID) = Todo.serializer() by
-                client.get("/todos/$todoID") {
-                    addToken()
-                }
+        suspend fun getTodo(todoID: UUID) = Todo.serializer() by client.get("/todos/$todoID") {
+            addToken()
+        }
 
         @Throws(IOException::class, CancellationException::class)
-        suspend fun createTodo(todo: Todo) = Todo.serializer() by
-                client.post("/todos") {
-                    body = todo using Todo.serializer()
-                    addToken()
-                }
+        suspend fun createTodo(todo: Todo) = Todo.serializer() by client.post("/todos") {
+            body = todo using Todo.serializer()
+            addToken()
+        }
 
         @Throws(IOException::class, CancellationException::class)
-        suspend fun updateTodo(todoID: UUID, todo: Todo) = Todo.serializer() by
-                client.put("/todos/$todoID") {
-                    body = todo using Todo.serializer()
-                    addToken()
-                }
+        suspend fun updateTodo(todoID: UUID, todo: Todo) = Todo.serializer() by client.put("/todos/$todoID") {
+            body = todo using Todo.serializer()
+            addToken()
+        }
 
         @Throws(IOException::class, CancellationException::class)
-        suspend fun deleteTodo(todoID: UUID) =
-            client.delete<Unit>("/todos/$todoID") {
-                addToken()
-            }
+        suspend fun deleteTodo(todoID: UUID) = client.delete<Unit>("/todos/$todoID") {
+            addToken()
+        }
     }
 
     internal infix fun <T> T.using(serializer: KSerializer<T>) =
