@@ -21,7 +21,10 @@ fun dbTest(
 }
 
 @OptIn(ExperimentalContracts::class)
-public fun testApplication(setup: Application.(Client.Database) -> Unit, tests: suspend HttpClient.(Client.Database) -> Unit) {
+public fun testApplication(
+    setup: Application.(Client.Database) -> Unit,
+    tests: suspend HttpClient.(Client.Database) -> Unit
+) {
     contract {
         callsInPlace(setup, InvocationKind.EXACTLY_ONCE)
         callsInPlace(tests, InvocationKind.EXACTLY_ONCE)

@@ -28,7 +28,15 @@ internal class TodoModuleKtTest {
             assertEquals(listOf(newUser), AdminController(db).allUsers())
         }
         login("user", "password") {
-            val todo = createTodo(Todo(id = UUID(), title = "New Todo", until = null, finished = false, recordChangeTag = null))
+            val todo = createTodo(
+                Todo(
+                    id = UUID(),
+                    title = "New Todo",
+                    until = null,
+                    finished = false,
+                    recordChangeTag = null
+                )
+            )
             assertEquals(1, getTodos().size)
             val updatedTodo = updateTodo(todo.id, todo.copy(title = "Updated Todo"))
             deleteTodo(updatedTodo.id)

@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>EmptyCatchBlock:AppContainer.kt$AppContainer${ }</ID>
+    <ID>EmptyFunctionBlock:UserDefaultsCookieStorage.kt$UserDefaultsCookieStorage${}</ID>
+    <ID>LongMethod:Register.kt$@Composable fun Register(viewModel: RegisterViewModel)</ID>
+    <ID>LongMethod:TodoModule.kt$fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider)</ID>
+    <ID>SwallowedException:AppContainer.kt$AppContainer$e: IOException</ID>
+    <ID>SwallowedException:FoundationDesktop.kt$cause: IllegalArgumentException</ID>
+    <ID>ThrowsCount:TodoModule.kt$fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider)</ID>
+    <ID>TooGenericExceptionThrown:Flows.kt$throw Error(it.localizedDescription)</ID>
+    <ID>UnusedPrivateMember:Flows.kt$caller: String</ID>
+    <ID>UnusedPrivateMember:Users.kt$api: API.LoggedIn</ID>
+  </CurrentIssues>
+</SmellBaseline>
