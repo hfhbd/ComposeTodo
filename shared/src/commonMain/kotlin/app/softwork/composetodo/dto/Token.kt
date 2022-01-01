@@ -28,7 +28,7 @@ data class Token(val content: String) {
         @SerialName("aud") val audience: String
     )
 
-    object InstantSerializer: KSerializer<Instant> {
+    object InstantSerializer : KSerializer<Instant> {
         override val descriptor = PrimitiveSerialDescriptor("InstantSerializer", PrimitiveKind.LONG)
 
         override fun deserialize(decoder: Decoder) =

@@ -12,4 +12,4 @@ data class Todo(
     val until: Instant?,
     val finished: Boolean,
     val recordChangeTag: String?
-): Identifiable
+) : Identifiable

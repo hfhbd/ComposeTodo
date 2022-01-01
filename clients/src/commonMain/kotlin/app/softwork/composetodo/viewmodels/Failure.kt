@@ -7,7 +7,7 @@ sealed class Failure {
         override val reason: String get() = "Wrong credentials"
     }
 
-    object NoNetwork: Failure() {
+    object NoNetwork : Failure() {
         override val reason: String get() = "Server not available"
     }
 }
