@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       packages: write
+      security-events: write
 
     steps:
       - name: Set environment for version
