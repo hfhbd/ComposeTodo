@@ -44,7 +44,11 @@ class RegisterViewModel(
     }
 }
 
-suspend fun API.LoggedOut.networkCall(action: suspend API.LoggedOut.() -> API.LoggedIn?, onSuccess: (API.LoggedIn) -> Unit, onFailure: (Failure) -> Unit) {
+suspend fun API.LoggedOut.networkCall(
+    action: suspend API.LoggedOut.() -> API.LoggedIn?,
+    onSuccess: (API.LoggedIn) -> Unit,
+    onFailure: (Failure) -> Unit
+) {
     try {
         val success = action()
         if (success != null) {
@@ -53,6 +57,7 @@ suspend fun API.LoggedOut.networkCall(action: suspend API.LoggedOut.() -> API.Lo
             onFailure(Failure.WrongCredentials)
         }
     } catch (e: IOException) {
+        println(e)
         onFailure(Failure.NoNetwork)
     }
 }

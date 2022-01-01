@@ -2,14 +2,14 @@ name: CD
 
 on:
   release:
-    types: [created]
+    types: [ created ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
       packages: write
-      
+
     steps:
       - name: Set environment for version
         run: long="${{ github.ref }}"; version=${long#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV
@@ -24,6 +24,13 @@ jobs:
           java-version: 11
       - name: Build with Gradle
         run: ./gradlew build
+      - name: Detekt
+        run: ./gradlew detekt
+      - name: Upload SARIF to Github using the upload-sarif action
+        uses: github/codeql-action/upload-sarif@v1
+        if: success() || failure()
+        with:
+          sarif_file: build/reports/detekt/detekt.sarif
 
       - name: Prepare files
         run: cp build/distributions/backend.zip Docker

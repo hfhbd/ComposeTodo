@@ -44,7 +44,8 @@ actual fun TextField(
     onValueChange: (String) -> Unit,
 ) {
     androidx.compose.material.TextField(
-        value = value, onValueChange = onValueChange,
+        value = value,
+        onValueChange = onValueChange,
         label = { Text(label) },
         placeholder = { Text(placeholder) },
         visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None
@@ -71,4 +72,8 @@ actual fun DateField(value: Instant?, label: String, onValueChange: (Instant?) -
     })
 }
 
-public fun String.toInstantOrNull(): Instant? = try { Instant.parse(this) } catch(cause: IllegalArgumentException) { null }
+public fun String.toInstantOrNull(): Instant? = try {
+    Instant.parse(this)
+} catch (cause: IllegalArgumentException) {
+    null
+}
