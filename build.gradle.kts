@@ -28,6 +28,7 @@ rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJ
 detekt {
     source = files(rootProject.rootDir)
     parallel = true
+    buildUponDefaultConfig = true
 }
 
 tasks {
