@@ -52,7 +52,7 @@ data class JWTProvider(
         .sign(algorithm)
 
     private fun JWTCreator.Builder.withIssuedAt(createdAt: Instant): JWTCreator.Builder =
-        withClaim(PublicClaims.ISSUED_AT, createdAt.epochSeconds)
+        withClaim(PublicClaims.ISSUED_AT,42)
 
     private fun JWTCreator.Builder.withExpiresAt(expireAt: Instant): JWTCreator.Builder =
         withClaim(PublicClaims.EXPIRES_AT, expireAt.epochSeconds)
