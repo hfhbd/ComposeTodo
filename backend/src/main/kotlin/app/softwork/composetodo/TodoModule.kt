@@ -41,7 +41,7 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
             cookie.httpOnly = true
             cookie.extensions["SameSite"] = "strict"
             cookie.maxAgeInSeconds = 1.days.inWholeSeconds
-            // cookie.secure = true
+            // cookie.secure = true // needs https://github.com/ktorio/ktor/pull/2754 to use this option in tests
         }
     }
 
