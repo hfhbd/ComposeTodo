@@ -29,7 +29,7 @@ internal class TodoModuleKtTest {
         }
         login("user", "password") {
             val todo = createTodo(
-                Todo(
+                TodoDTO(
                     id = UUID(),
                     title = "New Todo",
                     until = null,

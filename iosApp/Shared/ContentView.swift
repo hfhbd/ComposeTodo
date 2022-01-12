@@ -4,13 +4,13 @@ import shared
 
 struct ContentView: View {
     let container: IosContainer
-
-    init(container: IosContainer) {
+    
+    init (container: IosContainer) {
         self.container = container
-        self._isLoggedIn = .init(container.api)
+        self.isLoggedIn = API.LoggedOut(client: container.client)
     }
     
-    @Binding private var isLoggedIn: API
+    @State private var isLoggedIn: API
     
     var body: some View {
         if (isLoggedIn is API.LoggedOut) {
@@ -27,6 +27,10 @@ struct ContentView: View {
                 }.tabItem {
                     Label("Register", systemImage: "person.badge.plus")
                 }
+            }.task {
+                for await api in container.api.stream(API.self) {
+                    self.isLoggedIn = api
+                }
             }
         } else {
             NavigationView {
@@ -40,21 +44,27 @@ struct ContentView: View {
 struct Login: View {
     let viewModel: LoginViewModel
     
-    init(viewModel: LoginViewModel) {
-        self.viewModel = viewModel
-        self._username = .init(viewModel.userName)
-        self._password = .init(viewModel.password)
-        self._error = .init(viewModel.error)
-    }
-    
-    @Binding private var username: String
-    @Binding private var password: String
-    @Binding private var error: Failure?
+    @State private var username = ""
+    @State private var password = ""
+    @State private var error: Failure? = nil
 
     var body: some View {
         Form {
-            TextField("Username", text: $username)
-            SecureField("Password", text: $password)
+            TextField("Username", text: $username).task {
+                for await value in self.viewModel.userName.stream(String.self) {
+                    self.username = value
+                }
+            }.onChange(of: username) { newValue in
+                self.viewModel.userName.setValue(newValue)
+            }
+            
+            SecureField("Password", text: $password).task {
+                for await value in self.viewModel.password.stream(String.self) {
+                    self.password = value
+                }
+            }.onChange(of: password) { newValue in
+                self.viewModel.password.setValue(newValue)
+            }
 
             if let error = error {
                 Text(error.reason)
@@ -63,11 +73,10 @@ struct Login: View {
             Button("Login") {
                 viewModel.login()
             }
-        }.onReceive(viewModel.error.publisher(Failure?.self)
-                        .replaceError(with: nil)
-                        .receive(on: RunLoop.main)
-        ) {
-            self.error = $0
+        }.task {
+            for await newError in viewModel.error.stream(Failure?.self) {
+                self.error = newError
+            }
         }
     }
 }
@@ -75,28 +84,53 @@ struct Login: View {
 struct Register: View {
     let viewModel: RegisterViewModel
     
-    init(viewModel: RegisterViewModel) {
-        self.viewModel = viewModel
-        self._username = .init(viewModel.username)
-        self._password = .init(viewModel.password)
-        self._passwordAgain = .init(viewModel.passwordAgain)
-        self._firstName = .init(viewModel.firstName)
-        self._lastName = .init(viewModel.lastName)
-    }
-    
-    @Binding private var username: String
-    @Binding private var password: String
-    @Binding private var passwordAgain: String
-    @Binding private var firstName: String
-    @Binding private var lastName: String
+    @State private var username = ""
+    @State private var password = ""
+    @State private var passwordAgain = ""
+    @State private var firstName = ""
+    @State private var lastName = ""
     
     var body: some View {
         Form {
-            TextField("Username", text: $username)
-            SecureField("Password", text: $password)
-            SecureField("Password Again", text: $passwordAgain)
-            TextField("First Name", text: $firstName)
-            TextField("Last Name", text: $lastName)
+            TextField("Username", text: $username).task {
+                for await value in self.viewModel.username.stream(String.self) {
+                    self.username = value
+                }
+            }.onChange(of: username) { newValue in
+                self.viewModel.username.setValue(newValue)
+            }
+            
+            SecureField("Password", text: $password).task {
+                for await value in self.viewModel.password.stream(String.self) {
+                    self.password = value
+                }
+            }.onChange(of: password) { newValue in
+                self.viewModel.password.setValue(newValue)
+            }
+            
+            SecureField("Password Again", text: $passwordAgain).task {
+                for await value in self.viewModel.passwordAgain.stream(String.self) {
+                    self.passwordAgain = value
+                }
+            }.onChange(of: passwordAgain) { newValue in
+                self.viewModel.passwordAgain.setValue(newValue)
+            }
+            
+            TextField("First Name", text: $firstName).task {
+                for await value in self.viewModel.firstName.stream(String.self) {
+                    self.firstName = value
+                }
+            }.onChange(of: firstName) { newValue in
+                self.viewModel.firstName.setValue(newValue)
+            }
+            
+            TextField("Last Name", text: $lastName).task {
+                for await value in self.viewModel.lastName.stream(String.self) {
+                    self.lastName = value
+                }
+            }.onChange(of: lastName) { newValue in
+                self.viewModel.lastName.setValue(newValue)
+            }
         }.toolbar {
             Button("Register") {
                 viewModel.register()

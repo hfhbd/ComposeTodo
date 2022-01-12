@@ -104,24 +104,24 @@ sealed class API {
         }
 
         @Throws(IOException::class, CancellationException::class)
-        suspend fun getTodos() = ListSerializer(Todo.serializer()) by client.get("/todos") {
+        suspend fun getTodos() = ListSerializer(TodoDTO.serializer()) by client.get("/todos") {
             addToken()
         }
 
         @Throws(IOException::class, CancellationException::class)
-        suspend fun getTodo(todoID: UUID) = Todo.serializer() by client.get("/todos/$todoID") {
+        suspend fun getTodo(todoID: UUID) = TodoDTO.serializer() by client.get("/todos/$todoID") {
             addToken()
         }
 
         @Throws(IOException::class, CancellationException::class)
-        suspend fun createTodo(todo: Todo) = Todo.serializer() by client.post("/todos") {
-            body = todo using Todo.serializer()
+        suspend fun createTodo(todo: TodoDTO) = TodoDTO.serializer() by client.post("/todos") {
+            body = todo using TodoDTO.serializer()
             addToken()
         }
 
         @Throws(IOException::class, CancellationException::class)
-        suspend fun updateTodo(todoID: UUID, todo: Todo) = Todo.serializer() by client.put("/todos/$todoID") {
-            body = todo using Todo.serializer()
+        suspend fun updateTodo(todoID: UUID, todo: TodoDTO) = TodoDTO.serializer() by client.put("/todos/$todoID") {
+            body = todo using TodoDTO.serializer()
             addToken()
         }
 

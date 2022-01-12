@@ -6,11 +6,12 @@
     <ID>EmptyFunctionBlock:UserDefaultsCookieStorage.kt$UserDefaultsCookieStorage${}</ID>
     <ID>LongMethod:Register.kt$@Composable fun Register(viewModel: RegisterViewModel)</ID>
     <ID>LongMethod:TodoModule.kt$fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider)</ID>
+    <ID>MagicNumber:FlowsTest.kt$FlowsTest$3</ID>
+    <ID>MaxLineLength:FlowsTest.kt$FlowsTest$"upstream will always emit 1 time because other is a SharedFlow, so upstream will be called again before waiting for other"</ID>
+    <ID>MaximumLineLength:app.softwork.composetodo.FlowsTest.kt:112</ID>
     <ID>SwallowedException:AppContainer.kt$AppContainer$e: IOException</ID>
     <ID>SwallowedException:FoundationDesktop.kt$cause: IllegalArgumentException</ID>
     <ID>ThrowsCount:TodoModule.kt$fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider)</ID>
-    <ID>TooGenericExceptionThrown:Flows.kt$throw Error(it.localizedDescription)</ID>
-    <ID>UnusedPrivateMember:Flows.kt$caller: String</ID>
     <ID>UnusedPrivateMember:Users.kt$api: API.LoggedIn</ID>
   </CurrentIssues>
 </SmellBaseline>

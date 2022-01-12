@@ -21,7 +21,7 @@ class TodoController(private val db: Client.Database) {
         db.delete(it, Todo)
     }
 
-    suspend fun update(user: User, todoID: UUID, update: app.softwork.composetodo.dto.Todo) =
+    suspend fun update(user: User, todoID: UUID, update: app.softwork.composetodo.dto.TodoDTO) =
         getTodo(user, todoID)?.toDTO()?.copy(
             title = update.title,
             until = update.until,

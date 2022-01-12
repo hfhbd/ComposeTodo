@@ -25,7 +25,7 @@ class OnlineRepository(val api: API.LoggedIn) : TodoRepository {
         }
     }
 
-    private fun app.softwork.composetodo.dto.Todo.toDomain(): Todo = Todo(
+    private fun app.softwork.composetodo.dto.TodoDTO.toDomain(): Todo = Todo(
         id = id,
         title = title,
         finished = finished,
@@ -34,7 +34,7 @@ class OnlineRepository(val api: API.LoggedIn) : TodoRepository {
     )
 
     override suspend fun create(title: String, until: Instant?) {
-        val newTodo = app.softwork.composetodo.dto.Todo(
+        val newTodo = app.softwork.composetodo.dto.TodoDTO(
             id = UUID(),
             title = title,
             finished = false,
