@@ -53,7 +53,8 @@ kotlin {
         }
         commonTest {
             dependencies {
-                api(kotlin("test"))
+                implementation(kotlin("test"))
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
             }
         }
 

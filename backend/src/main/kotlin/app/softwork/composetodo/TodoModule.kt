@@ -117,29 +117,29 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
 
             route("/todos") {
                 get {
-                    call.respondJsonList(Todo.serializer()) {
+                    call.respondJsonList(TodoDTO.serializer()) {
                         todoController.todos(user)
                     }
                 }
                 post {
-                    call.respondJson(Todo.serializer()) {
-                        val newTodo = body(Todo.serializer()).toDAO(user)
+                    call.respondJson(TodoDTO.serializer()) {
+                        val newTodo = body(TodoDTO.serializer()).toDAO(user)
                         todoController.create(newTodo).toDTO()
                     }
                 }
 
                 route("/{todoID}") {
                     get {
-                        call.respondJson(Todo.serializer()) {
+                        call.respondJson(TodoDTO.serializer()) {
                             val todoID by parameters
                             todoController.getTodo(user, todoID)?.toDTO()
                                 ?: throw NotFoundException()
                         }
                     }
                     put {
-                        call.respondJson(Todo.serializer()) {
+                        call.respondJson(TodoDTO.serializer()) {
                             val todoID by parameters
-                            val toUpdate = body(Todo.serializer())
+                            val toUpdate = body(TodoDTO.serializer())
                             todoController.update(user, todoID, toUpdate)?.toDTO()
                                 ?: throw NotFoundException()
                         }

@@ -6,7 +6,7 @@ import kotlinx.serialization.*
 import kotlinx.uuid.*
 
 @Serializable
-data class Todo(
+data class TodoDTO(
     override val id: UUID,
     val title: String,
     val until: Instant?,

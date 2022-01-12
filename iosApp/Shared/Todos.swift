@@ -18,11 +18,10 @@ struct Todos: View {
             TodoItemRow(item: todo)
         }.refreshable {
             viewModel.refresh()
-        }.onReceive(viewModel.todos
-                        .publisher([Todo].self)
-                        .replaceError(with: [])
-        ) { newValues in
-            self.todos = newValues
+        }.task {
+            for await newTodos in viewModel.todos.stream([Todo].self) {
+                self.todos = newTodos
+            }
         }
     }
 }
@@ -41,7 +40,7 @@ struct Todos_Previews: PreviewProvider {
             KotlinUnit()
         }
         
-        func delete(todo: Todo_) async throws -> KotlinUnit? {
+        func delete(todo: Todo) async throws -> KotlinUnit? {
             KotlinUnit()
         }
         

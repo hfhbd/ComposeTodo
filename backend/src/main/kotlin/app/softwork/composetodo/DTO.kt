@@ -4,7 +4,7 @@ import app.softwork.cloudkitclient.values.*
 import app.softwork.composetodo.dao.*
 import kotlinx.uuid.*
 
-fun Todo.toDTO() = app.softwork.composetodo.dto.Todo(
+fun Todo.toDTO() = app.softwork.composetodo.dto.TodoDTO(
     id = recordName.toUUID(),
     title = fields.title.value,
     until = fields.until?.value,
@@ -12,7 +12,7 @@ fun Todo.toDTO() = app.softwork.composetodo.dto.Todo(
     recordChangeTag = recordChangeTag
 )
 
-fun app.softwork.composetodo.dto.Todo.toDAO(user: User) = Todo(
+fun app.softwork.composetodo.dto.TodoDTO.toDAO(user: User) = Todo(
     recordName = id.toString(),
     fields = Todo.Fields(
         title = Value.String(title),
