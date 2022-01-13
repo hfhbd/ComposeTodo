@@ -1,12 +1,12 @@
 package app.softwork.composetodo.repository
 
 import app.softwork.composetodo.*
+import app.softwork.composetodo.dto.*
 import com.squareup.sqldelight.db.*
 import com.squareup.sqldelight.runtime.coroutines.*
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.*
 import kotlinx.uuid.*
-import kotlinx.uuid.sqldelight.*
 
 interface TodoRepository {
     companion object {
@@ -48,12 +48,13 @@ interface TodoRepository {
             }
 
             override suspend fun create(title: String, until: Instant?) {
-                dao.upsertTodo(id = UUID(), title = title, until = until, finished = false, recordChangeTag = null)
+                val id = TodoDTO.ID(UUID())
+                dao.upsertTodo(id = id, title = title, until = until, finished = false, recordChangeTag = null)
             }
         }
 
         fun createDatabase(driver: SqlDriver) =
-            ComposeTodoDB(driver, todoAdapter = Todo.Adapter(UUIDStringAdapter, DateTimeAdapter))
+            ComposeTodoDB(driver, todoAdapter = Todo.Adapter(IDConverter, DateTimeAdapter))
     }
 
     val todos: Flow<List<Todo>>

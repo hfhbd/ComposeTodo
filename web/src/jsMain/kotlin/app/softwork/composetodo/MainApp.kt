@@ -2,6 +2,7 @@ package app.softwork.composetodo
 
 import androidx.compose.runtime.*
 import app.softwork.bootstrapcompose.*
+import app.softwork.composetodo.dto.*
 import app.softwork.composetodo.login.*
 import app.softwork.composetodo.todos.*
 import app.softwork.composetodo.users.*
@@ -68,7 +69,7 @@ private fun NavBuilder.MainContent(appContainer: AppContainer, api: API.LoggedIn
         }
         route("todos") {
             uuid { todoID ->
-                Todo(api, todoID)
+                Todo(api, TodoDTO.ID(todoID))
             }
             noMatch {
                 Todos(appContainer.todoViewModel(api))

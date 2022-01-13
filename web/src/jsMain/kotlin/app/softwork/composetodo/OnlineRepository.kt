@@ -1,5 +1,6 @@
 package app.softwork.composetodo
 
+import app.softwork.composetodo.dto.*
 import app.softwork.composetodo.repository.*
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.*
@@ -25,7 +26,7 @@ class OnlineRepository(val api: API.LoggedIn) : TodoRepository {
         }
     }
 
-    private fun app.softwork.composetodo.dto.TodoDTO.toDomain(): Todo = Todo(
+    private fun TodoDTO.toDomain(): Todo = Todo(
         id = id,
         title = title,
         finished = finished,
@@ -34,8 +35,8 @@ class OnlineRepository(val api: API.LoggedIn) : TodoRepository {
     )
 
     override suspend fun create(title: String, until: Instant?) {
-        val newTodo = app.softwork.composetodo.dto.TodoDTO(
-            id = UUID(),
+        val newTodo = TodoDTO(
+            id = TodoDTO.ID(UUID()),
             title = title,
             finished = false,
             until = until,
