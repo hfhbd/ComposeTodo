@@ -1,8 +1,8 @@
-import kotlinx.uuid.UUID;
+import app.softwork.composetodo.dto.TodoDTO.ID;
 import kotlinx.datetime.Instant;
 
 CREATE TABLE todo(
-  id TEXT AS UUID NOT NULL PRIMARY KEY,
+  id TEXT AS ID NOT NULL PRIMARY KEY,
   title TEXT NOT NULL,
   until TEXT AS Instant,
   finished INTEGER AS Boolean NOT NULL,

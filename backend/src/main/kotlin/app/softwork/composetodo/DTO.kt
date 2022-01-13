@@ -2,18 +2,20 @@ package app.softwork.composetodo
 
 import app.softwork.cloudkitclient.values.*
 import app.softwork.composetodo.dao.*
+import app.softwork.composetodo.dao.User
+import app.softwork.composetodo.dto.*
 import kotlinx.uuid.*
 
-fun Todo.toDTO() = app.softwork.composetodo.dto.TodoDTO(
-    id = recordName.toUUID(),
+fun Todo.toDTO() = TodoDTO(
+    id = TodoDTO.ID(recordName.toUUID()),
     title = fields.title.value,
     until = fields.until?.value,
     finished = fields.finished.value.toBoolean(),
     recordChangeTag = recordChangeTag
 )
 
-fun app.softwork.composetodo.dto.TodoDTO.toDAO(user: User) = Todo(
-    recordName = id.toString(),
+fun TodoDTO.toDAO(user: User) = Todo(
+    recordName = id.id.toString(),
     fields = Todo.Fields(
         title = Value.String(title),
         finished = Value.String(finished.toString()),

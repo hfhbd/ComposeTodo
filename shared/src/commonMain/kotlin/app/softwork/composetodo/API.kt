@@ -6,13 +6,11 @@ import io.ktor.client.features.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.util.*
-import io.ktor.util.InternalAPI
 import io.ktor.utils.io.errors.*
 import kotlinx.datetime.*
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.*
 import kotlinx.serialization.json.*
-import kotlinx.uuid.*
 import kotlin.coroutines.cancellation.*
 
 sealed class API {
@@ -109,7 +107,7 @@ sealed class API {
         }
 
         @Throws(IOException::class, CancellationException::class)
-        suspend fun getTodo(todoID: UUID) = TodoDTO.serializer() by client.get("/todos/$todoID") {
+        suspend fun getTodo(todoID: TodoDTO.ID) = TodoDTO.serializer() by client.get("/todos/${todoID.id}") {
             addToken()
         }
 
@@ -120,13 +118,14 @@ sealed class API {
         }
 
         @Throws(IOException::class, CancellationException::class)
-        suspend fun updateTodo(todoID: UUID, todo: TodoDTO) = TodoDTO.serializer() by client.put("/todos/$todoID") {
-            body = todo using TodoDTO.serializer()
-            addToken()
-        }
+        suspend fun updateTodo(todoID: TodoDTO.ID, todo: TodoDTO) =
+            TodoDTO.serializer() by client.put("/todos/${todoID.id}") {
+                body = todo using TodoDTO.serializer()
+                addToken()
+            }
 
         @Throws(IOException::class, CancellationException::class)
-        suspend fun deleteTodo(todoID: UUID) = client.delete<Unit>("/todos/$todoID") {
+        suspend fun deleteTodo(todoID: TodoDTO.ID) = client.delete<Unit>("/todos/${todoID.id}") {
             addToken()
         }
     }

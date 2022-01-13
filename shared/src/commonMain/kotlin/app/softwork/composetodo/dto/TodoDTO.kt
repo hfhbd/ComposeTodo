@@ -1,15 +1,19 @@
 package app.softwork.composetodo.dto
 
-import app.softwork.composetodo.*
 import kotlinx.datetime.*
 import kotlinx.serialization.*
 import kotlinx.uuid.*
+import kotlin.jvm.*
 
 @Serializable
 data class TodoDTO(
-    override val id: UUID,
+    val id: ID,
     val title: String,
     val until: Instant?,
     val finished: Boolean,
     val recordChangeTag: String?
-) : Identifiable
+) {
+    @Serializable
+    @JvmInline
+    value class ID(val id: UUID)
+}
