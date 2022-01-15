@@ -1,9 +1,10 @@
 package app.softwork.composetodo
 
+import com.squareup.sqldelight.drivers.sqljs.*
 import kotlinx.coroutines.*
 import org.jetbrains.compose.web.*
 
-fun main() {
+suspend fun main() {
     // https://youtrack.jetbrains.com/issue/KTOR-539
     js(
         """
@@ -13,8 +14,9 @@ window.fetch = function (resource, init) {
 };
 """
     )
+    val driver = initSqlDriver(ComposeTodoDB.Schema).await()
     renderComposable(rootElementId = "root") {
-        val appContainer = Container(MainScope())
+        val appContainer = WebContainer(MainScope(), driver)
         MainApp(appContainer)
     }
 }

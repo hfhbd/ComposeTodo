@@ -2,9 +2,9 @@ package app.softwork.composetodo
 
 import android.content.*
 import app.softwork.composetodo.repository.*
+import app.softwork.composetodo.repository.TodoRepository.Companion.createDatabase
 import app.softwork.composetodo.viewmodels.*
 import com.squareup.sqldelight.android.*
-import com.squareup.sqldelight.db.*
 import io.ktor.client.*
 import io.ktor.client.engine.android.*
 import io.ktor.client.features.*
@@ -13,7 +13,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
 class Container(applicationContext: Context, override val scope: CoroutineScope) : AppContainer {
-    private val driver: SqlDriver = AndroidSqliteDriver(ComposeTodoDB.Schema, applicationContext, "composetodo.db")
+    private val db = createDatabase(AndroidSqliteDriver(ComposeTodoDB.Schema, applicationContext, "composetodo.db"))
 
     override val client = HttpClient(Android) {
         defaultRequest {
@@ -34,5 +34,6 @@ class Container(applicationContext: Context, override val scope: CoroutineScope)
         this.api.value = it
     }
 
-    override fun todoViewModel(api: API.LoggedIn) = TodoViewModel(scope, TodoRepository(api = api, driver = driver))
+    override fun todoViewModel(api: API.LoggedIn) =
+        TodoViewModel(scope, TodoRepository(api = api, dao = db.schemaQueries))
 }

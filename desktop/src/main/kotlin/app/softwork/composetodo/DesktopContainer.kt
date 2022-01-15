@@ -1,6 +1,7 @@
 package app.softwork.composetodo
 
 import app.softwork.composetodo.repository.*
+import app.softwork.composetodo.repository.TodoRepository.Companion.createDatabase
 import app.softwork.composetodo.viewmodels.*
 import com.squareup.sqldelight.db.*
 import com.squareup.sqldelight.sqlite.driver.*
@@ -12,9 +13,14 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
 class DesktopContainer(override val scope: CoroutineScope) : AppContainer {
-    private val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:composetodo.db")
+    private val db: ComposeTodoDB
+    init {
+        val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:composetodo.db")
+        ComposeTodoDB.Schema.create(driver)
+        db = createDatabase(driver)
+    }
     override fun todoViewModel(api: API.LoggedIn): TodoViewModel =
-        TodoViewModel(scope, TodoRepository(api, driver) { schema -> schema.create(driver) })
+        TodoViewModel(scope, TodoRepository(api, db.schemaQueries))
 
     override fun loginViewModel(api: API.LoggedOut) = LoginViewModel(scope, api) {
         this.api.value = it
