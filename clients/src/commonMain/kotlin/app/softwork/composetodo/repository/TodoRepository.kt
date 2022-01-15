@@ -12,14 +12,8 @@ interface TodoRepository {
     companion object {
         operator fun invoke(
             api: API.LoggedIn,
-            driver: SqlDriver,
-            dao: SchemaQueries = createDatabase(driver).schemaQueries,
-            onCreate: (SqlDriver.Schema) -> Unit = { }
+            dao: SchemaQueries,
         ) = object : TodoRepository {
-            init {
-                onCreate(ComposeTodoDB.Schema)
-            }
-
             override val todos: Flow<List<Todo>> = dao.all().asFlow().mapToList()
 
             override suspend fun delete(todo: Todo) {

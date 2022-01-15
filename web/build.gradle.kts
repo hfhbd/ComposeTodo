@@ -32,6 +32,8 @@ kotlin {
                 implementation("app.softwork:routing-compose:0.1.5")
                 implementation(compose.web.core)
                 implementation(compose.runtime)
+                implementation("com.squareup.sqldelight:sqljs-driver:1.5.3")
+                implementation(devNpm("copy-webpack-plugin", "9.1.0"))
             }
         }
 

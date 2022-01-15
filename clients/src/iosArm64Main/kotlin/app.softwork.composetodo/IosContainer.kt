@@ -18,7 +18,7 @@ class IosContainer(
     protocol: URLProtocol,
     host: String
 ) : AppContainer {
-    private val driver: SqlDriver = NativeSqliteDriver(ComposeTodoDB.Schema, "composetodo.db")
+    private val db = TodoRepository.createDatabase(NativeSqliteDriver(ComposeTodoDB.Schema, "composetodo.db"))
 
     constructor() : this(scope = MainScope(), protocol = URLProtocol.HTTPS, host = "api.todo.softwork.app")
 
@@ -46,7 +46,8 @@ class IosContainer(
         this.api.value = it
     }
 
-    override fun todoViewModel(api: API.LoggedIn) = TodoViewModel(scope = scope, repo = TodoRepository(api, driver))
+    override fun todoViewModel(api: API.LoggedIn) =
+        TodoViewModel(scope = scope, repo = TodoRepository(api, db.schemaQueries))
 
     override fun registerViewModel(api: API.LoggedOut) = RegisterViewModel(scope, api) {
         this.api.value = it
