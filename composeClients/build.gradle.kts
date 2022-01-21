@@ -37,7 +37,7 @@ kotlin {
             dependencies {
                 api(compose.foundation)
                 api(compose.material)
-                implementation("io.github.vanpra.compose-material-dialogs:datetime:0.6.2")
+                implementation("io.github.vanpra.compose-material-dialogs:datetime:0.6.3")
             }
         }
 
