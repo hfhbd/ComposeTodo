@@ -35,5 +35,5 @@ class Container(applicationContext: Context, override val scope: CoroutineScope)
     }
 
     override fun todoViewModel(api: API.LoggedIn) =
-        TodoViewModel(scope, TodoRepository(api = api, dao = db.schemaQueries))
+        TodoViewModel(scope, TodoRepository(api = api, dao = db.todoQueries))
 }

@@ -47,7 +47,7 @@ class IosContainer(
     }
 
     override fun todoViewModel(api: API.LoggedIn) =
-        TodoViewModel(scope = scope, repo = TodoRepository(api, db.schemaQueries))
+        TodoViewModel(scope = scope, repo = TodoRepository(api, db.todoQueries))
 
     override fun registerViewModel(api: API.LoggedOut) = RegisterViewModel(scope, api) {
         this.api.value = it
