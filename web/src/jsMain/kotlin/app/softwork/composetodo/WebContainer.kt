@@ -21,7 +21,7 @@ class WebContainer(override val scope: CoroutineScope, driver: SqlDriver) : AppC
         this.api.value = it
     }
 
-    override fun todoViewModel(api: API.LoggedIn) = TodoViewModel(scope, TodoRepository(api = api, db.schemaQueries))
+    override fun todoViewModel(api: API.LoggedIn) = TodoViewModel(scope, TodoRepository(api = api, db.todoQueries))
 
     override val client = HttpClient(Js) {
         install(HttpCookies)

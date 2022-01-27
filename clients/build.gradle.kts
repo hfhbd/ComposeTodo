@@ -8,6 +8,8 @@ plugins {
 sqldelight {
     database("ComposeTodoDB") {
         packageName = "app.softwork.composetodo"
+        deriveSchemaFromMigrations = true
+        verifyMigrations = true
     }
 }
 

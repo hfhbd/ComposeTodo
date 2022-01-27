@@ -12,7 +12,7 @@ interface TodoRepository {
     companion object {
         operator fun invoke(
             api: API.LoggedIn,
-            dao: SchemaQueries,
+            dao: TodoQueries,
         ) = object : TodoRepository {
             override val todos: Flow<List<Todo>> = dao.all().asFlow().mapToList()
 

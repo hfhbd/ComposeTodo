@@ -16,11 +16,11 @@ class DesktopContainer(override val scope: CoroutineScope) : AppContainer {
     private val db: ComposeTodoDB
     init {
         val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:composetodo.db")
-        ComposeTodoDB.Schema.create(driver)
+        ComposeTodoDB.Schema.migrate(driver, 0, 1)
         db = createDatabase(driver)
     }
     override fun todoViewModel(api: API.LoggedIn): TodoViewModel =
-        TodoViewModel(scope, TodoRepository(api, db.schemaQueries))
+        TodoViewModel(scope, TodoRepository(api, db.todoQueries))
 
     override fun loginViewModel(api: API.LoggedOut) = LoginViewModel(scope, api) {
         this.api.value = it
