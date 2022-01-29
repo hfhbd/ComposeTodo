@@ -1,7 +1,6 @@
 package app.softwork.composetodo
 
 import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.*
 import kotlinx.coroutines.flow.*
 
 fun interface Cancelable {
@@ -35,32 +34,34 @@ public interface IteratorAsync<out T> : Cancelable {
 }
 
 fun <T> Flow<T>.asAsyncIterable(): IteratorAsync<T> = object : IteratorAsync<T> {
-    private val job = Job()
-    private val requester = MutableSharedFlow<suspend (T) -> Unit>()
-
-    init {
-        onCompletion {
-            job.cancel()
-        }.zip(requester) { t, requester ->
-            requester(t)
-        }.launchIn(CoroutineScope(job))
-    }
+    private var job: Job? = null
+    private val fixForInitDelay = 1
+    private val requester = MutableSharedFlow<(T) -> Unit>(replay = fixForInitDelay)
 
     override fun cancel() {
-        job.cancel()
+        job?.cancel()
     }
 
-    override suspend fun next(): T? = if (job.isCompleted) {
-        null
-    } else {
-        callbackFlow {
-            requester.emit {
-                send(it)
+    override suspend fun next(): T? {
+        if (job == null) {
+            val job = Job()
+            onCompletion {
+                job.cancel()
+            }.zip(requester) { t, requester ->
+                requester(t)
+            }.launchIn(CoroutineScope(job))
+            this.job = job
+        }
+        return if (job!!.isActive) {
+            try {
+                val deferred = CompletableDeferred<T>(job)
+                requester.emit { deferred.complete(it) }
+                deferred.await()
+            } catch (_: CancellationException) {
+                null
             }
-            job.invokeOnCompletion {
-                trySend(null)
-            }
-            awaitClose()
-        }.first()
+        } else {
+            null
+        }
     }
 }
