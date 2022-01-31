@@ -7,7 +7,7 @@ import app.softwork.composetodo.viewmodels.*
 @Composable
 fun Register(viewModel: RegisterViewModel) {
     Column {
-        val userName by viewModel.username.collectAsState()
+        val userName by remember { viewModel.username }.collectAsState()
         TextField(
             label = "Username",
             value = userName,
@@ -15,7 +15,7 @@ fun Register(viewModel: RegisterViewModel) {
             isPassword = false,
             placeholder = "John Doe"
         )
-        val password by viewModel.password.collectAsState()
+        val password by remember { viewModel.password }.collectAsState()
         TextField(
             label = "Password",
             value = password,
@@ -24,7 +24,7 @@ fun Register(viewModel: RegisterViewModel) {
             placeholder = ""
         )
 
-        val passwordAgain by viewModel.passwordAgain.collectAsState()
+        val passwordAgain by remember { viewModel.passwordAgain }.collectAsState()
         TextField(
             label = "Password Again",
             value = passwordAgain,
@@ -33,7 +33,7 @@ fun Register(viewModel: RegisterViewModel) {
             placeholder = ""
         )
 
-        val firstName by viewModel.firstName.collectAsState()
+        val firstName by remember { viewModel.firstName }.collectAsState()
         TextField(
             label = "First Name",
             value = firstName,
@@ -42,7 +42,7 @@ fun Register(viewModel: RegisterViewModel) {
             placeholder = ""
         )
 
-        val lastName by viewModel.lastName.collectAsState()
+        val lastName by remember { viewModel.lastName }.collectAsState()
         TextField(
             label = "Last Name",
             value = lastName,
@@ -51,7 +51,7 @@ fun Register(viewModel: RegisterViewModel) {
             placeholder = ""
         )
 
-        val enabled by viewModel.enableRegisterButton.collectAsState(false)
+        val enabled by remember { viewModel.enableRegisterButton }.collectAsState(false)
         Button("Register", enabled = enabled) { viewModel.register() }
     }
 }

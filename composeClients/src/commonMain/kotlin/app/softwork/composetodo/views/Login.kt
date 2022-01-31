@@ -7,7 +7,7 @@ import app.softwork.composetodo.viewmodels.*
 @Composable
 fun Login(viewModel: LoginViewModel) {
     Column {
-        val userName by viewModel.userName.collectAsState()
+        val userName by remember { viewModel.userName }.collectAsState()
         TextField(
             label = "Username",
             value = userName,
@@ -15,7 +15,7 @@ fun Login(viewModel: LoginViewModel) {
             isPassword = false,
             placeholder = "John Doe"
         )
-        val password by viewModel.password.collectAsState()
+        val password by remember { viewModel.password }.collectAsState()
         TextField(
             label = "Password",
             value = password,
@@ -24,11 +24,11 @@ fun Login(viewModel: LoginViewModel) {
             placeholder = ""
         )
 
-        val enableLogin by viewModel.enableLogin.collectAsState(false)
+        val enableLogin by remember { viewModel.enableLogin }.collectAsState(false)
 
         Button("Login", enabled = enableLogin) { viewModel.login() }
 
-        val error by viewModel.error.collectAsState()
+        val error by remember { viewModel.error }.collectAsState()
 
         error?.let {
             Text("ERROR: ${it.reason}")

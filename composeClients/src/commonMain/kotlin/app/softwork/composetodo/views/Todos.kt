@@ -13,7 +13,7 @@ fun Todos(viewModel: TodoViewModel) {
     Row {
         NewTodo(viewModel)
     }
-    val todos by viewModel.todos.collectAsState(emptyList())
+    val todos by remember { viewModel.todos }.collectAsState(emptyList())
     Column {
         todos.forEach { todo ->
             TodoRow(todo)
