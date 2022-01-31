@@ -29,7 +29,7 @@ struct FlowStream<T>: AsyncSequence {
                 iterator.cancel()
                 return nil
             }
-            return try? await iterator.next() as! T?
+            return (try? await iterator.next() as? T?) ?? nil
         }
 
         typealias Element = T
@@ -40,37 +40,37 @@ struct FlowStreamThrowing<T>: AsyncSequence {
     func makeAsyncIterator() -> FlowAsyncIterator {
         FlowAsyncIterator(flow: flow, onError: onError)
     }
-    
+
     typealias AsyncIterator = FlowAsyncIterator
-    
+
     typealias Element = T
-    
+
     private let flow: Flow
     private let onError: T
     init (_ type: T.Type, flow: Flow, onError: T) {
         self.flow = flow
         self.onError = onError
     }
-    
+
     struct FlowAsyncIterator: AsyncIteratorProtocol {
         private let iterator: IteratorAsync
-        
+
         private let onError: T
-        
+
         init(flow: Flow, onError: T) {
             self.iterator = FlowsKt.asAsyncIterable(flow)
             self.onError = onError
         }
-        
+
         @MainActor
         func next() async throws -> T? {
             if(Task.isCancelled) {
                 iterator.cancel()
                 return nil
             }
-            return (try? await iterator.next() as! T?) ?? onError
+            return (try? await iterator.next() as? T?) ?? onError
         }
-        
+
         typealias Element = T
     }
 }
@@ -79,7 +79,7 @@ extension Flow {
     func stream<T>(_ t: T.Type) -> FlowStream<T> {
         FlowStream(t, flow: self)
     }
-    
+
     func streamThrowing<T>(_ t: T.Type, onError: T) -> FlowStreamThrowing<T> {
         FlowStreamThrowing(t, flow: self, onError: onError)
     }
@@ -91,7 +91,7 @@ extension AsyncSequence {
             $0.append($1)
         }
     }
-    
+
     func first() async rethrows -> Element {
         try await first(where: { _ in true })!
     }
