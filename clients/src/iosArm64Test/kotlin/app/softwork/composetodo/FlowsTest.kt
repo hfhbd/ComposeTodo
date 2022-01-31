@@ -119,4 +119,10 @@ class FlowsTest {
         iterator.cancel()
         assertEquals(emptyList(), computed)
     }
+
+    @Test
+    fun iterableToFlowTest() = runTest {
+        val iterable = listOf(1, 2, 3).async()
+        assertEquals(listOf(1, 2, 3), iterable.toFlow().toList())
+    }
 }

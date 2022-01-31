@@ -65,3 +65,20 @@ fun <T> Flow<T>.asAsyncIterable(): IteratorAsync<T> = object : IteratorAsync<T> 
         }
     }
 }
+
+fun <T> IteratorAsync<T>.toFlow() = flow {
+    while (true) {
+        val next = next() ?: break
+        emit(next)
+    }
+}
+
+fun <T> List<T>.async(): IteratorAsync<T> = object : IteratorAsync<T> {
+    val iterator = iterator()
+
+    override fun cancel() {
+        // nothing
+    }
+
+    override suspend fun next() = if (iterator.hasNext()) iterator.next() else null
+}
