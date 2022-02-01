@@ -7,7 +7,7 @@ import app.softwork.composetodo.views.*
 fun MainView(appContainer: AppContainer) {
     Theme {
         Column {
-            when (val api = appContainer.api.collectAsState().value) {
+            when (val api = remember { appContainer.api }.collectAsState().value) {
                 is API.LoggedIn -> Todos(appContainer.todoViewModel(api))
                 is API.LoggedOut -> {
                     Row {
