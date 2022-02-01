@@ -5,6 +5,7 @@ plugins {
 }
 
 android {
+    namespace = "app.softwork.composetodo"
     compileSdk = 31
 
     defaultConfig {
