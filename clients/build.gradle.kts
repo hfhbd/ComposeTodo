@@ -24,7 +24,8 @@ kotlin {
                 xcf.add(this)
                 export(projects.shared)
                 export("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0-native-mt")
-                transitiveExport = true
+                export("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
+                export("app.softwork:kotlinx-uuid-core:0.0.12")
             }
         }
     }
@@ -35,7 +36,8 @@ kotlin {
                 xcf.add(this)
                 export(projects.shared)
                 export("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0-native-mt")
-                transitiveExport = true
+                export("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
+                export("app.softwork:kotlinx-uuid-core:0.0.12")
             }
         }
     }

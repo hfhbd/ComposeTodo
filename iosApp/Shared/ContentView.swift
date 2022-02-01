@@ -1,28 +1,27 @@
 import SwiftUI
-import CoreData
 import shared
 
 struct ContentView: View {
     let container: IosContainer
-    
+
     init (container: IosContainer) {
         self.container = container
         self.isLoggedIn = API.LoggedOut(client: container.client)
     }
-    
+
     @State private var isLoggedIn: API
-    
+
     var body: some View {
-        if (isLoggedIn is API.LoggedOut) {
+        if let isLoggedIn = isLoggedIn as? API.LoggedOut {
             TabView {
                 NavigationView {
-                    Login(viewModel: container.loginViewModel(api: isLoggedIn as! API.LoggedOut))
+                    Login(viewModel: container.loginViewModel(api: isLoggedIn))
                         .navigationTitle("Login")
                 }.tabItem {
                     Label("Login", systemImage: "person")
                 }
                 NavigationView {
-                    Register(viewModel: container.registerViewModel(api: isLoggedIn as! API.LoggedOut))
+                    Register(viewModel: container.registerViewModel(api: isLoggedIn))
                         .navigationTitle("Register")
                 }.tabItem {
                     Label("Register", systemImage: "person.badge.plus")
@@ -32,9 +31,9 @@ struct ContentView: View {
                     self.isLoggedIn = api
                 }
             }
-        } else {
+        } else if let isLoggedIn = isLoggedIn as? API.LoggedIn {
             NavigationView {
-                Todos(viewModel: container.todoViewModel(api: isLoggedIn as! API.LoggedIn))
+                Todos(viewModel: container.todoViewModel(api: isLoggedIn))
                     .navigationTitle("Todos")
             }
         }
@@ -43,7 +42,7 @@ struct ContentView: View {
 
 struct Login: View {
     let viewModel: LoginViewModel
-    
+
     @State private var username = ""
     @State private var password = ""
     @State private var error: Failure? = nil
@@ -57,7 +56,7 @@ struct Login: View {
             }.onChange(of: username) { newValue in
                 self.viewModel.userName.setValue(newValue)
             }
-            
+
             SecureField("Password", text: $password).task {
                 for await value in self.viewModel.password.stream(String.self) {
                     self.password = value
@@ -83,13 +82,13 @@ struct Login: View {
 
 struct Register: View {
     let viewModel: RegisterViewModel
-    
+
     @State private var username = ""
     @State private var password = ""
     @State private var passwordAgain = ""
     @State private var firstName = ""
     @State private var lastName = ""
-    
+
     var body: some View {
         Form {
             TextField("Username", text: $username).task {
@@ -99,7 +98,7 @@ struct Register: View {
             }.onChange(of: username) { newValue in
                 self.viewModel.username.setValue(newValue)
             }
-            
+
             SecureField("Password", text: $password).task {
                 for await value in self.viewModel.password.stream(String.self) {
                     self.password = value
@@ -107,7 +106,7 @@ struct Register: View {
             }.onChange(of: password) { newValue in
                 self.viewModel.password.setValue(newValue)
             }
-            
+
             SecureField("Password Again", text: $passwordAgain).task {
                 for await value in self.viewModel.passwordAgain.stream(String.self) {
                     self.passwordAgain = value
@@ -115,7 +114,7 @@ struct Register: View {
             }.onChange(of: passwordAgain) { newValue in
                 self.viewModel.passwordAgain.setValue(newValue)
             }
-            
+
             TextField("First Name", text: $firstName).task {
                 for await value in self.viewModel.firstName.stream(String.self) {
                     self.firstName = value
@@ -123,7 +122,7 @@ struct Register: View {
             }.onChange(of: firstName) { newValue in
                 self.viewModel.firstName.setValue(newValue)
             }
-            
+
             TextField("Last Name", text: $lastName).task {
                 for await value in self.viewModel.lastName.stream(String.self) {
                     self.lastName = value
