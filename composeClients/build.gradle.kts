@@ -51,6 +51,7 @@ kotlin {
 }
 
 android {
+    namespace = "app.softwork.composetodo.composeclients"
     compileSdk = 31
 
     defaultConfig {
