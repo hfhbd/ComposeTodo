@@ -6,7 +6,7 @@ import app.softwork.routingcompose.*
 import org.jetbrains.compose.web.dom.*
 
 @Composable
-fun Navbar(links: List<Pair<String, String>>, onLogout: (() -> Unit)?) {
+fun Navbar(links: List<Triple<String, String, Boolean?>>, onLogout: (() -> Unit)?) {
     Nav(attrs = {
         classes(
             "navbar",
@@ -28,9 +28,14 @@ fun Navbar(links: List<Pair<String, String>>, onLogout: (() -> Unit)?) {
                     id("navbarNav")
                 }) {
                     Ul(attrs = { classes("navbar-nav", "me-auto") }) {
-                        links.forEach { (name, link) ->
+                        links.forEach { (name, link, isActive) ->
                             Li(attrs = { classes("nav-item") }) {
-                                NavLink(attrs = { classes("nav-link") }, to = link) { Text(name) }
+                                NavLink(attrs = {
+                                    classes("nav-link")
+                                    if (isActive == true) {
+                                        classes("active")
+                                    }
+                                }, to = link) { Text(name) }
                             }
                         }
                     }
