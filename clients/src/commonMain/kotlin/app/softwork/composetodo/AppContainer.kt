@@ -19,7 +19,7 @@ interface AppContainer {
                 is API.LoggedIn -> {
                     try {
                         login.logout()
-                    } catch (e: IOException) {
+                    } catch (_: IOException) {
                     }
                     api.value = API.LoggedOut(client)
                 }

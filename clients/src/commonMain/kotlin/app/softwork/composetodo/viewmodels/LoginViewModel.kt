@@ -20,7 +20,7 @@ class LoginViewModel(
         }
     }
 
-    val enableLogin = userName.zip(password) { userName, password ->
+    val enableLogin = userName.combine(password) { userName, password ->
         userName.isNotEmpty() && password.isNotEmpty()
     }
 
