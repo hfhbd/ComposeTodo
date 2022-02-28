@@ -19,8 +19,8 @@ class RegisterViewModel(
 
     val error = MutableStateFlow<Failure?>(null)
 
-    val enableRegisterButton = password.combine(passwordAgain) { password, again ->
-        password == again
+    val enableRegisterButton = combine(password, passwordAgain, username) { password, again, userName ->
+        userName.isNotEmpty() && password.isNotEmpty() && password == again
     }
 
     fun register() {

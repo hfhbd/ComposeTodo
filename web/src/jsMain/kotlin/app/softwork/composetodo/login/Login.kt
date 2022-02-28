@@ -43,10 +43,10 @@ fun Login(viewModel: LoginViewModel) {
                 viewModel.login()
             }
 
-            val error by viewModel.error.collectAsState()
-            error?.let {
+            val error = viewModel.error.collectAsState().value
+            if (error != null) {
                 Alert(color = Color.Danger) {
-                    Text(it.reason)
+                    Text(error.reason)
                     CloseButton {
                         viewModel.error.value = null
                     }

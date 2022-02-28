@@ -53,6 +53,12 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
         post("/users") {
             call.respondJson(Token.serializer()) {
                 val newUser = body(User.New.serializer())
+                if (newUser.username.isEmpty()) {
+                    throw BadRequestException("Empty username")
+                }
+                if (newUser.password.isEmpty()) {
+                    throw BadRequestException("Empty password")
+                }
                 if (newUser.password != newUser.passwordAgain) {
                     throw BadRequestException("password was not equal to passwordAgain")
                 }
@@ -61,7 +67,6 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
         }
 
         route("/refreshToken") {
-
             authenticate("login") {
                 post {
                     call.respondJson(Token.serializer()) {

@@ -67,10 +67,10 @@ fun Register(viewModel: RegisterViewModel) {
                 viewModel.register()
             }
 
-            val error by viewModel.error.collectAsState()
-            error?.let {
+            val error = viewModel.error.collectAsState().value
+            if (error != null) {
                 Alert(color = Color.Danger) {
-                    Text(it.reason)
+                    Text(error.reason)
                     CloseButton {
                         viewModel.error.value = null
                     }

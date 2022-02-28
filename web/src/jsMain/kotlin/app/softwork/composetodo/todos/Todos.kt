@@ -31,7 +31,7 @@ fun Todos(viewModel: TodoViewModel) {
             }
             column("Until") {
                 todo.until?.let {
-                    Text(it.toDate().toLocaleString())
+                    Text(it.toJSDate().toLocaleString())
                 }
             }
             column("") {
@@ -42,5 +42,3 @@ fun Todos(viewModel: TodoViewModel) {
         }
     }
 }
-
-private fun Instant.toDate(): Date = Date(toEpochMilliseconds())
