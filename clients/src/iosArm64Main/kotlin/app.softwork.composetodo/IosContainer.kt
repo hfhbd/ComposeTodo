@@ -14,13 +14,14 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
 class IosContainer(
-    override val scope: CoroutineScope,
     protocol: URLProtocol,
     host: String
 ) : AppContainer {
     private val db = TodoRepository.createDatabase(NativeSqliteDriver(ComposeTodoDB.Schema, "composetodo.db"))
 
-    constructor() : this(scope = MainScope(), protocol = URLProtocol.HTTPS, host = "api.todo.softwork.app")
+    override val scope: CoroutineScope = MainScope()
+
+    constructor() : this(protocol = URLProtocol.HTTPS, host = "api.todo.softwork.app")
 
     override val client: HttpClient = HttpClient(Ios) {
         install(HttpCookies) {
@@ -34,11 +35,6 @@ class IosContainer(
         }
         install(Logging) {
             level = LogLevel.ALL
-        }
-        engine {
-            configureRequest {
-                setAllowsCellularAccess(true)
-            }
         }
     }
 

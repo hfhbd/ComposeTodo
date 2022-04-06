@@ -36,11 +36,18 @@ dependencies {
 }
 
 tasks {
-    withType<Detekt>().configureEach {
+    fun SourceTask.config() {
         include("**/*.kt")
         exclude("**/*.kts")
         exclude("**/resources/**")
+        exclude("**/generated/**")
         exclude("**/build/**")
+    }
+    withType<DetektCreateBaselineTask>().configureEach {
+        config()
+    }
+    withType<Detekt>().configureEach {
+        config()
 
         reports {
             sarif.required.set(true)

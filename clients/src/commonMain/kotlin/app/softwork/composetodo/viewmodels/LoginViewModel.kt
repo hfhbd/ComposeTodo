@@ -25,6 +25,7 @@ class LoginViewModel(
     }
 
     fun login() {
+        error.value = null
         scope.launch {
             api.networkCall(action = {
                 login(username = userName.value, password = password.value)
