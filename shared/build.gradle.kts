@@ -26,7 +26,7 @@ kotlin {
                 // Apache 2, https://github.com/ktorio/ktor/releases/latest
                 api("io.ktor:ktor-client-core:1.6.8")
 
-                api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0-native-mt")
+                api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1-native-mt")
             }
         }
         commonTest {
