@@ -46,7 +46,7 @@ jobs:
         run: docker push ghcr.io/hfhbd/composetodo:$version
         working-directory: backend/Docker
       - name: Upload WebApp Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           path: web/build/distributions
 
