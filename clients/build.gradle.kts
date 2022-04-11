@@ -25,7 +25,7 @@ kotlin {
                 export(projects.shared)
                 export("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1-native-mt")
                 export("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
-                export("app.softwork:kotlinx-uuid-core:0.0.12")
+                export("app.softwork:kotlinx-uuid-core:0.0.13")
             }
         }
     }
@@ -37,7 +37,7 @@ kotlin {
                 export(projects.shared)
                 export("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1-native-mt")
                 export("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
-                export("app.softwork:kotlinx-uuid-core:0.0.12")
+                export("app.softwork:kotlinx-uuid-core:0.0.13")
             }
         }
     }
