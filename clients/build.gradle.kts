@@ -51,7 +51,7 @@ kotlin {
             dependencies {
                 api(projects.shared)
                 implementation("com.squareup.sqldelight:coroutines-extensions:1.5.3")
-                implementation("app.softwork:kotlinx-uuid-sqldelight:0.0.12")
+                implementation("app.softwork:kotlinx-uuid-sqldelight:0.0.14")
                 implementation("io.ktor:ktor-client-logging:1.6.8")
             }
         }
