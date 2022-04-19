@@ -1,12 +1,16 @@
 package app.softwork.composetodo
 
-import io.ktor.client.features.cookies.*
+import io.ktor.client.plugins.cookies.*
 import io.ktor.http.*
 import platform.Foundation.*
 
 class UserDefaultsCookieStorage : CookiesStorage {
     override suspend fun addCookie(requestUrl: Url, cookie: Cookie) {
         NSUserDefaults.standardUserDefaults.setValue(cookie.value, forKey = "refreshToken")
+    }
+
+    init {
+        platform.Foundation.NSBundle.mainBundle.infoDictionary?.get("CFBundleVersion")
     }
 
     override fun close() {}

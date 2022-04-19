@@ -6,15 +6,13 @@
 //
 
 import SwiftUI
-import shared
+import clients
 
 @main
 struct ComposeTodoApp: App {
-    let container = IosContainer()
-
     var body: some Scene {
         WindowGroup {
-            ContentView(container: container)
+            ContentView()
         }
     }
 }

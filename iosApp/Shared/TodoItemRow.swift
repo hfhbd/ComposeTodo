@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import shared
+import clients
 
 struct TodoItemRow: View {
     let item: Todo

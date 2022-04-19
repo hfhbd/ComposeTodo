@@ -2,15 +2,13 @@ package app.softwork.composetodo
 
 import app.softwork.composetodo.repository.*
 import app.softwork.composetodo.viewmodels.*
-import com.squareup.sqldelight.db.*
 import com.squareup.sqldelight.drivers.native.*
 import io.ktor.client.*
-import io.ktor.client.engine.ios.*
-import io.ktor.client.features.*
-import io.ktor.client.features.cookies.*
-import io.ktor.client.features.logging.*
+import io.ktor.client.engine.darwin.*
+import io.ktor.client.plugins.*
+import io.ktor.client.plugins.cookies.*
+import io.ktor.client.plugins.logging.*
 import io.ktor.http.*
-import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
 class IosContainer(
@@ -19,11 +17,9 @@ class IosContainer(
 ) : AppContainer {
     private val db = TodoRepository.createDatabase(NativeSqliteDriver(ComposeTodoDB.Schema, "composetodo.db"))
 
-    override val scope: CoroutineScope = MainScope()
-
     constructor() : this(protocol = URLProtocol.HTTPS, host = "api.todo.softwork.app")
 
-    override val client: HttpClient = HttpClient(Ios) {
+    override val client: HttpClient = HttpClient(Darwin) {
         install(HttpCookies) {
             storage = UserDefaultsCookieStorage()
         }
@@ -38,14 +34,14 @@ class IosContainer(
         }
     }
 
-    override fun loginViewModel(api: API.LoggedOut) = LoginViewModel(scope, api) {
+    override fun loginViewModel(api: API.LoggedOut) = LoginViewModel(api) {
         this.api.value = it
     }
 
     override fun todoViewModel(api: API.LoggedIn) =
-        TodoViewModel(scope = scope, repo = TodoRepository(api, db.todoQueries))
+        TodoViewModel(repo = TodoRepository(api, db.todoQueries))
 
-    override fun registerViewModel(api: API.LoggedOut) = RegisterViewModel(scope, api) {
+    override fun registerViewModel(api: API.LoggedOut) = RegisterViewModel(api) {
         this.api.value = it
     }
 
