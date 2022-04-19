@@ -1,5 +1,6 @@
 package app.softwork.composetodo
 
+import app.softwork.cloudkitclient.*
 import app.softwork.composetodo.controller.*
 import app.softwork.composetodo.dto.*
 import com.auth0.jwt.algorithms.*
@@ -48,9 +49,9 @@ internal class TodoModuleKtTest {
     fun online() = testApplication({
         TodoModule(it, jwt)
     }) {
-        with(get<HttpResponse>("/")) {
+        with(get("/")) {
             assertEquals(HttpStatusCode.OK, status)
-            assertEquals("API is online", readText())
+            assertEquals("API is online", bodyAsText())
         }
     }
 }
