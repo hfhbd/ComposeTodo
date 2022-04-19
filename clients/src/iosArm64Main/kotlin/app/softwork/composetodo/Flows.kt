@@ -43,9 +43,11 @@ fun <T> Flow<T>.asAsyncIterable(context: CoroutineContext): IteratorAsync<T> = o
                 }
                 value.complete(null)
             }
-            cont = collecting.createCoroutine(Continuation(context) {
-                it.getOrNull()
-            })
+            cont = collecting.createCoroutine(
+                Continuation(context) {
+                    it.getOrNull()
+                }
+            )
             cont!!.resume(Unit)
             value.await()
         }

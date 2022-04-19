@@ -5,7 +5,7 @@ import app.softwork.composetodo.repository.*
 import kotlinx.coroutines.*
 import kotlinx.datetime.*
 
-class TodoViewModel(private val repo: TodoRepository): ViewModel() {
+class TodoViewModel(private val repo: TodoRepository) : ViewModel() {
     val todos = repo.todos
 
     init {

@@ -18,7 +18,7 @@ sealed interface API {
             val response = client.post("/users") {
                 setBody(newUser using User.New.serializer())
             }
-            return if(response.status == HttpStatusCode.BadRequest) {
+            return if (response.status == HttpStatusCode.BadRequest) {
                 null
             } else {
                 LoggedIn(Token.serializer() by response, client)
@@ -33,17 +33,17 @@ sealed interface API {
             val response = client.post("/refreshToken") {
                 basicAuth(username, password)
             }
-            return if(response.status == HttpStatusCode.Unauthorized) {
+            return if (response.status == HttpStatusCode.Unauthorized) {
                 null
             } else {
-                LoggedIn( Token.serializer() by response, client)
+                LoggedIn(Token.serializer() by response, client)
             }
         }
 
         @Throws(IOException::class, CancellationException::class)
         suspend fun silentLogin(): LoggedIn? {
             val response = client.get("/refreshToken")
-            return if(response.status == HttpStatusCode.BadRequest) {
+            return if (response.status == HttpStatusCode.BadRequest) {
                 null
             } else {
                 LoggedIn(Token.serializer() by response, client)

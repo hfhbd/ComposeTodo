@@ -3,11 +3,11 @@ package app.softwork.composetodo
 import app.softwork.cloudkitclient.*
 import app.softwork.composetodo.controller.*
 import app.softwork.composetodo.dto.*
+import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import io.ktor.server.plugins.*
-import io.ktor.http.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
@@ -98,8 +98,7 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
             route("/me") {
                 get {
                     call.respondJson(User.serializer()) {
-                        userController.find(user.recordName)?.toDTO()
-                            ?: throw NotFoundException()
+                        userController.find(user.recordName)?.toDTO() ?: throw NotFoundException()
                     }
                 }
                 put {
@@ -137,16 +136,14 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
                     get {
                         call.respondJson(TodoDTO.serializer()) {
                             val todoID by parameters
-                            todoController.getTodo(user, todoID)?.toDTO()
-                                ?: throw NotFoundException()
+                            todoController.getTodo(user, todoID)?.toDTO() ?: throw NotFoundException()
                         }
                     }
                     put {
                         call.respondJson(TodoDTO.serializer()) {
                             val todoID by parameters
                             val toUpdate = body(TodoDTO.serializer())
-                            todoController.update(user, todoID, toUpdate)?.toDTO()
-                                ?: throw NotFoundException()
+                            todoController.update(user, todoID, toUpdate)?.toDTO() ?: throw NotFoundException()
                         }
                     }
                     delete {

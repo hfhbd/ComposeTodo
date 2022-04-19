@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.*
 class RegisterViewModel(
     val api: API.LoggedOut,
     private val onLogin: (API.LoggedIn) -> Unit
-): ViewModel() {
+) : ViewModel() {
     val username = MutableStateFlow("")
     val password = MutableStateFlow("")
     val passwordAgain = MutableStateFlow("")
