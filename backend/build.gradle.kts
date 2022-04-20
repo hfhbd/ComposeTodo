@@ -28,5 +28,5 @@ dependencies {
 
     testImplementation(kotlin("test"))
     testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
-    implementation("app.softwork:cloudkitclient-testing:0.0.8")
+    implementation("app.softwork:cloudkitclient-testing:0.1.0")
 }
