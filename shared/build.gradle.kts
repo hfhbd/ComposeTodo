@@ -11,6 +11,8 @@ kotlin {
     iosSimulatorArm64()
     jvm()
 
+    explicitApi()
+
     sourceSets {
         commonMain {
             dependencies {
@@ -24,7 +26,12 @@ kotlin {
                 api("app.softwork:kotlinx-uuid-core:0.0.14")
 
                 // Apache 2, https://github.com/ktorio/ktor/releases/latest
-                api("io.ktor:ktor-client-core:2.0.0")
+                val ktor = "2.0.0"
+                api("io.ktor:ktor-client-core:$ktor")
+                api("io.ktor:ktor-resources:$ktor")
+                api("io.ktor:ktor-client-resources:$ktor")
+                api("io.ktor:ktor-client-content-negotiation:$ktor")
+                api("io.ktor:ktor-serialization-kotlinx-json:$ktor")
 
                 api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
             }

@@ -3,6 +3,11 @@ package app.softwork.composetodo
 import app.softwork.cloudkitclient.*
 import app.softwork.composetodo.dto.*
 import io.ktor.client.*
+import io.ktor.client.plugins.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.plugins.resources.*
+import io.ktor.http.*
+import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.testing.*
 import kotlin.contracts.*
@@ -23,6 +28,17 @@ fun testApplication(
         dbTest { db ->
             application {
                 setup(db)
+            }
+            val client = createClient {
+                defaultRequest {
+                    url {
+                        protocol = URLProtocol.HTTPS
+                    }
+                }
+                install(Resources)
+                install(ContentNegotiation) {
+                    json()
+                }
             }
             client.tests(db)
         }

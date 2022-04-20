@@ -8,7 +8,10 @@ import com.squareup.sqldelight.android.*
 import io.ktor.client.*
 import io.ktor.client.engine.android.*
 import io.ktor.client.plugins.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.plugins.resources.*
 import io.ktor.http.*
+import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.flow.*
 
 class Container(applicationContext: Context) : AppContainer {
@@ -20,6 +23,10 @@ class Container(applicationContext: Context) : AppContainer {
                 protocol = URLProtocol.HTTPS
                 host = "api.todo.softwork.app"
             }
+        }
+        install(Resources)
+        install(ContentNegotiation) {
+            json()
         }
     }
 

@@ -2,125 +2,143 @@ package app.softwork.composetodo
 
 import app.softwork.composetodo.dto.*
 import io.ktor.client.*
+import io.ktor.client.call.*
+import io.ktor.client.plugins.resources.*
 import io.ktor.client.request.*
-import io.ktor.client.statement.*
 import io.ktor.http.*
+import io.ktor.resources.*
 import io.ktor.utils.io.errors.*
 import kotlinx.datetime.*
 import kotlinx.serialization.*
-import kotlinx.serialization.builtins.*
-import kotlinx.serialization.json.*
+import kotlinx.uuid.*
 import kotlin.coroutines.cancellation.*
 
-sealed interface API {
-    class LoggedOut(private val client: HttpClient) : API {
-        suspend fun register(newUser: User.New): LoggedIn? {
-            val response = client.post("/users") {
-                setBody(newUser using User.New.serializer())
+public sealed interface API {
+    @Serializable
+    @Resource("/users")
+    public class Users
+
+    @Serializable
+    @Resource("/refreshToken")
+    public class RefreshToken
+
+    @Serializable
+    @Resource("/me")
+    public class Me
+
+    @Serializable
+    @Resource("/todos")
+    public class Todos {
+        @Serializable
+        @Resource("{id}")
+        public class Id(public val parent: Todos = Todos(), public val id: UUID)
+    }
+
+    public class LoggedOut(private val client: HttpClient) : API {
+        @Throws(IOException::class, CancellationException::class)
+        public suspend fun register(newUser: User.New): LoggedIn? {
+            val response = client.post(Users()) {
+                contentType(ContentType.Application.Json)
+                setBody(newUser)
             }
             return if (response.status == HttpStatusCode.BadRequest) {
                 null
             } else {
-                LoggedIn(Token.serializer() by response, client)
+                LoggedIn(response.body(), client)
             }
         }
 
         @Throws(IOException::class, CancellationException::class)
-        suspend fun login(
+        public suspend fun login(
             username: String,
             password: String
         ): LoggedIn? {
-            val response = client.post("/refreshToken") {
+            val response = client.post(RefreshToken()) {
                 basicAuth(username, password)
             }
             return if (response.status == HttpStatusCode.Unauthorized) {
                 null
             } else {
-                LoggedIn(Token.serializer() by response, client)
+                LoggedIn(response.body(), client)
             }
         }
 
         @Throws(IOException::class, CancellationException::class)
-        suspend fun silentLogin(): LoggedIn? {
-            val response = client.get("/refreshToken")
+        public suspend fun silentLogin(): LoggedIn? {
+            val response = client.get(RefreshToken())
             return if (response.status == HttpStatusCode.BadRequest) {
                 null
             } else {
-                LoggedIn(Token.serializer() by response, client)
+                LoggedIn(response.body(), client)
             }
         }
     }
 
-    class LoggedIn(private var token: Token, private val client: HttpClient) : API {
+    public class LoggedIn(private var token: Token, private val client: HttpClient) : API {
+        @Throws(IOException::class, CancellationException::class)
         private suspend fun HttpRequestBuilder.addToken() {
             if (Clock.System.now() > token.payload.expiredAt) {
-                token = Token.serializer() by client.get("/refreshToken")
+                token = client.get(RefreshToken()).body()
             }
-            header(HttpHeaders.Authorization, "Bearer ${token.content}")
+            bearerAuth(token.content)
         }
 
         @Throws(IOException::class, CancellationException::class)
-        suspend fun logout() {
-            client.delete("/refreshToken") {
+        public suspend fun logout() {
+            client.delete(RefreshToken()) {
                 addToken()
             }
         }
 
         @Throws(IOException::class, CancellationException::class)
-        suspend fun getMe(): User = User.serializer() by client.get("/me") {
+        public suspend fun getMe(): User = client.get(Me()) {
             addToken()
-        }
+        }.body()
 
         @Throws(IOException::class, CancellationException::class)
-        suspend fun updateMe(user: User): User = User.serializer() by client.put("/me") {
-            setBody(user using User.serializer())
+        public suspend fun updateMe(user: User): User = client.put(Me()) {
+            contentType(ContentType.Application.Json)
+            setBody(user)
             addToken()
-        }
+        }.body()
 
         @Throws(IOException::class, CancellationException::class)
-        suspend fun deleteMe() {
-            client.delete("/me") {
+        public suspend fun deleteMe() {
+            client.delete(Me()) {
                 addToken()
             }
         }
 
         @Throws(IOException::class, CancellationException::class)
-        suspend fun getTodos() = ListSerializer(TodoDTO.serializer()) by client.get("/todos") {
+        public suspend fun getTodos(): List<TodoDTO> = client.get(Todos()) {
             addToken()
-        }
+        }.body()
 
         @Throws(IOException::class, CancellationException::class)
-        suspend fun getTodo(todoID: TodoDTO.ID) = TodoDTO.serializer() by client.get("/todos/${todoID.id}") {
+        public suspend fun getTodo(todoID: TodoDTO.ID): TodoDTO = client.get(Todos.Id(id = todoID.id)) {
             addToken()
-        }
+        }.body()
 
         @Throws(IOException::class, CancellationException::class)
-        suspend fun createTodo(todo: TodoDTO) = TodoDTO.serializer() by client.post("/todos") {
-            setBody(todo using TodoDTO.serializer())
+        public suspend fun createTodo(todo: TodoDTO): TodoDTO = client.post(Todos()) {
+            contentType(ContentType.Application.Json)
+            setBody(todo)
             addToken()
-        }
+        }.body()
 
         @Throws(IOException::class, CancellationException::class)
-        suspend fun updateTodo(todoID: TodoDTO.ID, todo: TodoDTO) =
-            TodoDTO.serializer() by client.put("/todos/${todoID.id}") {
-                setBody(todo using TodoDTO.serializer())
+        public suspend fun updateTodo(todoID: TodoDTO.ID, todo: TodoDTO): TodoDTO =
+            client.put(Todos.Id(id = todoID.id)) {
+                contentType(ContentType.Application.Json)
+                setBody(todo)
+                addToken()
+            }.body()
+
+        @Throws(IOException::class, CancellationException::class)
+        public suspend fun deleteTodo(todoID: TodoDTO.ID) {
+            client.delete(Todos.Id(id = todoID.id)) {
                 addToken()
             }
-
-        @Throws(IOException::class, CancellationException::class)
-        suspend fun deleteTodo(todoID: TodoDTO.ID) {
-            client.delete("/todos/${todoID.id}") {
-                addToken()
-            }
         }
-    }
-
-    companion object {
-        private val json: Json = Json
-        infix fun <T> T.using(serializer: KSerializer<T>) =
-            json.encodeToString(serializer, this)
-
-        suspend infix fun <T> KSerializer<T>.by(response: HttpResponse): T =
-            json.decodeFromString(this, response.bodyAsText())
     }
 }

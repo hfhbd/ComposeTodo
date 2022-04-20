@@ -6,7 +6,7 @@ import kotlinx.uuid.*
 import kotlin.jvm.*
 
 @Serializable
-data class TodoDTO(
+public data class TodoDTO(
     val id: ID,
     val title: String,
     val until: Instant?,
@@ -15,5 +15,5 @@ data class TodoDTO(
 ) {
     @Serializable
     @JvmInline
-    value class ID(val id: UUID)
+    public value class ID(public val id: UUID)
 }
