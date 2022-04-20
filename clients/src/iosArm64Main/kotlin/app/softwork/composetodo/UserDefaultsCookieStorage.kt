@@ -9,10 +9,6 @@ class UserDefaultsCookieStorage : CookiesStorage {
         NSUserDefaults.standardUserDefaults.setValue(cookie.value, forKey = "refreshToken")
     }
 
-    init {
-        platform.Foundation.NSBundle.mainBundle.infoDictionary?.get("CFBundleVersion")
-    }
-
     override fun close() {}
 
     override suspend fun get(requestUrl: Url): List<Cookie> =
