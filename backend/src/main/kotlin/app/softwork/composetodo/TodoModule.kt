@@ -4,16 +4,24 @@ import app.softwork.cloudkitclient.*
 import app.softwork.composetodo.controller.*
 import app.softwork.composetodo.dto.*
 import io.ktor.http.*
+import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import io.ktor.server.plugins.*
+import io.ktor.server.plugins.contentnegotiation.*
+import io.ktor.server.resources.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
 import kotlin.time.Duration.Companion.days
 
 fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
+    install(Resources)
+    install(ContentNegotiation) {
+        json()
+    }
+
     val userController = UserController(db = db)
     val todoController = TodoController(db = db)
 
@@ -41,118 +49,83 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
             cookie.httpOnly = true
             cookie.extensions["SameSite"] = "strict"
             cookie.maxAgeInSeconds = 1.days.inWholeSeconds
-            // cookie.secure = true // needs https://github.com/ktorio/ktor/pull/2754 to use this option in tests
+            cookie.secure = true
         }
     }
 
     routing {
-        get {
+        getRaw {
             call.respondText { "API is online" }
         }
 
-        post("/users") {
-            call.respondJson(Token.serializer()) {
-                val newUser = body(User.New.serializer())
-                if (newUser.username.isEmpty()) {
-                    throw BadRequestException("Empty username")
-                }
-                if (newUser.password.isEmpty()) {
-                    throw BadRequestException("Empty password")
-                }
-                if (newUser.password != newUser.passwordAgain) {
-                    throw BadRequestException("password was not equal to passwordAgain")
-                }
-                userController.createUser(jwtProvider, newUser.toDAO())
+        post<API.Users, User.New, Token> { _, newUser ->
+            if (newUser.username.isEmpty()) {
+                throw BadRequestException("Empty username")
             }
+            if (newUser.password.isEmpty()) {
+                throw BadRequestException("Empty password")
+            }
+            if (newUser.password != newUser.passwordAgain) {
+                throw BadRequestException("password was not equal to passwordAgain")
+            }
+            userController.createUser(jwtProvider, newUser.toDAO())
         }
 
-        route("/refreshToken") {
-            authenticate("login") {
-                post {
-                    call.respondJson(Token.serializer()) {
-                        val longRefreshToken = RefreshToken(user.recordName)
-                        call.sessions.set(longRefreshToken)
-                        jwtProvider.token(longRefreshToken)
-                    }
-                }
+        authenticate("login") {
+            post<API.RefreshToken, Token> {
+                val longRefreshToken = RefreshToken(user.recordName)
+                call.sessions.set(longRefreshToken)
+                jwtProvider.token(longRefreshToken)
             }
 
-            get {
-                val refreshToken: RefreshToken =
-                    call.sessions.get<RefreshToken>() ?: throw BadRequestException("Token is missing")
+            get<API.RefreshToken, Token> {
+                val refreshToken: RefreshToken = call.sessions.get() ?: throw BadRequestException("Token is missing")
 
-                call.respondJson(Token.serializer()) {
-                    jwtProvider.token(refreshToken)
-                }
-            }
-
-            authenticate {
-                delete {
-                    call.sessions.clear<RefreshToken>()
-                    call.respond(HttpStatusCode.OK)
-                }
+                jwtProvider.token(refreshToken)
             }
         }
 
         authenticate {
-            route("/me") {
-                get {
-                    call.respondJson(User.serializer()) {
-                        userController.find(user.recordName)?.toDTO() ?: throw NotFoundException()
-                    }
+            delete<API.RefreshToken, HttpStatusCode> {
+                call.sessions.clear<RefreshToken>()
+                HttpStatusCode.OK
+            }
+
+            get<API.Me, User> {
+                userController.find(user.recordName)?.toDTO() ?: throw NotFoundException()
+            }
+            put<API.Me, User, User> { _, toUpdate ->
+                val dao = toUpdate.toDAO()
+                if (user.recordName != dao.recordName) {
+                    throw BadRequestException("Wrong username")
                 }
-                put {
-                    call.respondJson(User.serializer()) {
-                        val toUpdate = body(User.serializer()).toDAO()
-                        if (user.recordName != toUpdate.recordName) {
-                            throw BadRequestException("Wrong username")
-                        }
-                        userController.update(toUpdate).toDTO()
-                    }
-                }
-                delete {
-                    with(call) {
-                        todoController.deleteAll(user)
-                        userController.delete(user)
-                        respond(HttpStatusCode.OK)
-                    }
+                userController.update(dao).toDTO()
+            }
+            delete<API.Me, HttpStatusCode> {
+                with(call) {
+                    todoController.deleteAll(user)
+                    userController.delete(user)
+                    HttpStatusCode.OK
                 }
             }
 
-            route("/todos") {
-                get {
-                    call.respondJsonList(TodoDTO.serializer()) {
-                        todoController.todos(user)
-                    }
-                }
-                post {
-                    call.respondJson(TodoDTO.serializer()) {
-                        val newTodo = body(TodoDTO.serializer()).toDAO(user)
-                        todoController.create(newTodo).toDTO()
-                    }
-                }
+            get<API.Todos, List<TodoDTO>> {
+                todoController.todos(user)
+            }
+            post<API.Todos, TodoDTO, TodoDTO> { _, newTodo ->
+                todoController.create(newTodo.toDAO(user)).toDTO()
+            }
 
-                route("/{todoID}") {
-                    get {
-                        call.respondJson(TodoDTO.serializer()) {
-                            val todoID by parameters
-                            todoController.getTodo(user, todoID)?.toDTO() ?: throw NotFoundException()
-                        }
-                    }
-                    put {
-                        call.respondJson(TodoDTO.serializer()) {
-                            val todoID by parameters
-                            val toUpdate = body(TodoDTO.serializer())
-                            todoController.update(user, todoID, toUpdate)?.toDTO() ?: throw NotFoundException()
-                        }
-                    }
-                    delete {
-                        with(call) {
-                            val todoID by parameters
-                            todoController.delete(user, todoID) ?: throw NotFoundException()
-                            respond(HttpStatusCode.OK)
-                        }
-                    }
+            get<API.Todos.Id, TodoDTO> {
+                todoController.getTodo(user, it.id)?.toDTO() ?: throw NotFoundException()
+            }
+            put<API.Todos.Id, TodoDTO, TodoDTO> { parameters, toUpdate ->
+                todoController.update(user, parameters.id, toUpdate)?.toDTO() ?: throw NotFoundException()
+            }
+            delete<API.Todos.Id, HttpStatusCode> {
+                with(call) {
+                    todoController.delete(user, it.id) ?: throw NotFoundException()
+                    HttpStatusCode.OK
                 }
             }
         }

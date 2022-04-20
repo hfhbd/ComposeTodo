@@ -6,8 +6,11 @@ import com.squareup.sqldelight.db.*
 import io.ktor.client.*
 import io.ktor.client.engine.js.*
 import io.ktor.client.plugins.*
+import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.cookies.*
+import io.ktor.client.plugins.resources.*
 import io.ktor.http.*
+import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.flow.*
 
 class WebContainer(driver: SqlDriver) : AppContainer {
@@ -29,6 +32,10 @@ class WebContainer(driver: SqlDriver) : AppContainer {
                 protocol = URLProtocol.HTTPS
                 host = "api.todo.softwork.app"
             }
+        }
+        install(Resources)
+        install(ContentNegotiation) {
+            json()
         }
     }
     override val api: MutableStateFlow<API> = MutableStateFlow(API.LoggedOut(client))

@@ -9,16 +9,15 @@ import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.*
 
 @Serializable
-data class Token(val content: String) {
-
-    val payload: Payload by lazy {
+public data class Token(val content: String) {
+    internal val payload: Payload by lazy {
         val (_, payloadPart, _) = content.split(".")
         val payloadJson = payloadPart.decodeBase64String()
         Json.decodeFromString(Payload.serializer(), payloadJson)
     }
 
     @Serializable
-    data class Payload(
+    public data class Payload(
         @SerialName("iss") val issuer: String,
         @SerialName("sub") val subject: String,
         @Serializable(with = InstantSerializer::class) @SerialName("exp") val expiredAt: Instant,
@@ -27,10 +26,10 @@ data class Token(val content: String) {
         @SerialName("aud") val audience: String
     )
 
-    object InstantSerializer : KSerializer<Instant> {
-        override val descriptor = PrimitiveSerialDescriptor("InstantSerializer", PrimitiveKind.LONG)
+    public object InstantSerializer : KSerializer<Instant> {
+        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("InstantSerializer", PrimitiveKind.LONG)
 
-        override fun deserialize(decoder: Decoder) =
+        override fun deserialize(decoder: Decoder): Instant =
             Instant.fromEpochSeconds(decoder.decodeLong())
 
         override fun serialize(encoder: Encoder, value: Instant) {

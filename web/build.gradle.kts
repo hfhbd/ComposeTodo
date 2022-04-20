@@ -16,30 +16,19 @@ kotlin {
     }
 
     sourceSets {
-        commonMain {
-            dependencies {
-                api(projects.composeClients)
-            }
-        }
-        commonTest {
-            dependencies {
-                implementation(kotlin("test"))
-            }
-        }
-
         val jsMain by getting {
             dependencies {
+                implementation(projects.composeClients)
                 implementation("app.softwork:routing-compose:0.1.9-dev670")
                 implementation(compose.web.core)
                 implementation(compose.runtime)
-                implementation("com.squareup.sqldelight:sqljs-driver:1.5.3")
                 implementation(devNpm("copy-webpack-plugin", "9.1.0"))
             }
         }
 
         val jsTest by getting {
             dependencies {
-
+                implementation(kotlin("test"))
             }
         }
     }

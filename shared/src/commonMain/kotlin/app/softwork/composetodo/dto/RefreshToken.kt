@@ -5,6 +5,6 @@ import kotlinx.uuid.*
 
 // id is a function, otherwise Ktor conversion service fails when serializing kotlinx.uuid.UUID
 @Serializable
-data class RefreshToken(val value: String) {
-    fun id() = UUID(value)
+public data class RefreshToken(val value: String) {
+    public fun id(): UUID = UUID(value)
 }

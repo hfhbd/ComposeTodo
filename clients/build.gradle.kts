@@ -47,12 +47,15 @@ kotlin {
     }
 
     sourceSets {
+        val sqlDelight = "1.5.3"
+        val ktor = "2.0.0"
         commonMain {
             dependencies {
                 api(projects.shared)
-                implementation("com.squareup.sqldelight:coroutines-extensions:1.5.3")
+                implementation("com.squareup.sqldelight:coroutines-extensions:$sqlDelight")
                 implementation("app.softwork:kotlinx-uuid-sqldelight:0.0.14")
-                implementation("io.ktor:ktor-client-logging:2.0.0")
+
+                api("io.ktor:ktor-client-logging:$ktor")
             }
         }
         commonTest {
@@ -64,6 +67,8 @@ kotlin {
 
         val androidMain by getting {
             dependencies {
+                api("com.squareup.sqldelight:android-driver:$sqlDelight")
+                api("io.ktor:ktor-client-android:$ktor")
                 api("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
             }
         }
@@ -71,8 +76,8 @@ kotlin {
         val iosArm64Main by getting {
             dependencies {
                 // Apache 2, https://github.com/ktorio/ktor/releases/latest
-                implementation("io.ktor:ktor-client-darwin:2.0.0")
-                implementation("com.squareup.sqldelight:native-driver:1.5.3")
+                implementation("io.ktor:ktor-client-darwin:$ktor")
+                implementation("com.squareup.sqldelight:native-driver:$sqlDelight")
             }
         }
         val iosSimulatorArm64Main by getting {
@@ -83,6 +88,11 @@ kotlin {
 
         val iosSimulatorArm64Test by getting {
             dependsOn(iosArm64Test)
+        }
+        val jsMain by getting {
+            dependencies {
+                api("com.squareup.sqldelight:sqljs-driver:$sqlDelight")
+            }
         }
     }
 }
