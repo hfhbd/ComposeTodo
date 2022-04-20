@@ -31,12 +31,14 @@ class RegisterViewModel(
             lastName = lastName.value
         )
         lifecycleScope.launch {
-            api.networkCall(action = {
-                register(newUser)
-            }, onSuccess = {
-                error.value = null
-                onLogin(it)
-            }) {
+            api.networkCall(
+                action = {
+                    register(newUser)
+                }, onSuccess = {
+                    error.value = null
+                    onLogin(it)
+                }
+            ) {
                 error.value = it
             }
         }
