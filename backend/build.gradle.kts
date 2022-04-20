@@ -13,10 +13,11 @@ dependencies {
     implementation(projects.shared)
 
     // Apache 2, https://github.com/ktorio/ktor/releases/latest
-    val ktorVersion = "1.6.8"
+    val ktorVersion = "2.0.0"
 
     implementation("io.ktor:ktor-server-cio:$ktorVersion")
-    implementation("io.ktor:ktor-auth-jwt:$ktorVersion")
+    implementation("io.ktor:ktor-server-cors:$ktorVersion")
+    implementation("io.ktor:ktor-server-auth-jwt:$ktorVersion")
 
     // Apache 2, https://github.com/hfhbd/cloudkitclient/releases/latest
     implementation("app.softwork:cloudkitclient-core:0.0.8")
@@ -27,5 +28,5 @@ dependencies {
 
     testImplementation(kotlin("test"))
     testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
-    implementation("app.softwork:cloudkitclient-testing:0.0.8")
+    implementation("app.softwork:cloudkitclient-testing:0.1.0")
 }
