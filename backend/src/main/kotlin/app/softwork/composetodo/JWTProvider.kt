@@ -5,7 +5,7 @@ import app.softwork.composetodo.dto.*
 import com.auth0.jwt.*
 import com.auth0.jwt.algorithms.*
 import com.auth0.jwt.impl.*
-import io.ktor.auth.jwt.*
+import io.ktor.server.auth.jwt.*
 import kotlinx.datetime.*
 import kotlin.time.*
 

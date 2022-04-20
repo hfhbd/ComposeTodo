@@ -7,10 +7,9 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
 class RegisterViewModel(
-    val scope: CoroutineScope,
     val api: API.LoggedOut,
     private val onLogin: (API.LoggedIn) -> Unit
-) {
+) : ViewModel() {
     val username = MutableStateFlow("")
     val password = MutableStateFlow("")
     val passwordAgain = MutableStateFlow("")
@@ -31,7 +30,7 @@ class RegisterViewModel(
             firstName = firstName.value,
             lastName = lastName.value
         )
-        scope.launch {
+        lifecycleScope.launch {
             api.networkCall(action = {
                 register(newUser)
             }, onSuccess = {

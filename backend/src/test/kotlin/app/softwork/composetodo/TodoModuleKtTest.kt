@@ -48,9 +48,9 @@ internal class TodoModuleKtTest {
     fun online() = testApplication({
         TodoModule(it, jwt)
     }) {
-        with(get<HttpResponse>("/")) {
+        with(get("/")) {
             assertEquals(HttpStatusCode.OK, status)
-            assertEquals("API is online", readText())
+            assertEquals("API is online", bodyAsText())
         }
     }
 }

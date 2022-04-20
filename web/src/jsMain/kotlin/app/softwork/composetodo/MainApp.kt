@@ -7,6 +7,7 @@ import app.softwork.composetodo.login.*
 import app.softwork.composetodo.todos.*
 import app.softwork.composetodo.users.*
 import app.softwork.routingcompose.*
+import kotlinx.coroutines.*
 import org.jetbrains.compose.web.dom.*
 
 @Composable
@@ -70,7 +71,9 @@ private fun NavBuilder.MainContent(appContainer: AppContainer, api: API.LoggedIn
     }
 
     Content(links, {
-        appContainer.logout()
+        scope.launch {
+            appContainer.logout()
+        }
     }) {
         route("users") {
             LaunchedEffect(this) {

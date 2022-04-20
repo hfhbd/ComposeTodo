@@ -2,11 +2,11 @@ package app.softwork.composetodo
 
 import app.softwork.cloudkitclient.*
 import com.auth0.jwt.algorithms.*
-import io.ktor.application.*
-import io.ktor.features.*
 import io.ktor.http.*
+import io.ktor.server.application.*
 import io.ktor.server.cio.*
 import io.ktor.server.engine.*
+import io.ktor.server.plugins.cors.*
 import org.slf4j.*
 import java.util.*
 import kotlin.reflect.*
@@ -23,13 +23,13 @@ fun main() {
 
     embeddedServer(CIO) {
         install(CORS) {
-            host("todo.softwork.app", listOf("https"))
-            host("localhost:8080")
+            allowHost("todo.softwork.app", listOf("https"))
+            allowHost("localhost:8080")
             allowCredentials = true
-            header(HttpHeaders.Authorization)
-            header(HttpHeaders.ContentType)
-            method(HttpMethod.Delete)
-            method(HttpMethod.Put)
+            allowHeader(HttpHeaders.Authorization)
+            allowHeader(HttpHeaders.ContentType)
+            allowMethod(HttpMethod.Delete)
+            allowMethod(HttpMethod.Put)
         }
         TodoModule(db = db, jwtProvider = jwtProvider)
     }.start(wait = true)

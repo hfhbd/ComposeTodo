@@ -1,6 +1,6 @@
 package app.softwork.composetodo
 
-import io.ktor.client.features.cookies.*
+import io.ktor.client.plugins.cookies.*
 import io.ktor.http.*
 import platform.Foundation.*
 

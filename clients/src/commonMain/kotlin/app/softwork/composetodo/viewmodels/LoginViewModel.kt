@@ -5,17 +5,16 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
 class LoginViewModel(
-    private val scope: CoroutineScope,
     private val api: API.LoggedOut,
     private val onLogin: (API.LoggedIn) -> Unit
-) {
+) : ViewModel() {
     val userName = MutableStateFlow("")
     val password = MutableStateFlow("")
 
     val error = MutableStateFlow<Failure?>(null)
 
     fun silentLogin() {
-        scope.launch {
+        lifecycleScope.launch {
             api.silentLogin()
         }
     }
@@ -25,7 +24,8 @@ class LoginViewModel(
     }
 
     fun login() {
-        scope.launch {
+        error.value = null
+        lifecycleScope.launch {
             api.networkCall(action = {
                 login(username = userName.value, password = password.value)
             }, onSuccess = {

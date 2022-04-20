@@ -2,7 +2,7 @@ package app.softwork.composetodo.dao
 
 import app.softwork.cloudkitclient.*
 import app.softwork.cloudkitclient.values.*
-import io.ktor.auth.*
+import io.ktor.server.auth.*
 import kotlinx.serialization.*
 
 @Serializable

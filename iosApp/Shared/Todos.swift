@@ -6,13 +6,17 @@
 //
 
 import SwiftUI
-import shared
+import clients
 
 struct Todos: View {
-    let viewModel: TodoViewModel
-    
+    init(viewModel: @autoclosure @escaping () -> TodoViewModel) {
+        self._viewModel = StateObject(wrappedValue: viewModel())
+    }
+
+    @StateObject var viewModel: TodoViewModel
+
     @State private var todos = [Todo]()
-    
+
     var body: some View {
         List(todos) { todo in
             TodoItemRow(item: todo)
@@ -28,30 +32,22 @@ struct Todos: View {
 
 struct Todos_Previews: PreviewProvider {
     static var previews: some View {
-        Todos(viewModel: TodoViewModel.init(scope: CoroutineScopeKt.MainScope(), repo: TestRepo()))
+        Todos(viewModel: TodoViewModel.init(repo: TestRepo()))
     }
-    
+
     class TestRepo: TodoRepository {
         init() {
-            
+
         }
-    
-        func create(title: String, until: Instant?) async throws -> KotlinUnit? {
-            KotlinUnit()
-        }
-        
-        func delete(todo: Todo) async throws -> KotlinUnit? {
-            KotlinUnit()
-        }
-        
-        func deleteAll() async throws -> KotlinUnit? {
-            KotlinUnit()
-        }
-        
-        func sync() async throws -> KotlinUnit? {
-            KotlinUnit()
-        }
-        
+
+        func create(title: String, until: Instant?) async throws { }
+
+        func delete(todo: Todo) async throws { }
+
+        func deleteAll() async throws { }
+
+        func sync() async throws { }
+
         var todos: Flow {
             get {
                 BuildersKt.emptyFlow()
