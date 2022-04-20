@@ -29,7 +29,7 @@ kotlin {
 
         val jsMain by getting {
             dependencies {
-                implementation("app.softwork:routing-compose:0.1.8")
+                implementation("app.softwork:routing-compose:0.1.9-dev670")
                 implementation(compose.web.core)
                 implementation(compose.runtime)
                 implementation("com.squareup.sqldelight:sqljs-driver:1.5.3")
