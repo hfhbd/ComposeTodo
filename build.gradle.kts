@@ -9,7 +9,7 @@ plugins {
     id("org.jetbrains.compose") version "0.0.0-on-rebase-12-apr-2022-dev670" apply false
     id("com.squareup.sqldelight") version "1.5.3" apply false
     id("org.jetbrains.kotlinx.kover") version "0.5.0"
-    id("io.gitlab.arturbosch.detekt") version "1.19.0"
+    id("io.gitlab.arturbosch.detekt") version "1.20.0"
 }
 
 allprojects {
