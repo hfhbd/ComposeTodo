@@ -26,12 +26,14 @@ class LoginViewModel(
     fun login() {
         error.value = null
         lifecycleScope.launch {
-            api.networkCall(action = {
-                login(username = userName.value, password = password.value)
-            }, onSuccess = {
-                error.value = null
-                onLogin(it)
-            }) {
+            api.networkCall(
+                action = {
+                    login(username = userName.value, password = password.value)
+                }, onSuccess = {
+                    error.value = null
+                    onLogin(it)
+                }
+            ) {
                 error.value = it
             }
         }
