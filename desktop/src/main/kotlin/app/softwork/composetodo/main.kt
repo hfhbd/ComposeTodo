@@ -1,16 +1,10 @@
 package app.softwork.composetodo
 
+import androidx.compose.runtime.*
 import androidx.compose.ui.window.*
-import kotlinx.coroutines.*
 
-fun main() = application {
-    val scope = MainScope()
-    val appContainer = DesktopContainer(scope)
+fun main() = singleWindowApplication {
+    val appContainer = remember { DesktopContainer() }
 
-    Window(onCloseRequest = {
-        scope.cancel()
-        exitApplication()
-    }) {
-        MainView(appContainer)
-    }
+    MainView(appContainer)
 }

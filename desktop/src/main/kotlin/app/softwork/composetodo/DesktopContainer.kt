@@ -7,12 +7,11 @@ import com.squareup.sqldelight.db.*
 import com.squareup.sqldelight.sqlite.driver.*
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
-import io.ktor.client.features.*
+import io.ktor.client.plugins.*
 import io.ktor.http.*
-import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
-class DesktopContainer(override val scope: CoroutineScope) : AppContainer {
+class DesktopContainer : AppContainer {
     private val db: ComposeTodoDB
     init {
         val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:composetodo.db")
@@ -20,13 +19,13 @@ class DesktopContainer(override val scope: CoroutineScope) : AppContainer {
         db = createDatabase(driver)
     }
     override fun todoViewModel(api: API.LoggedIn): TodoViewModel =
-        TodoViewModel(scope, TodoRepository(api, db.todoQueries))
+        TodoViewModel(TodoRepository(api, db.todoQueries))
 
-    override fun loginViewModel(api: API.LoggedOut) = LoginViewModel(scope, api) {
+    override fun loginViewModel(api: API.LoggedOut) = LoginViewModel(api) {
         this.api.value = it
     }
 
-    override fun registerViewModel(api: API.LoggedOut) = RegisterViewModel(scope, api) {
+    override fun registerViewModel(api: API.LoggedOut) = RegisterViewModel(api) {
         this.api.value = it
     }
 
