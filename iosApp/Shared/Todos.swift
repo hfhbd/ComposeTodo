@@ -12,7 +12,7 @@ struct Todos: View {
     init(viewModel: @autoclosure @escaping () -> TodoViewModel) {
         self._viewModel = StateObject(wrappedValue: viewModel())
     }
-    
+
     @StateObject var viewModel: TodoViewModel
 
     @State private var todos = [Todo]()

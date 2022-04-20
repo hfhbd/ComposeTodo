@@ -22,16 +22,24 @@ extension ObservableObject where Self: ViewModel {
     func binding(_ keyPath: KeyPath<Self, MutableStateFlow>) -> Binding<Bool> {
         binding(flow: self[keyPath: keyPath], t: Bool.self)
     }
-    
-    func binding<T>(_ keyPath: KeyPath<Self, MutableStateFlow>, t: T.Type) -> Binding<T> {
+
+    func binding<T>(_ keyPath: KeyPath<Self, MutableStateFlow>, t: T.Type) -> Binding<T> where T: Equatable {
         binding(flow: self[keyPath: keyPath], t: t)
     }
 
-    func binding<T>(flow: MutableStateFlow, t: T.Type) -> Binding<T> {
-        .init(get: {
+    func binding<T>(flow: MutableStateFlow, t: T.Type) -> Binding<T> where T: Equatable {
+        Task {
+            let oldValue = flow.value as! T
+            for await newValue in flow.stream(t) {
+            if (oldValue != newValue) {
+                self.objectWillChange.send()
+                break
+                }
+            }
+        }
+        return .init(get: {
             flow.value as! T
         }, set: {
-            self.objectWillChange.send()
             flow.setValue($0)
         })
     }
