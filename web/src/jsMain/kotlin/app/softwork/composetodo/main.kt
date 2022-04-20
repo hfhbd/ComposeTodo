@@ -16,7 +16,9 @@ window.fetch = function (resource, init) {
     )
     val driver = initSqlDriver(ComposeTodoDB.Schema).await()
     renderComposable(rootElementId = "root") {
-        val appContainer = WebContainer(MainScope(), driver)
+        val appContainer = WebContainer(driver)
         MainApp(appContainer)
     }
 }
+
+val scope = MainScope()

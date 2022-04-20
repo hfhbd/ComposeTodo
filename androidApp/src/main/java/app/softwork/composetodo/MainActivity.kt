@@ -9,7 +9,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val appContainer = Container(applicationContext, MainScope())
+        val appContainer = Container(applicationContext)
 
         setContent {
             MainView(appContainer)

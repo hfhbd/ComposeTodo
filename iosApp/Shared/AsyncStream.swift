@@ -1,8 +1,8 @@
-import shared
+import clients
 
 struct FlowStream<T>: AsyncSequence {
     func makeAsyncIterator() -> FlowAsyncIterator {
-        FlowAsyncIterator(flow: flow)
+        FlowAsyncIterator(iterator: FlowsKt.asAsyncIterable(flow, context: context))
     }
 
     typealias AsyncIterator = FlowAsyncIterator
@@ -10,63 +10,32 @@ struct FlowStream<T>: AsyncSequence {
     typealias Element = T
 
     private let flow: Flow
-    init (_ type: T.Type, flow: Flow) {
+    private let context: KotlinCoroutineContext
+
+    init (_ type: T.Type, flow: Flow, context: KotlinCoroutineContext) {
         self.flow = flow
+        self.context = context
     }
 
     struct FlowAsyncIterator: AsyncIteratorProtocol {
-        private let iterator: IteratorAsync
-
-        init(flow: Flow) {
-            self.iterator = FlowsKt.asAsyncIterable(flow)
-        }
+        let iterator: IteratorAsync
 
         @MainActor
         func next() async -> T? {
-            if(Task.isCancelled) {
+            return try! await withTaskCancellationHandler(handler: {
                 iterator.cancel()
-                return nil
+            }) {
+                do {
+                    return Optional.some(try await iterator.next() as! T)
+                } catch let error as NSError {
+                    let kotlinException = error.kotlinException
+                    if kotlinException is KotlinCancellationException {
+                        return nil
+                    } else {
+                        throw error
+                    }
+                }
             }
-            return (try? await iterator.next() as? T?) ?? nil
-        }
-
-        typealias Element = T
-    }
-}
-
-struct FlowStreamThrowing<T>: AsyncSequence {
-    func makeAsyncIterator() -> FlowAsyncIterator {
-        FlowAsyncIterator(flow: flow, onError: onError)
-    }
-
-    typealias AsyncIterator = FlowAsyncIterator
-
-    typealias Element = T
-
-    private let flow: Flow
-    private let onError: T
-    init (_ type: T.Type, flow: Flow, onError: T) {
-        self.flow = flow
-        self.onError = onError
-    }
-
-    struct FlowAsyncIterator: AsyncIteratorProtocol {
-        private let iterator: IteratorAsync
-
-        private let onError: T
-
-        init(flow: Flow, onError: T) {
-            self.iterator = FlowsKt.asAsyncIterable(flow)
-            self.onError = onError
-        }
-
-        @MainActor
-        func next() async throws -> T? {
-            if(Task.isCancelled) {
-                iterator.cancel()
-                return nil
-            }
-            return (try? await iterator.next() as? T?) ?? onError
         }
 
         typealias Element = T
@@ -74,23 +43,7 @@ struct FlowStreamThrowing<T>: AsyncSequence {
 }
 
 extension Flow {
-    func stream<T>(_ t: T.Type) -> FlowStream<T> {
-        FlowStream(t, flow: self)
-    }
-
-    func streamThrowing<T>(_ t: T.Type, onError: T) -> FlowStreamThrowing<T> {
-        FlowStreamThrowing(t, flow: self, onError: onError)
-    }
-}
-
-extension AsyncSequence {
-    func collect() async rethrows -> [Element] {
-        try await reduce(into: [Element]()) {
-            $0.append($1)
-        }
-    }
-
-    func first() async rethrows -> Element {
-        try await first(where: { _ in true })!
+    func stream<T>(_ t: T.Type, context: KotlinCoroutineContext = Dispatchers.shared.Default) -> FlowStream<T> {
+        FlowStream(t, flow: self, context: context)
     }
 }

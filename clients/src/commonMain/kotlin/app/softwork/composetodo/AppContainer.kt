@@ -13,22 +13,18 @@ interface AppContainer {
 
     val client: HttpClient
 
-    fun logout() {
-        scope.launch {
-            when (val login = api.value) {
-                is API.LoggedIn -> {
-                    try {
-                        login.logout()
-                    } catch (_: IOException) {
-                    }
-                    api.value = API.LoggedOut(client)
+    suspend fun logout() {
+        when (val login = api.value) {
+            is API.LoggedIn -> {
+                try {
+                    login.logout()
+                } catch (_: IOException) {
                 }
-                is API.LoggedOut -> {}
+                api.value = API.LoggedOut(client)
             }
+            is API.LoggedOut -> {}
         }
     }
-
-    val scope: CoroutineScope
 
     val api: MutableStateFlow<API>
 }

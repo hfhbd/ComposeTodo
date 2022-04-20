@@ -11,6 +11,7 @@
 		0823C17B265282B600AA4A20 /* composetodoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0823C14F265282B400AA4A20 /* composetodoApp.swift */; };
 		0823C17D265282B600AA4A20 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0823C150265282B400AA4A20 /* ContentView.swift */; };
 		0823C181265282B600AA4A20 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0823C152265282B600AA4A20 /* Assets.xcassets */; };
+		0843F0282809D15100E60014 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0843F0272809D15100E60014 /* ViewModel.swift */; };
 		084C5AB4278F769D00737F4F /* AsyncStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084C5AB3278F769600737F4F /* AsyncStream.swift */; };
 		08DB9C8D27341E6300B6B383 /* TodoItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB9C8C27341E6300B6B383 /* TodoItemRow.swift */; };
 		08DB9C8F273432A200B6B383 /* Todos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB9C8E273432A200B6B383 /* Todos.swift */; };
@@ -54,6 +55,7 @@
 		0823C16B265282B600AA4A20 /* Tests_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_iOS.swift; sourceTree = "<group>"; };
 		0823C16D265282B600AA4A20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0823C198265286D200AA4A20 /* composetodo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = composetodo.entitlements; sourceTree = "<group>"; };
+		0843F0272809D15100E60014 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		084C5AB3278F769600737F4F /* AsyncStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncStream.swift; sourceTree = "<group>"; };
 		08DB9C8C27341E6300B6B383 /* TodoItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItemRow.swift; sourceTree = "<group>"; };
 		08DB9C8E273432A200B6B383 /* Todos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todos.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 				0823C152265282B600AA4A20 /* Assets.xcassets */,
 				08DB9C8C27341E6300B6B383 /* TodoItemRow.swift */,
 				08DB9C8E273432A200B6B383 /* Todos.swift */,
+				0843F0272809D15100E60014 /* ViewModel.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -251,6 +254,7 @@
 				0823C17D265282B600AA4A20 /* ContentView.swift in Sources */,
 				08DB9C8D27341E6300B6B383 /* TodoItemRow.swift in Sources */,
 				08DB9C8F273432A200B6B383 /* Todos.swift in Sources */,
+				0843F0282809D15100E60014 /* ViewModel.swift in Sources */,
 				084C5AB4278F769D00737F4F /* AsyncStream.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -325,6 +329,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -378,6 +383,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -401,7 +407,7 @@
 					"DEBUG=1",
 				);
 				INFOPLIST_FILE = iOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -427,7 +433,7 @@
 				FRAMEWORK_SEARCH_PATHS = "../iOSClient/build/xcode-frameworks";
 				GCC_PREPROCESSOR_DEFINITIONS = "_Nullable=_Nullable_result";
 				INFOPLIST_FILE = iOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -444,11 +450,11 @@
 		0823C18C265282B600AA4A20 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 468HYAQSU6;
 				INFOPLIST_FILE = "Tests iOS/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -466,11 +472,11 @@
 		0823C18D265282B600AA4A20 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 468HYAQSU6;
 				INFOPLIST_FILE = "Tests iOS/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -5,23 +5,22 @@ import app.softwork.composetodo.viewmodels.*
 import com.squareup.sqldelight.db.*
 import io.ktor.client.*
 import io.ktor.client.engine.js.*
-import io.ktor.client.features.*
-import io.ktor.client.features.cookies.*
+import io.ktor.client.plugins.*
+import io.ktor.client.plugins.cookies.*
 import io.ktor.http.*
-import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
-class WebContainer(override val scope: CoroutineScope, driver: SqlDriver) : AppContainer {
+class WebContainer(driver: SqlDriver) : AppContainer {
     private val db = TodoRepository.createDatabase(driver)
-    override fun loginViewModel(api: API.LoggedOut) = LoginViewModel(scope, api = api) {
+    override fun loginViewModel(api: API.LoggedOut) = LoginViewModel(api = api) {
         this.api.value = it
     }
 
-    override fun registerViewModel(api: API.LoggedOut) = RegisterViewModel(scope, api) {
+    override fun registerViewModel(api: API.LoggedOut) = RegisterViewModel(api) {
         this.api.value = it
     }
 
-    override fun todoViewModel(api: API.LoggedIn) = TodoViewModel(scope, TodoRepository(api = api, db.todoQueries))
+    override fun todoViewModel(api: API.LoggedIn) = TodoViewModel(TodoRepository(api = api, db.todoQueries))
 
     override val client = HttpClient(Js) {
         install(HttpCookies)
