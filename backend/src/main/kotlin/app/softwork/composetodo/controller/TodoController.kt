@@ -3,7 +3,8 @@ package app.softwork.composetodo.controller
 import app.softwork.cloudkitclient.*
 import app.softwork.composetodo.*
 import app.softwork.composetodo.dao.*
-import kotlinx.uuid.*
+import app.softwork.composetodo.dao.User
+import app.softwork.composetodo.dto.*
 
 class TodoController(private val db: Client.Database) {
 
@@ -13,15 +14,15 @@ class TodoController(private val db: Client.Database) {
 
     suspend fun create(newTodo: Todo) = db.create(newTodo, Todo)
 
-    suspend fun getTodo(user: User, todoID: UUID) = db.read(todoID.toString(), Todo)?.takeIf {
+    suspend fun getTodo(user: User, todoID: TodoDTO.ID) = db.read(todoID.id.toString(), Todo)?.takeIf {
         it.fields.user.value.recordName == user.recordName
     }
 
-    suspend fun delete(user: User, todoID: UUID) = getTodo(user, todoID)?.let {
+    suspend fun delete(user: User, todoID: TodoDTO.ID) = getTodo(user, todoID)?.let {
         db.delete(it, Todo)
     }
 
-    suspend fun update(user: User, todoID: UUID, update: app.softwork.composetodo.dto.TodoDTO) =
+    suspend fun update(user: User, todoID: TodoDTO.ID, update: TodoDTO) =
         getTodo(user, todoID)?.toDTO()?.copy(
             title = update.title,
             until = update.until,

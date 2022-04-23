@@ -31,7 +31,7 @@ public sealed interface API {
     public class Todos {
         @Serializable
         @Resource("{id}")
-        public class Id(public val parent: Todos = Todos(), public val id: UUID)
+        public class Id(public val parent: Todos = Todos(), public val id: TodoDTO.ID)
     }
 
     public class LoggedOut(private val client: HttpClient) : API {
@@ -115,7 +115,7 @@ public sealed interface API {
         }.body()
 
         @Throws(IOException::class, CancellationException::class)
-        public suspend fun getTodo(todoID: TodoDTO.ID): TodoDTO = client.get(Todos.Id(id = todoID.id)) {
+        public suspend fun getTodo(todoID: TodoDTO.ID): TodoDTO = client.get(Todos.Id(id = todoID)) {
             addToken()
         }.body()
 
@@ -128,7 +128,7 @@ public sealed interface API {
 
         @Throws(IOException::class, CancellationException::class)
         public suspend fun updateTodo(todoID: TodoDTO.ID, todo: TodoDTO): TodoDTO =
-            client.put(Todos.Id(id = todoID.id)) {
+            client.put(Todos.Id(id = todoID)) {
                 contentType(ContentType.Application.Json)
                 setBody(todo)
                 addToken()
@@ -136,7 +136,7 @@ public sealed interface API {
 
         @Throws(IOException::class, CancellationException::class)
         public suspend fun deleteTodo(todoID: TodoDTO.ID) {
-            client.delete(Todos.Id(id = todoID.id)) {
+            client.delete(Todos.Id(id = todoID)) {
                 addToken()
             }
         }
