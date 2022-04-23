@@ -77,11 +77,6 @@ inline fun <reified T : Any, reified Return : Any> Route.delete(
     }
 }
 
-@KtorDsl
-fun Route.getRaw(body: PipelineInterceptor<Unit, ApplicationCall>): Route {
-    return method(HttpMethod.Get) { handle(body) }
-}
-
 fun <T : Any> Route.handle(
     serializer: KSerializer<T>,
     body: suspend PipelineContext<Unit, ApplicationCall>.(T) -> Unit

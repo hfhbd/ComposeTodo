@@ -4,16 +4,17 @@ import app.softwork.cloudkitclient.*
 import app.softwork.composetodo.controller.*
 import app.softwork.composetodo.dto.*
 import io.ktor.http.*
+import io.ktor.resources.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import io.ktor.server.plugins.*
 import io.ktor.server.plugins.contentnegotiation.*
-import io.ktor.server.resources.*
-import io.ktor.server.response.*
+import io.ktor.server.resources.Resources
 import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
+import kotlinx.serialization.*
 import kotlin.time.Duration.Companion.days
 
 fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
@@ -54,8 +55,8 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
     }
 
     routing {
-        getRaw {
-            call.respondText { "API is online" }
+        get<Online, String> {
+            "API is online"
         }
 
         post<API.Users, User.New, Token> { _, newUser ->
@@ -131,3 +132,7 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
         }
     }
 }
+
+@Serializable
+@Resource("/")
+class Online
