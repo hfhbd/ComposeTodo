@@ -77,27 +77,4 @@ inline fun <reified T : Any, reified Return : Any> Route.delete(
     }
 }
 
-fun <T : Any> Route.handle(
-    serializer: KSerializer<T>,
-    body: suspend PipelineContext<Unit, ApplicationCall>.(T) -> Unit
-) {
-    intercept(ApplicationCallPipeline.Plugins) {
-        val resources = application.plugin(Resources)
-        try {
-            val resource = resources.resourcesFormat.decodeFromParameters(serializer, call.parameters)
-            call.attributes.put(ResourceInstanceKey, resource)
-        } catch (cause: SerializationException) {
-            throw BadRequestException("Can't transform call to resource", cause)
-        }
-    }
-
-    handle {
-        @Suppress("UNCHECKED_CAST")
-        val resource = call.attributes[ResourceInstanceKey] as T
-        body(resource)
-    }
-}
-
-private val ResourceInstanceKey: AttributeKey<Any> = AttributeKey("ResourceInstance")
-
 val PipelineContext<Unit, ApplicationCall>.user get() = call.principal<app.softwork.composetodo.dao.User>()!!
