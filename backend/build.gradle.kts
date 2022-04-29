@@ -13,7 +13,7 @@ dependencies {
     implementation(projects.shared)
 
     // Apache 2, https://github.com/ktorio/ktor/releases/latest
-    val ktor = "2.0.0"
+    val ktor = "2.0.1"
 
     implementation("io.ktor:ktor-server-cio:$ktor")
     implementation("io.ktor:ktor-server-cors:$ktor")
