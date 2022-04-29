@@ -26,7 +26,7 @@ kotlin {
                 api("app.softwork:kotlinx-uuid-core:0.0.14")
 
                 // Apache 2, https://github.com/ktorio/ktor/releases/latest
-                val ktor = "2.0.0"
+                val ktor = "2.0.1"
                 api("io.ktor:ktor-client-core:$ktor")
                 api("io.ktor:ktor-resources:$ktor")
                 api("io.ktor:ktor-client-resources:$ktor")
