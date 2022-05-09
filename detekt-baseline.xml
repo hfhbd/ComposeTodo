@@ -3,6 +3,7 @@
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
     <ID>EmptyFunctionBlock:UserDefaultsCookieStorage.kt$UserDefaultsCookieStorage${}</ID>
+    <ID>FunctionNaming:TodoModule.kt$fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider)</ID>
     <ID>LongMethod:Register.kt$@Composable fun Register(viewModel: RegisterViewModel)</ID>
     <ID>LongMethod:TodoModule.kt$fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider)</ID>
     <ID>MagicNumber:FlowsTest.kt$FlowsTest$3</ID>
