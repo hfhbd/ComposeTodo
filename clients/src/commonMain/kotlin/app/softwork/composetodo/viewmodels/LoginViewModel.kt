@@ -13,12 +13,6 @@ class LoginViewModel(
 
     val error = MutableStateFlow<Failure?>(null)
 
-    fun silentLogin() {
-        lifecycleScope.launch {
-            api.silentLogin()
-        }
-    }
-
     val enableLogin = userName.combine(password) { userName, password ->
         userName.isNotEmpty() && password.isNotEmpty()
     }

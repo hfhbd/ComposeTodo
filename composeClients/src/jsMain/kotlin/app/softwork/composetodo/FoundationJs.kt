@@ -53,7 +53,7 @@ actual fun TextField(
 
 @Composable
 actual fun H6(value: String) {
-    org.jetbrains.compose.web.dom.H6 { Text(value) }
+    H6 { Text(value) }
 }
 
 @Composable

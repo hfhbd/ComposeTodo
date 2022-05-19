@@ -5,7 +5,6 @@ import app.softwork.bootstrapcompose.*
 import app.softwork.composetodo.viewmodels.*
 import kotlinx.datetime.*
 import org.jetbrains.compose.web.dom.*
-import kotlin.js.*
 
 @Composable
 fun Todos(viewModel: TodoViewModel) {

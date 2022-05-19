@@ -16,4 +16,5 @@ The used authentication is for demo purpose only. Never use this implementation 
 ## Data Persistence
 
 The live demo is using a persistent CloudKit database, but as this application is a technical showcase, persistence
-cannot be guaranteed. All data can be deleted at any time.
+cannot be guaranteed.
+All data can be deleted at any time.

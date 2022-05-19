@@ -29,7 +29,7 @@ actual fun Text(value: String) {
 
 @Composable
 actual fun Button(title: String, enabled: Boolean, onClick: () -> Unit) {
-    androidx.compose.material.Button(onClick, enabled = enabled) {
+    Button(onClick, enabled = enabled) {
         Text(title)
     }
 }
@@ -42,7 +42,7 @@ actual fun TextField(
     isPassword: Boolean,
     onValueChange: (String) -> Unit,
 ) {
-    androidx.compose.material.TextField(
+    TextField(
         value = value,
         onValueChange = onValueChange,
         label = { Text(label) },
@@ -53,7 +53,7 @@ actual fun TextField(
 
 @Composable
 actual fun H6(value: String) {
-    androidx.compose.material.Text(value, style = typography.h6)
+    Text(value, style = typography.h6)
 }
 
 @Composable
@@ -71,7 +71,7 @@ actual fun DateField(value: Instant?, label: String, onValueChange: (Instant?) -
     })
 }
 
-public fun String.toInstantOrNull(): Instant? = try {
+fun String.toInstantOrNull(): Instant? = try {
     Instant.parse(this)
 } catch (cause: IllegalArgumentException) {
     null
