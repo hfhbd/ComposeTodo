@@ -3,7 +3,6 @@ package app.softwork.composetodo
 import app.softwork.composetodo.viewmodels.*
 import io.ktor.client.*
 import io.ktor.utils.io.errors.*
-import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
 interface AppContainer {

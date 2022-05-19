@@ -10,7 +10,6 @@ import io.ktor.resources.*
 import io.ktor.utils.io.errors.*
 import kotlinx.datetime.*
 import kotlinx.serialization.*
-import kotlinx.uuid.*
 import kotlin.coroutines.cancellation.*
 
 public sealed interface API {
