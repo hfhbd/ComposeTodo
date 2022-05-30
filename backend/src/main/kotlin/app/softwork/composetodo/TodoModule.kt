@@ -21,6 +21,7 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
     install(Resources)
     install(ContentNegotiation) {
         json()
+        ignoreType<String>()
     }
 
     val userController = UserController(db = db)
