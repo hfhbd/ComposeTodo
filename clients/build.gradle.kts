@@ -20,26 +20,23 @@ kotlin {
     jvm("desktop")
 
     val xcf = XCFramework()
-    fun Framework.clients() {
-        xcf.add(this)
-        export(projects.shared)
-        export("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
-        export("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
-        export("app.softwork:kotlinx-uuid-core:0.0.14")
+    fun KotlinNativeTarget.config() {
+        compilations["main"].kotlinOptions.freeCompilerArgs += "-Xexport-kdoc"
+        binaries {
+            framework {
+                xcf.add(this)
+                export(projects.shared)
+                export("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
+                export("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
+                export("app.softwork:kotlinx-uuid-core:0.0.14")
+            }
+        }
     }
     iosArm64 {
-        binaries {
-            framework {
-                clients()
-            }
-        }
+        config()
     }
     iosSimulatorArm64 {
-        binaries {
-            framework {
-                clients()
-            }
-        }
+        config()
     }
 
     js(IR) {
