@@ -7,8 +7,12 @@ kotlin {
     js(IR) {
         browser()
     }
-    iosArm64()
-    iosSimulatorArm64()
+    iosArm64 {
+        compilations["main"].kotlinOptions.freeCompilerArgs += "-Xexport-kdoc"
+    }
+    iosSimulatorArm64 {
+        compilations["main"].kotlinOptions.freeCompilerArgs += "-Xexport-kdoc"
+    }
     jvm()
 
     explicitApi()
