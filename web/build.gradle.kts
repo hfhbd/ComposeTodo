@@ -12,6 +12,9 @@ kotlin {
                     useChromeHeadless()
                 }
             }
+            commonWebpackConfig {
+                cssSupport.enabled = true
+            }
         }
     }
 }

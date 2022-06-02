@@ -9,7 +9,11 @@ kotlin {
     jvm("desktop")
 
     js(IR) {
-        browser()
+        browser {
+            commonWebpackConfig {
+                cssSupport.enabled = true
+            }
+        }
     }
 
     sourceSets {
@@ -62,12 +66,5 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    sourceSets {
-        named("main") {
-            manifest.srcFile("src/androidMain/AndroidManifest.xml")
-            res.srcDirs("src/androidMain/res")
-        }
     }
 }
