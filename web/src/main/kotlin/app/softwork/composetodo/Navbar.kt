@@ -2,51 +2,40 @@ package app.softwork.composetodo
 
 import androidx.compose.runtime.*
 import app.softwork.bootstrapcompose.*
+import app.softwork.bootstrapcompose.NavbarCollapseBehavior.*
 import app.softwork.routingcompose.*
 import org.jetbrains.compose.web.dom.*
 
 @Composable
-fun Navbar(links: List<Triple<String, String, Boolean?>>, onLogout: (() -> Unit)?) {
-    Nav(attrs = {
-        classes(
-            "navbar",
-            "navbar-expand-${Breakpoint.Medium}",
-            "navbar-${Color.Dark}",
-            "sticky-top",
-            "bg-${Color.Dark}"
-        )
-    }) {
-        Container(fluid = true, Breakpoint.ExtraExtraLarge) {
+fun Navbar(links: List<Pair<String, String>>, onLogout: (() -> Unit)?) {
+    Navbar(
+        fluid = true,
+        colorScheme = Color.Dark,
+        placement = NavbarPlacement.StickyTop,
+        backgroundColor = Color.Dark,
+        collapseBehavior = Never,
+        toggler = false,
+        brand = {
             Brand {
                 Text("Softwork.app")
             }
-
-            if (onLogout != null) {
-                Toggler("navbarNav", "navbarNav")
-                Div(attrs = {
-                    classes("collapse", "navbar-collapse")
-                    id("navbarNav")
-                }) {
-                    Ul(attrs = { classes("navbar-nav", "me-auto") }) {
-                        links.forEach { (name, link, isActive) ->
-                            Li(attrs = { classes("nav-item") }) {
-                                NavLink(attrs = {
-                                    classes("nav-link")
-                                    if (isActive == true) {
-                                        classes("active")
-                                    }
-                                }, to = link) { Text(name) }
-                            }
-                        }
-                    }
-                    A(attrs = {
-                        classes("btn", "btn-outline-${Color.Light}")
-                        onClick {
-                            onLogout()
-                        }
-                    }, href = "/#/") { Text("Logout") }
-                }
+        },
+        navAttrs = {
+            classes("me-auto")
+        }
+    ) {
+        if (onLogout != null) {
+            for ((name, link) in links) {
+                NavLink(attrs = {
+                    classes("nav-link")
+                }, to = link) { Text(name) }
             }
+            A(attrs = {
+                classes("btn", "btn-outline-${Color.Light}")
+                onClick {
+                    onLogout()
+                }
+            }, href = "/#/") { Text("Logout") }
         }
     }
 }
