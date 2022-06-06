@@ -20,11 +20,15 @@ kotlin {
 }
 
 dependencies {
-    implementation(projects.composeClients)
-    implementation("app.softwork:routing-compose:0.1.9-dev670")
+    implementation(projects.clients)
+
     implementation(compose.web.core)
-    implementation(compose.runtime)
+    implementation("app.softwork:bootstrap-compose:0.1.2")
+    implementation("app.softwork:routing-compose:0.1.9-dev670")
+
     implementation(devNpm("copy-webpack-plugin", "9.1.0"))
+    implementation(devNpm("sass-loader", "^13.0.0"))
+    implementation(devNpm("sass", "^1.52.1"))
 
     testImplementation(kotlin("test"))
 }

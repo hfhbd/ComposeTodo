@@ -1,37 +1,46 @@
 package app.softwork.composetodo
 
+import androidx.compose.foundation.*
+import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.text.input.*
 import kotlinx.datetime.*
 
 @Composable
-expect fun Column(content: @Composable () -> Unit)
+fun Button(title: String, enabled: Boolean, onClick: () -> Unit) {
+    Button(onClick, enabled = enabled) {
+        Text(title)
+    }
+}
 
 @Composable
-expect fun Row(content: @Composable () -> Unit)
-
-@Composable
-expect fun Card(content: @Composable () -> Unit)
-
-@Composable
-expect fun Text(value: String)
-
-@Composable
-expect fun Button(title: String, enabled: Boolean, onClick: () -> Unit)
-
-@Composable
-expect fun TextField(
+fun TextField(
     label: String,
     placeholder: String,
     value: String,
     isPassword: Boolean,
     onValueChange: (String) -> Unit,
-)
+) {
+    TextField(
+        value = value,
+        onValueChange = onValueChange,
+        label = { Text(label) },
+        placeholder = { Text(placeholder) },
+        visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None
+    )
+}
 
 @Composable
-expect fun H6(value: String)
+fun H6(value: String) {
+    Text(value, style = MaterialTheme.typography.h6)
+}
 
 @Composable
-expect fun Theme(content: @Composable () -> Unit)
+fun Theme(content: @Composable () -> Unit) {
+    MaterialTheme(colors = if (isSystemInDarkTheme()) darkColors() else lightColors()) {
+        content()
+    }
+}
 
 @Composable
 expect fun DateField(value: Instant?, label: String, onValueChange: (Instant?) -> Unit)
