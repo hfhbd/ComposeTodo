@@ -22,7 +22,7 @@ fun MainApp(appContainer: AppContainer) {
         }
     }
 
-    HashRouter("/todos") {
+    HashRouter("/") {
         when (val currentApi = api) {
             is API.LoggedIn -> {
                 MainContent(appContainer, currentApi)
@@ -80,7 +80,7 @@ private fun RouteBuilder.MainContent(appContainer: AppContainer, api: API.Logged
             }
         }
         noMatch {
-            Todos(appContainer.todoViewModel(api))
+            redirect("todos")
         }
     }
 }

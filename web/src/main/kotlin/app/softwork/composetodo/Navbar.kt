@@ -22,20 +22,22 @@ fun Navbar(links: List<Pair<String, String>>, onLogout: (() -> Unit)?) {
         },
         navAttrs = {
             classes("me-auto")
+        },
+        additionalNavContent = {
+            if (onLogout != null) {
+                A(attrs = {
+                    classes("btn", "btn-outline-${Color.Light}")
+                    onClick {
+                        onLogout()
+                    }
+                }, href = "/#/") { Text("Logout") }
+            }
         }
     ) {
-        if (onLogout != null) {
-            for ((name, link) in links) {
-                NavLink(attrs = {
-                    classes("nav-link")
-                }, to = link) { Text(name) }
-            }
-            A(attrs = {
-                classes("btn", "btn-outline-${Color.Light}")
-                onClick {
-                    onLogout()
-                }
-            }, href = "/#/") { Text("Logout") }
+        for ((name, link) in links) {
+            NavLink(attrs = {
+                classes("nav-link")
+            }, to = link) { Text(name) }
         }
     }
 }
