@@ -8,19 +8,13 @@ kotlin {
     android()
     jvm("desktop")
 
-    js(IR) {
-        browser {
-            commonWebpackConfig {
-                cssSupport.enabled = true
-            }
-        }
-    }
-
     sourceSets {
         commonMain {
             dependencies {
                 api(projects.clients)
                 api(compose.runtime)
+                api(compose.foundation)
+                api(compose.material)
             }
         }
 
@@ -32,23 +26,13 @@ kotlin {
 
         val desktopMain by getting {
             dependencies {
-                api(compose.foundation)
-                api(compose.material)
+
             }
         }
 
         val androidMain by getting {
             dependencies {
-                api(compose.foundation)
-                api(compose.material)
                 implementation("io.github.vanpra.compose-material-dialogs:datetime:0.7.2")
-            }
-        }
-
-        val jsMain by getting {
-            dependencies {
-                api(compose.web.core)
-                api("app.softwork:bootstrap-compose:0.1.2")
             }
         }
     }
