@@ -35,7 +35,7 @@ fun MainApp(appContainer: AppContainer) {
 }
 
 @Composable
-private fun NavBuilder.LoginView(appContainer: AppContainer, api: API.LoggedOut) {
+private fun RouteBuilder.LoginView(appContainer: AppContainer, api: API.LoggedOut) {
     Content(emptyList(), onLogout = null) {
         noMatch {
             Text("This application uses a cold Google Cloud Run server, which usually takes 2 seconds to start.")
@@ -47,7 +47,7 @@ private fun NavBuilder.LoginView(appContainer: AppContainer, api: API.LoggedOut)
 
 @Composable
 private fun Content(
-    links: List<Triple<String, String, Boolean?>>,
+    links: List<Pair<String, String>>,
     onLogout: (() -> Unit)?,
     content: @Composable () -> Unit
 ) {
@@ -60,15 +60,8 @@ private fun Content(
 }
 
 @Composable
-private fun NavBuilder.MainContent(appContainer: AppContainer, api: API.LoggedIn) {
-    var links by remember {
-        mutableStateOf(
-            listOf<Triple<String, String, Boolean?>>(
-                Triple("To-Dos", "/todos", null),
-                Triple("Users", "/users", null)
-            )
-        )
-    }
+private fun RouteBuilder.MainContent(appContainer: AppContainer, api: API.LoggedIn) {
+    val links = listOf("To-Dos" to "/todos", "Users" to "/users")
 
     Content(links, {
         scope.launch {
@@ -76,21 +69,9 @@ private fun NavBuilder.MainContent(appContainer: AppContainer, api: API.LoggedIn
         }
     }) {
         route("users") {
-            LaunchedEffect(this) {
-                links = listOf(
-                    Triple("To-Dos", "/todos", false),
-                    Triple("Users", "/users", true)
-                )
-            }
             Users(api)
         }
         route("todos") {
-            LaunchedEffect(this) {
-                links = listOf(
-                    Triple("To-Dos", "/todos", true),
-                    Triple("Users", "/users", false)
-                )
-            }
             uuid { todoID ->
                 Todo(api, TodoDTO.ID(todoID))
             }

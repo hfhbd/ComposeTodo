@@ -23,8 +23,8 @@ dependencies {
     implementation(projects.clients)
 
     implementation(compose.web.core)
-    implementation("app.softwork:bootstrap-compose:0.1.2")
-    implementation("app.softwork:routing-compose:0.1.9-dev670")
+    implementation("app.softwork:bootstrap-compose:0.1.3")
+    implementation("app.softwork:routing-compose:0.2.0")
 
     implementation(devNpm("copy-webpack-plugin", "9.1.0"))
     implementation(devNpm("sass-loader", "^13.0.0"))
