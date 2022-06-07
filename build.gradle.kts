@@ -1,5 +1,4 @@
 import io.gitlab.arturbosch.detekt.*
-import org.jetbrains.compose.*
 
 plugins {
     // Apache 2, https://github.com/JetBrains/kotlin/releases/latest
@@ -17,7 +16,7 @@ allprojects {
         mavenCentral()
         google()
 
-        jetbrainsCompose()
+        maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }
 
