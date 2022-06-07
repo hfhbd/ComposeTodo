@@ -8,6 +8,7 @@ Sample app to play with Jetpack Compose and Kotlin Multiplatform.
 - Desktop using Jetpack Compose
 - Web using Jetpack Compose Web
 - Backend using Ktor
+- iOS using SwiftUI
 
 ## Authentication
 
