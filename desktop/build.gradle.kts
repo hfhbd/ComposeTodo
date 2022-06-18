@@ -13,6 +13,10 @@ dependencies {
     implementation(compose.desktop.currentOs)
 }
 
+kotlin.target.compilations.all {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
 compose.desktop {
     application {
         mainClass = "app.softwork.composetodo.MainKt"

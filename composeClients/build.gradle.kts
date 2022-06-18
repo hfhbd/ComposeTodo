@@ -5,8 +5,16 @@ plugins {
 }
 
 kotlin {
-    android()
-    jvm("desktop")
+    android {
+        compilations.all {
+            kotlinOptions.jvmTarget = "1.8"
+        }
+    }
+    jvm("desktop") {
+        compilations.all {
+            kotlinOptions.jvmTarget = "1.8"
+        }
+    }
 
     sourceSets {
         commonMain {
