@@ -1,7 +1,7 @@
 package app.softwork.composetodo.repository
 
 import app.softwork.composetodo.dto.*
-import com.squareup.sqldelight.*
+import app.cash.sqldelight.*
 import kotlinx.uuid.sqldelight.*
 
 object IDConverter : ColumnAdapter<TodoDTO.ID, String> {

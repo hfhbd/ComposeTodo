@@ -1,5 +1,6 @@
 import app.softwork.composetodo.dto.TodoDTO.ID;
 import kotlinx.datetime.Instant;
+import kotlin.Boolean;
 
 CREATE TABLE todo(
   id TEXT AS ID NOT NULL PRIMARY KEY,

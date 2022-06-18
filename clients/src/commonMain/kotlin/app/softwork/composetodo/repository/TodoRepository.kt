@@ -2,8 +2,8 @@ package app.softwork.composetodo.repository
 
 import app.softwork.composetodo.*
 import app.softwork.composetodo.dto.*
-import com.squareup.sqldelight.db.*
-import com.squareup.sqldelight.runtime.coroutines.*
+import app.cash.sqldelight.db.*
+import app.cash.sqldelight.coroutines.*
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.*
 import kotlinx.uuid.*

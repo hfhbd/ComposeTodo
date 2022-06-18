@@ -9,7 +9,7 @@ dependencies {
 
     val ktor = "2.0.2"
     implementation("io.ktor:ktor-client-cio:$ktor")
-    implementation("com.squareup.sqldelight:sqlite-driver:1.5.3")
+    implementation("app.cash.sqldelight:sqlite-driver:2.0.0-alpha03")
     implementation(compose.desktop.currentOs)
 }
 
