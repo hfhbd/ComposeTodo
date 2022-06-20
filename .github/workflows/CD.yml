@@ -4,20 +4,27 @@ on:
   release:
     types: [ created ]
 
+env:
+  service_name: todo
+
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
       packages: write
+      id-token: write
 
     steps:
       - name: Set environment for version
         run: long="${{ github.ref }}"; version=${long#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV
       - name: Login to GitHub Container Registry
         run: echo "${{ github.token }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      - id: auth
+        uses: google-github-actions/auth@v0
+        with:
+          credentials_json: ${{ secrets.RUN_SA_KEY }}
       - uses: google-github-actions/setup-gcloud@v0
         with:
-          service_account_key: ${{ secrets.RUN_SA_KEY }}
           project_id: ${{ secrets.PROJECT_ID }}
       - name: Login to Google Container Registry
         run: gcloud auth configure-docker "eu.gcr.io" --quiet
@@ -31,7 +38,7 @@ jobs:
       - name: Push Docker Image to GitHub
         run: ./gradlew -Pversion=$version -Pregistry=GitHub jib
       - name: Push Docker Image to Google Container Registry
-        run: ./gradlew -Pversion=$version -Pregistry=Google jib
+        run: ./gradlew -Pversion=$version -Pproject_id=${{ secrets.PROJECT_ID }} -Pservice_name=$service_name -Pregistry=Google jib
       - name: Assemble with Gradle
         run: ./gradlew :web:browserDistribution
       - name: Upload WebApp Artifact
@@ -68,24 +75,25 @@ jobs:
   googleRun:
     needs: build
     runs-on: ubuntu-latest
-    env:
-      project_id: ${{ secrets.PROJECT_ID }}
-      service_name: todo
+    permissions:
+      id-token: write
 
     steps:
       - name: Set environment for version
         run: long="${{ github.ref }}"; version=${long#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV
-      - uses: google-github-actions/setup-gcloud@master
+      - id: auth
+        uses: google-github-actions/auth@v0
         with:
-          service_account_key: ${{ secrets.RUN_SA_KEY }}
-      - name: Login to Google Docker
-        run: gcloud auth configure-docker "eu.gcr.io" --quiet
+          credentials_json: ${{ secrets.RUN_SA_KEY }}
+      - uses: google-github-actions/setup-gcloud@v0
+        with:
+          project_id: ${{ secrets.PROJECT_ID }}
       - name: Deploy using Google Run
         run: |-
           gcloud run deploy "$service_name" \
           --quiet \
           --region "europe-west4" \
-          --image "eu.gcr.io/$project_id/$service_name:$version" \
+          --image "eu.gcr.io/${{ secrets.PROJECT_ID }}/$service_name:$version" \
           --platform "managed" \
           --allow-unauthenticated \
           --set-env-vars keyID="${{ secrets.CK_KEYID }}",privateKey=${{ secrets.CK_KEY}} \
