@@ -2,11 +2,6 @@ plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
     id("com.google.cloud.tools.jib")
-    application
-}
-
-application {
-    mainClass.set("app.softwork.composetodo.MainKt")
 }
 
 kotlin.target.compilations.all {
