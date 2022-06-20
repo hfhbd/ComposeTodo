@@ -58,9 +58,10 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: webpage
+      - run: find . \! -name CNAME -delete
       - uses: actions/download-artifact@v3
       - name: Copy files to /
-        run: cp artifact/* . && rm -fdr artifact
+        run: cp -r artifact/* . && rm -Rf artifact/*
       - name: Config git
         run: git config user.email "cd-bot@softwork.app" && git config user.name "CD Bot"
       - name: Add changes
