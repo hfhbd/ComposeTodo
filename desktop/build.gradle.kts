@@ -6,7 +6,7 @@ plugins {
 dependencies {
     implementation(projects.composeClients)
 
-    val ktor = "2.0.2"
+    val ktor = "2.0.3"
     implementation("io.ktor:ktor-client-cio:$ktor")
     implementation("com.squareup.sqldelight:sqlite-driver:1.5.3")
     implementation(compose.desktop.currentOs)
