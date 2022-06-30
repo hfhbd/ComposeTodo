@@ -3,7 +3,7 @@ import io.gitlab.arturbosch.detekt.*
 plugins {
     // Apache 2, https://github.com/JetBrains/kotlin/releases/latest
     kotlin("multiplatform") version "1.6.21" apply false
-    kotlin("plugin.serialization") version "1.6.21" apply false
+    kotlin("plugin.serialization") version "1.7.0" apply false
     id("com.android.application") version "7.2.1" apply false
     id("org.jetbrains.compose") version "1.2.0-alpha01-dev729" apply false
     id("com.squareup.sqldelight") version "1.5.3" apply false
