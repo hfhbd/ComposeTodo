@@ -15,17 +15,6 @@ dependencies {
     testImplementation(kotlin("test"))
 }
 
-kotlin.target.compilations.all {
-    kotlinOptions {
-        freeCompilerArgs += "-Xlambdas=indy"
-        jvmTarget = "17"
-    }
-}
-
-kotlin.target.compilations.all {
-    kotlinOptions.jvmTarget = "1.8"
-}
-
 compose.desktop {
     application {
         mainClass = "app.softwork.composetodo.MainKt"

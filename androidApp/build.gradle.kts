@@ -35,7 +35,3 @@ dependencies {
     implementation(projects.composeClients)
     implementation("androidx.activity:activity-compose:1.5.0")
 }
-
-kotlin.target.compilations.all {
-    kotlinOptions.jvmTarget = "1.8"
-}
