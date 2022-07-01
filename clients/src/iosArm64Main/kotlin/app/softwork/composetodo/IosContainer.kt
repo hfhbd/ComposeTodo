@@ -1,8 +1,8 @@
 package app.softwork.composetodo
 
+import app.cash.sqldelight.driver.native.*
 import app.softwork.composetodo.repository.*
 import app.softwork.composetodo.viewmodels.*
-import com.squareup.sqldelight.drivers.native.*
 import io.ktor.client.*
 import io.ktor.client.engine.darwin.*
 import io.ktor.client.plugins.*

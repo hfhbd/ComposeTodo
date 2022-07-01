@@ -1,6 +1,6 @@
 package app.softwork.composetodo.repository
 
-import com.squareup.sqldelight.*
+import app.cash.sqldelight.*
 import kotlinx.datetime.*
 
 object DateTimeAdapter : ColumnAdapter<Instant, String> {

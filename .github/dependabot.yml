@@ -13,3 +13,4 @@ updates:
     assignees:
       - "hfhbd"
     open-pull-requests-limit: 25
+    rebase-strategy: "disabled"
