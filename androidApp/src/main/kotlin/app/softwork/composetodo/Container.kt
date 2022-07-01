@@ -1,10 +1,10 @@
 package app.softwork.composetodo
 
 import android.content.*
+import app.cash.sqldelight.driver.android.*
 import app.softwork.composetodo.repository.*
 import app.softwork.composetodo.repository.TodoRepository.Companion.createDatabase
 import app.softwork.composetodo.viewmodels.*
-import com.squareup.sqldelight.android.*
 import io.ktor.client.*
 import io.ktor.client.engine.android.*
 import io.ktor.client.plugins.*

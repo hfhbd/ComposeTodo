@@ -1,6 +1,6 @@
 package app.softwork.composetodo
 
-import com.squareup.sqldelight.drivers.sqljs.*
+import app.cash.sqldelight.driver.sqljs.*
 import kotlinx.coroutines.*
 import org.jetbrains.compose.web.*
 

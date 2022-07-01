@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.apple.*
 plugins {
     id("com.android.library")
     kotlin("multiplatform")
-    id("com.squareup.sqldelight")
+    id("app.cash.sqldelight")
 }
 
 sqldelight {
@@ -27,8 +27,8 @@ kotlin {
                 xcf.add(this)
                 export(projects.shared)
                 export("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3")
-                export("org.jetbrains.kotlinx:kotlinx-datetime:0.3.2")
-                export("app.softwork:kotlinx-uuid-core:0.0.14")
+                export("org.jetbrains.kotlinx:kotlinx-datetime:0.3.3")
+                export("app.softwork:kotlinx-uuid-core:0.0.15")
                 embedBitcode = BitcodeEmbeddingMode.DISABLE
             }
         }
@@ -45,13 +45,13 @@ kotlin {
     }
 
     sourceSets {
-        val sqlDelight = "1.5.3"
+        val sqlDelight = "2.0.0-alpha03"
         val ktor = "2.0.3"
         commonMain {
             dependencies {
                 api(projects.shared)
-                implementation("com.squareup.sqldelight:coroutines-extensions:$sqlDelight")
-                implementation("app.softwork:kotlinx-uuid-sqldelight:0.0.14")
+                implementation("app.cash.sqldelight:coroutines-extensions:$sqlDelight")
+                implementation("app.softwork:kotlinx-uuid-sqldelight:0.0.15")
 
                 api("io.ktor:ktor-client-logging:$ktor")
             }
@@ -65,7 +65,7 @@ kotlin {
 
         val androidMain by getting {
             dependencies {
-                api("com.squareup.sqldelight:android-driver:$sqlDelight")
+                api("app.cash.sqldelight:android-driver:$sqlDelight")
                 api("io.ktor:ktor-client-android:$ktor")
                 api("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
             }
@@ -75,7 +75,7 @@ kotlin {
             dependencies {
                 // Apache 2, https://github.com/ktorio/ktor/releases/latest
                 implementation("io.ktor:ktor-client-darwin:$ktor")
-                implementation("com.squareup.sqldelight:native-driver:$sqlDelight")
+                implementation("app.cash.sqldelight:native-driver:$sqlDelight")
             }
         }
         val iosSimulatorArm64Main by getting {
@@ -89,7 +89,7 @@ kotlin {
         }
         val jsMain by getting {
             dependencies {
-                api("com.squareup.sqldelight:sqljs-driver:$sqlDelight")
+                api("app.cash.sqldelight:sqljs-driver:$sqlDelight")
             }
         }
     }

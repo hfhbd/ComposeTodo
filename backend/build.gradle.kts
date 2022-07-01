@@ -6,7 +6,6 @@ plugins {
 
 kotlin.target.compilations.all {
     kotlinOptions {
-        freeCompilerArgs += "-Xlambdas=indy"
         jvmTarget = "17"
     }
 }
