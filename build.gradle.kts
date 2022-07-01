@@ -9,6 +9,7 @@ plugins {
     id("app.cash.sqldelight") version "2.0.0-alpha03" apply false
     id("org.jetbrains.kotlinx.kover") version "0.5.1"
     id("io.gitlab.arturbosch.detekt") version "1.20.0"
+    id("com.google.cloud.tools.jib") version "3.2.1" apply false
 }
 
 allprojects {

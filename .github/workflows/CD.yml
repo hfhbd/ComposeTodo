@@ -4,47 +4,43 @@ on:
   release:
     types: [ created ]
 
+env:
+  service_name: todo
+
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
       packages: write
-      security-events: write
+      id-token: write
 
     steps:
-      - name: Set environment for version
-        run: long="${{ github.ref }}"; version=${long#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV
-      - name: Login to Docker
-        run: echo "${{ github.token }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-
       - uses: actions/checkout@v3
       - uses: gradle/wrapper-validation-action@v1
+      - name: Set environment for version
+        run: long="${{ github.ref }}"; version=${long#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV
+      - name: Login to GitHub Container Registry
+        run: echo "${{ github.token }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      - id: auth
+        uses: google-github-actions/auth@v0
+        with:
+          credentials_json: ${{ secrets.RUN_SA_KEY }}
+      - uses: google-github-actions/setup-gcloud@v0
+        with:
+          project_id: ${{ secrets.PROJECT_ID }}
+      - name: Login to Google Container Registry
+        run: gcloud auth configure-docker "eu.gcr.io" --quiet
+
       - uses: actions/setup-java@v3
         with:
           distribution: 'adopt'
-          java-version: 11
-      - name: Build with Gradle
-        run: ./gradlew build
-      - name: Detekt
-        run: ./gradlew detekt
-      - name: Upload SARIF to Github using the upload-sarif action
-        uses: github/codeql-action/upload-sarif@v2
-        if: success() || failure()
-        with:
-          sarif_file: build/reports/detekt/detekt.sarif
-
-      - name: Prepare files
-        run: cp build/distributions/backend.zip Docker
-        working-directory: backend
-      - name: Unzip Docker
-        run: unzip backend.zip && rm backend.zip
-        working-directory: backend/Docker
-      - name: Create Docker Image
-        run: docker build -t ghcr.io/hfhbd/composetodo:$version .
-        working-directory: backend/Docker
-      - name: Push Docker Image
-        run: docker push ghcr.io/hfhbd/composetodo:$version
-        working-directory: backend/Docker
+          java-version: 17
+      - name: Push Docker Image to GitHub
+        run: ./gradlew -Pversion=$version -Pregistry=GitHub jib
+      - name: Push Docker Image to Google Container Registry
+        run: ./gradlew -Pversion=$version -Pproject_id=${{ secrets.PROJECT_ID }} -Pservice_name=$service_name -Pregistry=Google jib
+      - name: Assemble with Gradle
+        run: ./gradlew :web:browserDistribution
       - name: Upload WebApp Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -62,9 +58,10 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: webpage
+      - run: find . \! -name CNAME -delete
       - uses: actions/download-artifact@v3
       - name: Copy files to /
-        run: cp artifact/* . && rm -fdr artifact
+        run: cp -r artifact/* . && rm -Rf artifact/*
       - name: Config git
         run: git config user.email "cd-bot@softwork.app" && git config user.name "CD Bot"
       - name: Add changes
@@ -79,35 +76,26 @@ jobs:
   googleRun:
     needs: build
     runs-on: ubuntu-latest
-    env:
-      project_id: ${{ secrets.PROJECT_ID }}
-      service_name: todo
+    permissions:
+      id-token: write
 
     steps:
+      - uses: actions/checkout@v3
       - name: Set environment for version
         run: long="${{ github.ref }}"; version=${long#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV
-      - name: Login to Docker
-        run: echo "${{ github.token }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-      - uses: google-github-actions/setup-gcloud@master
+      - id: auth
+        uses: google-github-actions/auth@v0
         with:
-          service_account_key: ${{ secrets.RUN_SA_KEY }}
+          credentials_json: ${{ secrets.RUN_SA_KEY }}
+      - uses: google-github-actions/setup-gcloud@v0
+        with:
           project_id: ${{ secrets.PROJECT_ID }}
-      - name: Login to Google Docker
-        run: gcloud auth configure-docker "eu.gcr.io" --quiet
-
-      - name: Pull Docker Image from GitHub
-        run: docker pull ghcr.io/hfhbd/composetodo:$version
-
-      - name: Create Docker Image for Google Container Registry
-        run: docker tag "ghcr.io/hfhbd/composetodo:$version" "eu.gcr.io/$project_id/$service_name:$version"
-      - name: Push Docker Image to Google Container Registry
-        run: docker push eu.gcr.io/$project_id/$service_name:$version
       - name: Deploy using Google Run
         run: |-
           gcloud run deploy "$service_name" \
           --quiet \
           --region "europe-west4" \
-          --image "eu.gcr.io/$project_id/$service_name:$version" \
+          --image "eu.gcr.io/${{ secrets.PROJECT_ID }}/$service_name:$version" \
           --platform "managed" \
           --allow-unauthenticated \
           --set-env-vars keyID="${{ secrets.CK_KEYID }}",privateKey=${{ secrets.CK_KEY}} \

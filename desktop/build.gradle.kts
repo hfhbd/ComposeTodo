@@ -5,12 +5,21 @@ plugins {
 
 dependencies {
     implementation(projects.composeClients)
-    testImplementation(kotlin("test"))
 
     val ktor = "2.0.2"
     implementation("io.ktor:ktor-client-cio:$ktor")
     implementation("app.cash.sqldelight:sqlite-driver:2.0.0-alpha03")
     implementation(compose.desktop.currentOs)
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.6.3")
+
+    testImplementation(kotlin("test"))
+}
+
+kotlin.target.compilations.all {
+    kotlinOptions {
+        freeCompilerArgs += "-Xlambdas=indy"
+        jvmTarget = "17"
+    }
 }
 
 kotlin.target.compilations.all {

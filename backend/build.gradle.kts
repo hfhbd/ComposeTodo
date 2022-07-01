@@ -1,13 +1,44 @@
 plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
-    application
+    id("com.google.cloud.tools.jib")
 }
 
-application {
-    mainClass.set("app.softwork.composetodo.MainKt")
+kotlin.target.compilations.all {
+    kotlinOptions {
+        freeCompilerArgs += "-Xlambdas=indy"
+        jvmTarget = "17"
+    }
 }
 
+jib {
+    val registry: String? by project
+    to.image = when (registry) {
+        "GitHub" -> "ghcr.io/hfhbd/composetodo:$version"
+        "Google" -> {
+            val project_id: String by project
+            val service_name: String by project
+            "eu.gcr.io/$project_id/$service_name:$version"
+        }
+
+        else -> return@jib
+    }
+
+    from {
+        image = "eclipse-temurin:17-jre"
+
+        platforms {
+            platform {
+                architecture = "arm64"
+                os = "linux"
+            }
+            platform {
+                architecture = "amd64"
+                os = "linux"
+            }
+        }
+    }
+}
 
 dependencies {
     implementation(projects.shared)
