@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "app.softwork.composetodo"
-    compileSdk = 31
+    compileSdk = 32
 
     defaultConfig {
         applicationId = "app.softwork.composetodo"
         minSdk = 26
-        targetSdk = 31
+        targetSdk = 32
         versionCode = 1
         versionName = "1.0"
         vectorDrawables.useSupportLibrary = true

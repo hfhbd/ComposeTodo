@@ -40,11 +40,11 @@ kotlin {
 
 android {
     namespace = "app.softwork.composetodo.composeclients"
-    compileSdk = 31
+    compileSdk = 32
 
     defaultConfig {
         minSdk = 26
-        targetSdk = 31
+        targetSdk = 32
     }
 
     compileOptions {
