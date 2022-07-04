@@ -15,6 +15,7 @@ import io.ktor.server.resources.Resources
 import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
 import kotlinx.serialization.*
+import kotlinx.serialization.json.*
 import kotlin.time.Duration.Companion.days
 
 fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
@@ -46,12 +47,12 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
     }
 
     install(Sessions) {
-        cookie<RefreshToken>("SESSION") {
-            cookie.path = "/refreshToken"
-            cookie.httpOnly = true
-            cookie.extensions["SameSite"] = "strict"
-            cookie.maxAgeInSeconds = 1.days.inWholeSeconds
-            cookie.secure = true
+        cookie("SESSION", RefreshToken.serializer(), Json) {
+            path = "/refreshToken"
+            httpOnly = true
+            extensions["SameSite"] = "strict"
+            maxAgeInSeconds = 1.days.inWholeSeconds
+            secure = true
         }
     }
 
