@@ -26,7 +26,7 @@ kotlin {
             framework {
                 xcf.add(this)
                 export(projects.shared)
-                export("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3")
+                export("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
                 export("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
                 export("app.softwork:kotlinx-uuid-core:0.0.15")
                 embedBitcode = BitcodeEmbeddingMode.DISABLE
