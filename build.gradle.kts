@@ -24,6 +24,7 @@ allprojects {
 detekt {
     source = files(rootProject.rootDir)
     parallel = true
+    autoCorrect = true
     buildUponDefaultConfig = true
 }
 

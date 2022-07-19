@@ -1,18 +1,17 @@
-<?xml version="1.0" ?>
+<?xml version='1.0' encoding='UTF-8'?>
 <SmellBaseline>
-  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <ManuallySuppressedIssues/>
   <CurrentIssues>
     <ID>EmptyFunctionBlock:UserDefaultsCookieStorage.kt$UserDefaultsCookieStorage${}</ID>
     <ID>FunctionNaming:TodoModule.kt$fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider)</ID>
     <ID>LongMethod:Register.kt$@Composable fun Register(viewModel: RegisterViewModel)</ID>
     <ID>LongMethod:TodoModule.kt$fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider)</ID>
     <ID>MagicNumber:FlowsTest.kt$FlowsTest$3</ID>
-    <ID>MatchingDeclarationName:Flows.kt$IteratorAsync&lt;out T&gt;</ID>
+    <ID>MatchingDeclarationName:Flows.kt$IteratorAsync&lt;out T></ID>
     <ID>MatchingDeclarationName:ViewModeliOS.kt$ViewModel</ID>
-    <ID>SwallowedException:FoundationDesktop.kt$cause: IllegalArgumentException</ID>
     <ID>ThrowsCount:TodoModule.kt$fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider)</ID>
-    <ID>UnnecessaryAbstractClass:ViewModel.kt$ViewModel</ID>
-    <ID>UnnecessaryAbstractClass:ViewModeliOS.kt$ViewModel</ID>
+    <ID>UnnecessaryAbstractClass:ViewModel.kt$ViewModel$ViewModel</ID>
+    <ID>UnnecessaryAbstractClass:ViewModeliOS.kt$ViewModel$ViewModel</ID>
     <ID>UnusedPrivateMember:Users.kt$api: API.LoggedIn</ID>
   </CurrentIssues>
 </SmellBaseline>

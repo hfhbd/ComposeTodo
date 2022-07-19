@@ -1,9 +1,11 @@
 package app.softwork.composetodo
 
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.test.*
 import kotlin.test.*
 
+@ExperimentalCoroutinesApi
 class FlowsTest {
     @Test
     fun toAsyncTest() = runTest {
