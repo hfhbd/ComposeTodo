@@ -14,6 +14,6 @@ actual fun DateField(value: Instant?, label: String, onValueChange: (Instant?) -
 
 fun String.toInstantOrNull(): Instant? = try {
     Instant.parse(this)
-} catch (cause: IllegalArgumentException) {
+} catch (ignored: IllegalArgumentException) {
     null
 }
