@@ -5,7 +5,7 @@ plugins {
     kotlin("multiplatform") version "1.7.10" apply false
     kotlin("plugin.serialization") version "1.7.10" apply false
     id("com.android.application") version "7.2.1" apply false
-    id("org.jetbrains.compose") version "1.2.0-alpha01-dev745" apply false
+    id("org.jetbrains.compose") version "1.2.0-alpha01-dev748" apply false
     id("app.cash.sqldelight") version "2.0.0-alpha03" apply false
     id("org.jetbrains.kotlinx.kover") version "0.5.1"
     id("io.gitlab.arturbosch.detekt") version "1.21.0"
