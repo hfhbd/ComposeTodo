@@ -1,10 +1,33 @@
+comments:
+  severity: "error"
+
+complexity:
+  severity: "error"
+
+coroutines:
+  severity: "error"
+
+empty-blocks:
+  severity: "error"
+
+exceptions:
+  severity: "error"
+
+formatting:
+  severity: "error"
+  NoWildcardImports:
+    active: false
+
 naming:
+  severity: "error"
   FunctionNaming:
     ignoreAnnotated: ['Composable']
 
-formatting:
-  NoWildcardImports:
-    active: false
+performance:
+  severity: "error"
+
+potential-bugs:
+  severity: "error"
 
 style:
   WildcardImport:
