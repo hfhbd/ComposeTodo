@@ -30,5 +30,6 @@ potential-bugs:
   severity: "error"
 
 style:
+  severity: "error"
   WildcardImport:
     active: false
