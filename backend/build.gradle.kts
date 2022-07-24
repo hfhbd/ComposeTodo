@@ -2,6 +2,7 @@ plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
     id("com.google.cloud.tools.jib")
+    id("app.cash.licensee")
 }
 
 kotlin.target.compilations.all {
@@ -61,4 +62,12 @@ dependencies {
     testImplementation(kotlin("test"))
     testImplementation("io.ktor:ktor-server-test-host:$ktor")
     implementation("app.softwork:cloudkitclient-testing:0.1.0")
+}
+
+licensee {
+    allow("Apache-2.0")
+    allow("MIT")
+    allow("EPL-1.0")
+    allowUrl("https://raw.githubusercontent.com/auth0/jwks-rsa-java/master/LICENSE") // MIT
+    allowUrl("https://raw.githubusercontent.com/auth0/java-jwt/master/LICENSE") // MIT
 }

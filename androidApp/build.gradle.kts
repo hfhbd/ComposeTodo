@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     id("org.jetbrains.compose")
+    id("app.cash.licensee")
 }
 
 android {
@@ -34,4 +35,9 @@ android {
 dependencies {
     implementation(projects.composeClients)
     implementation("androidx.activity:activity-compose:1.5.0")
+}
+
+licensee {
+    allow("Apache-2.0")
+    allow("MIT")
 }

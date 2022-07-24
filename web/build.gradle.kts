@@ -1,6 +1,7 @@
 plugins {
     kotlin("js")
     id("org.jetbrains.compose")
+    id("app.cash.licensee")
 }
 
 kotlin {
@@ -38,4 +39,12 @@ dependencies {
     implementation(devNpm("sass", "^1.52.1"))
 
     testImplementation(kotlin("test"))
+}
+
+licensee {
+    allow("Apache-2.0")
+    allowDependency("org.jetbrains.compose.web", "web-core-js", "1.2.0-alpha01-dev745")
+    allowDependency("org.jetbrains.compose.web", "web-core", "1.2.0-alpha01-dev745")
+    allowDependency("org.jetbrains.compose.web", "internal-web-core-runtime-js", "1.2.0-alpha01-dev745")
+    allowDependency("org.jetbrains.compose.web", "internal-web-core-runtime", "1.2.0-alpha01-dev745")
 }
