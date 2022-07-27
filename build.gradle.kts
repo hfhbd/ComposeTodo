@@ -14,6 +14,12 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version "1.21.0"
 }
 
+buildscript {
+    dependencies {
+        classpath("org.apache.commons:commons-compress:1.21")
+    }
+}
+
 allprojects {
     repositories {
         mavenCentral()
