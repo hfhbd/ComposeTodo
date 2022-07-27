@@ -27,7 +27,7 @@ kotlin {
                 api("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
 
                 // Apache 2, https://github.com/hfhbd/kotlinx-uuid/releases
-                api("app.softwork:kotlinx-uuid-core:0.0.15")
+                api("app.softwork:kotlinx-uuid-core:0.0.16-sqldelight2a03")
 
                 // Apache 2, https://github.com/ktorio/ktor/releases/latest
                 val ktor = "2.0.3"

@@ -52,6 +52,7 @@ dependencies {
     implementation("io.ktor:ktor-server-resources:$ktor")
     implementation("io.ktor:ktor-server-content-negotiation:$ktor")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor")
+    implementation("io.ktor:ktor-server-forwarded-header:$ktor")
 
     // Apache 2, https://github.com/hfhbd/cloudkitclient/releases/latest
     implementation("app.softwork:cloudkitclient-core:0.1.0")

@@ -65,7 +65,7 @@ public sealed interface API {
         @Throws(IOException::class, CancellationException::class)
         public suspend fun silentLogin(): LoggedIn? {
             val response = client.get(RefreshToken())
-            return if (response.status == HttpStatusCode.BadRequest) {
+            return if (response.status == HttpStatusCode.BadRequest || response.status == HttpStatusCode.Unauthorized) {
                 null
             } else {
                 LoggedIn(response.body(), client)
