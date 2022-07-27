@@ -28,7 +28,7 @@ kotlin {
                 export(projects.shared)
                 export("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
                 export("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
-                export("app.softwork:kotlinx-uuid-core:0.0.15")
+                export("app.softwork:kotlinx-uuid-core:0.0.16-sqldelight2a03")
                 embedBitcode = BitcodeEmbeddingMode.DISABLE
             }
         }
@@ -51,7 +51,7 @@ kotlin {
             dependencies {
                 api(projects.shared)
                 implementation("app.cash.sqldelight:coroutines-extensions:$sqlDelight")
-                implementation("app.softwork:kotlinx-uuid-sqldelight:0.0.15")
+                implementation("app.softwork:kotlinx-uuid-sqldelight:0.0.16-sqldelight2a03")
 
                 api("io.ktor:ktor-client-logging:$ktor")
             }

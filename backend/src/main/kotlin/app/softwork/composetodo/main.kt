@@ -7,6 +7,7 @@ import io.ktor.server.application.*
 import io.ktor.server.cio.*
 import io.ktor.server.engine.*
 import io.ktor.server.plugins.cors.routing.*
+import io.ktor.server.plugins.forwardedheaders.*
 import org.slf4j.*
 import java.util.*
 import kotlin.reflect.*
@@ -31,6 +32,7 @@ fun main() {
             allowMethod(HttpMethod.Delete)
             allowMethod(HttpMethod.Put)
         }
+        install(XForwardedHeaders)
         TodoModule(db = db, jwtProvider = jwtProvider)
     }.start(wait = true)
 }
