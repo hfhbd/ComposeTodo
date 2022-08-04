@@ -6,7 +6,7 @@ plugins {
     id("org.jetbrains.compose") version "1.2.0-alpha01-dev745" apply false
     id("app.cash.sqldelight") version "2.0.0-alpha03" apply false
 
-    id("com.android.application") version "7.2.1" apply false
+    id("com.android.application") version "7.2.2" apply false
     id("com.google.cloud.tools.jib") version "3.2.1" apply false
 
     id("app.cash.licensee") version "1.5.0" apply false
