@@ -3,11 +3,10 @@ import clients
 import Combine
 
 struct ContentView: View {
-    @StateObject var container: IosContainer
+    @ObservedObject var container: IosContainer
     
-    init () {
-        let container = IosContainer()
-        self._container = StateObject.init(wrappedValue: { container }())
+    init(container: IosContainer) {
+        self._container = .init(initialValue: container)
         self.isLoggedIn = APILoggedOut(client: container.client)
     }
 

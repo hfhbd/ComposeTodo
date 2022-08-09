@@ -38,9 +38,9 @@ extension ObservableObject where Self: ViewModel {
         Task {
             let oldValue = flow.value as! T
             for await newValue in flow.stream(t) {
-            if (oldValue != newValue) {
-                self.objectWillChange.send()
-                break
+                if (oldValue != newValue) {
+                    self.objectWillChange.send()
+                    break
                 }
             }
         }
