@@ -10,9 +10,11 @@ import clients
 
 @main
 struct ComposeTodoApp: App {
+    @StateObject var container = IosContainer()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(container: container)
         }
     }
 }
