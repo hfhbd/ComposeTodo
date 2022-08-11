@@ -30,7 +30,7 @@ kotlin {
                 api("app.softwork:kotlinx-uuid-core:0.0.16-sqldelight2a03")
 
                 // Apache 2, https://github.com/ktorio/ktor/releases/latest
-                val ktor = "2.0.3"
+                val ktor = "2.1.0"
                 api("io.ktor:ktor-client-core:$ktor")
                 api("io.ktor:ktor-resources:$ktor")
                 api("io.ktor:ktor-client-resources:$ktor")
