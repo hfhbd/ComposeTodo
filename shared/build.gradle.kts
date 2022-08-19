@@ -21,7 +21,7 @@ kotlin {
         commonMain {
             dependencies {
                 // Apache 2, https://github.com/Kotlin/kotlinx.serialization/releases/latest
-                api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
+                api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
 
                 // Apache 2, https://github.com/Kotlin/kotlinx-datetime/releases
                 api("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
