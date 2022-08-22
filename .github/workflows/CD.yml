@@ -41,7 +41,7 @@ jobs:
       - name: Login to Google Container Registry
         run: gcloud auth configure-docker "eu.gcr.io" --quiet
 
-      - uses: actions/configure-pages@v1
+      - uses: actions/configure-pages@v2
       - uses: actions/setup-java@v3
         with:
           distribution: 'adopt'
