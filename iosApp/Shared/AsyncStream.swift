@@ -20,7 +20,6 @@ struct FlowStream<T>: AsyncSequence {
     struct FlowAsyncIterator: AsyncIteratorProtocol {
         let iterator: IteratorAsync
 
-        @MainActor
         func next() async -> T? {
             return try! await withTaskCancellationHandler(handler: {
                 iterator.cancel()
