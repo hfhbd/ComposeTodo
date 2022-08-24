@@ -10,7 +10,7 @@ plugins {
     id("com.google.cloud.tools.jib") version "3.2.1" apply false
 
     id("app.cash.licensee") version "1.5.0" apply false
-    id("org.jetbrains.kotlinx.kover") version "0.5.1"
+    id("org.jetbrains.kotlinx.kover") version "0.6.0"
     id("io.gitlab.arturbosch.detekt") version "1.21.0"
 }
 
