@@ -30,13 +30,18 @@ fun Navbar(links: List<Pair<String, String>>, onLogout: (() -> Unit)?) {
                     onClick {
                         onLogout()
                     }
-                }, href = "/#/") { Text("Logout") }
+                }, href = "/#") {
+                    Text("Logout")
+                }
             }
         }
     ) {
         for ((name, link) in links) {
-            NavLink(attrs = {
+            NavLink(attrs = { isActive ->
                 classes("nav-link")
+                if (isActive) {
+                    classes("active")
+                }
             }, to = link) { Text(name) }
         }
     }

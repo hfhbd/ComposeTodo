@@ -35,13 +35,11 @@ fun MainApp(appContainer: AppContainer) {
 }
 
 @Composable
-private fun RouteBuilder.LoginView(appContainer: AppContainer, api: API.LoggedOut) {
+private fun LoginView(appContainer: AppContainer, api: API.LoggedOut) {
     Content(emptyList(), onLogout = null) {
-        noMatch {
-            Text("This application uses a cold Google Cloud Run server, which usually takes 2 seconds to start.")
-            Login(appContainer.loginViewModel(api))
-            Register(appContainer.registerViewModel(api))
-        }
+        Text("This application uses a cold Google Cloud Run server, which usually takes 2 seconds to start.")
+        Login(appContainer.loginViewModel(api))
+        Register(appContainer.registerViewModel(api))
     }
 }
 
@@ -80,7 +78,7 @@ private fun RouteBuilder.MainContent(appContainer: AppContainer, api: API.Logged
             }
         }
         noMatch {
-            redirect("todos")
+            redirect("todos", true)
         }
     }
 }
