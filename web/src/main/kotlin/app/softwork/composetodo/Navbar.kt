@@ -35,8 +35,11 @@ fun Navbar(links: List<Pair<String, String>>, onLogout: (() -> Unit)?) {
         }
     ) {
         for ((name, link) in links) {
-            NavLink(attrs = {
+            NavLink(attrs = { isActive ->
                 classes("nav-link")
+                if (isActive) {
+                    classes("active")
+                }    
             }, to = link) { Text(name) }
         }
     }
