@@ -25,7 +25,7 @@ dependencies {
 
     implementation(compose.web.core)
     implementation("app.softwork:bootstrap-compose:0.1.7")
-    implementation("app.softwork:routing-compose:0.2.7")
+    implementation("app.softwork:routing-compose:0.2.8")
     implementation(npm("sql.js", "1.7.0"))
 
     implementation(devNpm("copy-webpack-plugin", "9.1.0"))
