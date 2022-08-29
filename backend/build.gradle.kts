@@ -58,7 +58,7 @@ dependencies {
     implementation("app.softwork:cloudkitclient-core:0.1.0")
 
     // EPL 1.0, https://github.com/qos-ch/logback/releases
-    runtimeOnly("ch.qos.logback:logback-classic:1.2.11")
+    runtimeOnly("ch.qos.logback:logback-classic:1.4.0")
 
     testImplementation(kotlin("test"))
     testImplementation("io.ktor:ktor-server-test-host:$ktor")
