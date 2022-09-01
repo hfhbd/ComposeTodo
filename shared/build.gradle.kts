@@ -22,7 +22,7 @@ kotlin {
                 api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
                 api("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
 
-                api("app.softwork:kotlinx-uuid-core:0.0.16")
+                api("app.softwork:kotlinx-uuid-core:0.0.17")
 
                 val ktor = "2.1.0"
                 api("io.ktor:ktor-client-core:$ktor")
