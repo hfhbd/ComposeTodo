@@ -4,6 +4,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.apple.*
 plugins {
     id("com.android.library")
     kotlin("multiplatform")
+    id("org.jetbrains.compose")
     id("app.cash.sqldelight")
 }
 
@@ -21,14 +22,13 @@ kotlin {
 
     val xcf = XCFramework()
     fun KotlinNativeTarget.config() {
-        compilations["main"].kotlinOptions.freeCompilerArgs += "-Xexport-kdoc"
         binaries {
             framework {
                 xcf.add(this)
                 export(projects.shared)
                 export("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
                 export("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
-                export("app.softwork:kotlinx-uuid-core:0.0.16-sqldelight2a03")
+                export("app.softwork:kotlinx-uuid-core:0.0.16")
                 embedBitcode = BitcodeEmbeddingMode.DISABLE
             }
         }
@@ -51,7 +51,6 @@ kotlin {
             dependencies {
                 api(projects.shared)
                 implementation("app.cash.sqldelight:coroutines-extensions:$sqlDelight")
-                implementation("app.softwork:kotlinx-uuid-sqldelight:0.0.16-sqldelight2a03")
 
                 api("io.ktor:ktor-client-logging:$ktor")
             }
@@ -73,7 +72,6 @@ kotlin {
 
         val iosArm64Main by getting {
             dependencies {
-                // Apache 2, https://github.com/ktorio/ktor/releases/latest
                 implementation("io.ktor:ktor-client-darwin:$ktor")
                 implementation("app.cash.sqldelight:native-driver:$sqlDelight")
             }
