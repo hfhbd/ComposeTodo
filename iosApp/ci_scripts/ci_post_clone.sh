@@ -1,4 +1,5 @@
 #!/bin/sh
+set -x
 
 brew install openjdk
-/Users/local/Homebrew/opt/openjdk/bin/java --version
+/usr/local/opt/openjdk/bin/java --version

@@ -1,7 +1,8 @@
 #!/bin/sh
+set -x
 
-/Users/local/Homebrew/opt/openjdk/bin/java --version
-export JAVA_HOME=/Users/local/Homebrew/opt/openjdk
+/usr/local/opt/openjdk/bin/java --version
+export JAVA_HOME=/usr/local/opt/openjdk
 java --version
 cd ..
 cd ..
