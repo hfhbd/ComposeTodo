@@ -43,7 +43,7 @@ jib {
 dependencies {
     implementation(projects.shared)
 
-    val ktor = "2.1.0"
+    val ktor = "2.1.1"
     implementation("io.ktor:ktor-server-cio:$ktor")
     implementation("io.ktor:ktor-server-cors:$ktor")
     implementation("io.ktor:ktor-server-auth-jwt:$ktor")
