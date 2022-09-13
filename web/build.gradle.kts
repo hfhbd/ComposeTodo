@@ -24,7 +24,7 @@ dependencies {
     implementation(projects.clients)
 
     implementation(compose.web.core)
-    implementation("app.softwork:bootstrap-compose:0.1.8")
+    implementation("app.softwork:bootstrap-compose:0.1.10")
     implementation("app.softwork:routing-compose:0.2.8")
     implementation(npm("sql.js", "1.7.0"))
 
@@ -37,8 +37,4 @@ dependencies {
 
 licensee {
     allow("Apache-2.0")
-    allowDependency("org.jetbrains.compose.web", "web-core-js", "1.2.0-alpha01-dev778")
-    allowDependency("org.jetbrains.compose.web", "web-core", "1.2.0-alpha01-dev778")
-    allowDependency("org.jetbrains.compose.web", "internal-web-core-runtime-js", "1.2.0-alpha01-dev778")
-    allowDependency("org.jetbrains.compose.web", "internal-web-core-runtime", "1.2.0-alpha01-dev778")
 }
