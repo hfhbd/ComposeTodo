@@ -3,7 +3,7 @@ import io.gitlab.arturbosch.detekt.*
 plugins {
     kotlin("multiplatform") version "1.7.10" apply false
     kotlin("plugin.serialization") version "1.7.10" apply false
-    id("org.jetbrains.compose") version "1.2.0-beta02" apply false
+    id("org.jetbrains.compose") version "1.2.0-beta03-dev803" apply false
     id("app.cash.sqldelight") version "2.0.0-alpha03" apply false
 
     id("com.android.application") version "7.3.0" apply false
