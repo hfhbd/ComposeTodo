@@ -32,7 +32,7 @@ kotlin {
 
         val androidMain by getting {
             dependencies {
-                implementation("io.github.vanpra.compose-material-dialogs:datetime:0.7.2")
+                implementation("io.github.vanpra.compose-material-dialogs:datetime:0.9.0")
             }
         }
     }
