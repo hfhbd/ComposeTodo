@@ -4,7 +4,7 @@ plugins {
     kotlin("multiplatform") version "1.7.10" apply false
     kotlin("plugin.serialization") version "1.7.10" apply false
     id("org.jetbrains.compose") version "1.2.0" apply false
-    id("app.cash.sqldelight") version "2.0.0-alpha03" apply false
+    id("app.cash.sqldelight") version "2.0.0-alpha04" apply false
 
     id("com.android.application") version "7.3.1" apply false
     id("com.google.cloud.tools.jib") version "3.3.1" apply false
