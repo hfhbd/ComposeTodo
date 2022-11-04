@@ -13,22 +13,18 @@ extension ViewModel: ObservableObject {
 }
 
 extension ObservableObject where Self: ViewModel {
-    @MainActor
     func binding(_ keyPath: KeyPath<Self, MutableStateFlow>) -> Binding<String> {
         binding(flow: self[keyPath: keyPath], t: String.self)
     }
-    
-    @MainActor
+
     func binding(_ keyPath: KeyPath<Self, MutableStateFlow>) -> Binding<Int> {
         binding(flow: self[keyPath: keyPath], t: Int.self)
     }
-    
-    @MainActor
+
     func binding(_ keyPath: KeyPath<Self, MutableStateFlow>) -> Binding<Bool> {
         binding(flow: self[keyPath: keyPath], t: Bool.self)
     }
-    
-    @MainActor
+
     func binding<T>(_ keyPath: KeyPath<Self, MutableStateFlow>, t: T.Type) -> Binding<T> where T: Equatable {
         binding(flow: self[keyPath: keyPath], t: t)
     }

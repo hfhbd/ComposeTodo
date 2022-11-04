@@ -12,7 +12,6 @@ kotlin {
         commonMain {
             dependencies {
                 api(projects.clients)
-                api(compose.runtime)
                 api(compose.foundation)
                 api(compose.material)
             }
