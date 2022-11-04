@@ -4,6 +4,7 @@ import app.cash.sqldelight.coroutines.*
 import app.cash.sqldelight.db.*
 import app.softwork.composetodo.*
 import app.softwork.composetodo.dto.*
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.*
 import kotlinx.uuid.*
@@ -14,7 +15,7 @@ interface TodoRepository {
             api: API.LoggedIn,
             dao: TodoQueries,
         ) = object : TodoRepository {
-            override val todos: Flow<List<Todo>> = dao.all().asFlow().mapToList()
+            override val todos: Flow<List<Todo>> = dao.all().asFlow().mapToList(Dispatchers.Default)
 
             override suspend fun delete(todo: Todo) {
                 dao.delete(id = todo.id)
