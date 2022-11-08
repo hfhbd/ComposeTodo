@@ -26,7 +26,7 @@ dependencies {
     implementation(projects.clients)
 
     implementation(compose.web.core)
-    implementation("app.softwork:bootstrap-compose:0.1.11")
+    implementation("app.softwork:bootstrap-compose:0.1.12")
     implementation("app.softwork:routing-compose:0.2.9")
 
     implementation(npm("sql.js", "1.7.0"))
