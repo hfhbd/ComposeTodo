@@ -9,3 +9,7 @@ naming:
 style:
   WildcardImport:
     active: false
+
+complexity:
+  LongParameterList:
+    ignoreAnnotated: ['Composable']

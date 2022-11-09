@@ -16,7 +16,10 @@ struct ContentView: View {
         if let isLoggedIn = isLoggedIn as? APILoggedOut {
             TabView {
                 NavigationView {
-                    Login(viewModel: container.loginViewModel(api: isLoggedIn))
+                    let loginViewModel = container.loginViewModel(api: isLoggedIn)
+                    Login(state: {
+                        loginViewModel
+                    })
                         .navigationTitle("Login")
                 }.tabItem {
                     Label("Login", systemImage: "person")
@@ -43,36 +46,47 @@ struct ContentView: View {
 }
 
 struct Login: View {
-    init(viewModel: @autoclosure @escaping () -> LoginViewModel) {
-        self._viewModel = StateObject(wrappedValue: viewModel())
+    init(
+        state: @escaping () -> StateFlow,
+        updateUserName: @escaping (String) -> Void,
+        updatePassword: @escaping (String) -> Void
+    ) {
+        self._stateFlow = StateObject(wrappedValue: {
+            SwiftStateFlow(flow: state())
+        }())
+        self.updateUserName = updateUserName
+        self.updatePassword = updatePassword
     }
-
-    @StateObject var viewModel: LoginViewModel
-
-    @State private var error: Failure? = nil
-    @State private var disableLogin = true
+    let updateUserName: (String) -> Void
+    let updatePassword: (String) -> Void
+    
+    @StateObject private var stateFlow: SwiftStateFlow
 
     var body: some View {
-        Form {
-            TextField("Username", text: viewModel.binding(\.userName))
-            SecureField("Password", text: viewModel.binding(\.password))
-
-            if let error = error {
+        let state = stateFlow.value as! LoginViewModel.LoginState
+        
+        return Form {
+            TextField("Username", text: Binding(get: {
+                state.userName
+            }, set: {
+                updateUserName(new: $0)
+            }))
+            SecureField("Password", text: Binding(get: {
+                state.userName
+            }, set: {
+                updatePassword(new: $0)
+            }))
+            
+            if let error = state.error {
                 Text(error.reason)
             }
         }.toolbar {
             Button("Login") {
                 viewModel.login()
             }
-            .disabled(disableLogin)
+            .disabled(!state.enableLogin)
         }.task {
-            for await newError in viewModel.error.stream(Failure?.self) {
-                self.error = newError
-            }
-        }.task {
-            for await newEnabled in viewModel.enableLogin.stream(Bool.self) {
-                self.disableLogin = !newEnabled
-            }
+            for await _ in stateFlow.stream(LoginViewModel.LoginState.self) { }
         }
     }
 }
@@ -114,3 +128,36 @@ struct Register: View {
 }
 
 extension Todo: Swift.Identifiable { }
+
+class SwiftStateFlow: StateFlow, ObservableObject {
+    let flow: StateFlow
+    
+    var value: Any? {
+        flow.value
+    }
+    
+    var replayCache: [Any] { flow.replayCache }
+    
+    func collect(collector: FlowCollector) async throws {
+        try await flow.collect(collector: SwiftFlowCollector(collector: collector, objectWillChange: objectWillChange))
+    }
+    
+    init(flow: StateFlow) {
+        self.flow = flow
+    }
+    
+    private class SwiftFlowCollector: FlowCollector {
+        func emit(value: Any?) async throws {
+            objectWillChange.send()
+            try await collector.emit(value: value)
+        }
+        
+        let collector: FlowCollector
+        let objectWillChange: ObjectWillChangePublisher
+        
+        init(collector: FlowCollector, objectWillChange: ObjectWillChangePublisher) {
+            self.collector = collector
+            self.objectWillChange = objectWillChange
+        }
+    }
+}

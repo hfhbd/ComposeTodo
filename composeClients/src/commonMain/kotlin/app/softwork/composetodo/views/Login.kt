@@ -8,32 +8,50 @@ import app.softwork.composetodo.viewmodels.*
 
 @Composable
 fun Login(viewModel: LoginViewModel) {
+    val coroutineScope = rememberCoroutineScope()
+    val state by remember(viewModel, coroutineScope) { viewModel.state(coroutineScope) }.collectAsState()
+
+    Login(
+        username = state.username,
+        updateUsername = viewModel::updateUsername,
+        password = state.password,
+        updatePassword = viewModel::updatePassword,
+        enableLogin = state.enableLogin,
+        onLoginClick = viewModel::login,
+        error = state.error
+    )
+}
+
+@Composable
+private fun Login(
+    username: String,
+    updateUsername: (String) -> Unit,
+    password: String,
+    updatePassword: (String) -> Unit,
+    enableLogin: Boolean,
+    onLoginClick: () -> Unit,
+    error: Failure?
+) {
     Column {
-        val userName by remember { viewModel.userName }.collectAsState()
         TextField(
             label = "Username",
-            value = userName,
-            onValueChange = { viewModel.userName.value = it },
+            value = username,
+            onValueChange = updateUsername,
             isPassword = false,
             placeholder = "John Doe"
         )
-        val password by remember { viewModel.password }.collectAsState()
         TextField(
             label = "Password",
             value = password,
-            onValueChange = { viewModel.password.value = it },
+            onValueChange = updatePassword,
             isPassword = true,
             placeholder = ""
         )
 
-        val enableLogin by remember { viewModel.enableLogin }.collectAsState(false)
+        Button("Login", enabled = enableLogin) { onLoginClick() }
 
-        Button("Login", enabled = enableLogin) { viewModel.login() }
-
-        val error by remember { viewModel.error }.collectAsState()
-
-        error?.let {
-            Text("ERROR: ${it.reason}")
+        if (error != null) {
+            Text("ERROR: ${error.reason}")
         }
     }
 }

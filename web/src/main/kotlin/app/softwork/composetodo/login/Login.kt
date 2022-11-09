@@ -1,6 +1,7 @@
 package app.softwork.composetodo.login
 
 import androidx.compose.runtime.*
+import app.cash.molecule.*
 import app.softwork.bootstrapcompose.*
 import app.softwork.composetodo.viewmodels.*
 import org.jetbrains.compose.web.attributes.*
@@ -8,9 +9,34 @@ import org.jetbrains.compose.web.dom.*
 
 @Composable
 fun Login(viewModel: LoginViewModel) {
+    val coroutineScope = rememberCoroutineScope()
+    val state by remember(viewModel, coroutineScope) { viewModel.state(coroutineScope) }.collectAsState()
+
+    Login(
+        username = state.username,
+        updateUsername = viewModel::updateUsername,
+        password = state.password,
+        updatePassword = viewModel::updatePassword,
+        enableLogin = state.enableLogin,
+        onLoginClick = viewModel::login,
+        error = state.error,
+        dismissError = viewModel::dismissError
+    )
+}
+
+@Composable
+private fun Login(
+    username: String,
+    updateUsername: (String) -> Unit,
+    password: String,
+    updatePassword: (String) -> Unit,
+    enableLogin: Boolean,
+    onLoginClick: () -> Unit,
+    error: Failure?,
+    dismissError: () -> Unit
+) {
     Row {
         Column {
-            val username by viewModel.userName.collectAsState()
             H1 {
                 Text("Login $username")
             }
@@ -21,9 +47,9 @@ fun Login(viewModel: LoginViewModel) {
                 autocomplete = AutoComplete.username,
                 type = InputType.Text
             ) {
-                viewModel.userName.value = it.value
+                updateUsername(it.value)
             }
-            val password by viewModel.password.collectAsState()
+
             Input(
                 type = InputType.Password,
                 placeholder = "password",
@@ -31,20 +57,18 @@ fun Login(viewModel: LoginViewModel) {
                 autocomplete = AutoComplete.currentPassword,
                 value = password
             ) {
-                viewModel.password.value = it.value
+                updatePassword(it.value)
             }
-            val enableLogin by viewModel.enableLogin.collectAsState(false)
 
             Button(title = "Login $username", disabled = !enableLogin) {
-                viewModel.login()
+                onLoginClick()
             }
 
-            val error = viewModel.error.collectAsState().value
             if (error != null) {
                 Alert(color = Color.Danger) {
                     Text(error.reason)
                     CloseButton {
-                        viewModel.error.value = null
+                        dismissError()
                     }
                 }
             }

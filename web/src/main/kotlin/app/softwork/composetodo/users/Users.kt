@@ -5,6 +5,6 @@ import app.softwork.composetodo.*
 import org.jetbrains.compose.web.dom.*
 
 @Composable
-fun Users(api: API.LoggedIn) {
+fun Users() {
     Text("User placeholder")
 }
