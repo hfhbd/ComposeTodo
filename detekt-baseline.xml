@@ -1,8 +1,9 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
-  <ManuallySuppressedIssues/>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
     <ID>FunctionNaming:IosContainer.kt$fun IosContainer( protocol: URLProtocol, host: String, storage: CookiesStorage ): AppContainer</ID>
+    <ID>FunctionNaming:IosContainer.kt$fun IosContainer( storage: CookiesStorage )</ID>
     <ID>FunctionNaming:TodoModule.kt$fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider)</ID>
     <ID>LongMethod:Register.kt$@Composable fun Register(viewModel: RegisterViewModel)</ID>
     <ID>LongMethod:TodoModule.kt$fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider)</ID>
