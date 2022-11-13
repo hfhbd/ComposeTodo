@@ -13,6 +13,10 @@
 		0823C181265282B600AA4A20 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0823C152265282B600AA4A20 /* Assets.xcassets */; };
 		0843F0282809D15100E60014 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0843F0272809D15100E60014 /* ViewModel.swift */; };
 		084C5AB4278F769D00737F4F /* AsyncStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084C5AB3278F769600737F4F /* AsyncStream.swift */; };
+		086EE1F8292121A4000BE781 /* SwiftStateFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086EE1F7292121A4000BE781 /* SwiftStateFlow.swift */; };
+		086EE1FA292121D1000BE781 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086EE1F9292121D1000BE781 /* Login.swift */; };
+		086EE1FC29212236000BE781 /* Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086EE1FB29212236000BE781 /* Register.swift */; };
+		086EE1FE2921226E000BE781 /* UserDefaultStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 086EE1FD2921226E000BE781 /* UserDefaultStorage.swift */; };
 		08DB9C8D27341E6300B6B383 /* TodoItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB9C8C27341E6300B6B383 /* TodoItemRow.swift */; };
 		08DB9C8F273432A200B6B383 /* Todos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB9C8E273432A200B6B383 /* Todos.swift */; };
 		08EA7CEA26F1FF2300FFA5A9 /* clients.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08EA7CE926F1FF2300FFA5A9 /* clients.xcframework */; };
@@ -57,6 +61,10 @@
 		0823C198265286D200AA4A20 /* composetodo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = composetodo.entitlements; sourceTree = "<group>"; };
 		0843F0272809D15100E60014 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		084C5AB3278F769600737F4F /* AsyncStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncStream.swift; sourceTree = "<group>"; };
+		086EE1F7292121A4000BE781 /* SwiftStateFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftStateFlow.swift; sourceTree = "<group>"; };
+		086EE1F9292121D1000BE781 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
+		086EE1FB29212236000BE781 /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
+		086EE1FD2921226E000BE781 /* UserDefaultStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultStorage.swift; sourceTree = "<group>"; };
 		08DB9C8C27341E6300B6B383 /* TodoItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItemRow.swift; sourceTree = "<group>"; };
 		08DB9C8E273432A200B6B383 /* Todos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todos.swift; sourceTree = "<group>"; };
 		08EA7CE926F1FF2300FFA5A9 /* clients.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = clients.xcframework; path = ../clients/build/XCFrameworks/release/clients.xcframework; sourceTree = "<group>"; };
@@ -113,6 +121,10 @@
 				08DB9C8C27341E6300B6B383 /* TodoItemRow.swift */,
 				08DB9C8E273432A200B6B383 /* Todos.swift */,
 				0843F0272809D15100E60014 /* ViewModel.swift */,
+				086EE1F7292121A4000BE781 /* SwiftStateFlow.swift */,
+				086EE1F9292121D1000BE781 /* Login.swift */,
+				086EE1FB29212236000BE781 /* Register.swift */,
+				086EE1FD2921226E000BE781 /* UserDefaultStorage.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -250,12 +262,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				086EE1FE2921226E000BE781 /* UserDefaultStorage.swift in Sources */,
 				0823C17B265282B600AA4A20 /* composetodoApp.swift in Sources */,
+				086EE1F8292121A4000BE781 /* SwiftStateFlow.swift in Sources */,
 				0823C17D265282B600AA4A20 /* ContentView.swift in Sources */,
+				086EE1FC29212236000BE781 /* Register.swift in Sources */,
 				08DB9C8D27341E6300B6B383 /* TodoItemRow.swift in Sources */,
 				08DB9C8F273432A200B6B383 /* Todos.swift in Sources */,
 				0843F0282809D15100E60014 /* ViewModel.swift in Sources */,
 				084C5AB4278F769D00737F4F /* AsyncStream.swift in Sources */,
+				086EE1FA292121D1000BE781 /* Login.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

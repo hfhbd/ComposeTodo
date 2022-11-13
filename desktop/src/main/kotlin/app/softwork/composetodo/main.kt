@@ -1,7 +1,6 @@
 package app.softwork.composetodo
 
 import androidx.compose.ui.window.*
-import app.cash.sqldelight.db.*
 import app.cash.sqldelight.driver.jdbc.sqlite.*
 import app.softwork.composetodo.repository.*
 import io.ktor.client.*

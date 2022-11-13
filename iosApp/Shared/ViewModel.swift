@@ -51,5 +51,3 @@ extension ObservableObject where Self: ViewModel {
         })
     }
 }
-
-extension IosContainer: ObservableObject { }

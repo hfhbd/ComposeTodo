@@ -10,7 +10,16 @@ import io.ktor.client.plugins.cookies.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.client.plugins.resources.*
 import io.ktor.http.*
+import io.ktor.http.URLProtocol.Companion.HTTPS
 import io.ktor.serialization.kotlinx.json.*
+
+fun IosContainer(
+    storage: CookiesStorage
+) = IosContainer(
+    HTTPS,
+    "api.todo.softwork.app",
+    storage
+)
 
 fun IosContainer(
     protocol: URLProtocol,

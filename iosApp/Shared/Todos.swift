@@ -30,6 +30,8 @@ struct Todos: View {
     }
 }
 
+extension Todo: Swift.Identifiable { }
+
 struct Todos_Previews: PreviewProvider {
     static var previews: some View {
         Todos(viewModel: TodoViewModel.init(repo: TestRepo()))
