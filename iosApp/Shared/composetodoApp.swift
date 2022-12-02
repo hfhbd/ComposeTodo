@@ -10,7 +10,7 @@ import clients
 
 @main
 struct ComposeTodoApp: App {
-    @StateObject var container = IosContainer()
+    @StateObject var container = IosContainerKt.IosContainer(storage: UserDefaultStorage())
     
     var body: some Scene {
         WindowGroup {

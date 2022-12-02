@@ -7,7 +7,6 @@ import app.softwork.composetodo.login.*
 import app.softwork.composetodo.todos.*
 import app.softwork.composetodo.users.*
 import app.softwork.routingcompose.*
-import kotlinx.coroutines.*
 import org.jetbrains.compose.web.dom.*
 
 @Composable
@@ -27,19 +26,20 @@ fun MainApp(appContainer: AppContainer) {
             is API.LoggedIn -> {
                 MainContent(appContainer, currentApi)
             }
+
             is API.LoggedOut -> {
-                LoginView(appContainer, currentApi)
+                LoginView(appContainer)
             }
         }
     }
 }
 
 @Composable
-private fun LoginView(appContainer: AppContainer, api: API.LoggedOut) {
+private fun LoginView(appContainer: AppContainer) {
     Content(emptyList(), onLogout = null) {
         Text("This application uses a cold Google Cloud Run server, which usually takes 2 seconds to start.")
-        Login(appContainer.loginViewModel(api))
-        Register(appContainer.registerViewModel(api))
+        Login(appContainer.loginViewModel())
+        Register(appContainer.registerViewModel())
     }
 }
 
@@ -62,19 +62,17 @@ private fun RouteBuilder.MainContent(appContainer: AppContainer, api: API.Logged
     val links = listOf("To-Dos" to "/todos", "Users" to "/users")
 
     Content(links, {
-        scope.launch {
-            appContainer.logout()
-        }
+        appContainer.logout()
     }) {
         route("users") {
-            Users(api)
+            Users()
         }
         route("todos") {
             uuid { todoID ->
                 Todo(api, TodoDTO.ID(todoID))
             }
             noMatch {
-                Todos(appContainer.todoViewModel(api))
+                Todos(appContainer.todoViewModel())
             }
         }
         noMatch {

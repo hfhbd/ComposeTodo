@@ -10,6 +10,10 @@ kotlin {
     }
     iosArm64()
     iosSimulatorArm64()
+
+    watchosArm64()
+    watchosSimulatorArm64()
+
     jvm()
 
     explicitApi()

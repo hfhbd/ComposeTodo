@@ -40,6 +40,13 @@ kotlin {
         config()
     }
 
+    watchosArm64 {
+        config()
+    }
+    watchosSimulatorArm64 {
+        config()
+    }
+
     js(IR) {
         browser()
     }
@@ -51,7 +58,7 @@ kotlin {
             dependencies {
                 api(projects.shared)
                 implementation("app.cash.sqldelight:coroutines-extensions:$sqlDelight")
-
+                api("app.cash.molecule:molecule-runtime:0.6.0")
                 api("io.ktor:ktor-client-logging:$ktor")
             }
         }
@@ -70,21 +77,45 @@ kotlin {
             }
         }
 
-        val iosArm64Main by getting {
+        val darwinMain by creating {
+            dependsOn(commonMain.get())
             dependencies {
                 implementation("io.ktor:ktor-client-darwin:$ktor")
                 implementation("app.cash.sqldelight:native-driver:$sqlDelight")
             }
         }
+        val darwinTest by creating {
+            dependsOn(commonTest.get())
+        }
+
+        val iosArm64Main by getting {
+            dependsOn(darwinMain)
+        }
         val iosSimulatorArm64Main by getting {
             dependsOn(iosArm64Main)
         }
 
-        val iosArm64Test by getting
+        val iosArm64Test by getting {
+            dependsOn(darwinTest)
+        }
 
         val iosSimulatorArm64Test by getting {
             dependsOn(iosArm64Test)
         }
+
+        val watchosArm64Main by getting {
+            dependsOn(darwinMain)
+        }
+        val watchosArm64Test by getting {
+            dependsOn(darwinTest)
+        }
+        val watchosSimulatorArm64Main by getting {
+            dependsOn(darwinMain)
+        }
+        val watchosSimulatorArm64Test by getting {
+            dependsOn(darwinTest)
+        }
+
         val jsMain by getting {
             dependencies {
                 api("app.cash.sqldelight:sqljs-driver:$sqlDelight")

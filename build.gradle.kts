@@ -14,6 +14,7 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version "1.22.0"
 }
 
+// https://issuetracker.google.com/issues/240445963
 buildscript {
     dependencies {
         classpath("org.apache.commons:commons-compress:1.22")
