@@ -2,10 +2,11 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.*
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.*
 
 plugins {
-    id("com.android.library")
-    kotlin("multiplatform")
-    id("org.jetbrains.compose")
-    id("app.cash.sqldelight")
+    com.android.library
+    org.jetbrains.kotlin.multiplatform
+    org.jetbrains.compose
+    app.cash.sqldelight
+    androidSdk
 }
 
 sqldelight {
@@ -95,17 +96,6 @@ kotlin {
 
 android {
     namespace = "app.softwork.composetodo.clients"
-    compileSdk = 33
-
-    defaultConfig {
-        minSdk = 26
-        targetSdk = 33
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
 }
 
 tasks {

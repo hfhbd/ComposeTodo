@@ -1,7 +1,7 @@
 plugins {
-    kotlin("js")
-    id("org.jetbrains.compose")
-    id("app.cash.licensee")
+    org.jetbrains.kotlin.js
+    org.jetbrains.compose
+    license
 }
 
 kotlin {
@@ -33,8 +33,4 @@ dependencies {
     implementation(devNpm("copy-webpack-plugin", "9.1.0"))
 
     testImplementation(kotlin("test"))
-}
-
-licensee {
-    allow("Apache-2.0")
 }

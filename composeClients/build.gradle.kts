@@ -1,7 +1,8 @@
 plugins {
-    id("com.android.library")
-    kotlin("multiplatform")
-    id("org.jetbrains.compose")
+    com.android.library
+    org.jetbrains.kotlin.multiplatform
+    org.jetbrains.compose
+    androidSdk
 }
 
 kotlin {
@@ -39,15 +40,4 @@ kotlin {
 
 android {
     namespace = "app.softwork.composetodo.composeclients"
-    compileSdk = 33
-
-    defaultConfig {
-        minSdk = 26
-        targetSdk = 33
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
 }
