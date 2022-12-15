@@ -1,8 +1,8 @@
 plugins {
-    kotlin("jvm")
-    kotlin("plugin.serialization")
-    id("com.google.cloud.tools.jib")
-    id("app.cash.licensee")
+    org.jetbrains.kotlin.jvm
+    org.jetbrains.kotlin.plugin.serialization
+    com.google.cloud.tools.jib
+    license
 }
 
 kotlin.target.compilations.all {
@@ -62,7 +62,6 @@ dependencies {
 }
 
 licensee {
-    allow("Apache-2.0")
     allow("MIT")
     allow("EPL-1.0")
     allowUrl("https://raw.githubusercontent.com/auth0/jwks-rsa-java/master/LICENSE") // MIT

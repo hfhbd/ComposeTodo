@@ -1,8 +1,8 @@
 plugins {
-    id("com.android.application")
-    kotlin("android")
-    id("org.jetbrains.compose")
-    id("app.cash.licensee")
+    com.android.application
+    org.jetbrains.kotlin.android
+    org.jetbrains.compose
+    license
 }
 
 android {
@@ -39,6 +39,5 @@ dependencies {
 }
 
 licensee {
-    allow("Apache-2.0")
     allow("MIT")
 }

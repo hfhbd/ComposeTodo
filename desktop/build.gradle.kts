@@ -1,7 +1,7 @@
 plugins {
-    kotlin("jvm")
-    id("org.jetbrains.compose")
-    id("app.cash.licensee")
+    org.jetbrains.kotlin.jvm
+    org.jetbrains.compose
+    license
 }
 
 dependencies {
@@ -23,6 +23,5 @@ compose.desktop {
 }
 
 licensee {
-    allow("Apache-2.0")
     allow("MIT")
 }
