@@ -6,7 +6,7 @@ plugins {
     org.jetbrains.kotlin.multiplatform
     org.jetbrains.compose
     app.cash.sqldelight
-    androidSdk
+    androidLibrary
 }
 
 sqldelight {
