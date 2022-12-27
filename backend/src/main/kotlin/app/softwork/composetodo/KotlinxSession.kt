@@ -17,7 +17,8 @@ inline fun <reified T : Any> SessionsConfig.cookie(
     val configuration = CookieConfiguration().apply(block)
     register(
         provider = SessionProvider(
-            name = name, type = T::class,
+            name = name,
+            type = T::class,
             tracker = SessionTrackerByValue(T::class, serializer = serializer.toSessionSerializer(format)),
             transport = SessionTransportCookie(name, configuration = configuration, transformers = emptyList())
         )

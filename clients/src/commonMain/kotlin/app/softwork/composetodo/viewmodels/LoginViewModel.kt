@@ -23,7 +23,8 @@ class LoginViewModel(
             api.networkCall(
                 action = {
                     login(username = userName.value, password = password.value)
-                }, onSuccess = {
+                },
+                onSuccess = {
                     error.value = null
                     onLogin(it)
                 }

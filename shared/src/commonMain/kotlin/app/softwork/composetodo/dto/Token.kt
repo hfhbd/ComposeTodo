@@ -20,9 +20,15 @@ public data class Token(val content: String) {
     public data class Payload(
         @SerialName("iss") val issuer: String,
         @SerialName("sub") val subject: String,
-        @Serializable(with = InstantSerializer::class) @SerialName("exp") val expiredAt: Instant,
-        @Serializable(with = InstantSerializer::class) @SerialName("nbf") val notBefore: Instant,
-        @Serializable(with = InstantSerializer::class) @SerialName("iat") val issuedAt: Instant,
+        @Serializable(with = InstantSerializer::class)
+        @SerialName("exp")
+        val expiredAt: Instant,
+        @Serializable(with = InstantSerializer::class)
+        @SerialName("nbf")
+        val notBefore: Instant,
+        @Serializable(with = InstantSerializer::class)
+        @SerialName("iat")
+        val issuedAt: Instant,
         @SerialName("aud") val audience: String
     )
 

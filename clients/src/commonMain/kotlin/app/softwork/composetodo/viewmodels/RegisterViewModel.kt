@@ -34,7 +34,8 @@ class RegisterViewModel(
             api.networkCall(
                 action = {
                     register(newUser)
-                }, onSuccess = {
+                },
+                onSuccess = {
                     error.value = null
                     onLogin(it)
                 }

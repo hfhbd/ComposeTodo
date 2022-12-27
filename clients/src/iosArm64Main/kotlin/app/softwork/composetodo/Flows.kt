@@ -31,7 +31,9 @@ fun <T> Flow<T>.asAsyncIterable(context: CoroutineContext): IteratorAsync<T> = o
             if (cancelCont.isActive) {
                 cancelCont.resume(Unit)
                 value.await()
-            } else null
+            } else {
+                null
+            }
         } else {
             val collecting = suspend {
                 collect { t ->
