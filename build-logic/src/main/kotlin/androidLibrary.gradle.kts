@@ -6,6 +6,6 @@ android {
     androidConfig()
 
     defaultConfig {
-        targetSdk = targetSDK
+        targetSdk = TARGET_SDK
     }
 }

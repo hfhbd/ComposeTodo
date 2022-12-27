@@ -1,15 +1,16 @@
 import com.android.build.api.dsl.*
 import org.gradle.api.*
 
+@Suppress("MagicNumber")
 fun <BuildFeaturesT : BuildFeatures,
-        BuildTypeT : BuildType,
-        DefaultConfigT : DefaultConfig,
-        ProductFlavorT : ProductFlavor> CommonExtension<
-        BuildFeaturesT,
-        BuildTypeT,
-        DefaultConfigT,
-        ProductFlavorT
-        >.androidConfig() {
+    BuildTypeT : BuildType,
+    DefaultConfigT : DefaultConfig,
+    ProductFlavorT : ProductFlavor> CommonExtension<
+    BuildFeaturesT,
+    BuildTypeT,
+    DefaultConfigT,
+    ProductFlavorT
+    >.androidConfig() {
     compileSdk = 33
 
     defaultConfig {
@@ -22,4 +23,4 @@ fun <BuildFeaturesT : BuildFeatures,
     }
 }
 
-const val targetSDK = 33 
+const val TARGET_SDK = 33
