@@ -1,5 +1,5 @@
 plugins {
-    com.android.application
+    androidApplication
     org.jetbrains.kotlin.android
     org.jetbrains.compose
     license
@@ -7,22 +7,13 @@ plugins {
 
 android {
     namespace = "app.softwork.composetodo"
-    compileSdk = 33
 
     defaultConfig {
         applicationId = "app.softwork.composetodo"
-        minSdk = 26
-        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    compileOptions {
-        // Sets Java compatibility to Java 8
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     buildTypes {
