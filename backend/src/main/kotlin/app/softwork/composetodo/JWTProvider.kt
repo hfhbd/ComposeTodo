@@ -26,7 +26,9 @@ data class JWTProvider(
             credential.payload.subject?.let { username ->
                 find(username)
             }
-        } else null
+        } else {
+            null
+        }
 
     fun token(refreshToken: RefreshToken): Token {
         val now = Clock.System.now()

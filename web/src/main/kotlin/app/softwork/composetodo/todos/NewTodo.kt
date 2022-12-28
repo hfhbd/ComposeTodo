@@ -11,12 +11,18 @@ fun NewTodo(viewModel: TodoViewModel) {
     var title by remember { mutableStateOf("") }
     var until by remember { mutableStateOf("") }
     Input(
-        type = InputType.Text, label = "Title", placeholder = "Hello World", value = title
+        type = InputType.Text,
+        label = "Title",
+        placeholder = "Hello World",
+        value = title
     ) {
         title = it.value
     }
     Input(
-        type = InputType.DateTimeLocal, label = "Until", placeholder = "yyyy-mm-dd", value = until
+        type = InputType.DateTimeLocal,
+        label = "Until",
+        placeholder = "yyyy-mm-dd",
+        value = until
     ) {
         until = it.value
     }

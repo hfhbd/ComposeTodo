@@ -14,17 +14,21 @@ fun NewTodo(viewModel: TodoViewModel) {
     Column {
         Row {
             TextField(
-                value = title, onValueChange = {
+                value = title,
+                onValueChange = {
                     title = it
-                }, label = "Title",
+                },
+                label = "Title",
                 placeholder = "To-do Title",
                 isPassword = false
             )
 
             DateField(
-                value = until, onValueChange = {
+                value = until,
+                onValueChange = {
                     until = it
-                }, label = "Until"
+                },
+                label = "Until"
             )
 
             Button(title = "Create", enabled = title.isNotEmpty()) {
