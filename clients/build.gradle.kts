@@ -2,11 +2,10 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.*
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.*
 
 plugins {
-    com.android.library
+    androidLibrary
     org.jetbrains.kotlin.multiplatform
     org.jetbrains.compose
     app.cash.sqldelight
-    androidLibrary
 }
 
 sqldelight {
