@@ -5,7 +5,7 @@ plugins {
     license
 }
 
-kotlin.target.compilations.all {
+kotlin.target.compilations.configureEach {
     kotlinOptions {
         jvmTarget = "17"
     }

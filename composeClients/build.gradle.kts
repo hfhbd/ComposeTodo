@@ -23,13 +23,7 @@ kotlin {
             }
         }
 
-        val desktopMain by getting {
-            dependencies {
-
-            }
-        }
-
-        val androidMain by getting {
+        named("androidMain") {
             dependencies {
                 implementation("io.github.vanpra.compose-material-dialogs:datetime:0.9.0")
             }
@@ -39,4 +33,9 @@ kotlin {
 
 android {
     namespace = "app.softwork.composetodo.composeclients"
+}
+
+compose {
+    kotlinCompilerPlugin.set(dependencies.compiler.forKotlin("1.8.0"))
+    kotlinCompilerPluginArgs.add("suppressKotlinVersionCompatibilityCheck=1.8.10")
 }

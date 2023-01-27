@@ -9,34 +9,28 @@ import io.ktor.http.*
 import io.ktor.resources.*
 import io.ktor.utils.io.errors.*
 import kotlinx.datetime.*
-import kotlinx.serialization.*
 import kotlin.coroutines.cancellation.*
 
 public sealed interface API {
-    @Serializable
     @Resource("/users")
-    public class Users
+    public object Users
 
-    @Serializable
     @Resource("/refreshToken")
-    public class RefreshToken
+    public object RefreshToken
 
-    @Serializable
     @Resource("/me")
-    public class Me
+    public object Me
 
-    @Serializable
     @Resource("/todos")
-    public class Todos {
-        @Serializable
+    public object Todos {
         @Resource("{id}")
-        public class Id(public val parent: Todos = Todos(), public val id: TodoDTO.ID)
+        public class Id(public val parent: Todos = Todos, public val id: TodoDTO.ID)
     }
 
     public class LoggedOut(private val client: HttpClient) : API {
         @Throws(IOException::class, CancellationException::class)
         public suspend fun register(newUser: User.New): LoggedIn? {
-            val response = client.post(Users()) {
+            val response = client.post(Users) {
                 contentType(ContentType.Application.Json)
                 setBody(newUser)
             }
@@ -52,7 +46,7 @@ public sealed interface API {
             username: String,
             password: String
         ): LoggedIn? {
-            val response = client.post(RefreshToken()) {
+            val response = client.post(RefreshToken) {
                 basicAuth(username, password)
             }
             return if (response.status == HttpStatusCode.Unauthorized) {
@@ -64,7 +58,7 @@ public sealed interface API {
 
         @Throws(IOException::class, CancellationException::class)
         public suspend fun silentLogin(): LoggedIn? {
-            val response = client.get(RefreshToken())
+            val response = client.get(RefreshToken)
             return if (response.status == HttpStatusCode.BadRequest || response.status == HttpStatusCode.Unauthorized) {
                 null
             } else {
@@ -77,25 +71,25 @@ public sealed interface API {
         @Throws(IOException::class, CancellationException::class)
         private suspend fun HttpRequestBuilder.addToken() {
             if (Clock.System.now() > token.payload.expiredAt) {
-                token = client.get(RefreshToken()).body()
+                token = client.get(RefreshToken).body()
             }
             bearerAuth(token.content)
         }
 
         @Throws(IOException::class, CancellationException::class)
         public suspend fun logout() {
-            client.delete(RefreshToken()) {
+            client.delete(RefreshToken) {
                 addToken()
             }
         }
 
         @Throws(IOException::class, CancellationException::class)
-        public suspend fun getMe(): User = client.get(Me()) {
+        public suspend fun getMe(): User = client.get(Me) {
             addToken()
         }.body()
 
         @Throws(IOException::class, CancellationException::class)
-        public suspend fun updateMe(user: User): User = client.put(Me()) {
+        public suspend fun updateMe(user: User): User = client.put(Me) {
             contentType(ContentType.Application.Json)
             setBody(user)
             addToken()
@@ -103,13 +97,13 @@ public sealed interface API {
 
         @Throws(IOException::class, CancellationException::class)
         public suspend fun deleteMe() {
-            client.delete(Me()) {
+            client.delete(Me) {
                 addToken()
             }
         }
 
         @Throws(IOException::class, CancellationException::class)
-        public suspend fun getTodos(): List<TodoDTO> = client.get(Todos()) {
+        public suspend fun getTodos(): List<TodoDTO> = client.get(Todos) {
             addToken()
         }.body()
 
@@ -119,7 +113,7 @@ public sealed interface API {
         }.body()
 
         @Throws(IOException::class, CancellationException::class)
-        public suspend fun createTodo(todo: TodoDTO): TodoDTO = client.post(Todos()) {
+        public suspend fun createTodo(todo: TodoDTO): TodoDTO = client.post(Todos) {
             contentType(ContentType.Application.Json)
             setBody(todo)
             addToken()
