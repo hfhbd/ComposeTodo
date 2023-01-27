@@ -1,8 +1,7 @@
 plugins {
-    com.android.library
+    androidLibrary
     org.jetbrains.kotlin.multiplatform
     org.jetbrains.compose
-    androidLibrary
 }
 
 kotlin {

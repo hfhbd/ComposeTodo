@@ -1,5 +1,6 @@
 plugins {
     com.android.application
+    org.jetbrains.kotlin.android
 }
 
 android {

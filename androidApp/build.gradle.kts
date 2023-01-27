@@ -1,6 +1,5 @@
 plugins {
     androidApplication
-    org.jetbrains.kotlin.android
     org.jetbrains.compose
     license
 }
