@@ -71,21 +71,31 @@ kotlin {
             }
         }
 
-        val iosArm64Main by getting {
+        val iosMain by creating {
+            dependsOn(commonMain.get())
             dependencies {
                 implementation("io.ktor:ktor-client-darwin:$ktor")
                 implementation("app.cash.sqldelight:native-driver:$sqlDelight")
             }
         }
+        val iosTest by creating {
+            dependsOn(commonTest.get())
+        }
+        
+        val iosArm64Main by getting {
+            dependsOn(iosMain)
+        }
+        val iosArm64Test by getting {
+            dependsOn(iosTest)
+        }
+        
         val iosSimulatorArm64Main by getting {
-            dependsOn(iosArm64Main)
+            dependsOn(iosMain)
         }
-
-        val iosArm64Test by getting
-
         val iosSimulatorArm64Test by getting {
-            dependsOn(iosArm64Test)
+            dependsOn(iosTest)
         }
+
         val jsMain by getting {
             dependencies {
                 api("app.cash.sqldelight:sqljs-driver:$sqlDelight")
