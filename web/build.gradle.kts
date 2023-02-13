@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.*
+
 plugins {
     org.jetbrains.kotlin.js
     org.jetbrains.compose
@@ -15,7 +17,7 @@ kotlin {
             }
             commonWebpackConfig {
                 scssSupport {
-                    enabled = true
+                    enabled.set(true)
                 }
             }
         }
@@ -26,11 +28,23 @@ dependencies {
     implementation(projects.clients)
 
     implementation(compose.web.core)
-    implementation("app.softwork:bootstrap-compose:0.1.13")
-    implementation("app.softwork:routing-compose:0.2.10")
+    implementation("app.softwork:bootstrap-compose:0.1.14")
+    implementation("app.softwork:routing-compose:0.2.11")
 
     implementation(npm("sql.js", "1.7.0"))
     implementation(devNpm("copy-webpack-plugin", "9.1.0"))
 
     testImplementation(kotlin("test"))
+}
+
+compose {
+    kotlinCompilerPlugin.set("1.4.0")
+}
+
+tasks.withType(KotlinCompile::class).configureEach {
+    kotlinOptions {
+        freeCompilerArgs = freeCompilerArgs + listOf(
+            "-P", "plugin:androidx.compose.compiler.plugins.kotlin:suppressKotlinVersionCompatibilityCheck=1.8.10"
+        )
+    }
 }

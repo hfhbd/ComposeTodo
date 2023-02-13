@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.*
 import org.jetbrains.kotlin.gradle.plugin.mpp.*
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.*
 
@@ -9,10 +10,10 @@ plugins {
 }
 
 sqldelight {
-    database("ComposeTodoDB") {
-        packageName = "app.softwork.composetodo"
-        deriveSchemaFromMigrations = true
-        verifyMigrations = true
+    databases.register("ComposeTodoDB") {
+        packageName.set("app.softwork.composetodo")
+        deriveSchemaFromMigrations.set(true)
+        verifyMigrations.set(true)
     }
 }
 
@@ -29,7 +30,7 @@ kotlin {
                 export("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
                 export("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
                 export("app.softwork:kotlinx-uuid-core:0.0.17")
-                embedBitcode = BitcodeEmbeddingMode.DISABLE
+                embedBitcodeMode.set(BitcodeEmbeddingMode.DISABLE)
             }
         }
     }
@@ -45,7 +46,7 @@ kotlin {
     }
 
     sourceSets {
-        val sqlDelight = "2.0.0-alpha04"
+        val sqlDelight = "2.0.0-alpha05"
         val ktor = "2.2.3"
         commonMain {
             dependencies {
@@ -62,7 +63,7 @@ kotlin {
             }
         }
 
-        val androidMain by getting {
+        named("androidMain") {
             dependencies {
                 api("app.cash.sqldelight:android-driver:$sqlDelight")
                 api("io.ktor:ktor-client-android:$ktor")
@@ -70,21 +71,31 @@ kotlin {
             }
         }
 
-        val iosArm64Main by getting {
+        val iosMain by creating {
+            dependsOn(commonMain.get())
             dependencies {
                 implementation("io.ktor:ktor-client-darwin:$ktor")
                 implementation("app.cash.sqldelight:native-driver:$sqlDelight")
             }
         }
+        val iosTest by creating {
+            dependsOn(commonTest.get())
+        }
+        
+        val iosArm64Main by getting {
+            dependsOn(iosMain)
+        }
+        val iosArm64Test by getting {
+            dependsOn(iosTest)
+        }
+        
         val iosSimulatorArm64Main by getting {
-            dependsOn(iosArm64Main)
+            dependsOn(iosMain)
         }
-
-        val iosArm64Test by getting
-
         val iosSimulatorArm64Test by getting {
-            dependsOn(iosArm64Test)
+            dependsOn(iosTest)
         }
+
         val jsMain by getting {
             dependencies {
                 api("app.cash.sqldelight:sqljs-driver:$sqlDelight")
@@ -98,8 +109,20 @@ android {
 }
 
 tasks {
-    val assembleXCFramework by this
+    val assembleXCFramework by existing
     assemble {
         dependsOn(assembleXCFramework)
+    }
+}
+
+compose {
+    kotlinCompilerPlugin.set("1.4.0")
+}
+
+tasks.withType(KotlinCompile::class).configureEach {
+    kotlinOptions {
+        freeCompilerArgs = freeCompilerArgs + listOf(
+            "-P", "plugin:androidx.compose.compiler.plugins.kotlin:suppressKotlinVersionCompatibilityCheck=1.8.10"
+        )
     }
 }

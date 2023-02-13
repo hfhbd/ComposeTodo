@@ -4,8 +4,4 @@ plugins {
 
 android {
     androidConfig()
-
-    defaultConfig {
-        targetSdk = TARGET_SDK
-    }
 }
