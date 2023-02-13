@@ -21,9 +21,7 @@ struct FlowStream<T>: AsyncSequence {
         let iterator: IteratorAsync
 
         func next() async -> T? {
-            return try! await withTaskCancellationHandler(handler: {
-                iterator.cancel()
-            }) {
+            return try! await withTaskCancellationHandler {
                 do {
                     let next = try await iterator.next()
                     if (next == nil) {
@@ -39,6 +37,9 @@ struct FlowStream<T>: AsyncSequence {
                         throw error
                     }
                 }
+                
+            } onCancel: {
+                iterator.cancel()
             }
         }
 
