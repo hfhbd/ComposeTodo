@@ -21,7 +21,7 @@ kotlin {
             dependencies {
                 api(compose.runtime)
                 api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
-                api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
+                api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
                 api("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
 
                 api("app.softwork:kotlinx-uuid-core:0.0.17")
