@@ -9,7 +9,7 @@ plugins {
 dependencies {
     implementation(projects.composeClients)
 
-    val ktor = "2.2.3"
+    val ktor = "2.2.4"
     implementation("io.ktor:ktor-client-cio:$ktor")
     implementation("app.cash.sqldelight:sqlite-driver:2.0.0-alpha05")
     implementation(compose.desktop.currentOs)
