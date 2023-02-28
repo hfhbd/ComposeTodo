@@ -47,7 +47,7 @@ kotlin {
 
     sourceSets {
         val sqlDelight = "2.0.0-alpha05"
-        val ktor = "2.2.3"
+        val ktor = "2.2.4"
         commonMain {
             dependencies {
                 api(projects.shared)
