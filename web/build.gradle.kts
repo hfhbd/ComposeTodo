@@ -36,15 +36,3 @@ dependencies {
 
     testImplementation(kotlin("test"))
 }
-
-compose {
-    kotlinCompilerPlugin.set("1.4.0")
-}
-
-tasks.withType(KotlinCompile::class).configureEach {
-    kotlinOptions {
-        freeCompilerArgs = freeCompilerArgs + listOf(
-            "-P", "plugin:androidx.compose.compiler.plugins.kotlin:suppressKotlinVersionCompatibilityCheck=1.8.10"
-        )
-    }
-}
