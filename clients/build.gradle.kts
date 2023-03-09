@@ -67,7 +67,7 @@ kotlin {
             dependencies {
                 api("app.cash.sqldelight:android-driver:$sqlDelight")
                 api("io.ktor:ktor-client-android:$ktor")
-                api("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+                api("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0")
             }
         }
 
