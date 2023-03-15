@@ -55,7 +55,7 @@ dependencies {
     implementation("app.softwork:cloudkitclient-core:0.1.0")
     implementation("app.softwork:cloudkitclient-testing:0.1.0")
 
-    runtimeOnly("ch.qos.logback:logback-classic:1.4.5")
+    runtimeOnly("ch.qos.logback:logback-classic:1.4.6")
 
     testImplementation(kotlin("test"))
     testImplementation("io.ktor:ktor-server-test-host:$ktor")
