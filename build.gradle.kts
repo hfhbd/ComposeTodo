@@ -7,7 +7,7 @@ plugins {
 
 buildscript {
     dependencies {
-        classpath("org.apache.commons:commons-compress:1.22")
+        classpath("org.apache.commons:commons-compress:1.23.0")
     }
 }
 
