@@ -68,7 +68,6 @@ jobs:
       id-token: write
 
     steps:
-      - uses: actions/checkout@v3
       - name: Set environment for version
         run: long="${{ github.ref }}"; version=${long#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV
       - id: auth
