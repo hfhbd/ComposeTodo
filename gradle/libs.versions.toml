@@ -1,0 +1,66 @@
+[versions]
+kotlin = "1.8.20"
+detekt = "1.22.0"
+coroutines = "1.6.4"
+datetime = "0.4.0"
+serialization = "1.5.0"
+ktor = "2.3.0"
+sqldelight = "2.0.0-alpha05"
+cloudkit = "0.1.0"
+
+[libraries]
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "coroutines" }
+coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+
+datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "datetime" }
+serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
+
+sqldelight-sqliteDriver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
+sqldelight-androidDriver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
+sqldelight-nativeDriver = { module = "app.cash.sqldelight:native-driver", version.ref = "sqldelight" }
+sqldelight-sqljsDriver = { module = "app.cash.sqldelight:sqljs-driver", version.ref = "sqldelight" }
+sqldelight-coroutinesExtensions = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
+
+apacheCompress = { module = "org.apache.commons:commons-compress", version = "1.23.0" }
+
+detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+
+uuid-core = { module = "app.softwork:kotlinx-uuid-core", version = "0.0.18" }
+bootstrapCompose = { module = "app.softwork:bootstrap-compose", version = "0.1.15" }
+routingCompose = { module = "app.softwork:routing-compose", version = "0.2.12" }
+
+ktor-resources = { module = "io.ktor:ktor-resources", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+ktor-client-resources = { module = "io.ktor:ktor-client-resources", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-server-cio = { module = "io.ktor:ktor-server-cio", version.ref = "ktor" }
+ktor-server-cors = { module = "io.ktor:ktor-server-cors", version.ref = "ktor" }
+ktor-server-auth-jwt = { module = "io.ktor:ktor-server-auth-jwt", version.ref = "ktor" }
+ktor-server-resources = { module = "io.ktor:ktor-server-resources", version.ref = "ktor" }
+ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
+ktor-server-forwarded-header = { module = "io.ktor:ktor-server-forwarded-header", version.ref = "ktor" }
+ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
+
+logback = { module = "ch.qos.logback:logback-classic", version = "1.4.7" }
+
+composeMaterialDialogs-datetime = { module = "io.github.vanpra.compose-material-dialogs:datetime", version = "0.9.0" }
+androidx-viewmodel-lifecycle = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version = "2.6.1" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version = "1.7.1" }
+
+cloudkit-core = { module = "app.softwork:cloudkitclient-core", version.ref = "cloudkit" }
+cloudkit-testing = { module = "app.softwork:cloudkitclient-testing", version.ref = "cloudkit" }
+
+kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
+compose-gradlePlugin = { module = "org.jetbrains.compose:compose-gradle-plugin", version = "1.4.0" }
+sqldelight-gradlePlugin = { module = "app.cash.sqldelight:gradle-plugin", version.ref = "sqldelight" }
+android-gradlePlugin = { module = "com.android.tools.build:gradle", version = "7.4.2" }
+jib-gradlePlugin = { module = "com.google.cloud.tools:jib-gradle-plugin", version = "3.3.1" }
+licensee-gradlePlugin = { module = "app.cash.licensee:licensee-gradle-plugin", version = "1.6.0" }
+detekt-gradlePlugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt"}

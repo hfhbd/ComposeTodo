@@ -1,5 +1,5 @@
 plugins {
-    app.cash.licensee
+    id("app.cash.licensee")
 }
 
 licensee {
