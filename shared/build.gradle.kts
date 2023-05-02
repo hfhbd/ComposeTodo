@@ -26,7 +26,7 @@ kotlin {
 
                 api("app.softwork:kotlinx-uuid-core:0.0.18")
 
-                val ktor = "2.2.4"
+                val ktor = "2.3.0"
                 api("io.ktor:ktor-client-core:$ktor")
                 api("io.ktor:ktor-resources:$ktor")
                 api("io.ktor:ktor-client-resources:$ktor")

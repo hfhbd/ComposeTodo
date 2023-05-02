@@ -4,7 +4,6 @@ import app.softwork.composetodo.dao.User
 import app.softwork.composetodo.dto.*
 import com.auth0.jwt.*
 import com.auth0.jwt.algorithms.*
-import com.auth0.jwt.impl.*
 import io.ktor.server.auth.jwt.*
 import kotlinx.datetime.*
 import kotlin.time.*
@@ -54,11 +53,11 @@ data class JWTProvider(
         .sign(algorithm)
 
     private fun JWTCreator.Builder.withIssuedAt(createdAt: Instant): JWTCreator.Builder =
-        withClaim(PublicClaims.ISSUED_AT, createdAt.epochSeconds)
+        withClaim(RegisteredClaims.ISSUED_AT, createdAt.epochSeconds)
 
     private fun JWTCreator.Builder.withExpiresAt(expireAt: Instant): JWTCreator.Builder =
-        withClaim(PublicClaims.EXPIRES_AT, expireAt.epochSeconds)
+        withClaim(RegisteredClaims.EXPIRES_AT, expireAt.epochSeconds)
 
     private fun JWTCreator.Builder.withNotBefore(notBefore: Instant): JWTCreator.Builder =
-        withClaim(PublicClaims.NOT_BEFORE, notBefore.epochSeconds)
+        withClaim(RegisteredClaims.NOT_BEFORE, notBefore.epochSeconds)
 }
