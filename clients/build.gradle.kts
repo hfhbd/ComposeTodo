@@ -1,12 +1,11 @@
-import org.jetbrains.kotlin.gradle.dsl.*
 import org.jetbrains.kotlin.gradle.plugin.mpp.*
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.*
 
 plugins {
-    androidLibrary
-    org.jetbrains.kotlin.multiplatform
-    org.jetbrains.compose
-    app.cash.sqldelight
+    id("androidLibrary")
+    id("org.jetbrains.kotlin.multiplatform")
+    id("org.jetbrains.compose")
+    id("app.cash.sqldelight")
 }
 
 sqldelight {
@@ -18,6 +17,8 @@ sqldelight {
 }
 
 kotlin {
+    jvmToolchain(8)
+    
     android()
     jvm("desktop")
 
@@ -27,9 +28,9 @@ kotlin {
             framework {
                 xcf.add(this)
                 export(projects.shared)
-                export("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
-                export("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
-                export("app.softwork:kotlinx-uuid-core:0.0.18")
+                export(libs.coroutines.core)
+                export(libs.datetime)
+                export(libs.uuid.core)
                 embedBitcodeMode.set(BitcodeEmbeddingMode.DISABLE)
             }
         }
@@ -46,36 +47,34 @@ kotlin {
     }
 
     sourceSets {
-        val sqlDelight = "2.0.0-alpha05"
-        val ktor = "2.3.0"
         commonMain {
             dependencies {
                 api(projects.shared)
-                implementation("app.cash.sqldelight:coroutines-extensions:$sqlDelight")
+                implementation(libs.sqldelight.coroutinesExtensions)
 
-                api("io.ktor:ktor-client-logging:$ktor")
+                api(libs.ktor.client.logging)
             }
         }
         commonTest {
             dependencies {
                 implementation(kotlin("test"))
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+                implementation(libs.coroutines.test)
             }
         }
 
         named("androidMain") {
             dependencies {
-                api("app.cash.sqldelight:android-driver:$sqlDelight")
-                api("io.ktor:ktor-client-android:$ktor")
-                api("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+                api(libs.sqldelight.androidDriver)
+                api(libs.ktor.client.android)
+                api(libs.androidx.viewmodel.lifecycle)
             }
         }
 
         val iosMain by creating {
             dependsOn(commonMain.get())
             dependencies {
-                implementation("io.ktor:ktor-client-darwin:$ktor")
-                implementation("app.cash.sqldelight:native-driver:$sqlDelight")
+                implementation(libs.ktor.client.darwin)
+                implementation(libs.sqldelight.nativeDriver)
             }
         }
         val iosTest by creating {
@@ -98,7 +97,7 @@ kotlin {
 
         val jsMain by getting {
             dependencies {
-                api("app.cash.sqldelight:sqljs-driver:$sqlDelight")
+                api(libs.sqldelight.sqljsDriver)
             }
         }
     }

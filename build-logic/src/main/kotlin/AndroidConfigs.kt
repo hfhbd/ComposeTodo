@@ -11,7 +11,7 @@ fun <BuildFeaturesT : BuildFeatures,
     DefaultConfigT,
     ProductFlavorT
     >.androidConfig() {
-    compileSdk = 33
+    compileSdk = TARGET_SDK
 
     defaultConfig {
         minSdk = 26

@@ -1,10 +1,10 @@
-import org.jetbrains.kotlin.gradle.dsl.*
-
 plugins {
-    androidApplication
-    org.jetbrains.compose
-    license
+    id("androidApplication")
+    id("org.jetbrains.compose")
+    id("license")
 }
+
+kotlin.jvmToolchain(8)
 
 android {
     namespace = "app.softwork.composetodo"
@@ -27,7 +27,7 @@ android {
 
 dependencies {
     implementation(projects.composeClients)
-    implementation("androidx.activity:activity-compose:1.7.1")
+    implementation(libs.androidx.activity.compose)
 }
 
 licensee {

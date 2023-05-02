@@ -1,15 +1,11 @@
 plugins {
-    org.jetbrains.kotlin.jvm
-    org.jetbrains.kotlin.plugin.serialization
-    com.google.cloud.tools.jib
-    license
+    id("org.jetbrains.kotlin.jvm")
+    id("org.jetbrains.kotlin.plugin.serialization")
+    id("com.google.cloud.tools.jib")
+    id("license")
 }
 
-kotlin.target.compilations.configureEach {
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-}
+kotlin.jvmToolchain(17)
 
 jib {
     val registry: String? by project
@@ -43,22 +39,20 @@ jib {
 dependencies {
     implementation(projects.shared)
 
-    val ktor = "2.3.0"
-    implementation("io.ktor:ktor-server-cio:$ktor")
-    implementation("io.ktor:ktor-server-cors:$ktor")
-    implementation("io.ktor:ktor-server-auth-jwt:$ktor")
-    implementation("io.ktor:ktor-server-resources:$ktor")
-    implementation("io.ktor:ktor-server-content-negotiation:$ktor")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor")
-    implementation("io.ktor:ktor-server-forwarded-header:$ktor")
+    implementation(libs.ktor.server.cio)
+    implementation(libs.ktor.server.cors)
+    implementation(libs.ktor.server.auth.jwt)
+    implementation(libs.ktor.server.resources)
+    implementation(libs.ktor.server.content.negotiation)
+    implementation(libs.ktor.server.forwarded.header)
 
-    implementation("app.softwork:cloudkitclient-core:0.1.0")
-    implementation("app.softwork:cloudkitclient-testing:0.1.0")
+    implementation(libs.cloudkit.core)
+    implementation(libs.cloudkit.testing)
 
-    runtimeOnly("ch.qos.logback:logback-classic:1.4.7")
+    runtimeOnly(libs.logback)
 
     testImplementation(kotlin("test"))
-    testImplementation("io.ktor:ktor-server-test-host:$ktor")
+    testImplementation(libs.ktor.server.test.host)
 }
 
 licensee {

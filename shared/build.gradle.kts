@@ -1,12 +1,12 @@
-import org.jetbrains.kotlin.gradle.dsl.*
-
 plugins {
-    org.jetbrains.kotlin.multiplatform
-    org.jetbrains.kotlin.plugin.serialization
-    org.jetbrains.compose
+    id("org.jetbrains.kotlin.multiplatform")
+    id("org.jetbrains.kotlin.plugin.serialization")
+    id("org.jetbrains.compose")
 }
 
 kotlin {
+    jvmToolchain(8)
+
     js(IR) {
         browser()
     }
@@ -20,18 +20,17 @@ kotlin {
         commonMain {
             dependencies {
                 api(compose.runtime)
-                api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
-                api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
-                api("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
+                api(libs.coroutines.core)
+                api(libs.serialization.json)
+                api(libs.datetime)
 
-                api("app.softwork:kotlinx-uuid-core:0.0.18")
+                api(libs.uuid.core)
 
-                val ktor = "2.3.0"
-                api("io.ktor:ktor-client-core:$ktor")
-                api("io.ktor:ktor-resources:$ktor")
-                api("io.ktor:ktor-client-resources:$ktor")
-                api("io.ktor:ktor-client-content-negotiation:$ktor")
-                api("io.ktor:ktor-serialization-kotlinx-json:$ktor")
+                api(libs.ktor.client.core)
+                api(libs.ktor.resources)
+                api(libs.ktor.client.resources)
+                api(libs.ktor.client.content.negotiation)
+                api(libs.ktor.serialization.kotlinx.json)
             }
         }
         commonTest {

@@ -1,9 +1,7 @@
-import org.jetbrains.kotlin.gradle.dsl.*
-
 plugins {
-    org.jetbrains.kotlin.js
-    org.jetbrains.compose
-    license
+    id("org.jetbrains.kotlin.js")
+    id("org.jetbrains.compose")
+    id("license")
 }
 
 kotlin {
@@ -28,8 +26,8 @@ dependencies {
     implementation(projects.clients)
 
     implementation(compose.html.core)
-    implementation("app.softwork:bootstrap-compose:0.1.15")
-    implementation("app.softwork:routing-compose:0.2.12")
+    implementation(libs.bootstrapCompose)
+    implementation(libs.routingCompose)
 
     implementation(npm("sql.js", "1.7.0"))
     implementation(devNpm("copy-webpack-plugin", "9.1.0"))

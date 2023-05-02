@@ -1,19 +1,18 @@
-import org.jetbrains.kotlin.gradle.dsl.*
-
 plugins {
-    org.jetbrains.kotlin.jvm
-    org.jetbrains.compose
-    license
+    id("org.jetbrains.kotlin.jvm")
+    id("org.jetbrains.compose")
+    id("license")
 }
+
+kotlin.jvmToolchain(11)
 
 dependencies {
     implementation(projects.composeClients)
 
-    val ktor = "2.3.0"
-    implementation("io.ktor:ktor-client-cio:$ktor")
-    implementation("app.cash.sqldelight:sqlite-driver:2.0.0-alpha05")
+    implementation(libs.ktor.client.cio)
+    implementation(libs.sqldelight.sqliteDriver)
     implementation(compose.desktop.currentOs)
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.6.4")
+    implementation(libs.coroutines.swing)
 
     testImplementation(kotlin("test"))
 }

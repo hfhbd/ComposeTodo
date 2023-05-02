@@ -1,12 +1,12 @@
-import org.jetbrains.kotlin.gradle.dsl.*
-
 plugins {
-    androidLibrary
-    org.jetbrains.kotlin.multiplatform
-    org.jetbrains.compose
+    id("androidLibrary")
+    id("org.jetbrains.kotlin.multiplatform")
+    id("org.jetbrains.compose")
 }
 
 kotlin {
+    jvmToolchain(8)
+
     android()
     jvm("desktop")
 
@@ -27,7 +27,7 @@ kotlin {
 
         named("androidMain") {
             dependencies {
-                implementation("io.github.vanpra.compose-material-dialogs:datetime:0.9.0")
+                implementation(libs.composeMaterialDialogs.datetime)
             }
         }
     }

@@ -1,13 +1,12 @@
 import io.gitlab.arturbosch.detekt.*
 
 plugins {
-    org.jetbrains.kotlinx.kover
-    io.gitlab.arturbosch.detekt
+    id("io.gitlab.arturbosch.detekt")
 }
 
 buildscript {
     dependencies {
-        classpath("org.apache.commons:commons-compress:1.23.0")
+        classpath(libs.apacheCompress)
     }
 }
 
@@ -19,7 +18,7 @@ detekt {
 }
 
 dependencies {
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.22.0")
+    detektPlugins(libs.detekt.formatting)
 }
 
 tasks {
