@@ -27,7 +27,7 @@ kotlin {
 dependencies {
     implementation(projects.clients)
 
-    implementation(compose.web.core)
+    implementation(compose.html.core)
     implementation("app.softwork:bootstrap-compose:0.1.15")
     implementation("app.softwork:routing-compose:0.2.12")
 
