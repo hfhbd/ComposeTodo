@@ -62,5 +62,5 @@ compose-gradlePlugin = { module = "org.jetbrains.compose:compose-gradle-plugin",
 sqldelight-gradlePlugin = { module = "app.cash.sqldelight:gradle-plugin", version.ref = "sqldelight" }
 android-gradlePlugin = { module = "com.android.tools.build:gradle", version = "7.4.2" }
 jib-gradlePlugin = { module = "com.google.cloud.tools:jib-gradle-plugin", version = "3.3.1" }
-licensee-gradlePlugin = { module = "app.cash.licensee:licensee-gradle-plugin", version = "1.6.0" }
+licensee-gradlePlugin = { module = "app.cash.licensee:licensee-gradle-plugin", version = "1.7.0" }
 detekt-gradlePlugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt"}
