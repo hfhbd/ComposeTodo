@@ -113,3 +113,11 @@ tasks {
         dependsOn(assembleXCFramework)
     }
 }
+
+// https://youtrack.jetbrains.com/issue/KT-55751
+configurations {
+    val myAttribute = Attribute.of("dummy.attribute", String::class.java)
+
+    named("debugFrameworkIosFat") { attributes.attribute(myAttribute, "dummy-value") }
+    named("releaseFrameworkIosFat") { attributes.attribute(myAttribute, "dummy-value") }
+}
