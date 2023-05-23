@@ -1,5 +1,5 @@
 [versions]
-kotlin = "1.8.20"
+kotlin = "1.8.21"
 detekt = "1.22.0"
 coroutines = "1.7.1"
 datetime = "0.4.0"
