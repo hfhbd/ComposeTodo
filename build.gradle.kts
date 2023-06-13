@@ -11,7 +11,7 @@ buildscript {
 }
 
 detekt {
-    source = files(rootProject.rootDir)
+    source.from(files(rootProject.rootDir))
     parallel = true
     autoCorrect = true
     buildUponDefaultConfig = true

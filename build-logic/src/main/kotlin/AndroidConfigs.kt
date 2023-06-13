@@ -2,10 +2,12 @@ import com.android.build.api.dsl.*
 import org.gradle.api.*
 
 @Suppress("MagicNumber")
-fun <BuildFeaturesT : BuildFeatures,
+fun <
+    BuildFeaturesT : BuildFeatures,
     BuildTypeT : BuildType,
     DefaultConfigT : DefaultConfig,
-    ProductFlavorT : ProductFlavor> CommonExtension<
+    ProductFlavorT : ProductFlavor
+    > CommonExtension<
     BuildFeaturesT,
     BuildTypeT,
     DefaultConfigT,
