@@ -3,14 +3,18 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.kotlin.gradlePlugin)
-    implementation(libs.kotlin.serialization)
-    implementation(libs.compose.gradlePlugin)
-    implementation(libs.sqldelight.gradlePlugin)
+    implementation(libs.plugins.kotlin.jvm.toDep())
+    implementation(libs.plugins.kotlin.serialization.toDep())
+    implementation(libs.plugins.compose.toDep())
+    implementation(libs.plugins.sqldelight.toDep())
 
-    implementation(libs.android.gradlePlugin)
-    implementation(libs.jib.gradlePlugin)
+    implementation(libs.plugins.android.toDep())
+    implementation(libs.plugins.jib.toDep())
 
-    implementation(libs.licensee.gradlePlugin)
-    implementation(libs.detekt.gradlePlugin)
+    implementation(libs.plugins.licensee.toDep())
+    implementation(libs.plugins.detekt.toDep())
+}
+
+fun Provider<PluginDependency>.toDep() = map {
+    "${it.pluginId}:${it.pluginId}.gradle.plugin:${it.version}"
 }
