@@ -1,40 +1,11 @@
 plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
-    id("com.google.cloud.tools.jib")
+    id("jib")
     id("license")
 }
 
 kotlin.jvmToolchain(17)
-
-jib {
-    val registry: String? by project
-    to.image = when (registry) {
-        "GitHub" -> "ghcr.io/hfhbd/composetodo:$version"
-        "Google" -> {
-            val project_id: String by project
-            val service_name: String by project
-            "eu.gcr.io/$project_id/$service_name:$version"
-        }
-
-        else -> return@jib
-    }
-
-    from {
-        image = "eclipse-temurin:17-jre"
-
-        platforms {
-            platform {
-                architecture = "arm64"
-                os = "linux"
-            }
-            platform {
-                architecture = "amd64"
-                os = "linux"
-            }
-        }
-    }
-}
 
 dependencies {
     implementation(projects.shared)
@@ -53,6 +24,37 @@ dependencies {
 
     testImplementation(kotlin("test"))
     testImplementation(libs.ktor.server.test.host)
+}
+
+application.mainClass.set("app.softwork.composetodo.MainKt")
+
+tasks.register<Jib>("jibGithub") {
+    to.image.set("ghcr.io/hfhbd/composetodo:$version")
+}
+
+tasks.register<Jib>("jibGoogle") {
+    to.image.set(
+        providers.gradleProperty("project_id").zip(providers.gradleProperty("serviceName")) { projectId, serviceName ->
+            "eu.gcr.io/$projectId/$serviceName:$version"
+        }
+    )
+}
+
+tasks.withType<Jib>().configureEach {
+    from {
+        image.set("eclipse-temurin:17-jre")
+
+        platforms {
+            register("arm") {
+                architecture.set("arm64")
+                os.set("linux")
+            }
+            register("amd64") {
+                architecture.set("amd64")
+                os.set("linux")
+            }
+        }
+    }
 }
 
 licensee {

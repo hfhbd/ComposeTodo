@@ -13,6 +13,11 @@ dependencies {
 
     implementation(libs.plugins.licensee.toDep())
     implementation(libs.plugins.detekt.toDep())
+
+    implementation(libs.jib.core)
+    implementation("com.google.cloud.tools:jib-build-plan:0.4.0")
+    implementation("com.google.cloud.tools:jib-plugins-extension-common:0.2.0")
+    implementation("com.google.cloud.tools:jib-gradle-plugin-extension-api:0.4.0")
 }
 
 fun Provider<PluginDependency>.toDep() = map {

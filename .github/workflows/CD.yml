@@ -48,9 +48,9 @@ jobs:
       - uses: gradle/gradle-build-action@v2  
       - run: ./gradlew build
       - name: Push Docker Image to GitHub
-        run: ./gradlew -Pversion=$version -Pregistry=GitHub jib
+        run: ./gradlew -Pversion=$version jibGitHub
       - name: Push Docker Image to Google Container Registry
-        run: ./gradlew -Pversion=$version -Pproject_id=${{ secrets.PROJECT_ID }} -Pservice_name=$service_name -Pregistry=Google jib
+        run: ./gradlew -Pversion=$version -Pproject_id=${{ secrets.PROJECT_ID }} -Pservice_name=$service_name jibGoogle
       - name: Assemble with Gradle
         run: ./gradlew :web:browserDistribution
       - uses: actions/upload-pages-artifact@v2
