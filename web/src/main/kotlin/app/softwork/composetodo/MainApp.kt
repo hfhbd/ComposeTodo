@@ -67,7 +67,7 @@ private fun RouteBuilder.MainContent(appContainer: AppContainer, api: API.Logged
         }
     }) {
         route("users") {
-            Users(api)
+            Users()
         }
         route("todos") {
             uuid { todoID ->
