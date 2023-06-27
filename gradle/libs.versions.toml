@@ -59,7 +59,7 @@ cloudkit-testing = { module = "app.softwork:cloudkitclient-testing", version.ref
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-compose = { id = "org.jetbrains.compose", version = "1.4.0" }
+compose = { id = "org.jetbrains.compose", version = "1.4.1" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 android = { id = "com.android.application", version = "7.4.2" }
 jib = { id = "com.google.cloud.tools.jib", version = "3.3.2" }
