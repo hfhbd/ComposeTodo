@@ -56,16 +56,16 @@ public class MainClassResolver {
       throw new MainClassInferenceException(
           HelpfulSuggestions.forMainClassNotFound(
               "'mainClass' configured in "
-                  + projectProperties.getPluginName()
+                  + projectProperties.pluginName
                   + " is not a valid Java class: "
                   + configuredMainClass,
-              projectProperties.getPluginName()));
+                  projectProperties.pluginName));
     }
 
     projectProperties.log(
         LogEvent.info(
             "Searching for main class... Add a 'mainClass' configuration to '"
-                + projectProperties.getPluginName()
+                + projectProperties.pluginName
                 + "' to improve build speed."));
 
     String mainClassFromJarPlugin = projectProperties.getMainClassFromJarPlugin();
@@ -77,18 +77,18 @@ public class MainClassResolver {
       projectProperties.log(
           LogEvent.warn(
               "'mainClass' configured in "
-                  + projectProperties.getJarPluginName()
+                  + projectProperties.jarPluginName
                   + " is not a valid Java class: "
                   + mainClassFromJarPlugin));
     }
     projectProperties.log(
         LogEvent.info(
             "Could not find a valid main class from "
-                + projectProperties.getJarPluginName()
+                + projectProperties.jarPluginName
                 + "; looking into all class files to infer main class."));
 
     MainClassFinder.Result mainClassFinderResult =
-        MainClassFinder.find(projectProperties.getClassFiles(), projectProperties::log);
+        MainClassFinder.find(projectProperties.classFiles, projectProperties::log);
     switch (mainClassFinderResult.getType()) {
       case MAIN_CLASS_FOUND:
         return mainClassFinderResult.getFoundMainClass();
@@ -96,14 +96,14 @@ public class MainClassResolver {
       case MAIN_CLASS_NOT_FOUND:
         throw new MainClassInferenceException(
             HelpfulSuggestions.forMainClassNotFound(
-                "Main class was not found", projectProperties.getPluginName()));
+                "Main class was not found", projectProperties.pluginName));
 
       case MULTIPLE_MAIN_CLASSES:
         throw new MainClassInferenceException(
             HelpfulSuggestions.forMainClassNotFound(
                 "Multiple valid main classes were found: "
                     + String.join(", ", mainClassFinderResult.getFoundMainClasses()),
-                projectProperties.getPluginName()));
+                    projectProperties.pluginName));
 
       default:
         throw new IllegalStateException("Cannot reach here");

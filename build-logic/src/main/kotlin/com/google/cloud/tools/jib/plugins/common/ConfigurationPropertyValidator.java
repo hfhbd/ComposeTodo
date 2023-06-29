@@ -76,16 +76,16 @@ public class ConfigurationPropertyValidator {
     }
 
     // Check auth configuration next; warn if they aren't both set
-    if (!Strings.isNullOrEmpty(auth.getUsername()) && !Strings.isNullOrEmpty(auth.getPassword())) {
-      return Optional.of(Credential.from(auth.getUsername(), auth.getPassword()));
+    if (!Strings.isNullOrEmpty(auth.username) && !Strings.isNullOrEmpty(auth.password)) {
+      return Optional.of(Credential.from(auth.username, auth.password));
     }
 
     String missingConfig = "%s is missing from build configuration; ignoring auth section.";
-    if (!Strings.isNullOrEmpty(auth.getPassword())) {
-      logger.accept(LogEvent.warn(String.format(missingConfig, auth.getUsernameDescriptor())));
+    if (!Strings.isNullOrEmpty(auth.password)) {
+      logger.accept(LogEvent.warn(String.format(missingConfig, auth.usernameDescriptor)));
     }
-    if (!Strings.isNullOrEmpty(auth.getUsername())) {
-      logger.accept(LogEvent.warn(String.format(missingConfig, auth.getPasswordDescriptor())));
+    if (!Strings.isNullOrEmpty(auth.username)) {
+      logger.accept(LogEvent.warn(String.format(missingConfig, auth.passwordDescriptor)));
     }
 
     return Optional.empty();
@@ -110,11 +110,11 @@ public class ConfigurationPropertyValidator {
       ProjectProperties projectProperties,
       HelpfulSuggestions helpfulSuggestions)
       throws InvalidImageReferenceException {
-    String generatedName = projectProperties.getName();
+    String generatedName = projectProperties.name;
     String generatedTag =
-        projectProperties.getVersion().equals("unspecified")
+        projectProperties.version.equals("unspecified")
             ? "latest"
-            : projectProperties.getVersion();
+            : projectProperties.version;
     if (Strings.isNullOrEmpty(targetImage)) {
       projectProperties.log(
           LogEvent.lifecycle(helpfulSuggestions.forGeneratedTag(generatedName, generatedTag)));

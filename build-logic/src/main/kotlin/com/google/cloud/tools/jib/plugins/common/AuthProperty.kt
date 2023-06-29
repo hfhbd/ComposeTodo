@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC.
+ * Copyright 2018 Google LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -13,26 +13,13 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+package com.google.cloud.tools.jib.plugins.common
 
-package com.google.cloud.tools.jib.plugins.common.globalconfig;
-
-import com.google.cloud.tools.jib.json.JsonTemplate;
-import java.util.Collections;
-import java.util.List;
-import javax.annotation.Nullable;
-
-/** JSON template for registry mirror config. */
-public class RegistryMirrorsTemplate implements JsonTemplate {
-
-  @Nullable private String registry;
-  private List<String> mirrors = Collections.emptyList();
-
-  @Nullable
-  String getRegistry() {
-    return registry;
-  }
-
-  List<String> getMirrors() {
-    return mirrors;
-  }
+/** Holds a username and password property.  */
+interface AuthProperty {
+    val username: String?
+    val password: String?
+    val authDescriptor: String
+    val usernameDescriptor: String
+    val passwordDescriptor: String
 }

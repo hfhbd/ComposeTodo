@@ -494,7 +494,7 @@ public class PluginConfigurationProcessor {
         // Verify Java version is compatible
         List<String> splits = Splitter.on("://").splitToList(baseImageConfig);
         String prefixRemoved = splits.get(splits.size() - 1);
-        int javaVersion = projectProperties.getMajorJavaVersion();
+        int javaVersion = projectProperties.majorJavaVersion;
         if (isKnownJava8Image(prefixRemoved) && javaVersion > 8) {
             throw new IncompatibleBaseImageJavaVersionException(8, javaVersion);
         }
@@ -575,7 +575,7 @@ public class PluginConfigurationProcessor {
                                     + "when entrypoint is specified"));
         }
 
-        if (projectProperties.isWarProject()) {
+        if (projectProperties.isWarProject) {
             if (entrypointDefined) {
                 return rawEntrypoint.get().size() == 1 && "INHERIT".equals(rawEntrypoint.get().get(0))
                         ? null
@@ -611,9 +611,9 @@ public class PluginConfigurationProcessor {
                 throw new IllegalStateException("unknown containerizing mode: " + mode);
         }
 
-        if (projectProperties.getMajorJavaVersion() >= 9
+        if (projectProperties.majorJavaVersion >= 9
                 || rawConfiguration.getExpandClasspathDependencies()) {
-            List<Path> jars = projectProperties.getDependencies();
+            List<Path> jars = projectProperties.dependencies;
 
             Map<String, Long> occurrences =
                     jars.stream()
@@ -656,7 +656,7 @@ public class PluginConfigurationProcessor {
         addJvmArgFilesLayer(
                 rawConfiguration, projectProperties, jibContainerBuilder, classpathString, mainClass);
 
-        if (projectProperties.getMajorJavaVersion() >= 9) {
+        if (projectProperties.majorJavaVersion >= 9) {
             classpathString = "@" + appRoot.resolve(JIB_CLASSPATH_FILE);
         }
 
@@ -683,7 +683,7 @@ public class PluginConfigurationProcessor {
             String classpath,
             String mainClass)
             throws IOException, InvalidAppRootException {
-        Path projectCache = projectProperties.getDefaultCacheDirectory();
+        Path projectCache = projectProperties.defaultCacheDirectory;
         Path classpathFile = projectCache.resolve(JIB_CLASSPATH_FILE);
         Path mainClassFile = projectCache.resolve(JIB_MAIN_CLASS_FILE);
 
@@ -736,10 +736,10 @@ public class PluginConfigurationProcessor {
     @VisibleForTesting
     static String getDefaultBaseImage(ProjectProperties projectProperties)
             throws IncompatibleBaseImageJavaVersionException {
-        if (projectProperties.isWarProject()) {
+        if (projectProperties.isWarProject) {
             return "jetty";
         }
-        int javaVersion = projectProperties.getMajorJavaVersion();
+        int javaVersion = projectProperties.majorJavaVersion;
         if (javaVersion <= 8) {
             return "eclipse-temurin:8-jre";
         } else if (javaVersion <= 11) {
@@ -822,7 +822,7 @@ public class PluginConfigurationProcessor {
         String appRoot = rawConfiguration.getAppRoot();
         if (appRoot.isEmpty()) {
             appRoot =
-                    projectProperties.isWarProject()
+                    projectProperties.isWarProject
                             ? DEFAULT_JETTY_APP_ROOT
                             : JavaContainerBuilder.DEFAULT_APP_ROOT;
         }
@@ -837,7 +837,7 @@ public class PluginConfigurationProcessor {
             RawConfiguration rawConfiguration, ProjectProperties projectProperties)
             throws InvalidContainerizingModeException {
         ContainerizingMode mode = ContainerizingMode.from(rawConfiguration.getContainerizingMode());
-        if (mode == ContainerizingMode.PACKAGED && projectProperties.isWarProject()) {
+        if (mode == ContainerizingMode.PACKAGED && projectProperties.isWarProject) {
             throw new UnsupportedOperationException(
                     "packaged containerizing mode for WAR is not yet supported");
         }
@@ -962,17 +962,17 @@ public class PluginConfigurationProcessor {
                         rawConfiguration);
         if (optionalCredential.isPresent()) {
             defaultCredentialRetrievers.setKnownCredential(
-                    optionalCredential.get(), rawAuthConfiguration.getAuthDescriptor());
+                    optionalCredential.get(), rawAuthConfiguration.authDescriptor);
         } else {
             try {
                 Optional<AuthProperty> optionalInferredAuth =
                         inferredAuthProvider.inferAuth(imageReference.getRegistry());
                 if (optionalInferredAuth.isPresent()) {
                     AuthProperty auth = optionalInferredAuth.get();
-                    String username = Verify.verifyNotNull(auth.getUsername());
-                    String password = Verify.verifyNotNull(auth.getPassword());
+                    String username = Verify.verifyNotNull(auth.username);
+                    String password = Verify.verifyNotNull(auth.password);
                     Credential credential = Credential.from(username, password);
-                    defaultCredentialRetrievers.setInferredCredential(credential, auth.getAuthDescriptor());
+                    defaultCredentialRetrievers.setInferredCredential(credential, auth.authDescriptor);
                 }
             } catch (InferredAuthException ex) {
                 projectProperties.log(LogEvent.warn("InferredAuthException: " + ex.getMessage()));
@@ -1007,19 +1007,19 @@ public class PluginConfigurationProcessor {
             ProjectProperties projectProperties) {
         projectProperties.configureEventHandlers(containerizer);
         containerizer
-                .setOfflineMode(projectProperties.isOffline())
-                .setToolName(projectProperties.getToolName())
-                .setToolVersion(projectProperties.getToolVersion())
+                .setOfflineMode(projectProperties.isOffline)
+                .setToolName(projectProperties.toolName)
+                .setToolVersion(projectProperties.toolVersion)
                 .setAllowInsecureRegistries(rawConfiguration.getAllowInsecureRegistries())
                 .setBaseImageLayersCache(
                         getCheckedCacheDirectory(
                                 PropertyNames.BASE_IMAGE_CACHE,
                                 Boolean.getBoolean(PropertyNames.USE_ONLY_PROJECT_CACHE)
-                                        ? projectProperties.getDefaultCacheDirectory()
+                                        ? projectProperties.defaultCacheDirectory
                                         : Containerizer.DEFAULT_BASE_CACHE_DIRECTORY))
                 .setApplicationLayersCache(
                         getCheckedCacheDirectory(
-                                PropertyNames.APPLICATION_CACHE, projectProperties.getDefaultCacheDirectory()));
+                                PropertyNames.APPLICATION_CACHE, projectProperties.defaultCacheDirectory));
 
         rawConfiguration.getToTags().forEach(containerizer::withAdditionalTag);
     }

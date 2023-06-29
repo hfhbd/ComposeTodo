@@ -17,8 +17,8 @@
 package com.google.cloud.tools.jib.plugins.common.logging;
 
 import com.google.cloud.tools.jib.api.LogEvent.Level;
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.collect.ImmutableMap;
+
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -29,10 +29,9 @@ public class ConsoleLoggerBuilder {
    * Alias for function that takes a map from {@link Level} to a log message {@link Consumer} and
    * creates a {@link ConsoleLogger}.
    */
-  @VisibleForTesting
   @FunctionalInterface
   interface ConsoleLoggerFactory
-      extends Function<ImmutableMap<Level, Consumer<String>>, ConsoleLogger> {}
+      extends Function<Map<Level, Consumer<String>>, ConsoleLogger> {}
 
   /**
    * Starts a {@link ConsoleLoggerBuilder} for rich logging (ANSI support with footer).

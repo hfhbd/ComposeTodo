@@ -13,17 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+package com.google.cloud.tools.jib.plugins.common
 
-package com.google.cloud.tools.jib.plugins.common;
-
-/** Thrown when main class inference fails. */
-public class MainClassInferenceException extends Exception {
-
-  MainClassInferenceException(String message) {
-    super(message);
-  }
-
-  MainClassInferenceException(String message, Throwable cause) {
-    super(message, cause);
-  }
-}
+/** Wraps an exception that happens during containerization.  */
+class BuildStepsExecutionException(message: String?, cause: Throwable?) : Exception(message, cause)

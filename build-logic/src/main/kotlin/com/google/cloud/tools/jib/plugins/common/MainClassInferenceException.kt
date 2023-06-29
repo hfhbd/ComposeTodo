@@ -13,23 +13,10 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+package com.google.cloud.tools.jib.plugins.common
 
-package com.google.cloud.tools.jib.plugins.common;
-
-import javax.annotation.Nullable;
-
-/** Holds a username and password property. */
-public interface AuthProperty {
-
-  @Nullable
-  String getUsername();
-
-  @Nullable
-  String getPassword();
-
-  String getAuthDescriptor();
-
-  String getUsernameDescriptor();
-
-  String getPasswordDescriptor();
+/** Thrown when main class inference fails.  */
+class MainClassInferenceException : Exception {
+    internal constructor(message: String?) : super(message)
+    internal constructor(message: String?, cause: Throwable?) : super(message, cause)
 }

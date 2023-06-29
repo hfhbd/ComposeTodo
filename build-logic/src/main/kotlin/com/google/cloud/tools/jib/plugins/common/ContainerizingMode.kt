@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Google LLC.
+ * Copyright 2019 Google LLC.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -13,13 +13,17 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+package com.google.cloud.tools.jib.plugins.common
 
-package com.google.cloud.tools.jib.plugins.common;
-
-/** Wraps an exception that happens during containerization. */
-public class BuildStepsExecutionException extends Exception {
-
-  BuildStepsExecutionException(String message, Throwable cause) {
-    super(message, cause);
-  }
+/**
+ * Containerizing mode.
+ *
+ *
+ *  * `EXPLODED` puts individual application files without packaging.
+ *  * `PACKAGED` puts a single packaged artifact for an application.
+ *
+ */
+enum class ContainerizingMode {
+    EXPLODED,
+    PACKAGED
 }

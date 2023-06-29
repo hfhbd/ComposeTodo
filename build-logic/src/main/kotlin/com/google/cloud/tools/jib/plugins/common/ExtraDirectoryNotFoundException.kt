@@ -13,20 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+package com.google.cloud.tools.jib.plugins.common
 
-package com.google.cloud.tools.jib.plugins.common;
-
-/** Indicates that the {@code extraDirectories.paths.path} is not found. */
-public class ExtraDirectoryNotFoundException extends Exception {
-
-  private final String path;
-
-  public ExtraDirectoryNotFoundException(String message, String path) {
-    super(message);
-    this.path = path;
-  }
-
-  public String getPath() {
-    return path;
-  }
-}
+/** Indicates that the `extraDirectories.paths.path` is not found.  */
+class ExtraDirectoryNotFoundException(message: String?, val path: String) : Exception(message)
