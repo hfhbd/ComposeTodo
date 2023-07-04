@@ -4,4 +4,5 @@ plugins {
 
 android {
     androidConfig()
+    compileSdkVersion = "android-31"
 }
