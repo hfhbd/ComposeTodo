@@ -54,7 +54,7 @@ jobs:
         run: ./gradlew -Pversion=$version -Pproject_id=${{ secrets.PROJECT_ID }} -Pservice_name=$service_name -Pregistry=Google jib
       - name: Assemble with Gradle
         run: ./gradlew :web:browserDistribution
-      - uses: actions/upload-pages-artifact@v1
+      - uses: actions/upload-pages-artifact@v2
         with:
           path: web/build/distributions
       - name: Deploy to GitHub Pages
