@@ -1,6 +1,6 @@
 [versions]
 kotlin = "1.8.20"
-detekt = "1.23.0"
+detekt = "1.23.1"
 coroutines = "1.7.3"
 datetime = "0.4.0"
 serialization = "1.5.1"
