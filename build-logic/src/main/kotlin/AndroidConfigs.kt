@@ -7,7 +7,7 @@ fun <
     BuildTypeT : BuildType,
     DefaultConfigT : DefaultConfig,
     ProductFlavorT : ProductFlavor,
-    ResourcesT: AndroidResources
+    ResourcesT : AndroidResources
     > CommonExtension<
     BuildFeaturesT,
     BuildTypeT,
