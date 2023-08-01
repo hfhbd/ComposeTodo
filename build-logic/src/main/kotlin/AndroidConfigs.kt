@@ -6,12 +6,14 @@ fun <
     BuildFeaturesT : BuildFeatures,
     BuildTypeT : BuildType,
     DefaultConfigT : DefaultConfig,
-    ProductFlavorT : ProductFlavor
+    ProductFlavorT : ProductFlavor,
+    ResourcesT : AndroidResources
     > CommonExtension<
     BuildFeaturesT,
     BuildTypeT,
     DefaultConfigT,
-    ProductFlavorT
+    ProductFlavorT,
+    ResourcesT
     >.androidConfig() {
     compileSdk = TARGET_SDK
 
