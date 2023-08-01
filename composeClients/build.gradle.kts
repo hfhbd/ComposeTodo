@@ -7,7 +7,7 @@ plugins {
 kotlin {
     jvmToolchain(8)
 
-    android()
+    androidTarget()
     jvm("desktop")
 
     sourceSets {

@@ -18,8 +18,8 @@ sqldelight {
 
 kotlin {
     jvmToolchain(8)
-    
-    android()
+
+    androidTarget()
     jvm("desktop")
 
     val xcf = XCFramework()
@@ -80,14 +80,14 @@ kotlin {
         val iosTest by creating {
             dependsOn(commonTest.get())
         }
-        
+
         val iosArm64Main by getting {
             dependsOn(iosMain)
         }
         val iosArm64Test by getting {
             dependsOn(iosTest)
         }
-        
+
         val iosSimulatorArm64Main by getting {
             dependsOn(iosMain)
         }
@@ -112,12 +112,4 @@ tasks {
     assemble {
         dependsOn(assembleXCFramework)
     }
-}
-
-// https://youtrack.jetbrains.com/issue/KT-55751
-configurations {
-    val myAttribute = Attribute.of("dummy.attribute", String::class.java)
-
-    named("debugFrameworkIosFat") { attributes.attribute(myAttribute, "dummy-value") }
-    named("releaseFrameworkIosFat") { attributes.attribute(myAttribute, "dummy-value") }
 }
