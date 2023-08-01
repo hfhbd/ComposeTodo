@@ -1,6 +1,8 @@
+import org.jetbrains.kotlin.gradle.dsl.KotlinJsCompile
+
 plugins {
-    id("org.jetbrains.kotlin.multiplatform")
-    id("org.jetbrains.kotlin.plugin.serialization")
+    kotlin("multiplatform")
+    kotlin("plugin.serialization")
     id("org.jetbrains.compose")
 }
 
@@ -39,4 +41,10 @@ kotlin {
             }
         }
     }
+}
+
+tasks.withType<KotlinJsCompile>().configureEach {
+    kotlinOptions.freeCompilerArgs += listOf(
+        "-Xklib-enable-signature-clash-checks=false",
+    )
 }

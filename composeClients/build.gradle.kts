@@ -1,13 +1,13 @@
 plugins {
     id("androidLibrary")
-    id("org.jetbrains.kotlin.multiplatform")
+    kotlin("multiplatform")
     id("org.jetbrains.compose")
 }
 
 kotlin {
     jvmToolchain(8)
 
-    android()
+    androidTarget()
     jvm("desktop")
 
     sourceSets {

@@ -1,5 +1,5 @@
 plugins {
-    id("org.jetbrains.kotlin.js")
+    kotlin("js")
     id("org.jetbrains.compose")
     id("license")
 }
