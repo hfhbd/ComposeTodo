@@ -1,6 +1,6 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm")
-    id("org.jetbrains.kotlin.plugin.serialization")
+    kotlin("jvm")
+    kotlin("plugin.serialization")
     id("com.google.cloud.tools.jib")
     id("license")
 }

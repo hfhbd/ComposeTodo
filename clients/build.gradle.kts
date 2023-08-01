@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.apple.*
 
 plugins {
     id("androidLibrary")
-    id("org.jetbrains.kotlin.multiplatform")
+    kotlin("multiplatform")
     id("org.jetbrains.compose")
     id("app.cash.sqldelight")
 }
