@@ -26,7 +26,7 @@ apacheCompress = { module = "org.apache.commons:commons-compress", version = "1.
 
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 
-uuid-core = { module = "app.softwork:kotlinx-uuid-core", version = "0.0.20" }
+uuid-core = { module = "app.softwork:kotlinx-uuid-core", version = "0.0.21" }
 bootstrapCompose = { module = "app.softwork:bootstrap-compose", version = "0.1.15" }
 routingCompose = { module = "app.softwork:routing-compose", version = "0.2.12" }
 
