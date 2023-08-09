@@ -1,5 +1,6 @@
 package app.softwork.composetodo
 
+import app.cash.sqldelight.async.coroutines.*
 import app.cash.sqldelight.driver.native.*
 import app.softwork.composetodo.repository.*
 import app.softwork.composetodo.viewmodels.*
@@ -18,7 +19,9 @@ class IosContainer(
     protocol: URLProtocol,
     host: String
 ) : AppContainer {
-    private val db = TodoRepository.createDatabase(NativeSqliteDriver(ComposeTodoDB.Schema, "composetodo.db"))
+    private val db = TodoRepository.createDatabase(
+        NativeSqliteDriver(ComposeTodoDB.Schema.synchronous(), "composetodo.db")
+    )
 
     constructor() : this(protocol = URLProtocol.HTTPS, host = "api.todo.softwork.app")
 

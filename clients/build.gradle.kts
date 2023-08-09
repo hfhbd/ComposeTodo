@@ -12,7 +12,7 @@ sqldelight {
     databases.register("ComposeTodoDB") {
         packageName.set("app.softwork.composetodo")
         deriveSchemaFromMigrations.set(true)
-        verifyMigrations.set(true)
+        generateAsync.set(true)
     }
 }
 
@@ -93,12 +93,6 @@ kotlin {
         }
         val iosSimulatorArm64Test by getting {
             dependsOn(iosTest)
-        }
-
-        val jsMain by getting {
-            dependencies {
-                api(libs.sqldelight.sqljsDriver)
-            }
         }
     }
 }

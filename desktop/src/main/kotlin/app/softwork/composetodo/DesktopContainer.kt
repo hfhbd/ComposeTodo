@@ -1,5 +1,6 @@
 package app.softwork.composetodo
 
+import app.cash.sqldelight.async.coroutines.*
 import app.cash.sqldelight.db.*
 import app.cash.sqldelight.driver.jdbc.sqlite.*
 import app.softwork.composetodo.repository.*
@@ -18,7 +19,7 @@ class DesktopContainer : AppContainer {
     private val db: ComposeTodoDB
     init {
         val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:composetodo.db")
-        ComposeTodoDB.Schema.migrate(driver, 0, 1)
+        ComposeTodoDB.Schema.synchronous().migrate(driver, 0, 1)
         db = createDatabase(driver)
     }
     override fun todoViewModel(api: API.LoggedIn): TodoViewModel =
