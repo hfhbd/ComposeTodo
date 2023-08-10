@@ -15,7 +15,9 @@ window.fetch = function (resource, init) {
 };
 """
     )
-    val driver = WebWorkerDriver(Worker(js("""new URL("@cashapp/sqldelight-sqljs-worker/sqljs.worker.js", import.meta.url)""")))
+    val driver = WebWorkerDriver(
+        Worker(js("""new URL("@cashapp/sqldelight-sqljs-worker/sqljs.worker.js", import.meta.url)"""))
+    )
     ComposeTodoDB.Schema.migrate(driver, 0, 1).await()
     renderComposable(rootElementId = "root") {
         val appContainer = WebContainer(driver)
