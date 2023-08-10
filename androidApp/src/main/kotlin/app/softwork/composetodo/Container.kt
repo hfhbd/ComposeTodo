@@ -16,7 +16,9 @@ import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.flow.*
 
 class Container(applicationContext: Context) : AppContainer {
-    private val db = createDatabase(AndroidSqliteDriver(ComposeTodoDB.Schema.synchronous(), applicationContext, "composetodo.db"))
+    private val db = createDatabase(
+        AndroidSqliteDriver(ComposeTodoDB.Schema.synchronous(), applicationContext, "composetodo.db")
+    )
 
     override val client = HttpClient(Android) {
         defaultRequest {
