@@ -1,6 +1,7 @@
 package app.softwork.composetodo
 
 import android.content.*
+import app.cash.sqldelight.async.coroutines.*
 import app.cash.sqldelight.driver.android.*
 import app.softwork.composetodo.repository.*
 import app.softwork.composetodo.repository.TodoRepository.Companion.createDatabase
@@ -15,7 +16,9 @@ import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.flow.*
 
 class Container(applicationContext: Context) : AppContainer {
-    private val db = createDatabase(AndroidSqliteDriver(ComposeTodoDB.Schema, applicationContext, "composetodo.db"))
+    private val db = createDatabase(
+        AndroidSqliteDriver(ComposeTodoDB.Schema.synchronous(), applicationContext, "composetodo.db")
+    )
 
     override val client = HttpClient(Android) {
         defaultRequest {

@@ -1,5 +1,6 @@
 package app.softwork.composetodo.repository
 
+import app.cash.sqldelight.async.coroutines.*
 import app.cash.sqldelight.coroutines.*
 import app.cash.sqldelight.db.*
 import app.softwork.composetodo.*
@@ -35,7 +36,7 @@ interface TodoRepository {
             }
 
             override suspend fun deleteAll() {
-                val allIDs = dao.allIDs().executeAsList()
+                val allIDs = dao.allIDs().awaitAsList()
                 dao.deleteAll()
                 allIDs.forEach { id ->
                     api.deleteTodo(id)
