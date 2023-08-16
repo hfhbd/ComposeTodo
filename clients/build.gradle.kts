@@ -19,8 +19,14 @@ sqldelight {
 kotlin {
     jvmToolchain(8)
 
+    targetHierarchy.default()
+
     androidTarget()
     jvm("desktop")
+
+    js(IR) {
+        browser()
+    }
 
     val xcf = XCFramework()
     fun KotlinNativeTarget.config() {
@@ -35,16 +41,20 @@ kotlin {
             }
         }
     }
-    iosArm64 {
-        config()
-    }
-    iosSimulatorArm64 {
-        config()
-    }
 
-    js(IR) {
-        browser()
-    }
+    macosX64 { config() }
+    macosArm64 { config() }
+
+    iosArm64 { config() }
+    iosSimulatorArm64 { config() }
+
+    watchosArm32 { config() }
+    watchosArm64 { config() }
+    // watchosDeviceArm64 { config() }
+    watchosSimulatorArm64 { config() }
+
+    tvosArm64 { config() }
+    tvosSimulatorArm64 { config() }
 
     sourceSets {
         commonMain {
@@ -70,29 +80,11 @@ kotlin {
             }
         }
 
-        val iosMain by creating {
-            dependsOn(commonMain.get())
+        named("appleMain") {
             dependencies {
                 implementation(libs.ktor.client.darwin)
                 implementation(libs.sqldelight.nativeDriver)
             }
-        }
-        val iosTest by creating {
-            dependsOn(commonTest.get())
-        }
-
-        val iosArm64Main by getting {
-            dependsOn(iosMain)
-        }
-        val iosArm64Test by getting {
-            dependsOn(iosTest)
-        }
-
-        val iosSimulatorArm64Main by getting {
-            dependsOn(iosMain)
-        }
-        val iosSimulatorArm64Test by getting {
-            dependsOn(iosTest)
         }
     }
 }
