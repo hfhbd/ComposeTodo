@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.gradle.dsl.KotlinJsCompile
+import org.jetbrains.kotlin.gradle.dsl.*
 
 plugins {
     kotlin("multiplatform")
@@ -9,12 +9,25 @@ plugins {
 kotlin {
     jvmToolchain(8)
 
+    jvm()
+
     js(IR) {
         browser()
     }
+
+    macosX64()
+    macosArm64()
+
     iosArm64()
     iosSimulatorArm64()
-    jvm()
+
+    watchosArm32()
+    watchosArm64()
+    // watchosDeviceArm64()
+    watchosSimulatorArm64()
+
+    tvosArm64()
+    tvosSimulatorArm64()
 
     explicitApi()
 
