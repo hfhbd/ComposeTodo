@@ -20,6 +20,9 @@ jobs:
       pages: write
       id-token: write
 
+    env:
+      GRADLE_OPTS: -Dorg.gradle.caching=true
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -45,7 +48,7 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: 17
-      - uses: gradle/gradle-build-action@v2  
+      - uses: gradle/gradle-build-action@v2
       - run: ./gradlew build
       - name: Push Docker Image to GitHub
         run: ./gradlew -Pversion=$version -Pregistry=GitHub jib
