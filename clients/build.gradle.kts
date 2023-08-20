@@ -92,10 +92,3 @@ kotlin {
 android {
     namespace = "app.softwork.composetodo.clients"
 }
-
-tasks {
-    val assembleXCFramework by existing
-    assemble {
-        dependsOn(assembleXCFramework)
-    }
-}
