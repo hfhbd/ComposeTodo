@@ -1,5 +1,5 @@
 plugins {
-    kotlin("js")
+    kotlin("multiplatform")
     id("org.jetbrains.compose")
     id("license")
 }
@@ -20,19 +20,26 @@ kotlin {
             }
         }
     }
-}
 
-dependencies {
-    implementation(projects.clients)
+    sourceSets {
+        named("jsMain") {
+            dependencies {
+                implementation(projects.clients)
 
-    implementation(compose.html.core)
-    implementation(libs.bootstrapCompose)
-    implementation(libs.routingCompose)
+                implementation(compose.html.core)
+                implementation(libs.bootstrapCompose)
+                implementation(libs.routingCompose)
 
-    implementation(libs.sqldelight.sqljsDriver)
-    implementation(npm("@cashapp/sqldelight-sqljs-worker", "2.0.0"))
-    implementation(npm("sql.js", "1.8.0"))
-    implementation(devNpm("copy-webpack-plugin", "9.1.0"))
-
-    testImplementation(kotlin("test"))
+                implementation(libs.sqldelight.sqljsDriver)
+                implementation(npm("@cashapp/sqldelight-sqljs-worker", "2.0.0"))
+                implementation(npm("sql.js", "1.8.0"))
+                implementation(devNpm("copy-webpack-plugin", "9.1.0"))
+            }
+        }
+        commonTest {
+            dependencies {
+                implementation(kotlin("test"))
+            }
+        }
+    }
 }
