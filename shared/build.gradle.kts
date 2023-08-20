@@ -57,7 +57,5 @@ kotlin {
 }
 
 tasks.withType<KotlinJsCompile>().configureEach {
-    kotlinOptions.freeCompilerArgs += listOf(
-        "-Xklib-enable-signature-clash-checks=false",
-    )
+    kotlinOptions.options.freeCompilerArgs.add("-Xklib-enable-signature-clash-checks=false")
 }
