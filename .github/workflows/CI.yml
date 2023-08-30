@@ -1,10 +1,12 @@
 name: CI
 
 on:
-  push:
+  push: 
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  pull_request: P-Tanawat/ComposeTodoเ
+    branches:
+    - main
+    - P-Tanawat
 
 jobs:
   build:
@@ -41,3 +43,23 @@ jobs:
         if: success() || failure()
         with:
           sarif_file: build/reports/detekt/detekt.sarif
+
+- ชื่อ: ตั้งค่า .NET Core SDK
+  ใช้: actions/setup-dotnet@v3.2.0
+  กับ:
+    # เวอร์ชัน SDK เสริมที่จะใช้ หากไม่มีให้ จะติดตั้งเวอร์ชัน global.json เมื่อพร้อมใช้งาน ตัวอย่าง: 2.2.104, 3.1, 3.1.x, 3.x, 6.0.2xx
+    dotnet-เวอร์ชัน: # ตัวเลือก
+    # คุณภาพทางเลือกของการสร้าง ค่าที่เป็นไปได้คือ: รายวัน, ลงนาม, ตรวจสอบแล้ว, ดูตัวอย่าง, ga
+    คุณภาพ dotnet: # ตัวเลือก
+    # ตำแหน่ง global.json ที่เป็นตัวเลือก หาก global.json ของคุณไม่ได้อยู่ในรากของ repo
+    global-json-file: # ตัวเลือก
+    # แหล่งแพ็คเกจเสริมสำหรับตั้งค่าการรับรองความถูกต้อง จะปรึกษา NuGet.config ที่มีอยู่ในรูทของ repo และจัดเตรียม NuGet.config ชั่วคราวโดยใช้ตัวแปรสภาพแวดล้อม NUGET_AUTH_TOKEN เป็น ClearTextPassword
+    URL แหล่งที่มา: # ตัวเลือก
+    # เจ้าของทางเลือกสำหรับการใช้แพ็คเกจจากองค์กร/ผู้ใช้ GitHub Package Registry ที่ไม่ใช่เจ้าของพื้นที่เก็บข้อมูลปัจจุบัน ใช้เฉพาะเมื่อมีการระบุ GPR URL ใน URL แหล่งที่มาด้วย
+    เจ้าของ: # ตัวเลือก
+    # ตำแหน่ง NuGet.config ที่เป็นตัวเลือก หาก NuGet.config ของคุณไม่ได้อยู่ในรูทของ repo
+    ไฟล์ config: # ตัวเลือก
+    # อินพุตทางเลือกเพื่อเปิดใช้งานการแคชของโฟลเดอร์ NuGet global-packages
+    แคช: # ตัวเลือก
+    # ใช้เพื่อระบุเส้นทางไปยังไฟล์อ้างอิง: packages.lock.json รองรับไวด์การ์ดหรือรายการชื่อไฟล์สำหรับแคชการอ้างอิงหลายรายการ
+    เส้นทางการพึ่งพาแคช: # ตัวเลือก
