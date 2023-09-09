@@ -55,6 +55,14 @@ private fun Content(
             content()
         }
     }
+    Footer(attrs = { classes("footer", "mt-auto") }) {
+        Container {
+            Hr()
+            P {
+                Text("© Softwork.app")
+            }
+        }
+    }
 }
 
 @Composable
