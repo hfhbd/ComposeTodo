@@ -23,6 +23,8 @@ jobs:
           distribution: 'adopt'
           java-version: 17
       - uses: gradle/gradle-build-action@v2
+        env:
+          GITHUB_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         with:
           dependency-graph: generate-and-submit
           gradle-home-cache-cleanup: true
