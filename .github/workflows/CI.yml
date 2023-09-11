@@ -35,10 +35,14 @@ jobs:
             ~/.konan
       - name: Build with Gradle
         run: ./gradlew build
+        env:
+          GITHUB_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
 
       - name: Detekt
         run: ./gradlew detekt
         if: always()
+        env:
+          GITHUB_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
       - name: Upload SARIF to Github using the upload-sarif action
         uses: github/codeql-action/upload-sarif@v2
         if: always()
