@@ -10,7 +10,7 @@ pluginManagement {
 plugins {
     id("MyRepos")
     id("org.gradle.toolchains.foojay-resolver-convention") version "0.7.0"
-    id("com.gradle.enterprise") version "3.14.1"
+    id("com.gradle.enterprise") version "3.15"
 }
 
 gradleEnterprise {
