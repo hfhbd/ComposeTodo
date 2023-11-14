@@ -3,12 +3,12 @@ package app.softwork.composetodo
 import app.softwork.cloudkitclient.*
 import app.softwork.composetodo.controller.*
 import app.softwork.composetodo.dto.*
+import io.ktor.client.*
 import io.ktor.http.*
 import io.ktor.resources.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
-import io.ktor.server.auth.jwt.*
 import io.ktor.server.plugins.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.resources.Resources
@@ -18,7 +18,7 @@ import kotlinx.serialization.*
 import kotlinx.serialization.json.*
 import kotlin.time.Duration.Companion.days
 
-fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
+fun Application.TodoModule(db: Client.Database, oatuhClient: HttpClient) {
     install(Resources)
     install(ContentNegotiation) {
         json()
@@ -34,15 +34,43 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
                 userController.findBy(name, password)
             }
         }
-        jwt {
-            verifier {
-                jwtProvider.verifier
+        oauth("google") {
+            urlProvider = { "http://localhost:8080/callback" }
+            providerLookup = {
+                OAuthServerSettings.OAuth2ServerSettings(
+                    name = "google",
+                    authorizeUrl = "https://accounts.google.com/o/oauth2/auth",
+                    accessTokenUrl = "https://accounts.google.com/o/oauth2/token",
+                    requestMethod = HttpMethod.Post,
+                    clientId = System.getenv("GOOGLE_CLIENT_ID"),
+                    clientSecret = System.getenv("GOOGLE_CLIENT_SECRET"),
+                    defaultScopes = listOf("https://www.googleapis.com/auth/userinfo.profile"),
+                    extraAuthParameters = listOf("access_type" to "offline"),
+                    onStateCreated = { call, state ->
+                      //  redirects[state] = call.request.queryParameters["redirectUrl"]!!
+                    }
+                )
             }
-            validate { credentials ->
-                jwtProvider.validate(credentials) { userID ->
-                    userController.find(userID)
-                }
+            client = oatuhClient
+        }
+        oauth("apple") {
+            urlProvider = { "http://localhost:8080/callback" }
+            providerLookup = {
+                OAuthServerSettings.OAuth2ServerSettings(
+                    name = "google",
+                    authorizeUrl = "https://accounts.google.com/o/oauth2/auth",
+                    accessTokenUrl = "https://accounts.google.com/o/oauth2/token",
+                    requestMethod = HttpMethod.Post,
+                    clientId = System.getenv("GOOGLE_CLIENT_ID"),
+                    clientSecret = System.getenv("GOOGLE_CLIENT_SECRET"),
+                    defaultScopes = listOf("https://www.googleapis.com/auth/userinfo.profile"),
+                    extraAuthParameters = listOf("access_type" to "offline"),
+                    onStateCreated = { call, state ->
+                     //   redirects[state] = call.request.queryParameters["redirectUrl"]!!
+                    }
+                )
             }
+            client = oatuhClient
         }
     }
 
@@ -71,20 +99,21 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
             if (newUser.password != newUser.passwordAgain) {
                 throw BadRequestException("password was not equal to passwordAgain")
             }
-            userController.createUser(jwtProvider, newUser.toDAO())
+            // userController.createUser(jwtProvider, newUser.toDAO())
+            TODO("")
         }
 
         authenticate("login") {
             post<API.RefreshToken, Token> {
                 val longRefreshToken = RefreshToken(user.recordName)
                 call.sessions.set(longRefreshToken)
-                jwtProvider.token(longRefreshToken)
+                TODO() // jwtProvider.token(longRefreshToken)
             }
 
             get<API.RefreshToken, Token> {
                 val refreshToken: RefreshToken = call.sessions.get() ?: throw BadRequestException("Token is missing")
 
-                jwtProvider.token(refreshToken)
+                TODO() // jwtProvider.token(refreshToken)
             }
         }
 

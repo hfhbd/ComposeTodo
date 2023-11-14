@@ -1,7 +1,6 @@
 package app.softwork.composetodo
 
 import app.softwork.cloudkitclient.*
-import com.auth0.jwt.algorithms.*
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.cio.*
@@ -11,16 +10,9 @@ import io.ktor.server.plugins.forwardedheaders.*
 import org.slf4j.*
 import java.util.*
 import kotlin.reflect.*
-import kotlin.time.Duration.Companion.minutes
 
 fun main() {
     val db = client().publicDB
-    val jwtProvider = JWTProvider(
-        Algorithm.HMAC512("secret"),
-        "app.softwork.todo",
-        "app.softwork.todo",
-        expireDuration = 10.minutes
-    )
 
     embeddedServer(CIO) {
         install(CORS) {
@@ -33,7 +25,7 @@ fun main() {
             allowMethod(HttpMethod.Put)
         }
         install(XForwardedHeaders)
-        TodoModule(db = db, jwtProvider = jwtProvider)
+        TodoModule(db = db, oatuhClient = TODO())
     }.start(wait = true)
 }
 

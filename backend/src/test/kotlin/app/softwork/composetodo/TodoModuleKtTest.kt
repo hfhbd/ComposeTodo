@@ -2,20 +2,16 @@ package app.softwork.composetodo
 
 import app.softwork.composetodo.controller.*
 import app.softwork.composetodo.dto.*
-import com.auth0.jwt.algorithms.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import kotlinx.uuid.*
 import kotlin.test.*
-import kotlin.time.Duration.Companion.seconds
 
 internal class TodoModuleKtTest {
-    private val jwt = JWTProvider(Algorithm.HMAC256("secret"), "test.com", "test", 45.seconds)
-
     @Test
     fun newUser() = testApplication({ db ->
-        TodoModule(db, jwt)
+        TodoModule(db, TODO())
     }) { db ->
         assertTrue(AdminController(db).allUsers().isEmpty())
 
@@ -46,7 +42,7 @@ internal class TodoModuleKtTest {
 
     @Test
     fun online() = testApplication({
-        TodoModule(it, jwt)
+        TodoModule(it, TODO())
     }) {
         with(get("/")) {
             assertEquals(HttpStatusCode.OK, status)

@@ -1,18 +1,17 @@
 package app.softwork.composetodo.controller
 
 import app.softwork.cloudkitclient.*
-import app.softwork.composetodo.*
 import app.softwork.composetodo.dao.User
 import app.softwork.composetodo.dto.*
 
 class UserController(private val db: Client.Database) {
     suspend fun createUser(
-        jwtProvider: JWTProvider,
+        jwtProvider: Nothing?,
         newUser: User
     ): Token {
         val user = db.create(newUser, User)
 
-        return jwtProvider.token(RefreshToken(user.recordName))
+        return TODO()
     }
 
     suspend fun find(username: String): User? = db.read(username, User)
