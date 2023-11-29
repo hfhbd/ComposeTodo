@@ -34,7 +34,7 @@ jobs:
       - name: Login to GitHub Container Registry
         run: echo "${{ github.token }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
       - id: auth
-        uses: google-github-actions/auth@v1
+        uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.RUN_SA_KEY }}
       - uses: google-github-actions/setup-gcloud@v1
@@ -72,7 +72,7 @@ jobs:
       - name: Set environment for version
         run: long="${{ github.ref }}"; version=${long#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV
       - id: auth
-        uses: google-github-actions/auth@v1
+        uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.RUN_SA_KEY }}
       - uses: google-github-actions/setup-gcloud@v1
