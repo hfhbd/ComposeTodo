@@ -5,7 +5,7 @@ coroutines = "1.7.3"
 datetime = "0.4.1"
 serialization = "1.6.2"
 ktor = "2.3.6"
-sqldelight = "2.0.0"
+sqldelight = "2.0.1"
 cloudkit = "0.1.0"
 
 [libraries]
