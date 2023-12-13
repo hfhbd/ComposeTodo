@@ -14,7 +14,7 @@ jib {
         "Google" -> {
             val project_id: String by project
             val service_name: String by project
-            "eu.gcr.io/$project_id/$service_name:$version"
+            "europe-west4.pkg.dev/$project_id/composetodo-repo/$service_name:$version"
         }
 
         else -> return@jib
