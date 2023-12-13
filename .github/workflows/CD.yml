@@ -50,14 +50,14 @@ jobs:
           java-version: 17
       - uses: gradle/gradle-build-action@v2
       - name: Push Docker Image to GitHub
-        run: ./gradlew -Pversion=$version -Pregistry=GitHub jib
+        run: ./gradlew -Pversion=$version -Pregistry=GitHub jib --no-configuration-cache
       - name: Push Docker Image to Google Container Registry
-        run: ./gradlew -Pversion=$version -Pproject_id=${{ secrets.PROJECT_ID }} -Pservice_name=$service_name -Pregistry=Google jib
+        run: ./gradlew -Pversion=$version -Pregistry=Google -Pproject_id=${{ secrets.PROJECT_ID }} -Pservice_name=$service_name jib --no-configuration-cache
       - name: Assemble with Gradle
-        run: ./gradlew :web:browserDistribution
+        run: ./gradlew :web:jsBrowserDistribution
       - uses: actions/upload-pages-artifact@v2
         with:
-          path: web/build/distributions
+          path: web/build/dist/js/productionExecutable
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v3
