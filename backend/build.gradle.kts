@@ -5,23 +5,13 @@ plugins {
     id("license")
 }
 
-kotlin.jvmToolchain(17)
+kotlin.jvmToolchain(21)
 
 jib {
-    val registry: String? by project
-    to.image = when (registry) {
-        "GitHub" -> "ghcr.io/hfhbd/composetodo:$version"
-        "Google" -> {
-            val project_id: String by project
-            val service_name: String by project
-            "eu.gcr.io/$project_id/$service_name:$version"
-        }
-
-        else -> return@jib
-    }
+    to.image = "ghcr.io/hfhbd/composetodo:$version"
 
     from {
-        image = "eclipse-temurin:17-jre"
+        image = "eclipse-temurin:21-jre"
 
         platforms {
             platform {
