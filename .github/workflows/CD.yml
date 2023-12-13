@@ -33,6 +33,16 @@ jobs:
         run: long="${{ github.ref }}"; version=${long#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV
       - name: Login to GitHub Container Registry
         run: echo "${{ github.token }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      - id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.RUN_SA_KEY }}
+      - uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.PROJECT_ID }}
+      - name: Login to Google Container Registry
+        run: gcloud auth configure-docker "eu.gcr.io" --quiet
+
       - uses: actions/configure-pages@v4
       - uses: actions/setup-java@v4
         with:
@@ -40,7 +50,9 @@ jobs:
           java-version: 17
       - uses: gradle/gradle-build-action@v2
       - name: Push Docker Image to GitHub
-        run: ./gradlew -Pversion=$version jib --no-configuration-cache
+        run: ./gradlew -Pversion=$version -Pregistry=GitHub jib --no-configuration-cache
+      - name: Push Docker Image to Google Container Registry
+        run: ./gradlew -Pversion=$version -Pregistry=Google -Pproject_id=${{ secrets.PROJECT_ID }} -Pservice_name=$service_name jib --no-configuration-cache
       - name: Assemble with Gradle
         run: ./gradlew :web:jsBrowserDistribution
       - uses: actions/upload-pages-artifact@v2
@@ -71,7 +83,7 @@ jobs:
           gcloud run deploy "$service_name" \
           --quiet \
           --region "europe-west4" \
-          --image "ghcr.io/hfhbd/composetodo:$version" \
+          --image "eu.gcr.io/${{ secrets.PROJECT_ID }}/$service_name:$version" \
           --platform "managed" \
           --allow-unauthenticated \
           --set-env-vars keyID="${{ secrets.CK_KEYID }}",privateKey=${{ secrets.CK_KEY}} \
