@@ -41,7 +41,7 @@ jobs:
         with:
           project_id: ${{ secrets.PROJECT_ID }}
       - name: Login to Google Container Registry
-        run: gcloud auth configure-docker "eu.gcr.io" --quiet
+        run: gcloud auth configure-docker "europe-west4.pgk.dev" --quiet
 
       - uses: actions/configure-pages@v4
       - uses: actions/setup-java@v4
@@ -83,7 +83,7 @@ jobs:
           gcloud run deploy "$service_name" \
           --quiet \
           --region "europe-west4" \
-          --image "eu.gcr.io/${{ secrets.PROJECT_ID }}/$service_name:$version" \
+          --image "europe-west4-docker.pkg.dev/${{ secrets.PROJECT_ID }}/composetodo-repo/$service_name:$version" \
           --platform "managed" \
           --allow-unauthenticated \
           --set-env-vars keyID="${{ secrets.CK_KEYID }}",privateKey=${{ secrets.CK_KEY}} \
