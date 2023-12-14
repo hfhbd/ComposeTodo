@@ -37,7 +37,7 @@ jobs:
         uses: google-github-actions/auth@v2
         with:
           project_id: ${{ secrets.PROJECT_ID }}
-          workload_identity_provider: projects/${{ secrets.PROJECT_ID }}/locations/global/workloadIdentityPools/github-deployment/providers/github
+          workload_identity_provider: projects/963273362268/locations/global/workloadIdentityPools/github-deployment/providers/github
           service_account: github-todo
       - uses: google-github-actions/setup-gcloud@v2
         with:
@@ -78,7 +78,7 @@ jobs:
         uses: google-github-actions/auth@v2
         with:
           project_id: ${{ secrets.PROJECT_ID }}
-          workload_identity_provider: projects/${{ secrets.PROJECT_ID }}/locations/global/workloadIdentityPools/github-deployment/providers/github
+          workload_identity_provider: projects/963273362268/locations/global/workloadIdentityPools/github-deployment/providers/github
           service_account: github-todo
       - uses: google-github-actions/setup-gcloud@v2
         with:
