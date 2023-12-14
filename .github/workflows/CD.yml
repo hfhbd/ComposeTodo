@@ -6,7 +6,6 @@ on:
 
 env:
   service_name: todo
-  version: ${{ github.ref/refs\/tags\/v/ }}
 
 concurrency:
   group: "cd"
@@ -30,6 +29,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - name: Set environment for version
+        run: long="${{ github.ref }}"; version=${long#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV
       - name: Login to GitHub Container Registry
         run: echo "${{ github.token }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
       - id: auth
@@ -71,6 +72,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - name: Set environment for version
+        run: long="${{ github.ref }}"; version=${long#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV
       - id: auth
         uses: google-github-actions/auth@v2
         with:
