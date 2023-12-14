@@ -51,7 +51,7 @@ logback = { module = "ch.qos.logback:logback-classic", version = "1.4.14" }
 
 composeMaterialDialogs-datetime = { module = "io.github.vanpra.compose-material-dialogs:datetime", version = "0.9.0" }
 androidx-viewmodel-lifecycle = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version = "2.6.2" }
-androidx-activity-compose = { module = "androidx.activity:activity-compose", version = "1.8.1" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version = "1.8.2" }
 
 cloudkit-core = { module = "app.softwork:cloudkitclient-core", version.ref = "cloudkit" }
 cloudkit-testing = { module = "app.softwork:cloudkitclient-testing", version.ref = "cloudkit" }
