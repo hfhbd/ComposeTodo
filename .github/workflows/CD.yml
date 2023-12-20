@@ -60,7 +60,7 @@ jobs:
           path: web/build/dist/js/productionExecutable
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v3
+        uses: actions/deploy-pages@v4
 
   googleRun:
     needs: build
