@@ -92,3 +92,7 @@ kotlin {
 android {
     namespace = "app.softwork.composetodo.clients"
 }
+
+compose {
+    kotlinCompilerPlugin.set("1.5.7")
+}

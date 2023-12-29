@@ -43,3 +43,7 @@ kotlin {
         }
     }
 }
+
+compose {
+    kotlinCompilerPlugin.set("1.5.7")
+}
