@@ -1,5 +1,5 @@
 pluginManagement {
-    includeBuild("build-logic")
+    includeBuild("gradle/build-logic")
     repositories {
         mavenCentral()
         google()
