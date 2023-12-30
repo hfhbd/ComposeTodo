@@ -28,7 +28,7 @@ jobs:
           gradle-home-cache-cleanup: true
           cache-encryption-key: SWFteW91cmZhdGhlcg==
       - name: Build with Gradle
-        run: ./gradlew detekt build
+        run: ./gradlew detekt build --stacktrace --debug
 
       - name: Upload SARIF to Github using the upload-sarif action
         uses: github/codeql-action/upload-sarif@v3
