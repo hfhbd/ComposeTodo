@@ -28,5 +28,5 @@ licensee {
 }
 
 compose {
-    kotlinCompilerPlugin.set("1.5.7")
+    kotlinCompilerPlugin.set("1.5.7.1")
 }

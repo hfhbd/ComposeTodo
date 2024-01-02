@@ -61,5 +61,5 @@ tasks.withType<KotlinJsCompile>().configureEach {
 }
 
 compose {
-    kotlinCompilerPlugin.set("1.5.7")
+    kotlinCompilerPlugin.set("1.5.7.1")
 }
