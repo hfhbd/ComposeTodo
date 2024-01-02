@@ -47,8 +47,6 @@ jobs:
           distribution: 'adopt'
           java-version: 17
       - uses: gradle/gradle-build-action@v3-prerelease
-        with:
-          gradle-home-cache-cleanup: true
 
       - name: Push Docker Image to GitHub
         run: ./gradlew -Pversion=$version -Pregistry=GitHub :backend:jib --no-configuration-cache
