@@ -22,10 +22,11 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: 17
-      - uses: gradle/gradle-build-action@v2
+      - uses: gradle/gradle-build-action@v3-prerelease
         with:
           dependency-graph: generate-and-submit
           gradle-home-cache-cleanup: true
+          cache-encryption-key: ${{ secrets.GradleEncryptionKey }}
       - name: Build with Gradle
         run: ./gradlew detekt build
 
