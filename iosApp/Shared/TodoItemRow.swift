@@ -31,7 +31,7 @@ struct TodoItemRow: View {
 
 private let dateFormatter: DateFormatter = {
     let formatter = DateFormatter()
-    formatter.dateStyle = DateFormatter.Style.short
+    formatter.dateStyle = .short
     return formatter
 }()
 
