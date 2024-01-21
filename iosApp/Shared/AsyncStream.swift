@@ -23,11 +23,10 @@ struct FlowStream<T>: AsyncSequence {
         func next() async -> T? {
             return try! await withTaskCancellationHandler {
                 do {
-                    let next = try await iterator.next()
-                    if (next == nil) {
-                        return Optional.none
+                    if let next = try await iterator.next() {
+                        return next as? T
                     } else {
-                        return Optional.some(next as! T)
+                        return nil
                     }
                 } catch let error as NSError {
                     let kotlinException = error.kotlinException
