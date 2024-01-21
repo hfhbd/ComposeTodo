@@ -43,10 +43,6 @@ struct ContentView: View {
 }
 
 struct Login: View {
-    init(viewModel: @autoclosure @escaping () -> LoginViewModel) {
-        self._viewModel = StateObject(wrappedValue: viewModel())
-    }
-
     @StateObject var viewModel: LoginViewModel
 
     @State private var error: Failure? = nil
@@ -78,10 +74,6 @@ struct Login: View {
 }
 
 struct Register: View {
-    init(viewModel: @autoclosure @escaping () -> RegisterViewModel) {
-        self._viewModel = StateObject(wrappedValue: viewModel())
-    }
-    
     @StateObject var viewModel: RegisterViewModel
 
     @State private var disableRegister = true
