@@ -1,27 +1,18 @@
 plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
+    id("application")
     id("com.google.cloud.tools.jib")
     id("license")
 }
 
-kotlin.jvmToolchain(17)
+application.mainClass.set("app.softwork.composetodo.MainKt")
+
+kotlin.jvmToolchain(21)
 
 jib {
-    val registry: String? by project
-    to.image = when (registry) {
-        "GitHub" -> "ghcr.io/hfhbd/composetodo:$version"
-        "Google" -> {
-            val project_id: String by project
-            val service_name: String by project
-            "europe-west4-docker.pkg.dev/$project_id/composetodo-repo/$service_name:$version"
-        }
-
-        else -> return@jib
-    }
-
     from {
-        image = "eclipse-temurin:17-jre"
+        image = "eclipse-temurin:21-jre"
 
         platforms {
             platform {
@@ -33,6 +24,18 @@ jib {
                 os = "linux"
             }
         }
+    }
+
+    val registry: String? by project
+    to.image = when (registry) {
+        "GitHub" -> "ghcr.io/hfhbd/composetodo:$version"
+        "Google" -> {
+            val project_id: String by project
+            val service_name: String by project
+            "europe-west4-docker.pkg.dev/$project_id/composetodo-repo/$service_name:$version"
+        }
+
+        else -> return@jib
     }
 }
 
