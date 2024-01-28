@@ -22,7 +22,7 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: 17
-      - uses: hfhbd/actions/setup-gradle@df226e1fec5e08f7e999f94f266f0a5d5e47e736
+      - uses: hfhbd/actions/setup-gradle@178d08c34bd3174849bf1d0bd1e5faa817c871f9
         with:
           dependency-graph: generate-and-submit
           gradle-home-cache-cleanup: true
