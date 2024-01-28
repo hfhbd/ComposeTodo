@@ -19,7 +19,7 @@ public sealed interface API {
     public object RefreshToken
 
     @Resource("/me")
-    public object Me
+    public object 
 
     @Resource("/todos")
     public object Todos {
