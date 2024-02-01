@@ -31,4 +31,4 @@ jobs:
     if: github.event_name == 'pull_request'
     steps:
     - name: Perform dependency review
-      uses: actions/dependency-review-action@v3
+      uses: actions/dependency-review-action@v4
