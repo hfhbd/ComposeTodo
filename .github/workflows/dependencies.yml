@@ -9,7 +9,7 @@ on:
 
 jobs:
   dependency-submission:
-    runs-on: ubuntu-latest
+    runs-on: macos-14
     
     permissions:
       contents: write
