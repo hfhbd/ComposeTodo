@@ -1,6 +1,6 @@
 [versions]
 kotlin = "1.9.22"
-detekt = "1.23.4"
+detekt = "1.23.5"
 coroutines = "1.7.3"
 datetime = "0.5.0"
 serialization = "1.6.2"
@@ -28,7 +28,7 @@ detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", 
 
 uuid-core = { module = "app.softwork:kotlinx-uuid-core", version = "0.0.22" }
 bootstrapCompose = { module = "app.softwork:bootstrap-compose", version = "0.1.15" }
-routingCompose = { module = "app.softwork:routing-compose", version = "0.2.12" }
+routingCompose = { module = "app.softwork:routing-compose", version = "0.2.13" }
 
 ktor-resources = { module = "io.ktor:ktor-resources", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
