@@ -23,7 +23,7 @@ jobs:
     - name: Generate and submit dependency graph
       uses: gradle/actions/dependency-submission@v3
       with:
-          cache-encryption-key: ${{ secrets.GradleEncryptionKey }}
+        cache-encryption-key: ${{ secrets.GradleEncryptionKey }}
   
   dependency-review:
     runs-on: ubuntu-latest

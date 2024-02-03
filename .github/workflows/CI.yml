@@ -33,3 +33,6 @@ jobs:
         if: always()
         with:
           sarif_file: build/reports/detekt/detekt.sarif
+      - name: Build iOS app
+        run: swift build
+        working-directory: iosLib
