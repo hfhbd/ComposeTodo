@@ -3,20 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		0823C16C265282B600AA4A20 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0823C16B265282B600AA4A20 /* Tests_iOS.swift */; };
-		0823C17B265282B600AA4A20 /* composetodoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0823C14F265282B400AA4A20 /* composetodoApp.swift */; };
-		0823C17D265282B600AA4A20 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0823C150265282B400AA4A20 /* ContentView.swift */; };
 		0823C181265282B600AA4A20 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0823C152265282B600AA4A20 /* Assets.xcassets */; };
-		0843F0282809D15100E60014 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0843F0272809D15100E60014 /* ViewModel.swift */; };
-		084C5AB4278F769D00737F4F /* AsyncStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084C5AB3278F769600737F4F /* AsyncStream.swift */; };
-		08DB9C8D27341E6300B6B383 /* TodoItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB9C8C27341E6300B6B383 /* TodoItemRow.swift */; };
-		08DB9C8F273432A200B6B383 /* Todos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DB9C8E273432A200B6B383 /* Todos.swift */; };
-		08EA7CEA26F1FF2300FFA5A9 /* clients.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08EA7CE926F1FF2300FFA5A9 /* clients.xcframework */; };
-		08EA7CEB26F1FF2300FFA5A9 /* clients.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 08EA7CE926F1FF2300FFA5A9 /* clients.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		082554C02B6EBEC70032B531 /* iosLib in Frameworks */ = {isa = PBXBuildFile; productRef = 082554BF2B6EBEC70032B531 /* iosLib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +29,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				08EA7CEB26F1FF2300FFA5A9 /* clients.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -44,10 +36,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0812ECA92694724000CEC45D /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
-		0812ECAE2694D6B000CEC45D /* ci_pre_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_pre_xcodebuild.sh; sourceTree = "<group>"; };
-		0823C14F265282B400AA4A20 /* composetodoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = composetodoApp.swift; sourceTree = "<group>"; };
-		0823C150265282B400AA4A20 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0823C152265282B600AA4A20 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0823C157265282B600AA4A20 /* composetodo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = composetodo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0823C15A265282B600AA4A20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -55,11 +43,6 @@
 		0823C16B265282B600AA4A20 /* Tests_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_iOS.swift; sourceTree = "<group>"; };
 		0823C16D265282B600AA4A20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0823C198265286D200AA4A20 /* composetodo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = composetodo.entitlements; sourceTree = "<group>"; };
-		0843F0272809D15100E60014 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
-		084C5AB3278F769600737F4F /* AsyncStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncStream.swift; sourceTree = "<group>"; };
-		08DB9C8C27341E6300B6B383 /* TodoItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItemRow.swift; sourceTree = "<group>"; };
-		08DB9C8E273432A200B6B383 /* Todos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todos.swift; sourceTree = "<group>"; };
-		08EA7CE926F1FF2300FFA5A9 /* clients.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = clients.xcframework; path = ../clients/build/XCFrameworks/release/clients.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,7 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08EA7CEA26F1FF2300FFA5A9 /* clients.xcframework in Frameworks */,
+				082554C02B6EBEC70032B531 /* iosLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,38 +64,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0812ECA82694721B00CEC45D /* ci_scripts */ = {
-			isa = PBXGroup;
-			children = (
-				0812ECA92694724000CEC45D /* ci_post_clone.sh */,
-				0812ECAE2694D6B000CEC45D /* ci_pre_xcodebuild.sh */,
-			);
-			path = ci_scripts;
-			sourceTree = "<group>";
-		};
 		0823C147265282B300AA4A20 = {
 			isa = PBXGroup;
 			children = (
-				0812ECA82694721B00CEC45D /* ci_scripts */,
 				0823C198265286D200AA4A20 /* composetodo.entitlements */,
 				0823C14C265282B400AA4A20 /* Shared */,
 				0823C159265282B600AA4A20 /* iOS */,
 				0823C16A265282B600AA4A20 /* Tests iOS */,
 				0823C158265282B600AA4A20 /* Products */,
-				0823C192265284CF00AA4A20 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		0823C14C265282B400AA4A20 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				084C5AB3278F769600737F4F /* AsyncStream.swift */,
-				0823C14F265282B400AA4A20 /* composetodoApp.swift */,
-				0823C150265282B400AA4A20 /* ContentView.swift */,
 				0823C152265282B600AA4A20 /* Assets.xcassets */,
-				08DB9C8C27341E6300B6B383 /* TodoItemRow.swift */,
-				08DB9C8E273432A200B6B383 /* Todos.swift */,
-				0843F0272809D15100E60014 /* ViewModel.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -143,14 +109,6 @@
 			path = "Tests iOS";
 			sourceTree = "<group>";
 		};
-		0823C192265284CF00AA4A20 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				08EA7CE926F1FF2300FFA5A9 /* clients.xcframework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -168,6 +126,9 @@
 			dependencies = (
 			);
 			name = "composetodo (iOS)";
+			packageProductDependencies = (
+				082554BF2B6EBEC70032B531 /* iosLib */,
+			);
 			productName = "composetodo (iOS)";
 			productReference = 0823C157265282B600AA4A20 /* composetodo.app */;
 			productType = "com.apple.product-type.application";
@@ -196,8 +157,9 @@
 		0823C148265282B300AA4A20 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1250;
-				LastUpgradeCheck = 1400;
+				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					0823C156265282B600AA4A20 = {
 						CreatedOnToolsVersion = 12.5;
@@ -209,7 +171,7 @@
 				};
 			};
 			buildConfigurationList = 0823C14B265282B300AA4A20 /* Build configuration list for PBXProject "composetodo" */;
-			compatibilityVersion = "Xcode 13.0";
+			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -217,6 +179,9 @@
 				Base,
 			);
 			mainGroup = 0823C147265282B300AA4A20;
+			packageReferences = (
+				082554BE2B6EBEC70032B531 /* XCLocalSwiftPackageReference "../iosLib" */,
+			);
 			productRefGroup = 0823C158265282B600AA4A20 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -250,12 +215,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0823C17B265282B600AA4A20 /* composetodoApp.swift in Sources */,
-				0823C17D265282B600AA4A20 /* ContentView.swift in Sources */,
-				08DB9C8D27341E6300B6B383 /* TodoItemRow.swift in Sources */,
-				08DB9C8F273432A200B6B383 /* Todos.swift in Sources */,
-				0843F0282809D15100E60014 /* ViewModel.swift in Sources */,
-				084C5AB4278F769D00737F4F /* AsyncStream.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,6 +241,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -316,6 +276,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -330,7 +291,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -343,6 +304,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -377,6 +339,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -385,7 +348,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -408,7 +371,7 @@
 					"DEBUG=1",
 				);
 				INFOPLIST_FILE = iOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -433,7 +396,7 @@
 				ENABLE_PREVIEWS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = "_Nullable=_Nullable_result";
 				INFOPLIST_FILE = iOS/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -450,7 +413,6 @@
 		0823C18C265282B600AA4A20 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 468HYAQSU6;
 				INFOPLIST_FILE = "Tests iOS/Info.plist";
@@ -472,7 +434,6 @@
 		0823C18D265282B600AA4A20 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 468HYAQSU6;
 				INFOPLIST_FILE = "Tests iOS/Info.plist";
@@ -523,6 +484,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		082554BE2B6EBEC70032B531 /* XCLocalSwiftPackageReference "../iosLib" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../iosLib;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		082554BF2B6EBEC70032B531 /* iosLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = iosLib;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0823C148265282B300AA4A20 /* Project object */;
 }

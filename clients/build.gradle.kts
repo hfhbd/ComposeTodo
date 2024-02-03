@@ -42,7 +42,6 @@ kotlin {
         }
     }
 
-    macosX64 { config() }
     macosArm64 { config() }
 
     iosArm64 { config() }
