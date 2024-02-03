@@ -49,7 +49,7 @@ struct Login: View {
 
     @StateObject var viewModel: LoginViewModel
 
-    @State private var error: Failure? = nil
+    @State private var error: Failure?
     @State private var disableLogin = true
 
     var body: some View {
@@ -85,7 +85,7 @@ struct Register: View {
     @StateObject var viewModel: RegisterViewModel
 
     @State private var disableRegister = true
-    @State private var error: Failure? = nil
+    @State private var error: Failure?
 
     var body: some View {
         Form {

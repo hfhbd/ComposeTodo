@@ -13,7 +13,7 @@ struct TodoItemRow: View {
 
     var body: some View {
         HStack {
-            if(item.finished) {
+            if (item.finished) {
                 Image(systemName: "checkmark.circle")
             } else {
                 Image(systemName: "xmark.circle")
@@ -31,7 +31,7 @@ struct TodoItemRow: View {
 
 private let dateFormatter: DateFormatter = {
     let formatter = DateFormatter()
-    formatter.dateStyle = DateFormatter.Style.short
+    formatter.dateStyle = .short
     return formatter
 }()
 
