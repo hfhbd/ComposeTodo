@@ -3,6 +3,8 @@ name: CD
 on:
   release:
     types: [ created ]
+  schedule:
+    - cron: '0 6 * * *'
 
 env:
   service_name: todo
@@ -28,9 +30,14 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
+      - name: Get latest release
+        id: latest_release
+        run: echo "FULLTAG=${gh release list -R hfhbd/Composetodo -L 1 --json tagName --jq ".[] | \"refs/tags/\"+.tagName"}" >> "$GITHUB_ENV"
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.FULLTAG }}
       - name: Set environment for version
-        run: long="${{ github.ref }}"; version=${long#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV
+        run: version=${${{ env.FULLTAG }}#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV
 
       - name: Login to GitHub Container Registry
         run: echo "${{ github.token }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
@@ -69,9 +76,12 @@ jobs:
       id-token: write
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Get latest release
+        id: latest_release
+        run: echo "FULLTAG=${gh release list -R hfhbd/Composetodo -L 1 --json tagName --jq ".[] | \"refs/tags/\"+.tagName"}" >> "$GITHUB_ENV"
+      #- uses: actions/checkout@v4
       - name: Set environment for version
-        run: long="${{ github.ref }}"; version=${long#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV
+        run: version=${FULLTAG#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV
       - id: auth
         uses: google-github-actions/auth@v2
         with:
