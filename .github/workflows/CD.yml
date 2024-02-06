@@ -33,7 +33,7 @@ jobs:
     steps:
       - name: Get latest release
         id: latest_release
-        run: echo "FULLTAG=${gh release list -R hfhbd/Composetodo -L 1 --json tagName --jq ".[] | \"refs/tags/\"+.tagName"}" >> "$GITHUB_ENV"
+        run: echo FULLTAG=$(gh release list -R hfhbd/Composetodo -L 1 --json tagName --jq ".[] | \"refs/tags/\"+.tagName") >> "$GITHUB_ENV"
       - uses: actions/checkout@v4
         with:
           ref: ${{ env.FULLTAG }}
@@ -79,7 +79,7 @@ jobs:
     steps:
       - name: Get latest release
         id: latest_release
-        run: echo "FULLTAG=${gh release list -R hfhbd/Composetodo -L 1 --json tagName --jq ".[] | \"refs/tags/\"+.tagName"}" >> "$GITHUB_ENV"
+        run: echo FULLTAG=$(gh release list -R hfhbd/Composetodo -L 1 --json tagName --jq ".[] | \"refs/tags/\"+.tagName") >> "$GITHUB_ENV"
       #- uses: actions/checkout@v4
       - name: Set environment for version
         run: version=${FULLTAG#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV
