@@ -40,7 +40,7 @@ jobs:
         with:
           ref: ${{ env.FULLTAG }}
       - name: Set environment for version
-        run: long="${{ env.FULLTAG }}"; version=${long#"refs/tags/v"}; echo "version=${version}"
+        run: long="${{ env.FULLTAG }}"; version=${long#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV
 
       - name: Login to GitHub Container Registry
         run: echo "${{ github.token }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
@@ -84,9 +84,9 @@ jobs:
         run: echo FULLTAG=$(gh release list -R hfhbd/Composetodo -L 1 --json tagName --jq ".[] | \"refs/tags/\"+.tagName") >> "$GITHUB_ENV"
         env:
           GH_TOKEN: ${{ github.token }}
-      #- uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       - name: Set environment for version
-        run: long="${{ env.FULLTAG }}"; version=${long#"refs/tags/v"}; echo "version=${version}"
+        run: long="${{ env.FULLTAG }}"; version=${long#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV
       - id: auth
         uses: google-github-actions/auth@v2
         with:
@@ -100,6 +100,6 @@ jobs:
           service: ${{ env.service_name }}
           region: europe-west4
           image: europe-west4-docker.pkg.dev/${{ secrets.PROJECT_ID }}/composetodo-repo/${{ env.service_name }}:${{ env.version }}
-          env_vars: |
+          screts: |
             keyID=${{ secrets.CK_KEYID }}
             privateKey=${{ secrets.CK_KEY }}
