@@ -22,7 +22,7 @@ sqldelight-nativeDriver = { module = "app.cash.sqldelight:native-driver", versio
 sqldelight-sqljsDriver = { module = "app.cash.sqldelight:web-worker-driver", version.ref = "sqldelight" }
 sqldelight-coroutinesExtensions = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
 
-apacheCompress = { module = "org.apache.commons:commons-compress", version = "1.25.0" }
+apacheCompress = { module = "org.apache.commons:commons-compress", version = "1.26.0" }
 
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 
