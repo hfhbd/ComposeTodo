@@ -47,14 +47,6 @@ kotlin {
     iosArm64 { config() }
     iosSimulatorArm64 { config() }
 
-    watchosArm32 { config() }
-    watchosArm64 { config() }
-    // watchosDeviceArm64 { config() }
-    watchosSimulatorArm64 { config() }
-
-    tvosArm64 { config() }
-    tvosSimulatorArm64 { config() }
-
     sourceSets {
         commonMain {
             dependencies {
