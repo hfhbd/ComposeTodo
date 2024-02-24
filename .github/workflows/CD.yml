@@ -100,6 +100,6 @@ jobs:
           service: ${{ env.service_name }}
           region: europe-west4
           image: europe-west4-docker.pkg.dev/${{ secrets.PROJECT_ID }}/composetodo-repo/${{ env.service_name }}:${{ env.version }}
-          screts: |
+          secrets: |
             keyID=${{ secrets.CK_KEYID }}
             privateKey=${{ secrets.CK_KEY }}
