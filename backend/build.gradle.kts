@@ -12,7 +12,7 @@ kotlin.jvmToolchain(21)
 
 jib {
     from {
-        image = "eclipse-temurin:21-jre"
+        image = "eclipse-temurin:21-jre-alpine"
 
         platforms {
             platform {
@@ -26,7 +26,7 @@ jib {
         }
     }
 
-    val registry: String? by project
+    val registry = project.findProperty("registry") as String?
     to.image = when (registry) {
         "GitHub" -> "ghcr.io/hfhbd/composetodo:$version"
         "Google" -> {
