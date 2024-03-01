@@ -8,7 +8,7 @@ fun <
     DefaultConfigT : DefaultConfig,
     ProductFlavorT : ProductFlavor,
     ResourcesT : AndroidResources,
-    InstallationT: Installation,
+    InstallationT : Installation,
     > CommonExtension<
     BuildFeaturesT,
     BuildTypeT,
