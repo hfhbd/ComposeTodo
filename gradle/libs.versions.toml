@@ -28,7 +28,7 @@ detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", 
 
 uuid-core = { module = "app.softwork:kotlinx-uuid-core", version = "0.0.22" }
 bootstrapCompose = { module = "app.softwork:bootstrap-compose", version = "0.1.15" }
-routingCompose = { module = "app.softwork:routing-compose", version = "0.2.13" }
+routingCompose = { module = "app.softwork:routing-compose", version = "0.2.14" }
 
 ktor-resources = { module = "io.ktor:ktor-resources", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
@@ -47,7 +47,7 @@ ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negoti
 ktor-server-forwarded-header = { module = "io.ktor:ktor-server-forwarded-header", version.ref = "ktor" }
 ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
 
-logback = { module = "ch.qos.logback:logback-classic", version = "1.5.0" }
+logback = { module = "ch.qos.logback:logback-classic", version = "1.5.1" }
 
 composeMaterialDialogs-datetime = { module = "io.github.vanpra.compose-material-dialogs:datetime", version = "0.9.0" }
 androidx-viewmodel-lifecycle = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version = "2.7.0" }
@@ -62,6 +62,6 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 compose = { id = "org.jetbrains.compose", version = "1.6.0" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 android = { id = "com.android.application", version = "8.2.2" }
-jib = { id = "com.google.cloud.tools.jib", version = "3.4.0" }
+jib = { id = "com.google.cloud.tools.jib", version = "3.4.1" }
 licensee = { id = "app.cash.licensee", version = "1.9.1" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt"}
