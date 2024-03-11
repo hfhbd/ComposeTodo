@@ -4,7 +4,7 @@ detekt = "1.23.5"
 coroutines = "1.8.0"
 datetime = "0.5.0"
 serialization = "1.6.3"
-ktor = "2.3.8"
+ktor = "2.3.9"
 sqldelight = "2.0.1"
 cloudkit = "0.1.0"
 
@@ -22,7 +22,7 @@ sqldelight-nativeDriver = { module = "app.cash.sqldelight:native-driver", versio
 sqldelight-sqljsDriver = { module = "app.cash.sqldelight:web-worker-driver", version.ref = "sqldelight" }
 sqldelight-coroutinesExtensions = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
 
-apacheCompress = { module = "org.apache.commons:commons-compress", version = "1.26.0" }
+apacheCompress = { module = "org.apache.commons:commons-compress", version = "1.26.1" }
 
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 
@@ -47,7 +47,7 @@ ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negoti
 ktor-server-forwarded-header = { module = "io.ktor:ktor-server-forwarded-header", version.ref = "ktor" }
 ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
 
-logback = { module = "ch.qos.logback:logback-classic", version = "1.5.1" }
+logback = { module = "ch.qos.logback:logback-classic", version = "1.5.3" }
 
 composeMaterialDialogs-datetime = { module = "io.github.vanpra.compose-material-dialogs:datetime", version = "0.9.0" }
 androidx-viewmodel-lifecycle = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version = "2.7.0" }
@@ -61,7 +61,7 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 compose = { id = "org.jetbrains.compose", version = "1.6.0" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
-android = { id = "com.android.application", version = "8.2.2" }
+android = { id = "com.android.application", version = "8.3.0" }
 jib = { id = "com.google.cloud.tools.jib", version = "3.4.1" }
 licensee = { id = "app.cash.licensee", version = "1.9.1" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt"}
