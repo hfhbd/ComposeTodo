@@ -38,7 +38,3 @@ dependencies {
 licensee {
     allow("MIT")
 }
-
-compose {
-    kotlinCompilerPlugin.set("1.5.7.1")
-}
