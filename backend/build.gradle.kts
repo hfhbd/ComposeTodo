@@ -30,8 +30,8 @@ jib {
     to.image = when (registry) {
         "GitHub" -> "ghcr.io/hfhbd/composetodo:$version"
         "Google" -> {
-            val project_id: String by project
-            val service_name: String by project
+            val project_id = providers.gradleProperty("project_id").get()
+            val service_name = providers.gradleProperty("service_name").get()
             "europe-west4-docker.pkg.dev/$project_id/composetodo-repo/$service_name:$version"
         }
 
