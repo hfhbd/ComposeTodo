@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm")
-    id("org.jetbrains.compose")
+    id("compose")
     id("license")
 }
 

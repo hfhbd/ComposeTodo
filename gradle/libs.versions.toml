@@ -1,5 +1,5 @@
 [versions]
-kotlin = "1.9.23"
+kotlin = "2.0.0-RC2"
 detekt = "1.23.6"
 coroutines = "1.8.0"
 datetime = "0.5.0"
@@ -57,7 +57,8 @@ cloudkit-testing = { module = "app.softwork:cloudkitclient-testing", version.ref
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-compose = { id = "org.jetbrains.compose", version = "1.6.2" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+compose = { id = "org.jetbrains.compose", version = "1.6.10-rc01" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 android = { id = "com.android.application", version = "8.4.0" }
 jib = { id = "com.google.cloud.tools.jib", version = "3.4.2" }

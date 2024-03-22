@@ -5,6 +5,7 @@ plugins {
 dependencies {
     implementation(libs.plugins.kotlin.jvm.toDep())
     implementation(libs.plugins.kotlin.serialization.toDep())
+    implementation(libs.plugins.kotlin.compose.toDep())
     implementation(libs.plugins.compose.toDep())
     implementation(libs.plugins.sqldelight.toDep())
 
