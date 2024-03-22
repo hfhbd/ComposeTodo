@@ -1,6 +1,6 @@
 plugins {
     id("androidApplication")
-    id("org.jetbrains.compose")
+    id("compose")
     id("license")
 }
 
