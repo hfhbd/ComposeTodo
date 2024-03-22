@@ -26,7 +26,7 @@ jib {
         }
     }
 
-    val registry = project.findProperty("registry") as String?
+    val registry = providers.gradleProperty("registry").orNull
     to.image = when (registry) {
         "GitHub" -> "ghcr.io/hfhbd/composetodo:$version"
         "Google" -> {
