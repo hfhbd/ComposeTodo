@@ -25,6 +25,8 @@ jobs:
         with:
           gradle-home-cache-cleanup: true
           cache-encryption-key: ${{ secrets.GradleEncryptionKey }}
+      - run: cat /Users/runner/.m2/toolchains.xml
+      - run: printenv
       - name: Build with Gradle
         run: ./gradlew detekt build
 
