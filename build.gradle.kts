@@ -4,12 +4,6 @@ plugins {
     id("io.gitlab.arturbosch.detekt")
 }
 
-buildscript {
-    dependencies {
-        classpath(libs.apacheCompress)
-    }
-}
-
 detekt {
     source.from(files(rootProject.rootDir))
     parallel = true
