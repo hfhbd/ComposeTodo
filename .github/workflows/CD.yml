@@ -32,15 +32,11 @@ jobs:
 
     steps:
       - name: Get latest release
-        id: latest_release
-        run: echo FULLTAG=$(gh release list -R hfhbd/Composetodo -L 1 --json tagName --jq ".[] | \"refs/tags/\"+.tagName") >> "$GITHUB_ENV"
-        env:
-          GH_TOKEN: ${{ github.token }}
+        id: setup-version
+        uses: hfhbd/actions/setup-version@main
       - uses: actions/checkout@v4
         with:
-          ref: ${{ env.FULLTAG }}
-      - name: Set environment for version
-        run: long="${{ env.FULLTAG }}"; version=${long#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV
+          ref: ${{ steps.setup-version.outputs.full-tag }}
 
       - name: Login to GitHub Container Registry
         run: echo "${{ github.token }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
@@ -80,13 +76,11 @@ jobs:
 
     steps:
       - name: Get latest release
-        id: latest_release
-        run: echo FULLTAG=$(gh release list -R hfhbd/Composetodo -L 1 --json tagName --jq ".[] | \"refs/tags/\"+.tagName") >> "$GITHUB_ENV"
-        env:
-          GH_TOKEN: ${{ github.token }}
+        id: setup-version
+        uses: hfhbd/actions/setup-version@main
       - uses: actions/checkout@v4
-      - name: Set environment for version
-        run: long="${{ env.FULLTAG }}"; version=${long#"refs/tags/v"}; echo "version=${version}" >> $GITHUB_ENV
+        with:
+          ref: ${{ steps.setup-version.outputs.full-tag }}
       - id: auth
         uses: google-github-actions/auth@v2
         with:
