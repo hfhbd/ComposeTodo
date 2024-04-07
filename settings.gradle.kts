@@ -18,7 +18,8 @@ develocity {
         termsOfUseUrl.set("https://gradle.com/terms-of-service")
         termsOfUseAgree.set("yes")
         publishing {
-            onlyIf { providers.environmentVariable("CI").isPresent }
+            val isCI = providers.environmentVariable("CI").isPresent
+            onlyIf { isCI }
         }
         tag("CI")
     }
