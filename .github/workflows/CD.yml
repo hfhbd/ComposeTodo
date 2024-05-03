@@ -34,6 +34,8 @@ jobs:
       - name: Get latest release
         id: setup-version
         uses: hfhbd/actions/setup-version@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/checkout@v4
         with:
           ref: ${{ steps.setup-version.outputs.full-tag }}
