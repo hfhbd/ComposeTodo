@@ -5,6 +5,7 @@ plugins {
     id("androidLibrary")
     kotlin("multiplatform")
     id("org.jetbrains.compose")
+    kotlin("plugin.compose")
     id("app.cash.sqldelight")
 }
 

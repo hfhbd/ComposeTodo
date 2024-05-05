@@ -2,6 +2,7 @@ plugins {
     id("androidLibrary")
     kotlin("multiplatform")
     id("org.jetbrains.compose")
+    kotlin("plugin.compose")
 }
 
 kotlin {
@@ -16,6 +17,7 @@ kotlin {
                 api(projects.clients)
                 api(compose.foundation)
                 api(compose.material)
+                api(compose.preview)
             }
         }
 
