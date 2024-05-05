@@ -62,7 +62,7 @@ jobs:
         run: echo "::set-output name=digest::$(cat backend/build/jib-image.digest)"
       - name: Attest
         uses: actions/attest-build-provenance@v1
-        id: attest
+        id: attestGitHub
         with:
           subject-name: ghcr.io/hfhbd/composetodo
           subject-digest: ${{ steps.githubDockerDigest.outputs.digest }}
@@ -75,7 +75,7 @@ jobs:
         run: echo "::set-output name=digest::$(cat backend/build/jib-image.digest)"
       - name: Attest
         uses: actions/attest-build-provenance@v1
-        id: attest
+        id: attestGoogle
         with:
           subject-name: europe-west4-docker.pkg.dev/${{ secrets.PROJECT_ID }}/composetodo-repo/$service_name
           subject-digest: ${{ steps.googleDockerDigest.outputs.digest }}
