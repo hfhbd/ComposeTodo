@@ -1,8 +1,5 @@
 version: 2
 registries:
-  maven-central:
-    type: maven-repository
-    url: https://repo.maven.apache.org/maven2
   google:
     type: maven-repository
     url: https://dl.google.com/dl/android/maven2
@@ -25,6 +22,5 @@ updates:
     open-pull-requests-limit: 25
     rebase-strategy: "disabled"
     registries:
-      - maven-central
       - google
       - gradle
