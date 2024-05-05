@@ -4,7 +4,8 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.apple.*
 plugins {
     id("androidLibrary")
     kotlin("multiplatform")
-    id("compose")
+    id("org.jetbrains.compose")
+    kotlin("plugin.compose")
     id("app.cash.sqldelight")
 }
 
