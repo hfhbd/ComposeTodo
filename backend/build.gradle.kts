@@ -26,17 +26,7 @@ jib {
         }
     }
 
-    val registry = providers.gradleProperty("registry").orNull
-    to.image = when (registry) {
-        "GitHub" -> "ghcr.io/hfhbd/composetodo:$version"
-        "Google" -> {
-            val project_id = providers.gradleProperty("project_id").get()
-            val service_name = providers.gradleProperty("service_name").get()
-            "europe-west4-docker.pkg.dev/$project_id/composetodo-repo/$service_name:$version"
-        }
-
-        else -> return@jib
-    }
+    to.setImage(providers.gradleProperty("jibImage"))
 }
 
 dependencies {
