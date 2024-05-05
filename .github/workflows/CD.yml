@@ -117,5 +117,5 @@ jobs:
           region: europe-west4
           image: europe-west4-docker.pkg.dev/${{ secrets.PROJECT_ID }}/composetodo-repo/${{ env.service_name }}:${{ env.version }}
           secrets: |
-            keyID=${{ secrets.CK_KEYID }}
-            privateKey=${{ secrets.CK_KEY }}
+            keyID=${{ secrets.CK_KEYID }}:latest
+            privateKey=${{ secrets.CK_KEY }}:latest
