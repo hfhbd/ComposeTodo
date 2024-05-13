@@ -3,9 +3,6 @@ registries:
   google:
     type: maven-repository
     url: https://dl.google.com/dl/android/maven2
-  gradle:
-    type: maven-repository
-    url: https://plugins.gradle.org/m2
 updates:
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -23,4 +20,3 @@ updates:
     rebase-strategy: "disabled"
     registries:
       - google
-      - gradle
