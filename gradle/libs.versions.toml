@@ -2,7 +2,7 @@
 kotlin = "2.0.0-RC3"
 detekt = "1.23.6"
 coroutines = "1.8.1"
-datetime = "0.5.0"
+datetime = "0.6.0"
 serialization = "1.6.3"
 ktor = "2.3.11"
 sqldelight = "2.0.2"
