@@ -62,13 +62,15 @@ jobs:
       - name: Read GitHub Docker Digest
         id: githubDockerDigest
         run: echo "::set-output name=digest::$(cat backend/build/jib-image.digest)"
-      - name: Attest
-        uses: actions/attest-build-provenance@v1
-        id: attestGitHub
-        with:
-          subject-name: ghcr.io/hfhbd/composetodo
-          subject-digest: ${{ steps.githubDockerDigest.outputs.digest }}
-          push-to-registry: true
+
+     # https://github.com/actions/attest-build-provenance/issues/73
+     #- name: Attest
+     #  uses: actions/attest-build-provenance@v1
+     #  id: attestGitHub
+     #  with:
+     #    subject-name: ghcr.io/hfhbd/composetodo
+     #    subject-digest: ${{ steps.githubDockerDigest.outputs.digest }}
+     #    push-to-registry: true
 
       - name: Push Docker Image to Google Container Registry
         run: ./gradlew :backend:jib -PjibImage=europe-west4-docker.pkg.dev/${{ secrets.PROJECT_ID }}/composetodo-repo/${{ env.service_name }}:${{ steps.setup-version.outputs.version }} --no-configuration-cache
