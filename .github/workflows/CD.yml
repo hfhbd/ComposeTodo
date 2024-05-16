@@ -122,6 +122,6 @@ jobs:
           service: ${{ env.service_name }}
           region: europe-west4
           image: europe-west4-docker.pkg.dev/${{ secrets.PROJECT_ID }}/composetodo-repo/${{ env.service_name }}:${{ steps.setup-version.outputs.version }}
-          secrets: |
+          secrets: |-
             keyID=${{ secrets.CK_KEYID }}:latest
             privateKey=${{ secrets.CK_KEY }}:latest
