@@ -58,7 +58,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v3
 
       - name: Push Docker Image to GitHub
-        run: ./gradlew :backend:jib -PjibImage=ghcr.io/hfhbd/composetodo: ${{ steps.setup-version.outputs.ref }} --no-configuration-cache
+        run: ./gradlew :backend:jib -PjibImage=ghcr.io/hfhbd/composetodo:${{ steps.setup-version.outputs.version }} --no-configuration-cache
       - name: Read GitHub Docker Digest
         id: githubDockerDigest
         run: echo "::set-output name=digest::$(cat backend/build/jib-image.digest)"
