@@ -58,7 +58,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v3
 
       - name: Push Docker Image to GitHub
-        run: ./gradlew :backend:jib -PjibImage=ghcr.io/hfhbd/composetodo:$version --no-configuration-cache
+        run: ./gradlew :backend:jib -PjibImage=ghcr.io/hfhbd/composetodo: ${{ steps.setup-version.outputs.ref }} --no-configuration-cache
       - name: Read GitHub Docker Digest
         id: githubDockerDigest
         run: echo "::set-output name=digest::$(cat backend/build/jib-image.digest)"
@@ -71,7 +71,7 @@ jobs:
           push-to-registry: true
 
       - name: Push Docker Image to Google Container Registry
-        run: ./gradlew :backend:jib -PjibImage=europe-west4-docker.pkg.dev/${{ secrets.PROJECT_ID }}/composetodo-repo/${{ env.service_name }}:${{ env.version }} --no-configuration-cache
+        run: ./gradlew :backend:jib -PjibImage=europe-west4-docker.pkg.dev/${{ secrets.PROJECT_ID }}/composetodo-repo/${{ env.service_name }}:${{ steps.setup-version.outputs.version }} --no-configuration-cache
       - name: Read Google Docker Digest
         id: googleDockerDigest
         run: echo "::set-output name=digest::$(cat backend/build/jib-image.digest)"
@@ -119,7 +119,7 @@ jobs:
         with:
           service: ${{ env.service_name }}
           region: europe-west4
-          image: europe-west4-docker.pkg.dev/${{ secrets.PROJECT_ID }}/composetodo-repo/${{ env.service_name }}:${{ env.version }}
+          image: europe-west4-docker.pkg.dev/${{ secrets.PROJECT_ID }}/composetodo-repo/${{ env.service_name }}:${{ steps.setup-version.outputs.version }}
           secrets: |
             keyID=${{ secrets.CK_KEYID }}:latest
             privateKey=${{ secrets.CK_KEY }}:latest
