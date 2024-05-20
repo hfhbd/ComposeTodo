@@ -7,8 +7,12 @@ serialization = "1.6.3"
 ktor = "2.3.11"
 sqldelight = "2.0.2"
 cloudkit = "0.1.0"
+compose = "1.6.10-rc03"
 
 [libraries]
+compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose" }
+compose-html-core = { module = "org.jetbrains.compose.html:html-core", version.ref = "compose" }
+
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "coroutines" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
@@ -25,7 +29,7 @@ sqldelight-coroutinesExtensions = { module = "app.cash.sqldelight:coroutines-ext
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 
 uuid-core = { module = "app.softwork:kotlinx-uuid-core", version = "0.0.25" }
-bootstrapCompose = { module = "app.softwork:bootstrap-compose", version = "0.1.15" }
+bootstrapCompose = { module = "app.softwork:bootstrap-compose", version = "0.2.0" }
 routingCompose = { module = "app.softwork:routing-compose", version = "0.2.14" }
 
 ktor-resources = { module = "io.ktor:ktor-resources", version.ref = "ktor" }
@@ -58,7 +62,7 @@ cloudkit-testing = { module = "app.softwork:cloudkitclient-testing", version.ref
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-compose = { id = "org.jetbrains.compose", version = "1.6.10-rc03" }
+compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 android = { id = "com.android.application", version = "8.4.0" }
 jib = { id = "com.google.cloud.tools.jib", version = "3.4.2" }
