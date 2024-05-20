@@ -7,7 +7,7 @@ serialization = "1.6.3"
 ktor = "2.3.11"
 sqldelight = "2.0.2"
 cloudkit = "0.1.0"
-compose = "1.6.10-rc03"
+compose = "1.6.10"
 
 [libraries]
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose" }
