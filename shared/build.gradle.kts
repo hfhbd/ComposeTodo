@@ -1,7 +1,6 @@
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization")
-    id("org.jetbrains.compose")
     kotlin("plugin.compose")
 }
 
@@ -24,7 +23,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                api(compose.runtime)
+                api(libs.compose.runtime)
                 api(libs.coroutines.core)
                 api(libs.serialization.json)
                 api(libs.datetime)
