@@ -29,7 +29,7 @@ sqldelight-coroutinesExtensions = { module = "app.cash.sqldelight:coroutines-ext
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 
 uuid-core = { module = "app.softwork:kotlinx-uuid-core", version = "0.0.25" }
-bootstrapCompose = { module = "app.softwork:bootstrap-compose", version = "0.2.0" }
+bootstrapCompose = { module = "app.softwork:bootstrap-compose", version = "0.2.1" }
 routingCompose = { module = "app.softwork:routing-compose", version = "0.2.14" }
 
 ktor-resources = { module = "io.ktor:ktor-resources", version.ref = "ktor" }
