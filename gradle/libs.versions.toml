@@ -3,11 +3,11 @@ kotlin = "2.0.0"
 detekt = "1.23.6"
 coroutines = "1.8.1"
 datetime = "0.6.0"
-serialization = "1.6.3"
+serialization = "1.7.0"
 ktor = "2.3.11"
 sqldelight = "2.0.2"
 cloudkit = "0.1.0"
-compose = "1.6.10"
+compose = "1.6.11"
 
 [libraries]
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose" }
