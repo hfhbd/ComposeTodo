@@ -64,7 +64,7 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
-android = { id = "com.android.application", version = "8.4.1" }
+android = { id = "com.android.application", version = "8.4.2" }
 jib = { id = "com.google.cloud.tools.jib", version = "3.4.3" }
 licensee = { id = "app.cash.licensee", version = "1.11.0" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt"}
