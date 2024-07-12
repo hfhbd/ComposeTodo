@@ -68,7 +68,7 @@ jobs:
         run: ./gradlew :backend:jib -PjibImage=ghcr.io/hfhbd/composetodo:${{ steps.setup-version.outputs.version }} --no-configuration-cache
       - name: Read GitHub Docker Digest
         id: githubDockerDigest
-        run: echo "::set-output name=digest::$(cat backend/build/jib-image.digest)"
+        run: echo "digest=$(cat backend/build/jib-image.digest)" >> "$GITHUB_OUTPUT"
 
       - name: Attest
         uses: actions/attest-build-provenance@v1
@@ -82,7 +82,7 @@ jobs:
         run: ./gradlew :backend:jib -PjibImage=europe-west4-docker.pkg.dev/${{ secrets.PROJECT_ID }}/composetodo-repo/${{ env.service_name }}:${{ steps.setup-version.outputs.version }} --no-configuration-cache
       - name: Read Google Docker Digest
         id: googleDockerDigest
-        run: echo "::set-output name=digest::$(cat backend/build/jib-image.digest)"
+        run: echo "digest=$(cat backend/build/jib-image.digest)" >> "$GITHUB_OUTPUT"
 #      - name: Attest
 #        uses: actions/attest-build-provenance@v1
 #        id: attestGoogle

@@ -22,7 +22,7 @@ kotlin {
     applyDefaultHierarchyTemplate()
 
     androidTarget()
-    jvm("desktop")
+    jvm()
 
     js {
         browser()
