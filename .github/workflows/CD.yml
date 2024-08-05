@@ -62,7 +62,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 21
-      - uses: gradle/actions/setup-gradle@v3
+      - uses: gradle/actions/setup-gradle@v4
 
       - name: Push Docker Image to GitHub
         run: ./gradlew :backend:jib -PjibImage=ghcr.io/hfhbd/composetodo:${{ steps.setup-version.outputs.version }} --no-configuration-cache
