@@ -19,8 +19,6 @@ sqldelight {
 kotlin {
     jvmToolchain(8)
 
-    applyDefaultHierarchyTemplate()
-
     androidTarget()
     jvm()
 
