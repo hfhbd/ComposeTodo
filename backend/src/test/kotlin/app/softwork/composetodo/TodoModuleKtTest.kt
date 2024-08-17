@@ -6,10 +6,11 @@ import com.auth0.jwt.algorithms.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
-import kotlinx.uuid.*
 import kotlin.test.*
 import kotlin.time.Duration.Companion.seconds
+import kotlin.uuid.*
 
+@ExperimentalUuidApi
 internal class TodoModuleKtTest {
     private val jwt = JWTProvider(Algorithm.HMAC256("secret"), "test.com", "test", 45.seconds)
 
@@ -30,7 +31,7 @@ internal class TodoModuleKtTest {
         login("user", "password") {
             val todo = createTodo(
                 TodoDTO(
-                    id = TodoDTO.ID(UUID()),
+                    id = TodoDTO.ID(Uuid.random()),
                     title = "New Todo",
                     until = null,
                     finished = false,

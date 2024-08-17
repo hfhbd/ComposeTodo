@@ -9,7 +9,9 @@ import app.softwork.composetodo.users.*
 import app.softwork.routingcompose.*
 import kotlinx.coroutines.*
 import org.jetbrains.compose.web.dom.*
+import kotlin.uuid.ExperimentalUuidApi
 
+@ExperimentalUuidApi
 @Composable
 fun MainApp(appContainer: AppContainer) {
     val api by appContainer.api.collectAsState()
@@ -65,6 +67,7 @@ private fun Content(
     }
 }
 
+@ExperimentalUuidApi
 @Composable
 private fun RouteBuilder.MainContent(appContainer: AppContainer, api: API.LoggedIn) {
     val links = listOf("To-Dos" to "/todos", "Users" to "/users")

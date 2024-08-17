@@ -2,8 +2,8 @@ package app.softwork.composetodo.dto
 
 import kotlinx.datetime.*
 import kotlinx.serialization.*
-import kotlinx.uuid.*
 import kotlin.jvm.*
+import kotlin.uuid.*
 
 @Serializable
 public data class TodoDTO(
@@ -15,5 +15,9 @@ public data class TodoDTO(
 ) {
     @Serializable
     @JvmInline
-    public value class ID(public val id: UUID)
+    public value class ID(
+        @Serializable(with = UuidSerializer::class)
+        @OptIn(ExperimentalUuidApi::class)
+        public val id: Uuid,
+    )
 }

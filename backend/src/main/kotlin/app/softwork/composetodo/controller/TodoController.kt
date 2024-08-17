@@ -5,6 +5,7 @@ import app.softwork.composetodo.*
 import app.softwork.composetodo.dao.*
 import app.softwork.composetodo.dao.User
 import app.softwork.composetodo.dto.*
+import kotlin.uuid.ExperimentalUuidApi
 
 class TodoController(private val db: Client.Database) {
 
@@ -14,6 +15,7 @@ class TodoController(private val db: Client.Database) {
 
     suspend fun create(newTodo: Todo) = db.create(newTodo, Todo)
 
+    @OptIn(ExperimentalUuidApi::class)
     suspend fun getTodo(user: User, todoID: TodoDTO.ID) = db.read(todoID.id.toString(), Todo)?.takeIf {
         it.fields.user.value.recordName == user.recordName
     }

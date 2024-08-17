@@ -8,7 +8,7 @@ import app.softwork.composetodo.dto.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.*
-import kotlinx.uuid.*
+import kotlin.uuid.*
 
 interface TodoRepository {
     companion object {
@@ -43,8 +43,9 @@ interface TodoRepository {
                 }
             }
 
+            @OptIn(ExperimentalUuidApi::class)
             override suspend fun create(title: String, until: Instant?) {
-                val id = TodoDTO.ID(UUID())
+                val id = TodoDTO.ID(Uuid.random())
                 dao.upsertTodo(id = id, title = title, until = until, finished = false, recordChangeTag = null)
             }
         }

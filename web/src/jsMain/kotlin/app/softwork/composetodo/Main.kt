@@ -4,7 +4,9 @@ import app.cash.sqldelight.driver.worker.*
 import kotlinx.coroutines.*
 import org.jetbrains.compose.web.*
 import org.w3c.dom.*
+import kotlin.uuid.ExperimentalUuidApi
 
+@ExperimentalUuidApi
 suspend fun main() {
     // https://youtrack.jetbrains.com/issue/KTOR-539
     js(
