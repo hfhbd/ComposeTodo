@@ -4,16 +4,19 @@ import app.softwork.cloudkitclient.values.*
 import app.softwork.composetodo.dao.*
 import app.softwork.composetodo.dao.User
 import app.softwork.composetodo.dto.*
-import kotlinx.uuid.*
+import app.softwork.uuid.*
+import kotlin.uuid.ExperimentalUuidApi
 
+@OptIn(ExperimentalUuidApi::class)
 fun Todo.toDTO() = TodoDTO(
-    id = TodoDTO.ID(recordName.toUUID()),
+    id = TodoDTO.ID(recordName.toUuid()),
     title = fields.title.value,
     until = fields.until?.value,
     finished = fields.finished.value.toBoolean(),
     recordChangeTag = recordChangeTag
 )
 
+@OptIn(ExperimentalUuidApi::class)
 fun TodoDTO.toDAO(user: User) = Todo(
     recordName = id.id.toString(),
     fields = Todo.Fields(

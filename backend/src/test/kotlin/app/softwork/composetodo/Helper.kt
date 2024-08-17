@@ -10,13 +10,15 @@ import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.testing.*
+import kotlinx.datetime.Clock
 import kotlin.contracts.*
 import kotlin.test.*
 
 suspend fun dbTest(
+    clock: Clock,
     test: suspend (Client.Database) -> Unit
 ) {
-    val db = TestClient().publicDB
+    val db = TestClient(clock).publicDB
     test(db)
 }
 
@@ -25,7 +27,7 @@ fun testApplication(
     tests: suspend HttpClient.(Client.Database) -> Unit
 ) {
     testApplication {
-        dbTest { db ->
+        dbTest(Clock.System) { db ->
             application {
                 setup(db)
             }

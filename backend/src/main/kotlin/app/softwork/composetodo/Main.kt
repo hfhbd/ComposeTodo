@@ -8,13 +8,14 @@ import io.ktor.server.cio.*
 import io.ktor.server.engine.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.plugins.forwardedheaders.*
+import kotlinx.datetime.Clock
 import org.slf4j.*
 import java.util.*
 import kotlin.reflect.*
 import kotlin.time.Duration.Companion.minutes
 
 fun main() {
-    val db = client().publicDB
+    val db = client(Clock.System).publicDB
     val jwtProvider = JWTProvider(
         Algorithm.HMAC512("secret"),
         "app.softwork.todo",
@@ -37,9 +38,9 @@ fun main() {
     }.start(wait = true)
 }
 
-private fun client(): Client {
+private fun client(clock: Clock): Client {
     val container = "iCloud.app.softwork.composetodo"
-    val keyID = System.getenv("keyID") ?: return TestClient()
+    val keyID = System.getenv("keyID") ?: return TestClient(clock)
 
     val privateKey by Env
     val logger = LoggerFactory.getLogger(CKClient::class.java)
