@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 import clients
 
-extension ViewModel: @retroactive ObservableObject {
+extension ViewModel: ObservableObject {
 }
 
 extension ObservableObject where Self: ViewModel {
@@ -52,4 +52,4 @@ extension ObservableObject where Self: ViewModel {
     }
 }
 
-extension IosContainer: @retroactive ObservableObject { }
+extension IosContainer: ObservableObject { }
