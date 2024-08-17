@@ -9,10 +9,6 @@ import SwiftUI
 import clients
 
 struct Todos: View {
-    init(viewModel: @autoclosure @escaping () -> TodoViewModel) {
-        self._viewModel = StateObject(wrappedValue: viewModel())
-    }
-
     @StateObject var viewModel: TodoViewModel
 
     @State private var todos = [Todo]()
@@ -35,7 +31,7 @@ struct Todos_Previews: PreviewProvider {
         Todos(viewModel: TodoViewModel.init(repo: TestRepo()))
     }
 
-    class TestRepo: TodoRepository {
+    private final class TestRepo: TodoRepository {
         init() {
 
         }
@@ -49,9 +45,7 @@ struct Todos_Previews: PreviewProvider {
         func sync() async throws { }
 
         var todos: Flow {
-            get {
-                BuildersKt.emptyFlow()
-            }
+            BuildersKt.emptyFlow()
         }
     }
 }

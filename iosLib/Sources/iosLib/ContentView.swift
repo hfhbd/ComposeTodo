@@ -4,7 +4,7 @@ import Combine
 
 struct ContentView: View {
     @ObservedObject var container: IosContainer
-    
+
     init(container: IosContainer) {
         self._container = .init(initialValue: container)
         self.isLoggedIn = APILoggedOut(client: container.client)
@@ -43,10 +43,6 @@ struct ContentView: View {
 }
 
 struct Login: View {
-    init(viewModel: @autoclosure @escaping () -> LoginViewModel) {
-        self._viewModel = StateObject(wrappedValue: viewModel())
-    }
-
     @StateObject var viewModel: LoginViewModel
 
     @State private var error: Failure?
@@ -57,7 +53,7 @@ struct Login: View {
             TextField("Username", text: viewModel.binding(\.userName))
             SecureField("Password", text: viewModel.binding(\.password))
 
-            if let error = error {
+            if let error {
                 Text(error.reason)
             }
         }.toolbar {
@@ -78,10 +74,6 @@ struct Login: View {
 }
 
 struct Register: View {
-    init(viewModel: @autoclosure @escaping () -> RegisterViewModel) {
-        self._viewModel = StateObject(wrappedValue: viewModel())
-    }
-    
     @StateObject var viewModel: RegisterViewModel
 
     @State private var disableRegister = true

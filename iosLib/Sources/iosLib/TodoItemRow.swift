@@ -20,7 +20,7 @@ struct TodoItemRow: View {
             }
             VStack(alignment: .leading) {
                 Text(item.title)
-                Text((item.id as! clients.UUID).toNsUUID().uuidString).font(.footnote)
+                Text((item.id as! clients.KotlinUuid).toNsUUID().uuidString).font(.footnote)
                 if let until = item.until {
                     Text(dateFormatter.string(from: until.toNSDate()))
                 }
@@ -37,6 +37,6 @@ private let dateFormatter: DateFormatter = {
 
 struct TodoItemRowPreview: PreviewProvider {
     static var previews: some View {
-        TodoItemRow(item: Todo(id: clients.UUID.companion.NIL, title: "TestItem", until: clients.Instant.companion.fromEpochMilliseconds(epochMilliseconds: 0), finished: false, recordChangeTag: nil))
+        TodoItemRow(item: Todo(id: KotlinUuid.companion.NIL, title: "TestItem", until: clients.Instant.companion.fromEpochMilliseconds(epochMilliseconds: 0), finished: false, recordChangeTag: nil))
     }
 }
