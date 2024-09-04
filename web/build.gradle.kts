@@ -6,7 +6,7 @@ plugins {
 }
 
 kotlin {
-    js(IR) {
+    js {
         browser {
             binaries.executable()
             testTask {
@@ -23,7 +23,7 @@ kotlin {
     }
 
     sourceSets {
-        named("jsMain") {
+        jsMain {
             dependencies {
                 implementation(projects.clients)
 
@@ -32,8 +32,8 @@ kotlin {
                 implementation(libs.routingCompose)
 
                 implementation(libs.sqldelight.sqljsDriver)
-                implementation(npm("@cashapp/sqldelight-sqljs-worker", "2.0.0"))
-                implementation(npm("sql.js", "1.8.0"))
+                implementation(npm("@cashapp/sqldelight-sqljs-worker", "2.0.2"))
+                implementation(npm("sql.js", "1.11.0"))
                 implementation(devNpm("copy-webpack-plugin", "9.1.0"))
             }
         }
