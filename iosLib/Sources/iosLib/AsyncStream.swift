@@ -1,4 +1,4 @@
-import clients
+@preconcurrency import clients
 
 struct FlowStream<T>: AsyncSequence {
     func makeAsyncIterator() -> FlowAsyncIterator {
@@ -17,7 +17,7 @@ struct FlowStream<T>: AsyncSequence {
         self.context = context
     }
 
-    struct FlowAsyncIterator: AsyncIteratorProtocol {
+    struct FlowAsyncIterator: AsyncIteratorProtocol, Sendable {
         let iterator: IteratorAsync
 
         func next() async -> T? {
