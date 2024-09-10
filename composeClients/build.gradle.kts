@@ -29,7 +29,7 @@ kotlin {
             }
         }
 
-        named("androidMain") {
+        androidMain {
             dependencies {
                 implementation(libs.composeMaterialDialogs.datetime)
             }

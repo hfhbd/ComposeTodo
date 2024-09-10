@@ -23,6 +23,10 @@ jib {
                 architecture = "amd64"
                 os = "linux"
             }
+            platform {
+                architecture = "s390x"
+                os = "linux"
+            }
         }
     }
 

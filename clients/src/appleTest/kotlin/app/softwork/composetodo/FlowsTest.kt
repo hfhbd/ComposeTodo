@@ -36,6 +36,7 @@ class FlowsTest {
         iterator.cancel()
         assertEquals(1, next)
         assertEquals(listOf(1), computed)
+        assertNull(iterator.next())
     }
 
     @Test
