@@ -52,7 +52,7 @@ ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref 
 logback = { module = "ch.qos.logback:logback-classic", version = "1.5.8" }
 
 composeMaterialDialogs-datetime = { module = "io.github.vanpra.compose-material-dialogs:datetime", version = "0.9.0" }
-androidx-viewmodel-lifecycle = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version = "2.8.5" }
+androidx-viewmodel-lifecycle = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version = "2.8.6" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version = "1.9.2" }
 
 cloudkit-core = { module = "app.softwork:cloudkitclient-core", version.ref = "cloudkit" }
