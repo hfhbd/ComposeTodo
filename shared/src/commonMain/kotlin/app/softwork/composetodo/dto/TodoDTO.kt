@@ -16,7 +16,6 @@ public data class TodoDTO(
     @Serializable
     @JvmInline
     public value class ID(
-        @Serializable(with = UuidSerializer::class)
         @OptIn(ExperimentalUuidApi::class)
         public val id: Uuid,
     )
