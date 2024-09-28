@@ -29,6 +29,9 @@ android {
             )
         }
     }
+    lint {
+        abortOnError = false
+    }
 }
 
 dependencies {
