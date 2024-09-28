@@ -37,7 +37,6 @@ kotlin {
                 export(libs.coroutines.core)
                 export(libs.datetime)
                 export(libs.uuid.core)
-                embedBitcodeMode.set(BitcodeEmbeddingMode.DISABLE)
             }
         }
     }
