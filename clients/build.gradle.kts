@@ -36,7 +36,6 @@ kotlin {
                 export(projects.shared)
                 export(libs.coroutines.core)
                 export(libs.datetime)
-                export(libs.uuid.core)
             }
         }
     }
@@ -62,7 +61,7 @@ kotlin {
             }
         }
 
-        named("androidMain") {
+        androidMain {
             dependencies {
                 api(libs.sqldelight.androidDriver)
                 api(libs.ktor.client.android)
@@ -70,7 +69,7 @@ kotlin {
             }
         }
 
-        named("appleMain") {
+        appleMain {
             dependencies {
                 implementation(libs.ktor.client.darwin)
                 implementation(libs.sqldelight.nativeDriver)

@@ -135,6 +135,5 @@ fun Application.TodoModule(db: Client.Database, jwtProvider: JWTProvider) {
     }
 }
 
-@Serializable
 @Resource("/")
 class Online

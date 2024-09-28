@@ -28,8 +28,6 @@ kotlin {
                 api(libs.serialization.json)
                 api(libs.datetime)
 
-                api(libs.uuid.core)
-
                 api(libs.ktor.client.core)
                 api(libs.ktor.resources)
                 api(libs.ktor.client.resources)
