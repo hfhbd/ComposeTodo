@@ -2,8 +2,8 @@ package app.softwork.composetodo
 
 import app.softwork.composetodo.viewmodels.*
 import io.ktor.client.*
-import io.ktor.utils.io.errors.*
 import kotlinx.coroutines.flow.*
+import kotlinx.io.IOException
 
 interface AppContainer {
     fun todoViewModel(api: API.LoggedIn): TodoViewModel
