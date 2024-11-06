@@ -7,8 +7,8 @@ import io.ktor.client.plugins.resources.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.resources.*
-import io.ktor.utils.io.errors.*
 import kotlinx.datetime.*
+import kotlinx.io.IOException
 import kotlin.coroutines.cancellation.*
 
 public sealed interface API {

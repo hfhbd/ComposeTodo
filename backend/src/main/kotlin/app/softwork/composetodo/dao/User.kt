@@ -17,7 +17,7 @@ data class User(
     override val pluginFields: PluginFields = PluginFields(),
     override var recordChangeTag: String? = null,
     override val zoneID: ZoneID = ZoneID.default
-) : Record<User.Fields>, Principal {
+) : Record<User.Fields> {
 
     override val recordType: String = Companion.recordType
 

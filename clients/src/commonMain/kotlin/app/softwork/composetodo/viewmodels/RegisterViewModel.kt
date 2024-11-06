@@ -5,6 +5,7 @@ import app.softwork.composetodo.dto.*
 import io.ktor.utils.io.errors.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+import kotlinx.io.IOException
 
 class RegisterViewModel(
     val api: API.LoggedOut,
