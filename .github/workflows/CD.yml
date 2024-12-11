@@ -24,9 +24,6 @@ jobs:
       id-token: write
       attestations: write
 
-    env:
-      GRADLE_OPTS: -Dorg.gradle.caching=true
-
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
