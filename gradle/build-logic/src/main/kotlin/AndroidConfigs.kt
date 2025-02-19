@@ -29,4 +29,4 @@ fun <
     }
 }
 
-const val TARGET_SDK = 34
+const val TARGET_SDK = 35
