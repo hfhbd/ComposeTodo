@@ -64,6 +64,6 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 android = { id = "com.android.application", version = "8.8.0" }
-jib = { id = "com.google.cloud.tools.jib", version = "3.4.4" }
+jib = { id = "com.google.cloud.tools.jib", version = "3.4.5" }
 licensee = { id = "app.cash.licensee", version = "1.12.0" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
