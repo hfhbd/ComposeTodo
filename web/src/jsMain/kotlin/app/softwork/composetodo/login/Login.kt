@@ -12,7 +12,7 @@ fun Login(viewModel: LoginViewModel) {
         Column {
             val username by viewModel.userName.collectAsState()
             H1 {
-                Text("Login $username")
+                Text("Login with Username $username")
             }
             Input(
                 value = username,
