@@ -34,7 +34,7 @@ jobs:
         uses: hfhbd/actions/setup-version@main
         with:
           token: ${{ github.token }}
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ steps.setup-version.outputs.ref }}
 
@@ -109,7 +109,7 @@ jobs:
         uses: hfhbd/actions/setup-version@main
         with:
           token: ${{ github.token }}
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: ${{ steps.setup-version.outputs.full-tag }}
       - id: auth
