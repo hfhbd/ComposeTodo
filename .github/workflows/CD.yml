@@ -90,7 +90,7 @@ jobs:
 
       - name: Assemble with Gradle
         run: ./gradlew :web:jsBrowserDistribution
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: web/build/dist/js/productionExecutable
       - name: Deploy to GitHub Pages
