@@ -32,8 +32,7 @@ jobs:
       - name: Get latest release
         id: setup-version
         uses: hfhbd/actions/setup-version@main
-        with:
-          token: ${{ github.token }}
+
       - uses: actions/checkout@v6
         with:
           ref: ${{ steps.setup-version.outputs.ref }}
@@ -55,10 +54,6 @@ jobs:
           password: ${{ steps.auth.outputs.access_token }}
 
       - uses: actions/configure-pages@v5
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: 21
       - uses: gradle/actions/setup-gradle@v5
 
       - name: Push Docker Image to GitHub
